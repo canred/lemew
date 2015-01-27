@@ -1,1 +1,0 @@
-Schema.sql 為建立table , function , view 以及資料
