@@ -21,6 +21,38 @@
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/supersubs.js")%>'></script>
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/InitialiseMenu.js")%>'></script> 
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/system-config.ashx")%>'></script>
+    <!--引入ExtJs的程式-->
+    <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/shared/include-ext.js")%>'></script>
+    <script type="text/javascript" src='<%= Page.ResolveUrl("~/Proxy.ashx")%>'></script>
+    <!--引入ExtJs相關的設定-->
+    <script language="javascript" type="text/javascript">    
+        /*設定ExtJs ux路徑*/
+        Ext.Loader.setPath('Ext.ux', SYSTEM_URL_ROOT + '/js/ux');
+        Ext.Loader.setPath('WS', SYSTEM_URL_ROOT + '/pagejs');
+        //alert(SYSTEM_URL_ROOT);
+        /*引入DataTip的package*/
+        Ext.require(['*', 'Ext.ux.DataTip']);
+        /*初始化QuickTips的功能*/
+        Ext.QuickTips.init();
+        /*引入ModelAll.js*/
+        
+        /*最後一步*/
+        Ext.onReady(function(){            
+            //引入ExtJs Direct Provider
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ADAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AdminCompanyAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UserAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
+
+              Ext.Loader.loadScript([                
+                  'pagejs/CompanyQueryPanel.js',
+                  'pagejs/CompanyWindow.js',
+                  'pagejs/LogonPanel.js'
+              ]);           
+                           
+        });
+
+    </script>
 	<style type ="text/css">
     .x-tip {
         width: auto !important;

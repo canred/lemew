@@ -4,7 +4,7 @@ using System.Web;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
-using LK.MyException;
+using IST.MyException;
 using Newtonsoft.Json.Linq;
 using System;
 namespace ExtDirect.Direct
@@ -67,11 +67,14 @@ namespace ExtDirect.Direct
             return jSri.Serialize(res);
         }
 
-        public JObject ExecuteRPCJObject(HttpRequest request, string bodyContext)
+        public JObject ExecuteRPCJObject(HttpRequest request, string bodyContext,HttpContext hc)
         {
             bool flag = true;
             var rpc = new ExtAction();
             var checkFormPost = request["extAction"];
+            /*Canred*/
+
+
             try
             {
                 if (!string.IsNullOrEmpty(checkFormPost) && checkFormPost.Length > 0)
@@ -93,6 +96,8 @@ namespace ExtDirect.Direct
                 string requestData = bodyContext;
                 var data = new Request();
                 data.HttpRequest = request;
+                data.HttpContext = hc;
+               
                 JObject jobject;
                 Boolean isMutilAction;
 
@@ -304,6 +309,7 @@ namespace ExtDirect.Direct
             var rpc = new ExtAction();
             var newData = new Request();
             newData.HttpRequest = data.HttpRequest;
+            newData.HttpContext = data.HttpContext;
             newData.action = jobject["action"].ToString();
             newData.method = jobject["method"].ToString();
             newData.tid = Convert.ToInt32(jobject["tid"].ToString());
@@ -489,6 +495,7 @@ namespace ExtDirect.Direct
             newData.data = dd;
             data = newData;
             data.HttpRequest = newData.HttpRequest;
+            data.HttpContext = newData.HttpContext;
             var isNull = data.IsNullData();
             if (data.IsSpecialField())
             {
