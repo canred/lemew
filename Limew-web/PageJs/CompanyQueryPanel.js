@@ -1,6 +1,12 @@
 /*全局變量*/
 var WS_COMPANYQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
+/*TODO*/
+/*
+1.Model 要集中                                 [NO]
+2.panel 的title要換成icon , title的方式        [YES]
+3.add 的icon要換成icon , title的方式           [YES]
+*/
 Ext.define('WS.CompanyQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -13,17 +19,58 @@ Ext.define('WS.CompanyQueryPanel', {
     },
     /*值擴展*/
     val: {},
+    /*物件會用到的Store物件*/
+    myStore: {
+        company: Ext.create('Ext.data.Store', {
+            successProperty: 'success',
+            autoLoad: true,
+            model: Ext.define('COMPANY', {
+                extend: 'Ext.data.Model',
+                fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
+            }),
+            pageSize: 10,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.AdminCompanyAction.loadCompany
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pIsActive', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pIsActive: 'Y'
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'Warning',
+                            msg: response.result.message,
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            remoteSort: true,
+            sorters: [{
+                property: 'C_NAME',
+                direction: 'ASC'
+            }]
+        })
+    },
     fnActiveRender: function isActiveRenderer(value, id, r) {
-        if (value == "Y")
-            return "<img src='" + SYSTEM_URL_ROOT + "/css/custimages/active.gif' style='height:20px;vertical-align:middle'>";
-        else if (value == "N")
-            return "<img src='" + SYSTEM_URL_ROOT + "/css/custimages/unactive.gif' style='height:20px;vertical-align:middle'>";
+        var html = "<img src='" + SYSTEM_URL_ROOT;
+        return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     initComponent: function() {
-        var me = this;
-        me.items = [{
+        this.items = [{
             xtype: 'panel',
-            title: '<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司維護',
+            title: '公司維護',
+            icon: SYSTEM_URL_ROOT + '/css/images/company16x16.png',
             frame: true,
             padding: 5,
             border: false,
@@ -38,25 +85,27 @@ Ext.define('WS.CompanyQueryPanel', {
                     xtype: 'textfield',
                     fieldLabel: '關鍵字',
                     margin: '2 0 0 5',
-                    id: 'txt_search',
+                    itemId: 'txt_search',
                     labelWidth: 50,
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            if (t.button == 12) {
+                            var keyCode = t.parentEvent.keyCode;
+                            if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
-                            }
+                            };
                         }
                     }
                 }, {
                     xtype: 'combobox',
                     queryMode: 'local',
                     fieldLabel: '是否啟用',
-                    margin: '2 0 0 5',
+                    margin: '2 0 0 20',
                     labelWidth: 60,
+                    width: 150,
                     displayField: 'name',
                     valueField: 'value',
-                    id: 'cmb_isActive',
+                    itemId: 'cmb_isActive',
                     editable: false,
                     store: {
                         xtype: 'store',
@@ -73,120 +122,77 @@ Ext.define('WS.CompanyQueryPanel', {
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            if (t.button == 12) {
+                            var keyCode = t.parentEvent.keyCode;
+                            if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
-                            }
+                            };
                         }
                     }
                 }, {
                     xtype: 'button',
-                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/custimages/search.gif" style="height:20px;vertical-align:middle;"/>查詢',
-                    margin: '0 0 0 5',
+                    icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
+                    text: '查詢',
+                    margin: '0 0 0 20',
                     itemId: 'btnQuery',
                     width: 70,
                     handler: function() {
                         var store = this.up('panel').down("#grdCompanyQuery").getStore(),
-                            doSomeghing = function(obj) {
-                                obj.getProxy().setExtraParam('pKeyword', Ext.getCmp('txt_search').getValue());
-                                obj.getProxy().setExtraParam('pIsActive', Ext.getCmp('cmb_isActive').getValue());
-                                obj.load();
-                            }(store);
+                            doSomeghing = function(obj, pl) {
+                                obj.getProxy().setExtraParam('pKeyword', pl.down("#txt_search").getValue());
+                                obj.getProxy().setExtraParam('pIsActive', pl.down("#cmb_isActive").getValue());
+                                obj.loadPage(1);
+                            }(store, this.up('panel'));
                     }
                 }, {
                     xtype: 'button',
                     width: 70,
                     margin: '0 0 0 5',
-                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/custimages/clear.gif" style="height:20px;vertical-align:middle;"/>清除',
+                    icon: SYSTEM_URL_ROOT + '/css/custimages/clear.png',
+                    text: '清除',
+                    tooltip: '*清除目前所有的條件查詢',
                     handler: function() {
-                        Ext.getCmp('txt_search').setValue('');
-                        Ext.getCmp('cmb_isActive').setValue('Y');
+                        this.up('panel').down("#txt_search").setValue('');
+                        this.up('panel').down("#cmb_isActive").setValue('Y');
                     }
                 }]
             }, {
                 xtype: 'gridpanel',
-                store: Ext.create('Ext.data.Store', {
-                    successProperty: 'success',
-                    autoLoad: true,
-                    model: Ext.define('COMPANY', {
-                        extend: 'Ext.data.Model',
-                        fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
-                    }),
-                    pageSize: 10,
-                    proxy: {
-                        type: 'direct',
-                        api: {
-                            read: WS.AdminCompanyAction.loadCompany
-                        },
-                        reader: {
-                            root: 'data'
-                        },
-                        paramsAsHash: true,
-                        paramOrder: ['pKeyword', 'pIsActive', 'page', 'limit', 'sort', 'dir'],
-                        extraParams: {
-                            pKeyword: '',
-                            pIsActive: 'Y'
-                        },
-                        simpleSortMode: true,
-                        listeners: {
-                            exception: function(proxy, response, operation) {
-                                Ext.MessageBox.show({
-                                    title: 'Warning',
-                                    msg: response.result.message,
-                                    icon: Ext.MessageBox.ERROR,
-                                    buttons: Ext.Msg.OK
-                                });
-                            }
-                        }
-                    },                   
-                    remoteSort: true,
-                    sorters: [{
-                        property: 'C_NAME',
-                        direction: 'ASC'
-                    }]
-                }),
+                store: this.myStore.company,
                 itemId: 'grdCompanyQuery',
-                paramOrder: ['C_NAME'],
-                idProperty: 'UUID',
-                paramsAsHash: false,
                 border: true,
                 height: $(document).height() - 240,
                 padding: '5 15 5 5',
                 columns: [{
-                    header: "編輯",
+                    text: "編輯",
+                    xtype: 'actioncolumn',
                     dataIndex: 'UUID',
                     align: 'center',
-                    renderer: function(value, m, r) {
-                        var id = Ext.id();
-                        var main = this.up('panel').up('panel');
-                        Ext.defer(function() {
-                            Ext.widget('button', {
-                                renderTo: id,
-                                text: '<img src="' + SYSTEM_URL_ROOT + '/css/custimages/edit.gif" style="height:12px;vertical-align:middle;margin-right:5px;margin-top:-2px;">&nbsp;編輯',
-                                width: 75,
-                                handler: function() {
-                                    if (!main.subWinCompany) {
-                                        Ext.MessageBox.show({
-                                            title: '系統訊息',
-                                            icon: Ext.MessageBox.INFO,
-                                            buttons: Ext.Msg.OK,
-                                            msg: '未實現subWinCompany物件,無法進行編輯操作!'
-                                        });
-                                        return false;
-                                    }
-                                    /*註冊事件*/
-                                    main.subWinCompany.on('closeEvent', function(obj) {
-                                        main.down("#grdCompanyQuery").getStore().load();
-                                    }, main);
-                                    /*設定屬性*/
-                                    main.subWinCompany.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                                    /*設定參數*/
-                                    main.subWinCompany.param.uuid = value;
-                                    main.subWinCompany.show();
-                                }
-                            });
-                        }, 50);
-                        return Ext.String.format('<div id="{0}"></div>', id);
-                    },
+                    width: 60,
+                    items: [{
+                        tooltip: '*編輯',
+                        icon: '../../css/images/edit16x16.png',
+                        handler: function(grid, rowIndex, colIndex) {
+                            var main = grid.up('panel').up('panel').up('panel');
+                            if (!main.subWinCompany) {
+                                Ext.MessageBox.show({
+                                    title: '系統訊息',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    msg: '未實現subWinCompany物件,無法進行編輯操作!'
+                                });
+                                return false;
+                            };
+                            /*註冊事件*/
+                            main.subWinCompany.on('closeEvent', function(obj) {
+                                main.down("#grdCompanyQuery").getStore().load();
+                            }, main);
+                            /*設定屬性*/
+                            //main.subWinCompany.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
+                            /*設定參數*/
+                            main.subWinCompany.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
+                            main.subWinCompany.show();
+                        }
+                    }],
                     sortable: false,
                     hideable: false
                 }, {
@@ -198,24 +204,12 @@ Ext.define('WS.CompanyQueryPanel', {
                     header: "名稱-簡中",
                     align: 'left',
                     dataIndex: 'NAME_ZH_CN',
-                    flex: 1,
-                    renderer: function(value) {
-                        return '<div align="left">' + value + '</div>';
-                    }
+                    flex: 1
                 }, {
                     header: "名稱-英文",
                     dataIndex: 'E_NAME',
                     align: 'left',
                     flex: 1
-                }, {
-                    header: "每週第一天為",
-                    align: 'left',
-                    dataIndex: 'WEEK_SHIFT',
-                    hidden:true,
-                    flex: 1,
-                    renderer: function(value) {
-                        return '<div align="left">' + value + '</div>';
-                    }
                 }, {
                     header: '啟用',
                     dataIndex: 'IS_ACTIVE',
@@ -227,26 +221,38 @@ Ext.define('WS.CompanyQueryPanel', {
                     buttonAlign: 'right'
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    //store: storeCompany,
+                    store: this.myStore.company,
                     displayInfo: true,
                     displayMsg: '第{0}~{1}資料/共{2}筆',
                     emptyMsg: "無資料顯示"
                 }),
                 tbar: [{
-                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/custimages/add.gif" style="height:12px;vertical-align:middle;margin-top:-2px;margin-right:5px;">新增',
+                    icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+                    text: '新增',
                     handler: function() {
-                        if (main.subWinCompany == undefined) {
-                            main.subWinCompany = Ext.create('CompanyForm', {});
-                            main.subWinCompany.on('closeEvent', function(obj) {
-                                storeCompany.load();
+                        var main = this.up('panel').up('panel').up('panel');
+                        if (!main.subWinCompany) {
+                            Ext.MessageBox.show({
+                                title: '系統訊息',
+                                icon: Ext.MessageBox.INFO,
+                                buttons: Ext.Msg.OK,
+                                msg: '未實現subWinCompany物件,無法進行編輯操作!'
                             });
-                        }
-                        main.subWinCompany.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【新增】');
+                            return false;
+                        };
+                        /*註冊事件*/
+                        main.subWinCompany.on('closeEvent', function(obj) {
+                            main.down("#grdCompanyQuery").getStore().load();
+                        }, main);
+                        /*設定屬性*/
+                        main.subWinCompany.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
+                        /*設定參數*/
                         main.subWinCompany.param.uuid = undefined;
                         main.subWinCompany.show();
                     }
                 }, {
-                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/Cloud_Sync.png" style="height:20px;vertical-align:middle;margin-top:-2px;margin-right:5px;">同步公司(主伺服器)',
+                    icon: SYSTEM_URL_ROOT + '/css/images/cloudsync16x16.png',
+                    text: '同步公司(主伺服器)',
                     hidden: this.param.showADSync,
                     handler: function() {
                         Ext.getBody().mask("正在處理中…請稍後…");
@@ -269,15 +275,12 @@ Ext.define('WS.CompanyQueryPanel', {
                                     buttons: Ext.Msg.OK,
                                     msg: jsonObj.result.message
                                 });
-                            }
+                            };
                         });
                     }
                 }]
             }]
         }];
-        me.callParent(arguments);
-    },
-    closeEvent: function() {
-        //this.fireEvent('closeEvent', this);
+        this.callParent(arguments);
     }
 });

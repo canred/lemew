@@ -40,15 +40,21 @@
         Ext.onReady(function(){            
             //引入ExtJs Direct Provider
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ADAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AttendantAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AdminCompanyAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UserAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
-
-              Ext.Loader.loadScript([                
-                  'pagejs/CompanyQueryPanel.js',
-                  'pagejs/CompanyWindow.js',
-                  'pagejs/LogonPanel.js'
-              ]);           
+            
+    
+    
+            Ext.Loader.loadScript([                
+              'pagejs/AttendantQueryPanel.js',
+              'pagejs/AttendantWindow.js',
+              'pagejs/CompanyQueryPanel.js',
+              'pagejs/CompanyWindow.js',
+              'pagejs/LogonPanel.js',
+              'pagejs/LogoutPanel.js'
+            ]);           
                            
         });
 

@@ -4,7 +4,7 @@ using System.Web;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
-using IST.MyException;
+using LK.MyException;
 using Newtonsoft.Json.Linq;
 using System;
 namespace ExtDirect.Direct

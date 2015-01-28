@@ -78,7 +78,7 @@ namespace Limew
             AppDomain MyDomain = AppDomain.CurrentDomain;
             System.Reflection.Assembly[] AssembliesLoaded = MyDomain.GetAssemblies();
             StringBuilder sb = new StringBuilder();
-            EDA.Util.Session.Store ss = new EDA.Util.Session.Store();
+            Limew.Util.Session.Store ss = new Limew.Util.Session.Store();
 
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("ServiceClass");
@@ -104,29 +104,29 @@ namespace Limew
                     }
                 }
             }
-            return IST.Util.JsonHelper.DataTable2JObject(dt, 0, 9999);
+            return LK.Util.JsonHelper.DataTable2JObject(dt, 0, 9999);
         }
 
         public void ProcessRequest(HttpContext context)
         {
             var rpc = new ExtDirect.Direct.ExtRPC();
             string action, method;
-            EDA.Controller.Model.Basic.BasicModel mod = new EDA.Controller.Model.Basic.BasicModel();
+            Limew.Model.Basic.BasicModel mod = new Limew.Model.Basic.BasicModel();
             string INIT = "";
-            IList<EDA.Controller.Model.Basic.Table.Record.Proxy_Record> allProxy = new List<EDA.Controller.Model.Basic.Table.Record.Proxy_Record>();
+            IList<Limew.Model.Basic.Table.Record.Proxy_Record> allProxy = new List<Limew.Model.Basic.Table.Record.Proxy_Record>();
             if (context.Request.QueryString["init"] != null)
             {
-                allProxy = mod.getProxy_By_KeyWord(EDA.Parameter.Config.ParemterConfigs.GetConfig().InitAppUuid, "", null);
+                allProxy = mod.getProxy_By_KeyWord(Limew.Parameter.Config.ParemterConfigs.GetConfig().InitAppUuid, "", null);
             }
 
 
 
 
             #region 跨網POST支援
-            if (IST.Config.DirectAuth.DirectAuthConfigs.GetConfig().AllowCrossPost)
+            if (LK.Config.DirectAuth.DirectAuthConfigs.GetConfig().AllowCrossPost)
             {
                 JObject jo = new JObject();
-                var json = "{" + IST.Config.DirectAuth.DirectAuthConfigs.GetConfig().Rule + "}";
+                var json = "{" + LK.Config.DirectAuth.DirectAuthConfigs.GetConfig().Rule + "}";
                 jo = JObject.Parse(json);
 
                 var accessAll = jo["access_all"].Value<string>().ToLower() == "true" ? true : false;
@@ -197,10 +197,10 @@ namespace Limew
                 return;
             }
             var bodyContent = getContentText(context, out action, out method);
-            IList<EDA.Controller.Model.Basic.Table.Record.Proxy_Record> drsProxy = new List<EDA.Controller.Model.Basic.Table.Record.Proxy_Record>();
+            IList<Limew.Model.Basic.Table.Record.Proxy_Record> drsProxy = new List<Limew.Model.Basic.Table.Record.Proxy_Record>();
             if (context.Request.QueryString["init"] != null)
             {
-                drsProxy = mod.getProxy_By_KeyWord(EDA.Parameter.Config.ParemterConfigs.GetConfig().InitAppUuid, "", null);
+                drsProxy = mod.getProxy_By_KeyWord(Limew.Parameter.Config.ParemterConfigs.GetConfig().InitAppUuid, "", null);
             }
 
             var countNeedRedirect = drsProxy.Where(c => c.PROXY_ACTION.ToUpper().Equals(action.ToUpper()) && c.PROXY_METHOD.ToUpper().Equals(method.ToUpper()) && c.NEED_REDIRECT.Equals("Y"))
@@ -212,7 +212,7 @@ namespace Limew
                 var drProxy = drsProxy.Where(c => c.PROXY_ACTION.ToUpper().Equals(action.ToUpper()) && c.PROXY_METHOD.ToUpper().Equals(method.ToUpper()) && c.NEED_REDIRECT.Equals("Y"))
                 .First();
 
-                IST.Cloud cloud = new IST.Cloud();
+                LK.Cloud cloud = new LK.Cloud();
                 StoreSession ss = new StoreSession();
                 //var dataCount = JObject.Parse(bodyContent)["data"].Count();
                 List<string> sParam = new List<string>();

@@ -9,10 +9,9 @@ Ext.define('WS.CompanyWindow', {
     height: 400,
     layout: 'fit',
     resizable: false,
-    draggable: true,
+    draggable: false,
     initComponent: function() {
-        var me = this;
-        me.items = [Ext.create('Ext.form.Panel', {
+        this.items = [Ext.create('Ext.form.Panel', {
             layout: {
                 type: 'form',
             },
@@ -24,7 +23,6 @@ Ext.define('WS.CompanyWindow', {
             paramOrder: ['pUuid'],
             border: true,
             bodyPadding: 5,
-            defaultType: 'textfield',
             buttonAlign: 'center',
             items: [{
                     xtype: 'container',
@@ -94,6 +92,7 @@ Ext.define('WS.CompanyWindow', {
                 Ext.create('Ext.form.Panel', {
                     itemId: 'itemId',
                     border: true,
+                    margin: '5 0 5 0',
                     bodyPadding: 5,
                     bodyStyle: {
                         "background-color": "#7BAEBD"
@@ -136,9 +135,9 @@ Ext.define('WS.CompanyWindow', {
                             text: '測試LDAP',
                             margin: '0 5 0 5',
                             handler: function(handler, scope) {
-                                var ldap = this.up("panel").down("#AD_LDAP").getValue();
-                                var account = this.up("panel").down("#AD_LDAP_USER").getValue();
-                                var pwd = this.up("panel").down("#AD_LDAP_USER_PASSWORD").getValue();
+                                var ldap = this.up("panel").down("#AD_LDAP").getValue(),
+                                    account = this.up("panel").down("#AD_LDAP_USER").getValue(),
+                                    pwd = this.up("panel").down("#AD_LDAP_USER_PASSWORD").getValue();
                                 WS.ADAction.testLDAP(ldap, account, pwd, function(obj, jsonObj) {
                                     if (jsonObj.result.success) {
                                         Ext.MessageBox.show({
@@ -190,14 +189,14 @@ Ext.define('WS.CompanyWindow', {
             ],
             fbar: [{
                 type: 'button',
-                text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/save.gif" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '儲存',
+                icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
+                text: '儲存',
                 handler: function() {
                     var form = this.up('window').down("#CompanyForm").getForm();
                     if (form.isValid() == false) {
                         return;
                     }
                     this.up('window').down('#ID').setDisabled(false);
-                    console.log(this.up('window'));
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
@@ -224,13 +223,14 @@ Ext.define('WS.CompanyWindow', {
                 }
             }, {
                 type: 'button',
-                text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/leave.png" style="width:20px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '關閉',
+                icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
+                text: '關閉',
                 handler: function() {
                     this.up('window').hide();
                 }
             }]
         })]
-        me.callParent(arguments);
+        this.callParent(arguments);
     },
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
