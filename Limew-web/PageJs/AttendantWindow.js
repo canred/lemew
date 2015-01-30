@@ -231,7 +231,6 @@ Ext.define('WS.AttendantWindow', {
     listeners: {
         'show': function() {
             Ext.getBody().mask();
-
             if (this.param.uuid != undefined) {
                 this.down("#AttendantForm").getForm().load({
                     params: {
@@ -247,7 +246,6 @@ Ext.define('WS.AttendantWindow', {
                                 msg: jsonObj.result.message
                             });
                         }
-
                     }
                 });
             } else {

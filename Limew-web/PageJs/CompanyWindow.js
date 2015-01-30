@@ -1,7 +1,8 @@
 Ext.define('WS.CompanyWindow', {
     extend: 'Ext.window.Window',
-    title: '公司 新增/修改',
+    title: '公司維護',
     closeAction: 'destroy',
+    closable:false,
     param: {
         uuid: undefined
     },

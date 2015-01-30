@@ -66,5 +66,50 @@ public class CompanyAction : BaseAction
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }
+
+    [DirectMethod("getAllCompany", DirectAction.Store, MethodVisibility.Visible)]
+    public JObject getAllCompany(string pageNo, string limitNo, string sort, string dir, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        #endregion
+        try
+        {
+
+            if (Limew.Parameter.Config.ParemterConfigs.GetConfig().WhereAnyChangeAccount)
+            {
+
+
+                /*取得總資料數*/
+                var totalCount = 1;
+                /*取得資料*/
+                var data = model.getCompany();
+
+                //var data = model.getGhgProjectCompany(basic_company_uuid, is_active, orderLimit);
+                if (data.Count > 0)
+                {
+                    /*將List<RecordBase>變成JSON字符串*/
+                    jobject = JsonHelper.RecordBaseListJObject(data.ToList());
+                }
+                else
+                {
+                    totalCount = 0;
+                }
+                /*使用Store Std out 『Sotre物件標準輸出格式』*/
+                return ExtDirect.Direct.Helper.Store.OutputJObject(jobject, totalCount);
+            }
+            else
+            {
+                return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("動作不允許"));
+            }
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
 }
 

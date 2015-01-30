@@ -98,6 +98,47 @@ public class AttendantAction : BaseAction
         }
     }
 
+
+    [DirectMethod("loadAnyWhere", DirectAction.Store, MethodVisibility.Visible)]
+    public JObject loadAnyWhere(string company_uuid, string keyword, string pageNo, string limitNo, string sort, string dir, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        BasicModel model = new BasicModel();
+        AttendantV_Record table = new AttendantV_Record();
+        OrderLimit orderLimit = null;
+        #endregion
+        try
+        {
+
+            /*是Store操作一下就可能含有分頁資訊。*/
+            if (Limew.Parameter.Config.ParemterConfigs.GetConfig().WhereAnyChangeAccount)
+            {
+                orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
+                /*取得總資料數*/
+                var totalCount = model.getAttendantV_By_CompanyUuid_KeyWord_Count(company_uuid, keyword);
+                /*取得資料*/
+                var data = model.getAttendantV_By_CompanyUuid_KeyWord(company_uuid, keyword, orderLimit);
+                if (data.Count > 0)
+                {
+                    /*將List<RecordBase>變成JSON字符串*/
+                    jobject = JsonHelper.RecordBaseListJObject(data);
+                }
+                /*使用Store Std out 『Sotre物件標準輸出格式』*/
+                return ExtDirect.Direct.Helper.Store.OutputJObject(jobject, totalCount);
+            }
+            else
+            {
+                return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("動作不允許"));
+            }
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
     [DirectMethod("info", DirectAction.Load, MethodVisibility.Visible)]
     public JObject info(string pUuid, Request request)
     {

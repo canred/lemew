@@ -398,7 +398,51 @@ public class UserAction : BaseAction
 
     }
 
+    [DirectMethod("changeAccount", DirectAction.Load, MethodVisibility.Visible)]
+    public JObject changeAccount(string company, string account, Request request)
+    {
+        try
+        { /*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            var drAttendantV = new List<AttendantV_Record>();
+            Limew.Model.Basic.BasicModel mBasic = new Limew.Model.Basic.BasicModel();
 
+            //drAttendantV = mBasic.getAttendantV_By_Company_Account_Password(company, account, password).ToList();
+            var drAttendant = mBasic.getAttendant_By_CompanyUuid_Account(company, account);
+
+            System.Collections.Hashtable hash = new System.Collections.Hashtable();
+
+
+
+            if (drAttendant != null)
+            {
+                hash.Add("validation", "OK");
+                ss.setObject("CLOUD_ID", "");
+
+                ss.setObject("USER", mBasic.getAttendantV_By_Uuid(drAttendant.UUID).AllRecord().First());
+            }
+            else
+            {
+                if (!hash.ContainsKey("validation"))
+                {
+                    hash.Add("validation", "CANCEL");
+                }
+            }
+
+
+
+
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(hash);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
 }
 
 

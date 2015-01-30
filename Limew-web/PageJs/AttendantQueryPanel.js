@@ -24,7 +24,7 @@ Ext.define('WS.AttendantQueryPanel', {
     myStore: {
         attendantV: Ext.create('Ext.data.Store', {
             successProperty: 'success',
-            autoLoad: true,
+            autoLoad: false,
             model: Ext.define('ATTEDNANTVV', {
                 extend: 'Ext.data.Model',
                 fields: [

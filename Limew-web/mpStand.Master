@@ -26,36 +26,45 @@
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/Proxy.ashx")%>'></script>
     <!--引入ExtJs相關的設定-->
     <script language="javascript" type="text/javascript">    
-        /*設定ExtJs ux路徑*/
+        // /*設定ExtJs ux路徑*/
         Ext.Loader.setPath('Ext.ux', SYSTEM_URL_ROOT + '/js/ux');
         Ext.Loader.setPath('WS', SYSTEM_URL_ROOT + '/pagejs');
-        //alert(SYSTEM_URL_ROOT);
         /*引入DataTip的package*/
-        Ext.require(['*', 'Ext.ux.DataTip']);
-        /*初始化QuickTips的功能*/
+        Ext.require(['*', 'Ext.ux.DataTip']);       
+        // /*初始化QuickTips的功能*/
         Ext.QuickTips.init();
-        /*引入ModelAll.js*/
-        
-        /*最後一步*/
+        // /*引入ModelAll.js*/        
+        // /*最後一步*/
         Ext.onReady(function(){            
             //引入ExtJs Direct Provider
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ApplicationAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ADAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AttendantAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AppPageAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AdminCompanyAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CompanyAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MenuAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UserAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SiteMapAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
             
-    
-    
-            Ext.Loader.loadScript([                
-              'pagejs/AttendantQueryPanel.js',
-              'pagejs/AttendantWindow.js',
-              'pagejs/CompanyQueryPanel.js',
-              'pagejs/CompanyWindow.js',
-              'pagejs/LogonPanel.js',
-              'pagejs/LogoutPanel.js'
-            ]);           
-                           
+
+
+
+
+            
+            // Ext.Loader.loadScript([                
+            //   SYSTEM_URL_ROOT +'/pagejs/AttendantQueryPanel.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/AttendantWindow.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/ApplicationWindow.js',              
+            //   SYSTEM_URL_ROOT +'/pagejs/CompanyQueryPanel.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/CompanyWindow.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/ChangeAttendantWindow.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/LogonPanel.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/LogoutPanel.js',
+            //   SYSTEM_URL_ROOT +'/pagejs/SystemQueryPanel.js',              
+            // ]);            
         });
 
     </script>

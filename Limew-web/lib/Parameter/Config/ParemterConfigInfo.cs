@@ -35,6 +35,13 @@ namespace Limew.Parameter.Config
             set { _enableGuestLogin = value; }
         }
 
+        private bool _WhereAnyChangeAccount = false;
+        public bool WhereAnyChangeAccount
+        {
+            get { return _WhereAnyChangeAccount; }
+            set { _WhereAnyChangeAccount = value; }
+        }
+
         private string _guestAccount = "";
         public string GuestAccount
         {

@@ -243,7 +243,8 @@ Ext.onReady(function() {
                     }
                 }, {
                     type: 'button',
-                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/leave.png" style="width:20px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '關閉',
+                    icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
+                    text: '關閉',
                     handler: function() {
                         Ext.getCmp('ExtAppPageForm').hide();
                     }

@@ -18,7 +18,7 @@ Ext.define('WS.LogoutPanel', {
             }, {
                 html: '感謝您的使用。<BR>'
             }, {
-                html: '如果您對系統有任何建議，請透過Email與我們連聯(canred_chen@istgroup.com)'
+                html: '如果您對系統有任何建議，請透過Email與我們連聯(canred.chen@gmail.com)'
             }, {
                 xtype: 'container',
                 layout: {

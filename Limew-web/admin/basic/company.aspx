@@ -7,11 +7,11 @@
 
 Ext.onReady(function() {
     /*實例化公司編輯的物件*/    
-    var subWinCompany = Ext.create('WS.CompanyWindow',{});
+    //var subWinCompany = Ext.create('WS.CompanyWindow',{});
 
     WS_COMPANYQUERYPANEL = Ext.create('WS.CompanyQueryPanel',{
         /*將實例化的公司編輯物件傳入*/
-        'subWinCompany':subWinCompany
+        'subWinCompany':'WS.CompanyWindow'
     });
 
     WS_COMPANYQUERYPANEL.render('divMain');
@@ -20,7 +20,7 @@ Ext.onReady(function() {
 </script>
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
 <!-- 使用者session的檢查操作，當逾期時自動轉頁至登入頁面 -->
-<script type="text/javascript" src='<%= Page.ResolveUrl("~/pageJs/keeySession.js")%>'></script>           
+<script type="text/javascript" src='<%= Page.ResolveUrl("~/pagejs/keeySession.js")%>'></script>           
 </asp:Content>
 
 
