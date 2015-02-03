@@ -5,6 +5,7 @@
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 */
+/*columns 使用default*/
 var WS_CHANGEATTENDANTWINDOW;
 Ext.define('WS.ChangeAttendantWindow', {
     extend: 'Ext.window.Window',

@@ -9,6 +9,7 @@ var WS_MENUQUERYPANEL;
 4.不可以有 getCmp                              [YES]
 5.有一段程式碼不確定 line 69
 */
+/*columns 使用default*/
 Ext.define('WS.MenuQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -31,22 +32,7 @@ Ext.define('WS.MenuQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             /*:::Table設定:::*/
-            model: Ext.define('APPLICATION', {
-                extend: 'Ext.data.Model',
-                /*:::欄位設定:::*/
-                fields: [
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'NAME',
-                    'DESCRIPTION',
-                    'ID',
-                    'CREATE_USER',
-                    'UPDATE_USER',
-                    'WEB_SITE',
-                    'UUID'
-                ]
-            }),
+            model: 'APPLICATION',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -127,7 +113,9 @@ Ext.define('WS.MenuQueryPanel', {
             return false;
         };
         this.param.PARENTUUID = menuUuid;
-        var subWin = Ext.create(this.subWinMenuWindow, {});
+        var subWin = Ext.create(this.subWinMenuWindow, {
+            subWinProxyPickerWindow: 'WS.ProxyPickerWindow'
+        });
         /*註冊事件*/
         subWin.on('closeEvent', this.fnCallBackCloseEvent, this);
         /*設定參數*/
@@ -233,7 +221,7 @@ Ext.define('WS.MenuQueryPanel', {
                 border: true,
                 autoWidth: true,
                 autoHeight: true,
-                minHeight: 400,
+                minHeight: $(document).height() - 230,
                 store: this.myStore.tree,
                 multiSelect: true,
                 rootVisible: false,

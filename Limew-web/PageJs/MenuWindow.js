@@ -1,6 +1,10 @@
+//TODO
+//StoreManager 要換
+/*columns 使用default*/
 Ext.define('WS.MenuWindow', {
     extend: 'Ext.window.Window',
     title: '選單維護',
+    subWinProxyPickerWindow: undefined,
     closable: false,
     icon: SYSTEM_URL_ROOT + '/css/images/menu16x16.png',
     closeAction: 'destroy',
@@ -10,15 +14,14 @@ Ext.define('WS.MenuWindow', {
         applicationHeadUuid: undefined,
         parentUuid: undefined
     },
+    win: {
+        proxypicker: undefined
+    },
     myStore: {
         sitemap: Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
-            model: Ext.define('SiteMap', {
-                extend: 'Ext.data.Model',
-                /*:::欄位設定:::*/
-                fields: ['UUID', 'IS_ACTIVE', 'CREATE_DATE', 'CREATE_USER', 'UPDATE_DATE', 'UPDATE_USER', 'SITEMAP_UUID', 'APPPAGE_UUID', 'ROOT_UUID', 'HASCHILD', 'APPLICATION_HEAD_UUID', 'NAME', 'DESCRIPTION', 'URL', 'P_MODE', 'PARAMETER_CLASS', 'APPPAGE_IS_ACTIVE']
-            }),
+            model:'SITEMAP',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -63,10 +66,7 @@ Ext.define('WS.MenuWindow', {
         menu: Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
-            model: Ext.define('Menu', {
-                extend: 'Ext.data.Model',
-                fields: ['UUID', 'IS_ACTIVE', 'CREATE_DATE', 'CREATE_USER', 'UPDATE_DATE', 'UPDATE_USER', 'NAME_ZH_TW', 'NAME_ZH_CN', 'NAME_EN_US', 'ID', 'APPMENU_UUID', 'HASCHILD', 'APPLICATION_HEAD_UUID', 'ORD', 'PARAMETER_CLASS', 'IMAGE', 'SITEMAP_UUID', 'ACTION_MODE', 'IS_DEFAULT_PAGE', 'IS_ADMIN']
-            }),
+            model: 'MENU',
             pageSize: 99999,
             proxy: {
                 type: 'direct',
@@ -103,27 +103,8 @@ Ext.define('WS.MenuWindow', {
             extend: 'Ext.data.Store',
             storeId: 'storevappmenuproxymap',
             autoLoad: false,
-            model: Ext.define('Vappmenuproxymap', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'PROXY_UUID',
-                    'PROXY_ACTION',
-                    'PROXY_METHOD',
-                    'PROXY_DESCRIPTION',
-                    'PROXY_TYPE',
-                    'NEED_REDIRECT',
-                    'REDIRECT_PROXY_ACTION',
-                    'REDIRECT_PROXY_METHOD',
-                    'REDIRECT_SRC',
-                    'APPLICATION_HEAD_UUID',
-                    'NAME_ZH_TW',
-                    'NAME_ZH_CN',
-                    'NAME_EN_US',
-                    'UUID',
-                    'APPMENU_PROXY_UUID',
-                    'APPMENU_UUID',
-                ]
-            }),
+            remoteSort: true,
+            model: 'V_APPMENU_PROXY_MAP',
             pageSize: 5,
             proxy: {
                 type: 'direct',
@@ -132,11 +113,6 @@ Ext.define('WS.MenuWindow', {
                 },
                 reader: {
                     root: 'data'
-                },
-                writer: {
-                    type: 'json',
-                    writeAllFields: true,
-                    root: 'updatedata'
                 },
                 paramsAsHash: true,
                 paramOrder: ['pApplicationHeadUuid', 'pAppmenuUuid', 'pKeyWord', 'page', 'limit', 'sort', 'dir'],
@@ -164,16 +140,51 @@ Ext.define('WS.MenuWindow', {
         })
     },
     is_operational_boundary: undefined,
-    width: $(window).width() * 0.9,
-    height: $(window).height() * 0.9,
-    maxHeight: 600,
-    maxWidth: 700,
+    width: 800,
+    autoHeight: true,
+    maxHeight: $(window).height() * 0.9,
     overflowY: 'auto',
     border: false,
     resizable: false,
     draggable: false,
     autoFitErrors: true,
+    fnCallBackProxyPickerClose: function() {
+        this.down('#gridProxy').getStore().reload();
+    },
+    fnCallBackProxyPickerSelect: function(obj, record) {
+        var appUuid = this.down('#APPLICATION_HEAD_UUID').getValue(),
+            menuUuid = this.down('#UUID').getValue();
+        WS.ProxyAction.addAppmenuProxyMap(appUuid, menuUuid, record.UUID, function(obj, jsonObj2) {
+            if (jsonObj2.result.success) {
+                this.win.proxypicker.close();
+                this.myStore.vappmenuproxymap.reload();
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Warning',
+                    icon: Ext.MessageBox.INFO,
+                    buttons: Ext.Msg.OK,
+                    msg: jsonObj2.result.message
+                });
+            }
+        }, this);
+    },
+    fnCheckSubComponent: function() {
+        /*要把scope變成SitemapQueryPanel主體*/
+        if (Ext.isEmpty(this.subWinProxyPickerWindow)) {
+            Ext.MessageBox.show({
+                title: '系統提示',
+                icon: Ext.MessageBox.WARNING,
+                buttons: Ext.Msg.OK,
+                msg: '未指定 subWinProxyPickerWindow 物件,無法進行編輯操作!'
+            });
+            return false;
+        };
+        return true;
+    },
     initComponent: function() {
+        if (!this.fnCheckSubComponent()) {
+            return false;
+        };
         this.items = [Ext.create('Ext.form.Panel', {
             padding: '5 25 5 5',
             layout: {
@@ -291,7 +302,6 @@ Ext.define('WS.MenuWindow', {
                 fieldLabel: '父選單',
                 labelAlign: 'right',
                 xtype: 'combobox',
-
                 itemId: 'APPMENU_UUID',
                 displayField: 'NAME_ZH_TW',
                 valueField: 'UUID',
@@ -362,13 +372,11 @@ Ext.define('WS.MenuWindow', {
                     margin: '0 0 0 47'
                 }]
             }, {
-                /*PK值，必須存在*/
                 xtype: 'hidden',
                 fieldLabel: 'UUID',
                 name: 'UUID',
                 itemId: 'UUID'
             }, {
-                /*appliction_head_uuid值，必須存在*/
                 xtype: 'hidden',
                 fieldLabel: 'APPLICATION_HEAD_UUID',
                 name: 'APPLICATION_HEAD_UUID',
@@ -415,7 +423,6 @@ Ext.define('WS.MenuWindow', {
                 text: '刪除',
                 handler: function() {
                     var form = this.up('window').down('#AppMenuForm').getForm();
-                    /*:::變更Submit的方向:::*/
                     form.api.submit = WS.MenuAction.destroy;
                     form.submit({
                         params: {
@@ -472,86 +479,52 @@ Ext.define('WS.MenuWindow', {
                         text: '挑選資源',
                         handler: function() {
                             var mainWin = this.up('window');
-                            if (WinProxyPicker == undefined) {
-                                WinProxyPicker = Ext.create('ProxyPicker', {});
-                                WinProxyPicker.on('closeEvent', function(obj) {
-                                    if (appMenuForm) {
-                                        appMenuForm.unmask();
-                                    }
-                                });
-                                WinProxyPicker.on('selectedEvent', function(obj, jsonObj) {
-                                    var appUuid = obj.down('#APPLICATION_HEAD_UUID').getValue();
-                                    var menUuid = obj.down('#UUID').getValue();
-                                    // var appUuid = Ext.getCmp('Ext.AppMenuForm.Form.APPLICATION_HEAD_UUID').getValue();
-                                    // var menUuid = Ext.getCmp('Ext.AppMenuForm.Form.UUID').getValue();
-                                    WS.ProxyAction.addAppmenuProxyMap(appUuid, menUuid, jsonObj.UUID, function(obj, jsonObj2) {
-                                        if (jsonObj2.result.success) {
-                                            WinProxyPicker.hide();
-                                            Ext.data.StoreManager.lookup('storevappmenuproxymap').reload();
-                                        } else {
-                                            Ext.MessageBox.show({
-                                                title: 'Warning',
-                                                icon: Ext.MessageBox.INFO,
-                                                buttons: Ext.Msg.OK,
-                                                msg: jsonObj2.result.message
-                                            });
-                                        }
-                                        if (appMenuForm) {
-                                            appMenuForm.unmask();
-                                        }
-                                    });
-                                }, mainWin);
-                            };
-                            WinProxyPicker.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/source.png" style="height:20px;vertical-align:middle;margin-right:5px;">挑選資源');
-                            WinProxyPicker.applicationHeadUuid = mainWin.down('#APPLICATION_HEAD_UUID').getValue();
-                            WinProxyPicker.menuUuid = mainWin.down('#UUID').getValue();
-                            WinProxyPicker.show();
-                            if (appMenuForm) {
-                                appMenuForm.mask();
-                            };
+                            mainWin.win.proxypicker = Ext.create(mainWin.subWinProxyPickerWindow, {});
+                            mainWin.win.proxypicker.on('closeEvent', mainWin.fnCallBackProxyPickerClose, mainWin);
+                            mainWin.win.proxypicker.on('selectEvent', mainWin.fnCallBackProxyPickerSelect, mainWin);
+                            mainWin.win.proxypicker.param.applicationHeadUuid = mainWin.down('#APPLICATION_HEAD_UUID').getValue();
+                            mainWin.win.proxypicker.param.menuUuid = mainWin.down('#UUID').getValue();
+                            mainWin.win.proxypicker.param.parentObject = mainWin
+                            mainWin.win.proxypicker.show();
                         }
                     }],
                     itemId: 'gridProxy',
-                    store: this.myStore.vappmenuproxymap,                    
+                    store: this.myStore.vappmenuproxymap,
                     padding: 5,
                     autoScroll: true,
                     columns: [{
-                        text: '',
-                        dataIndex: 'PROXY_UUID',
+                        text: "操作",
+                        xtype: 'actioncolumn',
+                        dataIndex: 'UUID',
                         align: 'center',
-                        maxWidth: 50,
-                        renderer: function(value, m, r) {
-                            var id = Ext.id();
-                            Ext.defer(function() {
-                                Ext.widget('button', {
-                                    renderTo: id,
-                                    text: '<img src="' + SYSTEM_URL_ROOT + '/css/custimages/delete2.png" style="height:12px;vertical-align:middle;margin-right:5px;margin-top:-2px;">',
-                                    width: 30,
-                                    handler: function() {
-                                        Ext.MessageBox.confirm('刪除資源通知', '要刪除此項資源?', function(result) {
-                                            //alert(result);
-                                            //alert(value);
-                                            var menUuid = Ext.getCmp('Ext.AppMenuForm.Form.UUID').getValue();
-                                            if (result == 'yes') {
-                                                WS.ProxyAction.removeAppmenuProxyMap(menUuid, value, function(obj, jsonObj) {
-                                                    if (jsonObj.result.success) {
-                                                        Ext.data.StoreManager.lookup('storevappmenuproxymap').loadPage(1);
-                                                    } else {
-                                                        Ext.MessageBox.show({
-                                                            title: 'Warning',
-                                                            msg: jsonObj.result.message,
-                                                            icon: Ext.MessageBox.ERROR,
-                                                            buttons: Ext.Msg.OK
-                                                        });
-                                                    }
+                        width: 80,
+                        items: [{
+                            tooltip: '*刪除',
+                            icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
+                            handler: function(grid, rowIndex, colIndex) {
+                                var mainWin = grid.up('window');
+                                Ext.MessageBox.confirm('刪除資源通知', '要刪除此項資源?', function(result) {
+                                    var menUuid = grid.getStore().getAt(rowIndex).data.APPMENU_UUID,
+                                        proxyUuid = grid.getStore().getAt(rowIndex).data.PROXY_UUID;
+                                    if (result == 'yes') {
+                                        WS.ProxyAction.removeAppmenuProxyMap(menUuid, proxyUuid, function(obj, jsonObj) {
+                                            if (jsonObj.result.success) {
+                                                Ext.data.StoreManager.lookup('storevappmenuproxymap').loadPage(1);
+                                            } else {
+                                                Ext.MessageBox.show({
+                                                    title: 'Warning',
+                                                    msg: jsonObj.result.message,
+                                                    icon: Ext.MessageBox.ERROR,
+                                                    buttons: Ext.Msg.OK
                                                 });
                                             }
                                         });
                                     }
                                 });
-                            }, 50);
-                            return Ext.String.format('<div id="{0}"></div>', id);
-                        }
+                            }
+                        }],
+                        sortable: false,
+                        hideable: false
                     }, {
                         text: "Action",
                         dataIndex: 'PROXY_ACTION',

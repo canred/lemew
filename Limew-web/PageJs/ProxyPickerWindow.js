@@ -1,46 +1,39 @@
-/*WS.CompanyQueryPanel物件類別*/
-/*TODO*/
-/*
-1.Model 要集中                                 [NO]
-2.panel 的title要換成icon , title的方式        [YES]
-3.add 的icon要換成icon , title的方式           [YES]
-4.不可以有 getCmp                              [YES]
-5.有一段程式碼不確定 line 69
-
-*/
 /*columns 使用default*/
-Ext.define('WS.AppPagePickerWindow', {
+Ext.define('WS.ProxyPickerWindow', {
     extend: 'Ext.window.Window',
-    title: '挑選網站地圖功能',
-    icon: SYSTEM_URL_ROOT + '/css/images/map16x16.png',
+    title: '挑選資源',
+    icon: SYSTEM_URL_ROOT + '/css/images/connector16x16.png',
     closeAction: 'destroy',
     closable: false,
     param: {
-        uuid: undefined,
-        applicationHeadUuid: undefined
+        applicationHeadUuid: undefined,
+        menuUuid: undefined,
+        parentObject: undefined
     },
     width: 800,
-    height: 600,
+    autoHeight: true,
+    maxHeight: $(window).height() * 0.9,
     layout: 'fit',
     resizable: false,
     draggable: false,
     myStore: {
-        apppage: Ext.create('Ext.data.Store', {
+        proxy: Ext.create('Ext.data.Store', {
             successProperty: 'success',
-            model: 'APPPAGE',
-            pageSize: 10,
+            model: 'PROXY',
+            pageSize: 1000,
             proxy: {
                 type: 'direct',
                 api: {
-                    read: WS.AppPageAction.loadAppPage
+                    read: WS.ProxyAction.loadAppmenuProxyMapUnSelected
                 },
                 reader: {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pApplicationHeadUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pApplicationHeadUuid', 'pAppMenuUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pApplicationHeadUuid: '',
+                    pAppMenuUuid: '',
                     pKeyword: ''
                 },
                 simpleSortMode: true,
@@ -57,33 +50,30 @@ Ext.define('WS.AppPagePickerWindow', {
             },
             remoteSort: true,
             sorters: [{
-                property: 'NAME'
+                property: 'PROXY_ACTION'
             }]
         })
     },
     initComponent: function() {
-        this.items = [Ext.create('Ext.panel.Panel', {
-            id: 'Ext.AppPagePicker.Form',
-            border: false,
-            defaultType: 'textfield',
+        this.items = [Ext.create('Ext.form.Panel', {
+            border: true,
+            bodyPadding: 5,
             buttonAlign: 'center',
             items: [{
                 xtype: 'container',
                 layout: 'hbox',
-                margin: 5,
                 items: [{
                     xtype: 'textfield',
                     fieldLabel: '關鍵字',
-                    margin: '0 5 0 0',
-                    itemId: 'txtKeywork',
-                    labelAlign: 'left',
-                    labelWidth: 50,
+                    itemId: 'txtKeyword',
+                    labelAlign: 'right',
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(obj, t) {
-                            if (t.button == 12) {
+                            var keyCode = t.parentEvent.keyCode;
+                            if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
-                            }
+                            };
                         }
                     }
                 }, {
@@ -91,24 +81,23 @@ Ext.define('WS.AppPagePickerWindow', {
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
                     text: '查詢',
                     margin: '0 0 0 20',
-                    width: 80,
                     itemId: 'btnQuery',
+                    width: 80,
                     handler: function() {
                         var mainWin = this.up('window');
-                        mainWin.myStore.apppage.getProxy().setExtraParam('pKeyword', mainWin.down('#txtKeywork').getValue());
-                        mainWin.myStore.apppage.getProxy().setExtraParam('pApplicationHeadUuid', mainWin.param.applicationHeadUuid);
-                        mainWin.myStore.apppage.loadPage(1);
+                        mainWin.myStore.proxy.getProxy().setExtraParam('pKeyword', mainWin.down('#txtKeyword').getValue());
+                        mainWin.myStore.proxy.getProxy().setExtraParam('pApplicationHeadUuid', mainWin.param.applicationHeadUuid);
+                        mainWin.myStore.proxy.getProxy().setExtraParam('pAppMenuUuid', mainWin.param.menuUuid);
+                        mainWin.myStore.proxy.load();
                     }
                 }]
             }, {
                 xtype: 'gridpanel',
-                store: this.myStore.apppage,
-                idProperty: 'UUID',
-                itemId: 'grdAppPage',
-                paramsAsHash: false,
+                store: this.myStore.proxy,
+                itemId: 'grdProxy',
                 border: true,
                 padding: 5,
-                height: 480,
+                autoWidth: true,
                 columns: [{
                     text: "挑選",
                     xtype: 'actioncolumn',
@@ -120,14 +109,19 @@ Ext.define('WS.AppPagePickerWindow', {
                         icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
                             var mainWin = grid.up('window');
-                            mainWin.selectedEvent(grid.getStore().getAt(rowIndex).data);
+                            mainWin.selectEvent(grid.getStore().getAt(rowIndex).data);
                         }
                     }],
                     sortable: false,
                     hideable: false
                 }, {
-                    text: "功能名稱",
-                    dataIndex: 'NAME',
+                    text: "Action",
+                    dataIndex: 'PROXY_ACTION',
+                    align: 'left',
+                    flex: 1
+                }, {
+                    text: "Method",
+                    dataIndex: 'PROXY_METHOD',
                     align: 'left',
                     flex: 1
                 }, {
@@ -135,18 +129,8 @@ Ext.define('WS.AppPagePickerWindow', {
                     dataIndex: 'DESCRIPTION',
                     align: 'left',
                     flex: 1
-                }, {
-                    text: "參數",
-                    dataIndex: 'PARAMETER_CLASS',
-                    align: 'left',
-                    flex: 2
                 }],
-                bbar: Ext.create('Ext.toolbar.Paging', {
-                    store: this.myStore.apppage,
-                    displayInfo: true,
-                    displayMsg: '第{0}~{1}資料/共{2}筆',
-                    emptyMsg: "無資料顯示"
-                }),
+                height: 420,
                 tbarCfg: {
                     buttonAlign: 'right'
                 }
@@ -165,17 +149,21 @@ Ext.define('WS.AppPagePickerWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    selectedEvent: function(result) {
-        this.fireEvent('selectedEvent', this, result);
-        this.down('#grdAppPage').getStore().reload();
+    selectEvent: function(result) {
+        this.fireEvent('selectEvent', this, result);
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
+            if (this.param.parentObject) {
+                this.param.parentObject.mask();
+            };
+            this.down("#btnQuery").handler();
         },
         'close': function() {
+            if (this.param.parentObject) {
+                this.param.parentObject.unmask();
+            };
             this.closeEvent();
-            Ext.getBody().unmask();
         }
     }
 });

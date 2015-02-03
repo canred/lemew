@@ -8,7 +8,7 @@ var WS_SYSTEMQUERYPANEL;
 3.add 的icon要換成icon , title的方式           [YES]
 4.不可以有 getCmp                              [YES]
 */
-
+/*columns 使用default*/
 Ext.define('WS.SystemQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -25,21 +25,7 @@ Ext.define('WS.SystemQueryPanel', {
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('APPLICATION', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'NAME',
-                    'DESCRIPTION',
-                    'ID',
-                    'CREATE_USER',
-                    'UPDATE_USER',
-                    'WEB_SITE',
-                    'UUID'
-                ]
-            }),
+            model: 'APPLICATION',
             pageSize: 10,
             proxy: {
                 type: 'direct',

@@ -1,3 +1,4 @@
+/*columns 使用default*/
 Ext.define('WS.LogoutPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',

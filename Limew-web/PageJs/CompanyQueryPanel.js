@@ -7,6 +7,7 @@ var WS_COMPANYQUERYPANEL;
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 */
+/*columns 使用default*/
 Ext.define('WS.CompanyQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -24,10 +25,7 @@ Ext.define('WS.CompanyQueryPanel', {
         company: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('COMPANY', {
-                extend: 'Ext.data.Model',
-                fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
-            }),
+            model: 'COMPANY',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -139,7 +137,7 @@ Ext.define('WS.CompanyQueryPanel', {
                 }, {
                     xtype: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
-                    text: '查詢',
+                    text: '查詢', 
                     margin: '0 0 0 20',
                     itemId: 'btnQuery',
                     width: 80,

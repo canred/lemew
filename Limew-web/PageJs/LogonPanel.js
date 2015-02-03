@@ -1,6 +1,7 @@
 /*全局變量*/
 var WS_LOGONPANEL;
 /*WS.LogonPanel物件類別*/
+/*columns 使用default*/
 Ext.define('WS.LogonPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',

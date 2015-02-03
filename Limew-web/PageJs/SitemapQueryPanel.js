@@ -9,6 +9,7 @@ var WS_SITEMAPQUERYPANEL;
 4.不可以有 getCmp                              [YES]
 5.有一段程式碼不確定 line 69
 */
+/*columns 使用default*/
 Ext.define('WS.SitemapQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -27,21 +28,7 @@ Ext.define('WS.SitemapQueryPanel', {
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: true,
-            model: Ext.define('APPLICATION', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'NAME',
-                    'DESCRIPTION',
-                    'ID',
-                    'CREATE_USER',
-                    'UPDATE_USER',
-                    'WEB_SITE',
-                    'UUID'
-                ]
-            }),
+            model: 'APPLICATION',
             pageSize: 10,
             proxy: {
                 type: 'direct',

@@ -6,6 +6,7 @@ var WS_ATTENDANTQUERYPANEL;
 1.Model 要集中                 [NO]
 2.不可以有任何的 getCmp 字眼   [YES]
 */
+/*columns 使用default*/
 Ext.define('WS.AttendantQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
@@ -25,45 +26,7 @@ Ext.define('WS.AttendantQueryPanel', {
         attendantV: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('ATTEDNANTVV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'COMPANY_ID',
-                    'COMPANY_C_NAME',
-                    'COMPANY_E_NAME',
-                    'DEPARTMENT_ID',
-                    'DEPARTMENT_C_NAME',
-                    'DEPARTMENT_E_NAME',
-                    'SITE_ID',
-                    'SITE_C_NAME',
-                    'SITE_E_NAME',
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'COMPANY_UUID',
-                    'ACCOUNT',
-                    'C_NAME',
-                    'E_NAME',
-                    'EMAIL',
-                    'PASSWORD',
-                    'IS_SUPPER',
-                    'IS_ADMIN',
-                    'CODE_PAGE',
-                    'DEPARTMENT_UUID',
-                    'PHONE',
-                    'SITE_UUID',
-                    'GENDER',
-                    'BIRTHDAY',
-                    'HIRE_DATE',
-                    'QUIT_DATE',
-                    'IS_MANAGER',
-                    'IS_DIRECT',
-                    'GRADE',
-                    'ID',
-                    'IS_DEFAULT_PASS'
-                ]
-            }),
+            model: 'ATTEDNANTVV',
             pageSize: 10,
             proxy: {
                 type: 'direct',

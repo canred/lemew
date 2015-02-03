@@ -1,3 +1,4 @@
+/*columns 使用default*/
 Ext.define('WS.CompanyWindow', {
     extend: 'Ext.window.Window',
     title: '公司維護',

@@ -1,4 +1,5 @@
-    Ext.define('Model.AppMenu', {
+   
+Ext.define('Model.AppMenu', {
         extend: 'Ext.data.Model',
         fields: [{
             name: 'UUID'

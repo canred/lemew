@@ -1,5 +1,5 @@
 /*全局變量*/
-var WS_APPPAGEQUERYPANEL;
+var WS_PROXYQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
@@ -8,21 +8,24 @@ var WS_APPPAGEQUERYPANEL;
 3.add 的icon要換成icon , title的方式           [YES]
 */
 /*columns 使用default*/
-Ext.define('WS.AppPageQueryPanel', {
+Ext.define('WS.ProxyQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
-    subWinAppPage: undefined,
+    subWinProxy: undefined,
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
-    param: {},
+    param: {
+        showADSync: true
+    },
     /*值擴展*/
     val: {},
     /*物件會用到的Store物件*/
     myStore: {
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
-            autoLoad: false,
+            autoLoad: true,
+            /*:::Table設定:::*/
             model: 'APPLICATION',
             pageSize: 10,
             proxy: {
@@ -50,19 +53,28 @@ Ext.define('WS.AppPageQueryPanel', {
                     }
                 }
             },
+            listeners: {
+                load: function() {
+                    // if (storeApplication.getCount() > 0) {
+                    //     Ext.getCmp('cmbApplication').setValue(storeApplication.data.getAt(0).data['UUID']);
+                    //     storeProxy.getProxy().setExtraParam('pApplicationHeadUuid', Ext.getCmp('cmbApplication').getValue());
+                    //     storeProxy.load();
+                    // }
+                }
+            },
             remoteSort: true,
             sorters: [{
                 property: 'NAME'
             }]
         }),
-        apppage: Ext.create('Ext.data.Store', {
+        proxy: Ext.create('Ext.data.Store', {
             successProperty: 'success',
-            model: 'APPPAGE',
+            model: 'PROXY',
             pageSize: 10,
             proxy: {
                 type: 'direct',
                 api: {
-                    read: WS.AppPageAction.loadAppPage
+                    read: WS.ProxyAction.loadProxy
                 },
                 reader: {
                     root: 'data'
@@ -77,9 +89,9 @@ Ext.define('WS.AppPageQueryPanel', {
                 listeners: {
                     exception: function(proxy, response, operation) {
                         Ext.MessageBox.show({
-                            title: 'Warning',
-                            msg: response.result.message,
-                            icon: Ext.MessageBox.WARNING,
+                            title: 'REMOTE EXCEPTION',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
                             buttons: Ext.Msg.OK
                         });
                     }
@@ -87,66 +99,58 @@ Ext.define('WS.AppPageQueryPanel', {
             },
             remoteSort: true,
             sorters: [{
-                property: 'NAME'
+                property: 'PROXY_ACTION'
             }]
         })
     },
-    fnActiveRender: function(value, id, r) {
+    fnActiveRender: function isActiveRenderer(value, id, r) {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
-    fnCallBackReloadGrid: function(main) {
-        /*this是由scope來的*/
-        this.down("#grdAppPage").getStore().load();
-        this.subWinAppPage.un('closeEvent', this.fnCallBackReloadGrid);
-    },
     initComponent: function() {
-        if (Ext.isEmpty(this.subWinAppPage)) {
-            Ext.MessageBox.show({
-                title: '系統提示',
-                icon: Ext.MessageBox.WARNING,
-                buttons: Ext.Msg.OK,
-                msg: '未實現subWinAppPage物件,無法進行編輯操作!'
-            });
-            return;
-        };
+        // if (Ext.isEmpty(this.subWinProxy)) {
+        //     Ext.MessageBox.show({
+        //         title: '系統提示',
+        //         icon: Ext.MessageBox.WARNING,
+        //         buttons: Ext.Msg.OK,
+        //         msg: '未實現 subWinProxy 物件,無法進行編輯操作!'
+        //     });
+        //     return false;
+        // };
         this.items = [{
             xtype: 'panel',
-            title: '功能清單',
-            icon: SYSTEM_URL_ROOT + '/css/images/apppage16x16.png',
+            title: '資源',
+            icon: SYSTEM_URL_ROOT + '/css/images/proxy16x16.png',
             frame: true,
-            height: 580,
-            autoWidth: true,
+            padding: 5,
+            height: $(document).height() - 150,
             items: [{
                 xtype: 'container',
                 layout: 'hbox',
                 margin: 5,
                 items: [{
                     xtype: 'combo',
-                    margin: '0 5 0 5',
                     editable: false,
+                    fieldLabel: '系統',
+                    labelWidth: 40,
                     store: this.myStore.application,
                     enableKeyEvents: true,
                     displayField: 'NAME',
-                    fieldLabel: '系統',
-                    labelAlign: 'right',
-                    labelWidth: 50,
                     valueField: 'UUID',
-                    itemId: 'function_Query_Application',
+                    itemId: 'cmbApplication',
                     listeners: {
                         keyup: function(e, t, eOpts) {
                             var keyCode = t.parentEvent.keyCode;
                             if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
                             };
-
                         }
                     }
                 }, {
                     xtype: 'textfield',
-                    itemId: 'txt_search',
-                    margin: '0 5 0 5',
+                    itemId: 'txtSearch',
                     fieldLabel: '關鍵字',
+                    margin: '0 0 0 20',
                     labelWidth: 50,
                     enableKeyEvents: true,
                     listeners: {
@@ -155,51 +159,42 @@ Ext.define('WS.AppPageQueryPanel', {
                             if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
                             };
-
                         }
                     }
-
                 }, {
                     xtype: 'button',
-                    icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
                     text: '查詢',
+                    margin: '0 0 0 20',
+                    icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
                     width: 80,
-                    margin: '0 5 0 5',
                     itemId: 'btnQuery',
                     handler: function() {
-                        var main = this.up('panel').up('panel');
-                        var _txtSearch = main.down("#txt_search").getValue();
-                        var _application = main.down("#function_Query_Application").getValue();
-                        if (Ext.isEmpty(_application)) {
-                            Ext.MessageBox.show({
-                                title: '系統提示',
-                                icon: Ext.MessageBox.WARNING,
-                                buttons: Ext.Msg.OK,
-                                msg: '請先選擇系統!'
-                            });
-                            return false;
-                        };
-                        main.myStore.apppage.getProxy().setExtraParam('pKeyword', _txtSearch);
-                        main.myStore.apppage.getProxy().setExtraParam('pApplicationHeadUuid', _application);
-                        main.myStore.apppage.loadPage(1);
+                        var mainPanel = this.up('panel').up('panel'),
+                            store = mainPanel.myStore.proxy,
+                            proxy = store.getProxy();
+                        proxy.setExtraParam('pKeyword', mainPanel.down('#txtSearch').getValue());
+                        proxy.setExtraParam('pApplicationHeadUuid', mainPanel.down('#cmbApplication').getValue());
+                        store.loadPage(1);
                     }
                 }, {
                     xtype: 'button',
-                    width: 80,
-                    margin: '0 0 0 5',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/clear.png',
                     text: '清除',
+                    width: 80,
+                    margin: '0 0 0 20',
                     handler: function() {
-                        this.up('panel').up('panel').down("#txt_search").setValue('');
+                        var mainPanel = this.up('panel').up('panel');
+                        mainPanel.down('#txtSearch').setValue('');
                     }
                 }]
             }, {
                 xtype: 'gridpanel',
-                store: this.myStore.apppage,
-                itemId: 'grdAppPage',
-                height: 500,
-                padding: 5,
+                store: this.myStore.proxy,
                 border: true,
+                paramOrder: ['NAME'],
+                idProperty: 'UUID',
+                paramsAsHash: false,
+                padding: 5,
                 columns: [{
                     text: "編輯",
                     xtype: 'actioncolumn',
@@ -211,70 +206,83 @@ Ext.define('WS.AppPageQueryPanel', {
                         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
                             var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinAppPage) {
+                            if (!main.subWinProxy) {
                                 Ext.MessageBox.show({
                                     title: '系統訊息',
                                     icon: Ext.MessageBox.INFO,
                                     buttons: Ext.Msg.OK,
-                                    msg: '未實現subWinAppPage物件,無法進行編輯操作!'
+                                    msg: '未實現 subWinProxy 物件,無法進行編輯操作!'
                                 });
                                 return false;
                             };
-                            /*註冊事件*/
-                            main.subWinAppPage.on('closeEvent', main.fnCallBackReloadGrid, main);
-                            /*設定屬性*/
-                            //main.subWinAppPage.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                            /*設定參數*/
-                            main.subWinAppPage.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
-                            main.subWinAppPage.show();
+                            var subWin = Ext.create(main.subWinProxy, {
+                                param: {
+                                    uuid: grid.getStore().getAt(rowIndex).data.UUID
+                                }
+                            });
+                            subWin.on('closeEvent', main.fnCallBackReloadGrid, main);
+                            main.subWinProxy.show();
                         }
                     }],
                     sortable: false,
                     hideable: false
                 }, {
-                    header: "<center>功能代碼</center>",
-                    dataIndex: 'ID',
+                    header: "Action",
+                    dataIndex: 'PROXY_ACTION',
                     align: 'left',
-                    flex: 1
+                    flex: 2
                 }, {
-
-                    header: "功能名稱",
-                    dataIndex: 'NAME',
+                    header: "Method",
+                    dataIndex: 'PROXY_METHOD',
                     align: 'left',
-                    flex: 1
+                    flex: 2
                 }, {
-                    header: "<center>功能描述</center>",
+                    header: "功能描述",
                     align: 'left',
                     dataIndex: 'DESCRIPTION',
-                    flex: 1,
+                    flex: 2,
                     renderer: function(value) {
                         return '<div align="left">' + value + '</div>';
                     }
                 }, {
-                    header: "<center>路徑</center>",
-                    dataIndex: 'URL',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: "<center>行為</center>",
+                    header: "方式",
                     align: 'center',
-                    dataIndex: 'P_MODE',
+                    dataIndex: 'PROXY_TYPE',
                     flex: 1,
                     renderer: function(value) {
                         return '<div align="left">' + value + '</div>';
                     }
                 }, {
-                    header: '<center>啟用</center>',
-                    dataIndex: 'IS_ACTIVE',
+                    header: '跨服務',
+                    dataIndex: 'NEED_REDIRECT',
                     align: 'center',
                     flex: 1,
                     renderer: this.fnActiveRender
+                }, {
+                    header: "SRC(跨服務)",
+                    dataIndex: 'REDIRECT_SRC',
+                    align: 'left',
+                    flex: 1,
+                    hidden: true
+                }, {
+                    header: "Action(跨服務)",
+                    dataIndex: 'REDIRECT_PROXY_ACTION',
+                    align: 'left',
+                    flex: 1,
+                    hidden: true
+                }, {
+                    header: "Method(跨服務)",
+                    dataIndex: 'REDIRECT_PROXY_METHOD',
+                    align: 'left',
+                    flex: 1,
+                    hidden: true
                 }],
+                height: $(document).height() - 240,
                 tbarCfg: {
                     buttonAlign: 'right'
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    store: this.myStore.apppage,
+                    store: this.myStore.proxy,
                     displayInfo: true,
                     displayMsg: '第{0}~{1}資料/共{2}筆',
                     emptyMsg: "無資料顯示"
@@ -283,23 +291,14 @@ Ext.define('WS.AppPageQueryPanel', {
                     icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
                     text: '新增',
                     handler: function() {
-                        var main = this.up('panel').up('panel').up('panel');
-                        if (!main.subWinAppPage) {
-                            Ext.MessageBox.show({
-                                title: '系統訊息',
-                                icon: Ext.MessageBox.INFO,
-                                buttons: Ext.Msg.OK,
-                                msg: '未實現subWinAppPage物件,無法進行編輯操作!'
+                        if (myForm == undefined) {
+                            myForm = Ext.create('ProxyForm', {});
+                            myForm.on('closeEvent', function(obj) {
+                                storeProxy.load();
                             });
-                            return false;
                         };
-                        /*註冊事件*/
-                        main.subWinAppPage.on('closeEvent', main.fnCallBackReloadGrid, main);
-                        /*設定屬性*/
-                        //main.subWinAppPage.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                        /*設定參數*/
-                        main.subWinAppPage.param.uuid = undefined;
-                        main.subWinAppPage.show();
+                        myForm.uuid = undefined;
+                        myForm.show();
                     }
                 }]
             }]

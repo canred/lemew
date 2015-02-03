@@ -1,3 +1,4 @@
+/*columns 使用default*/
 Ext.define('WS.AppPageWindow', {
     extend: 'Ext.window.Window',
     title: '功能維護',

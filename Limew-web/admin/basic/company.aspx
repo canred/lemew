@@ -8,7 +8,6 @@
 Ext.onReady(function() {
     /*實例化公司編輯的物件*/    
     //var subWinCompany = Ext.create('WS.CompanyWindow',{});
-
     WS_COMPANYQUERYPANEL = Ext.create('WS.CompanyQueryPanel',{
         /*將實例化的公司編輯物件傳入*/
         'subWinCompany':'WS.CompanyWindow'

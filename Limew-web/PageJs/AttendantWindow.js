@@ -1,3 +1,4 @@
+/*columns 使用default*/
 Ext.define('WS.AttendantWindow', {
     extend: 'Ext.window.Window',
     icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',

@@ -1,4 +1,5 @@
 var WS_APPLICATIONWINDOW;
+/*columns 使用default*/
 Ext.define('WS.ApplicationWindow', {
     extend: 'Ext.window.Window',
     title: '系統維護',
