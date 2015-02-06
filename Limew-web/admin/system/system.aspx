@@ -8,10 +8,9 @@
 <script language="javascript" type="text/javascript">
 var ApplicationQuery = undefined;
 var myForm = undefined;
-Ext.onReady(function() {    
-    WS_APPLICATIONWINDOW = Ext.create('WS.ApplicationWindow');    
+Ext.onReady(function() {        
     WS_SYSTEMQUERYPANEL = Ext.create('WS.SystemQueryPanel',{
-        subWinApplication:WS_APPLICATIONWINDOW
+        subWinApplication:'WS.ApplicationWindow'
     });
     WS_SYSTEMQUERYPANEL.render('divMain');
 });
