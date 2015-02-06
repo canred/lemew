@@ -33,16 +33,19 @@
          expanded: true
      },
      autoLoad: false,
+     autoSync:false,
      successProperty: 'success',
      model: 'TreeAppMenu',
      nodeParam: 'NAME_ZH_TW',
+     //nodeParam: 'id',
      proxy: {
          paramOrder: ['UUID', 'GROUPHEADUUID'],
          type: 'direct',
-         directFn: WS.AuthorityAction.loadAppmenuTree,
+         directFn: WS.AuthorityAction.loadAppmenuTree2,
          extraParams: {
-             "UUID": '',
-             "GROUPHEADUUID": ''
+             "UUID": 'aaa',
+             "GROUPHEADUUID": 'aaa'
          }
      }
  });
+

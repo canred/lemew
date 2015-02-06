@@ -45,17 +45,17 @@ public class AuthorityAction : BaseAction
                 throw new Exception("Permission Denied!");
             };
             /*取得資料*/
-            var genTable = new Limew.Model.Basic.Table.AppmenuApppageV();
-            var dataTable = model.getAppmenuV_By_ParentUuid_DataTable(parentUuid);
-            dataTable.Columns.Add("leaf");
-            //dataTable.Columns.Add("id");
-            dataTable.Columns.Add("checked", typeof(Boolean));
-            //dataTable.Columns.Add("cls");
-            dataTable.Columns.Add("DEFAULT_PAGE_CHECKED");
 
+            var genTable = new Limew.Model.Basic.Table.AppmenuApppageV();
+           
+
+            var dataTable = model.getAppmenuApppageV_By_ParentUuid_DataTable(parentUuid);
+            dataTable.Columns.Add("leaf");            
+            dataTable.Columns.Add("checked", typeof(Boolean));            
+            dataTable.Columns.Add("DEFAULT_PAGE_CHECKED");
             foreach (DataRow dr in dataTable.Rows)
             {
-                var children = model.getAppmenuV_By_ParentUuid_DataTable(dr[tblAppmenu.UUID].ToString());
+                var children = model.getAppmenuApppageV_By_ParentUuid_DataTable(dr[tblAppmenu.UUID].ToString());
                 if (children.Rows.Count == 0)
                 {
                     dr["leaf"] = "true";
@@ -94,6 +94,213 @@ public class AuthorityAction : BaseAction
             log.Error(ex); LK.MyException.MyException.Error(this, ex);
             /*將Exception轉成EXT Exception JSON格式*/
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("loadAppmenuTree2", DirectAction.TreeStore, MethodVisibility.Visible)]
+    public JObject loadAppmenuTree2(string parentUuid, string pGroupHeadUuid, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        BasicModel model = new BasicModel();
+        AppmenuApppageV tblAppmenuApppageV = new AppmenuApppageV();
+        #endregion
+        try
+        {
+            /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得資料*/
+            var genTable = new AppmenuApppageV();
+            var drsAppmenuApppageV = model.getAppmenuApppageV_By_ParentUuid(parentUuid);
+            var drAppmenuApppageV = drsAppmenuApppageV.First();
+            drsAppmenuApppageV = model.getAppmenuApppageV_By_ApplicationHeadUuid(drAppmenuApppageV.APPLICATION_HEAD_UUID);
+            var dataTable = model.getAppmenuApppageV_By_ParentUuid_DataTable(parentUuid);
+
+            IList<GroupAppmenu_Record> gm_ut = model.getGroupAppmenuV_By_GroupHeadUuid(pGroupHeadUuid);
+
+            dataTable.Columns.Add("leaf", System.Type.GetType("System.Boolean"));            
+            dataTable.Columns.Add("name");            
+            dataTable.Columns.Add("checked", typeof(Boolean));            
+            dataTable.Columns.Add("DEFAULT_PAGE_CHECKED");
+            dataTable.Columns.Add("expanded", System.Type.GetType("System.Boolean"));
+            //dataTable.Columns.Add("checked", typeof(Boolean));
+            foreach (DataRow dr in dataTable.Rows)
+            {
+
+                var children = model.getAppmenuApppageV_By_ParentUuid_DataTable(dr[tblAppmenuApppageV.UUID].ToString());
+                if (children.Rows.Count == 0)
+                {
+                    dr["leaf"] = true;
+                }
+                else
+                {
+                    dr["leaf"] = false;
+                }
+                dr["name"] = dr[tblAppmenuApppageV.NAME_ZH_TW].ToString();
+                dr["expanded"] = true;
+
+                string defaultPageChecked = "N";
+                //IList<GroupAppmenu_Record> gm_ut = model.getGroupAppmenuV_By_GroupHeadUuid(pGroupHeadUuid);
+                var groupMenu = gm_ut.Where(col => col.APPMENU_UUID.Equals(dr[tblAppmenuApppageV.UUID]));
+                if (groupMenu.Count() > 0)
+                {
+                    dr["checked"] = true;
+                    if (groupMenu.First().IS_DEFAULT_PAGE == "Y")
+                        defaultPageChecked = "Y";
+                }
+                else
+                    dr["checked"] = false;
+
+                dr["DEFAULT_PAGE_CHECKED"] = defaultPageChecked;
+            }
+            var jarray = JsonHelper.DataTableSerializerJArray(dataTable);
+
+            foreach (var item in jarray)
+            {
+                var thisUuid = item["UUID"].ToString();
+                var thisLeaf = item["leaf"].ToString();
+                if (thisLeaf.ToLower() == "false")
+                {
+                    item["children"] = _loadAppmenuTree2(thisUuid, pGroupHeadUuid, ref drsAppmenuApppageV,ref gm_ut);
+                }
+            }
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            return ExtDirect.Direct.Helper.Tree.Output(jarray, 9999);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    public JArray _loadAppmenuTree2(string parentUuid, string pGroupHeadUuid, ref IList<AppmenuApppageV_Record> drsAppmenuApppageV,ref IList<GroupAppmenu_Record> gm_ut)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        BasicModel model = new BasicModel();        
+        #endregion
+        try
+        {
+            /*取得資料*/
+
+            var dataTable = new System.Data.DataTable();
+            AppmenuApppageV tbl = new AppmenuApppageV();
+            dataTable.Columns.Add(tbl.ACTION_MODE);
+            dataTable.Columns.Add(tbl.APPLICATION_HEAD_UUID);
+            dataTable.Columns.Add(tbl.APPMENU_UUID);
+            dataTable.Columns.Add(tbl.CREATE_DATE);
+            dataTable.Columns.Add(tbl.CREATE_USER);
+            dataTable.Columns.Add(tbl.DESCRIPTION);
+            dataTable.Columns.Add(tbl.FUNC_NAME);
+            dataTable.Columns.Add(tbl.FUNC_PARAMETER_CLASS);
+            dataTable.Columns.Add(tbl.HASCHILD);
+            dataTable.Columns.Add(tbl.ID);
+            dataTable.Columns.Add(tbl.IMAGE);
+            dataTable.Columns.Add(tbl.IS_ACTIVE);
+            dataTable.Columns.Add(tbl.IS_ADMIN);
+            dataTable.Columns.Add(tbl.IS_DEFAULT_PAGE);
+            dataTable.Columns.Add(tbl.NAME_EN_US);
+            dataTable.Columns.Add(tbl.NAME_ZH_CN);
+            dataTable.Columns.Add(tbl.NAME_ZH_TW);
+            dataTable.Columns.Add(tbl.ORD);
+            dataTable.Columns.Add(tbl.P_MODE);
+            dataTable.Columns.Add(tbl.PARAMETER_CLASS);
+            dataTable.Columns.Add(tbl.SITEMAP_UUID);
+            dataTable.Columns.Add(tbl.UPDATE_DATE);
+            dataTable.Columns.Add(tbl.UPDATE_USER);
+            dataTable.Columns.Add(tbl.URL);
+            dataTable.Columns.Add(tbl.UUID);
+            //var dataTable = model.getAppmenuApppageV_By_ParentUuid_DataTable(parentUuid);
+            dataTable.Columns.Add("leaf", System.Type.GetType("System.Boolean"));
+            dataTable.Columns.Add("name");
+            dataTable.Columns.Add("checked", typeof(Boolean));
+            dataTable.Columns.Add("DEFAULT_PAGE_CHECKED");
+            dataTable.Columns.Add("expanded", System.Type.GetType("System.Boolean"));
+            var _AppmenuApppageV = drsAppmenuApppageV.Where(c => c.APPMENU_UUID.Equals(parentUuid));
+            foreach (var item in _AppmenuApppageV)
+            {
+                var dr = dataTable.NewRow();
+                dr[tbl.ACTION_MODE]=item.ACTION_MODE;
+                dr[tbl.APPLICATION_HEAD_UUID] = item.APPLICATION_HEAD_UUID;
+                dr[tbl.APPMENU_UUID] = item.APPMENU_UUID;
+                dr[tbl.CREATE_DATE] = item.CREATE_DATE;
+                dr[tbl.CREATE_USER] = item.CREATE_USER;
+                dr[tbl.DESCRIPTION] = item.DESCRIPTION;
+                dr[tbl.FUNC_NAME] = item.FUNC_NAME;
+                dr[tbl.FUNC_PARAMETER_CLASS] = item.FUNC_PARAMETER_CLASS;
+                dr[tbl.HASCHILD] = item.HASCHILD;
+                dr[tbl.ID] = item.ID;
+                dr[tbl.IMAGE] = item.IMAGE;
+                dr[tbl.IS_ACTIVE] = item.IS_ACTIVE;
+                dr[tbl.IS_ADMIN] = item.IS_ADMIN;
+                dr[tbl.IS_DEFAULT_PAGE] = item.IS_DEFAULT_PAGE;
+                dr[tbl.NAME_EN_US] = item.NAME_EN_US;
+                dr[tbl.NAME_ZH_CN] = item.NAME_ZH_CN;
+                dr[tbl.NAME_ZH_TW] = item.NAME_ZH_TW;
+                dr[tbl.ORD] = item.ORD;
+                dr[tbl.P_MODE] = item.P_MODE;
+                dr[tbl.PARAMETER_CLASS] = item.PARAMETER_CLASS;
+                dr[tbl.SITEMAP_UUID] = item.SITEMAP_UUID;
+                dr[tbl.UPDATE_DATE] = item.UPDATE_DATE;
+                dr[tbl.UPDATE_USER] = item.UPDATE_USER;
+                dr[tbl.URL] = item.URL;
+                dr[tbl.UUID] = item.UUID;
+                dr["expanded"] = true;
+                var childrenCount = drsAppmenuApppageV.Where(c => c.APPMENU_UUID.Equals(dr[tbl.UUID].ToString())).Count();                
+                if (childrenCount == 0)
+                {
+                    dr["leaf"] = true;                    
+                }
+                else
+                {
+                    dr["leaf"] = false;
+                }
+                dr["name"] = dr[tbl.NAME_ZH_TW].ToString();
+                string defaultPageChecked = "N";
+                //IList<GroupAppmenu_Record> gm_ut = model.getGroupAppmenuV_By_GroupHeadUuid(pGroupHeadUuid);
+                var groupMenu = gm_ut.Where(col => col.APPMENU_UUID.Equals(dr[tbl.UUID]));
+                if (groupMenu.Count() > 0)
+                {
+                    dr["checked"] = true;
+                    if (groupMenu.First().IS_DEFAULT_PAGE == "Y")
+                        defaultPageChecked = "Y";
+                }
+                else
+                {
+                    dr["checked"] = false;
+                }
+
+                dr["DEFAULT_PAGE_CHECKED"] = defaultPageChecked;
+                dataTable.Rows.Add(dr);
+                dataTable.AcceptChanges();
+            }
+            var jarray = JsonHelper.DataTableSerializerJArray(dataTable);
+            foreach (var item in jarray)
+            {
+                var thisUuid = item["UUID"].ToString();
+                var thisLeaf = item["leaf"].ToString();
+                if (thisLeaf.ToLower() == "false")
+                {
+                    item["children"] = _loadAppmenuTree2(thisUuid,  pGroupHeadUuid,ref drsAppmenuApppageV,ref gm_ut);
+                }
+            }
+            return jarray;
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex);
+            LK.MyException.MyException.Error(this, ex);
+            throw ex;
         }
     }
 
@@ -302,7 +509,7 @@ public class AuthorityAction : BaseAction
         BasicModel modBasic = new BasicModel();
         try
         {
-            IList<Appmenu_Record> dt = modBasic.getAppmenu_By_ParentUuid_DataTable(pAppmenuUuid);
+            IList<Appmenu_Record> dt = modBasic.getAppmenu_By_ParentUuid(pAppmenuUuid);
             if (dt.Count > 0)
             {
                 foreach (Appmenu_Record r in dt)

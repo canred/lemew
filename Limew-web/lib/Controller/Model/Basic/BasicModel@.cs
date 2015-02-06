@@ -1014,13 +1014,151 @@ namespace Limew.Model.Basic
         #region Appmenu
 
         #region getAppmenuV_By_ParentUuid_DataTable
-        public System.Data.DataTable getAppmenuV_By_ParentUuid_DataTable(string pParentUuid)
+        public System.Data.DataTable getAppmenuApppageV_By_ParentUuid_DataTable(string pParentUuid)
         {
             try
             {
                 dbc = LK.Config.DataBase.Factory.getInfo();
-                Limew.Model.Basic.Table.AppmenuApppageV appmenuv =
-                    new Limew.Model.Basic.Table.AppmenuApppageV(dbc);
+                AppmenuApppageV appmenuv =
+                    new AppmenuApppageV(dbc);
+                SQLCondition con = new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPMENU_UUID, pParentUuid);
+                OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
+                var result = appmenuv.Where(con)
+                     .Limit(order)
+                     .FetchAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+        public IList<AppmenuApppageV_Record> getAppmenuApppageV_By_ParentUuid(string pParentUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                AppmenuApppageV appmenuv =
+                    new AppmenuApppageV(dbc);
+                SQLCondition con = new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPMENU_UUID, pParentUuid);
+                OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
+                var result = appmenuv.Where(con)
+                     .Limit(order)
+                     .FetchAll<AppmenuApppageV_Record>();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<AppmenuApppageV_Record> getAppmenuApppageV_By_ApplicationHeadUuid(string pApplicationHeadUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                AppmenuApppageV appmenuv =
+                    new AppmenuApppageV(dbc);
+                SQLCondition con = new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPLICATION_HEAD_UUID, pApplicationHeadUuid);
+                OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
+                var result = appmenuv.Where(con)
+                     .Limit(order)
+                     .FetchAll<AppmenuApppageV_Record>();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+        
+        public IList<Appmenu_Record> getAppmenu_By_ParentUuid(string pParentUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Appmenu appmenuv =
+                    new Appmenu(dbc);
+                SQLCondition con = new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPMENU_UUID, pParentUuid);
+                OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
+                var result = appmenuv.Where(con)
+                     .Limit(order)
+                     .FetchAll<Appmenu_Record>();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<AppmenuApppageV_Record> getAppmenuV_Root_By_ApplicationHead(string pApplicationHeadUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                AppmenuApppageV appmenuv = new AppmenuApppageV(dbc);
+                var result = appmenuv.Where(new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPLICATION_HEAD_UUID, pApplicationHeadUuid)
+                    .And()
+                    .IsNull(appmenuv.APPMENU_UUID)
+                ).FetchAll<AppmenuApppageV_Record>();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        //public System.Data.DataTable getAppmenuV_By_ParentUuid_DataTable(string pApplicationHeadUuid)
+        //{
+        //    try
+        //    {
+        //        dbc = LK.Config.DataBase.Factory.getInfo();
+        //        AppmenuApppageV appmenuv =
+        //            new AppmenuApppageV(dbc);
+        //        SQLCondition con = new SQLCondition(appmenuv)
+        //            .Equal(appmenuv.APPLICATION_HEAD_UUID, pApplicationHeadUuid);
+        //        OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
+        //        var result = appmenuv.Where(con)
+        //             .Limit(order)
+        //             .FetchAll();
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex);
+        //        LK.MyException.MyException.Error(this, ex);
+        //        throw ex;
+        //    }
+        //}
+        #endregion
+
+        #region getAppmenu_By_ParentUuid_DataTable
+        public System.Data.DataTable getAppmenu_By_ParentUuid_DataTable(string pParentUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Basic.Table.Appmenu appmenuv =
+                    new Limew.Model.Basic.Table.Appmenu(dbc);
                 SQLCondition con = new SQLCondition(appmenuv)
                     .Equal(appmenuv.APPMENU_UUID, pParentUuid);
                 OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
@@ -1038,33 +1176,8 @@ namespace Limew.Model.Basic
         }
         #endregion
 
-        #region getAppmenu_By_ParentUuid_DataTable
-        public IList<Appmenu_Record> getAppmenu_By_ParentUuid_DataTable(string pParentUuid)
-        {
-            try
-            {
-                dbc = LK.Config.DataBase.Factory.getInfo();
-                Limew.Model.Basic.Table.Appmenu appmenuv =
-                    new Limew.Model.Basic.Table.Appmenu(dbc);
-                SQLCondition con = new SQLCondition(appmenuv)
-                    .Equal(appmenuv.APPMENU_UUID, pParentUuid);
-                OrderLimit order = new OrderLimit(appmenuv.NAME_ZH_TW, OrderLimit.OrderMethod.ASC);
-                var result = appmenuv.Where(con)
-                     .Limit(order)
-                     .FetchAll<Appmenu_Record>();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                LK.MyException.MyException.Error(this, ex);
-                throw ex;
-            }
-        }
-        #endregion
-
         #region getAppmenuV_Root_By_ApplicationHead
-        public IList<AppmenuApppageV_Record> getAppmenuV_Root_By_ApplicationHead(string pApplicationHeadUuid)
+        public IList<Appmenu_Record> getAppmenu_Root_By_ApplicationHead(string pApplicationHeadUuid)
         {
             try
             {
@@ -1074,7 +1187,27 @@ namespace Limew.Model.Basic
                     .Equal(appmenuv.APPLICATION_HEAD_UUID, pApplicationHeadUuid)
                     .And()
                     .IsNull(appmenuv.APPMENU_UUID)
-                ).FetchAll<AppmenuApppageV_Record>();
+                ).FetchAll<Appmenu_Record>();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<Appmenu_Record> getAppmenu_By_ApplicationHead(string pApplicationHeadUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Basic.Table.AppmenuApppageV appmenuv = new Limew.Model.Basic.Table.AppmenuApppageV(dbc);
+                var result = appmenuv.Where(new SQLCondition(appmenuv)
+                    .Equal(appmenuv.APPLICATION_HEAD_UUID, pApplicationHeadUuid)                    
+                ).FetchAll<Appmenu_Record>();
 
                 return result;
             }

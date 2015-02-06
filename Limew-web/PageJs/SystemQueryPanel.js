@@ -68,7 +68,7 @@ Ext.define('WS.SystemQueryPanel', {
                 title: '系統提示',
                 icon: Ext.MessageBox.WARNING,
                 buttons: Ext.Msg.OK,
-                msg: '物件初始化需要subWinApplication子物件'
+                msg: '物件初始化需要 subWinApplication 子物件'
             });
             return false;
         };
@@ -137,12 +137,15 @@ Ext.define('WS.SystemQueryPanel', {
                         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
                             var main = grid.up('panel').up('panel').up('panel');
-                            main.subWinApplication.on('closeEvent', function(obj) {
-                                main.myStore.application.load();
-                                main.subWinApplication.un('closeEvent');
+                            var subWin = Ext.create(main.subWinApplication,{
+                                param:{
+                                    uuid : grid.getStore().getAt(rowIndex).data.UUID
+                                }
                             });
-                            main.subWinApplication.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
-                            main.subWinApplication.show();
+                            subWin.on('closeEvent', function(obj) {
+                                main.myStore.application.load();                                
+                            });
+                            subWin.show();
                         }
                     }],
                     sortable: false,
@@ -195,13 +198,16 @@ Ext.define('WS.SystemQueryPanel', {
                     text: '新增',
                     icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
                     handler: function() {
-                        var main = this.up('panel').up('panel').up('panel');
-                        main.subWinApplication.on('closeEvent', function(obj) {
-                            main.myStore.application.load();
-                            main.subWinApplication.un('closeEvent');
+                        var mainPanel = this.up('panel').up('panel').up('panel');
+                        var subWin = Ext.create(mainPanel.subWinApplication,{
+                            param:{
+                                uuid:undefined
+                            }
                         });
-                        main.subWinApplication.param.uuid = undefined;
-                        main.subWinApplication.show();
+                        subWin.on('closeEvent', function(obj) {
+                            mainPanel.myStore.application.load();                            
+                        });                        
+                        subWin.show();
                     }
                 }]
             }]

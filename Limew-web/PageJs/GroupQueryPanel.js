@@ -127,7 +127,7 @@ Ext.define('WS.GroupQueryPanel', {
         this.items = [{
             xtype: 'panel',
             title: '權限維護',
-            icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png',
+            icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png', 
             frame: true,
             autoWidth: true,
             height: $(document).height() - 150,
@@ -273,7 +273,7 @@ Ext.define('WS.GroupQueryPanel', {
                         handler: function(grid, rowIndex, colIndex) {
                             var mainPanel = grid.up('panel').up('panel').up('panel'),
                                 uuid = grid.getStore().getAt(rowIndex).data.UUID,
-                                subWin = Ext.create('WS.GroupHeadForm', {
+                                subWin = Ext.create('WS.GroupWindow', {
                                     param: {
                                         'uuid': uuid
                                     }

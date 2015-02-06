@@ -8,6 +8,10 @@ var WS_MENUQUERYPANEL;
 3.add 的icon要換成icon , title的方式           [YES]
 4.不可以有 getCmp                              [YES]
 5.有一段程式碼不確定 line 69
+6. tree 要改變一次顯示                         [YES]
+7. 如果menu不是有效要表現出來                  [YES]
+8. 新增子節點的功能未完成                      [NO]
+9. 子視窗的功能未完成
 */
 /*columns 使用default*/
 Ext.define('WS.MenuQueryPanel', {
@@ -24,14 +28,12 @@ Ext.define('WS.MenuQueryPanel', {
     /*值擴展*/
     val: {},
     AppMenuTask: undefined,
-
     /*物件會用到的Store物件*/
     myStore: {
         tree: undefined,
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            /*:::Table設定:::*/
             model: 'APPLICATION',
             pageSize: 10,
             proxy: {
@@ -69,7 +71,9 @@ Ext.define('WS.MenuQueryPanel', {
         /*obj要是主體*/
         WS.MenuAction.loadTreeRoot(obj.down('#cmbApplication').getValue(), function(data) {
             if (data.UUID != undefined) {
-                this.myStore.tree.getProxy().setExtraParam('UUID', data.UUID);
+                var store = this.myStore.tree,
+                    proxy = store.getProxy();
+                proxy.setExtraParam('UUID', data.UUID);
                 this.myStore.tree.load({
                     params: {
                         'UUID': data.UUID
@@ -78,15 +82,10 @@ Ext.define('WS.MenuQueryPanel', {
                 this.param.AppMenuTaskFlag = true;
             }
         }, obj);
-
     },
     fnActiveRender: function(value, id, r) {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
-    },
-    fnCallBackReloadGrid: function(main) {
-        /*this是由scope來的*/
-
     },
     fnCheckSubComponent: function() {
         /*要把scope變成SitemapQueryPanel主體*/
@@ -101,12 +100,6 @@ Ext.define('WS.MenuQueryPanel', {
         };
         return true;
     },
-    fnCallBackCloseEvent: function(obj) {
-
-    },
-    fnCallBackSelectEvent: function(obj, record) {
-
-    },
     fnEditMenu: function(menuUuid) {
         /*要把scope變成SitemapQueryPanel主體*/
         if (!this.fnCheckSubComponent()) {
@@ -114,27 +107,44 @@ Ext.define('WS.MenuQueryPanel', {
         };
         this.param.PARENTUUID = menuUuid;
         var subWin = Ext.create(this.subWinMenuWindow, {
-            subWinProxyPickerWindow: 'WS.ProxyPickerWindow'
+            subWinProxyPickerWindow: 'WS.ProxyPickerWindow',
+            param: {
+                uuid: menuUuid,
+                applicationHeadUuid: this.down('#cmbApplication').getValue()
+            }
         });
         /*註冊事件*/
         subWin.on('closeEvent', this.fnCallBackCloseEvent, this);
         /*設定參數*/
-        subWin.param.uuid = menuUuid;
-        subWin.param.applicationHeadUuid = this.down('#cmbApplication').getValue();
         subWin.show();
     },
-    fnAddMenuChild: function(parentMenuUuid) {
-
-    },
+    fnAddMenuChild: function(parentMenuUuid) {},
     fnOpenOrgn: function(uuid, parendUuid) {
         /*要把scope變成SitemapQueryPanel主體*/
-
     },
     fnRemoveMenu: function(menuUuid) {
         /*要把scope變成SitemapQueryPanel主體*/
-
     },
     initComponent: function() {
+
+        var a = function(A, B) {
+            A = {};
+            A.setAttr = function(a) {
+                a.name = 'Chiawen';
+                a.year = 99;
+            }(A);
+            return B(A);
+        }(a, function(A) {
+            A.sayHello=function(){
+                alert(A.name+' Hello ');
+            };
+            A.sayOk = function(){
+                alert(A.name+' OK');
+            };
+            return A;
+        });
+        a.sayHello();
+
         this.myStore.tree = Ext.create('WS.MenuTreeStore', {});
         this.AppMenuTask = {
             run: function() {
@@ -225,24 +235,32 @@ Ext.define('WS.MenuQueryPanel', {
                 store: this.myStore.tree,
                 multiSelect: true,
                 rootVisible: false,
-                useArrows: true,
                 columns: [{
                     xtype: 'treecolumn',
                     text: '選單',
                     flex: 2,
-                    sortable: true,
+                    sortable: false,
                     dataIndex: 'NAME_ZH_TW'
+                }, {
+                    text: '啟用',
+                    flex: .5,
+                    dataIndex: 'IS_ACTIVE',
+                    align: 'center',
+                    sortable: false,
+                    hidden: true,
+                    renderer: this.fnActiveRender
                 }, {
                     text: '順序',
                     flex: .5,
                     dataIndex: 'ORD',
                     align: 'center',
-                    sortable: true
+                    sortable: false
                 }, {
                     text: "維護",
                     xtype: 'actioncolumn',
                     dataIndex: 'UUID',
                     align: 'center',
+                    sortable: false,
                     flex: 1,
                     items: [{
                         tooltip: '*編輯',
@@ -270,57 +288,8 @@ Ext.define('WS.MenuQueryPanel', {
                             mainPanel.fnRemoveMenu(uuid);
                         }
                     }],
-                    sortable: false,
                     hideable: false
-                }],
-                listeners: {
-                    beforeload: function(tree, node, eOpts) {
-                        var mainPanel = this.up('panel').up('panel'),
-                            treeStore = mainPanel.myStore.tree,
-                            myMask = new Ext.LoadMask(
-                                mainPanel.down('#AppMenuTree'), {
-                                    msg: "資料載入中，請稍等...",
-                                    store: mainPanel.myStore.tree,
-                                    removeMask: true
-                                }).show();
-                        /*樹在開始展開前的動作*/
-                        if (node.isComplete() == false) {
-                            if (node.getParams()["UUID"] != undefined) {
-                                treeStore.getProxy().setExtraParam('UUID', node.getParams()["UUID"]);
-                            } else {
-                                treeStore.getProxy().setExtraParam('UUID', node.config.node.data["UUID"]);
-                            }
-                        }
-                    },
-                    checkchange: function(a, b, c, d) {
-                        var oUuid = a.data.UUID;
-                        if (a.data.checked == true) {
-                            /*表加入*/
-                            WS.MenuAction.setAppMenuIsActive(oUuid, "1", function(ret) {
-                                if (ret.success == false) {
-                                    Ext.MessageBox.show({
-                                        title: 'WARNING',
-                                        msg: "ok",
-                                        icon: Ext.MessageBox.WARNING,
-                                        buttons: Ext.Msg.OK
-                                    });
-                                }
-                            });
-                        } else {
-                            WS.MenuAction.setAppMenuIsActive(oUuid, "0", function(ret) {
-                                if (ret.success == false) {
-                                    Ext.MessageBox.show({
-                                        title: 'WARNING',
-                                        msg: "ok",
-                                        icon: Ext.MessageBox.WARNING,
-                                        buttons: Ext.Msg.OK
-                                    });
-                                }
-                            });
-
-                        }
-                    }
-                }
+                }]
             }]
         }];
         this.callParent(arguments);

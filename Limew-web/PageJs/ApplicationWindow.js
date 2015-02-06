@@ -135,7 +135,7 @@ Ext.define('WS.ApplicationWindow', {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                 text: '關閉',
                 handler: function() {
-                    this.up('window').hide();
+                    this.up('window').close();
                 }
             }]
         })]
@@ -168,7 +168,7 @@ Ext.define('WS.ApplicationWindow', {
                 this.down("#ApplicationForm").getForm().reset();
             };
         },
-        'hide': function() {
+        'close': function() {
             Ext.getBody().unmask();
             this.closeEvent();
         }

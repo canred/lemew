@@ -26,7 +26,7 @@ Ext.define('WS.MenuTreeStore', {
     proxy: {
             paramOrder: ['UUID'],
             type: 'direct',
-            directFn: WS.MenuAction.loadMenuTree,
+            directFn: WS.MenuAction.loadMenuTree2,
             extraParams: {
                 "UUID": ''
             }

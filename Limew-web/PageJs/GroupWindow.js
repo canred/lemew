@@ -5,13 +5,23 @@
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 4. getCmp
+5. tree 要改變一次顯示                         [YES]
+6. 左右拉的功能未完成
+7. 新增的測式未完成
+8. 刪除的測式未完成
+9. 勾選測式
+10.有一些程式碼已經沒有在使用了哦，要刪除
+11.預設頁面的功能也消取
+12.icon & title 
+13.當是編輯的狀態要等到所有的資料都已經ready
+   才可以開啟維護模式
 */
 
 /*columns 使用default*/
 Ext.define('WS.GroupWindow', {
     extend: 'Ext.window.Window',
-    title: '群組權限',
-    icon: SYSTEM_URL_ROOT + '/css/images/permission.png',
+    title: '權限維護',
+    icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png',
     closeAction: 'destroy',
     padding: 10,
     border: false,
@@ -20,12 +30,13 @@ Ext.define('WS.GroupWindow', {
         companyUuid: undefined,
     },
     fnQuery: function() {
-        var mainWin = this.up('window');
-        loadAttendantStoreNotInGroup(
-            COMPANYUUID,
-            mainWin.param.uuid,
-            mainWin.down('#txtSearch').getValue()
-        );
+        var mainWin = this.up('window'),
+            store = mainWin.myStore.attendantnotingroupattendant,
+            proxy = store.getProxy();
+        proxy.setExtraParam('group_head_uuid', mainWin.param.uuid);
+        proxy.setExtraParam('keyword', mainWin.down('#txtSearch').getValue());
+        proxy.setExtraParam('company_uuid', mainWin.param.companyUuid);
+        store.loadPage(1);
     },
     myStore: {
         applicationheadheadv: Ext.create('Ext.data.Store', {
@@ -241,10 +252,7 @@ Ext.define('WS.GroupWindow', {
     autoScroll: true,
     initComponent: function() {
         this.items = [Ext.create('Ext.form.Panel', {
-            layout: {
-                type: 'form',
-                align: 'stretch'
-            },
+
             api: {
                 load: WS.GroupHeadAction.info,
                 submit: WS.GroupHeadAction.submit
@@ -335,7 +343,8 @@ Ext.define('WS.GroupWindow', {
             }],
             fbar: [{
                 type: 'button',
-                text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/save.gif" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '儲存',
+                icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
+                text: '儲存',
                 handler: function() {
                     var mainWin = this.up('window');
                     var form = mainWin.down('#groupHeadForm').getForm();
@@ -345,7 +354,7 @@ Ext.define('WS.GroupWindow', {
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
-                            this.down('#groupHeadId').setDisabled(false);
+
                             this.down('#groupheafFormApplicationHead').setDisabled(false);
                             this.down('#bnt_Query').setDisabled(false);
                             this.down('#bnt_Delete').setDisabled(false);
@@ -372,9 +381,10 @@ Ext.define('WS.GroupWindow', {
                     });
                 }
             }, {
-                type: 'button',
                 itemId: 'bnt_Delete',
-                text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/delete.png" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '刪除',
+                type: 'button',
+                icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
+                text: '刪除',
                 handler: function() {
                     var mainWin = this.up('window');
                     Ext.Msg.show({
@@ -386,13 +396,14 @@ Ext.define('WS.GroupWindow', {
                                 WS.GroupHeadAction.deleteGroupHead(mainWin.param.uuid, function(data) {
                                     this.close();
                                 }, mainWin);
-                            }
+                            };
                         }
                     });
                 }
             }, {
                 type: 'button',
-                text: '<img src="' + SYSTEM_URL_ROOT + '/css/images/leave.png" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"/>' + '關閉',
+                icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
+                text: '關閉',
                 handler: function() {
                     this.up('window').close();
                 }
@@ -405,7 +416,7 @@ Ext.define('WS.GroupWindow', {
             maxWidth: 880,
             items: [{
                 title: '權限維護',
-                icon: SYSTEM_URL_ROOT + '/css/images/menu.png',
+                icon: SYSTEM_URL_ROOT + '/css/images/menu16x16.png',
                 items: [{
                     itemId: 'AppMenuPanel',
                     xtype: 'panel',
@@ -423,17 +434,18 @@ Ext.define('WS.GroupWindow', {
                         border: true,
                         autoWidth: true,
                         autoHeight: true,
+                        autoLoad: false,
                         minHeight: 400,
-                        store: this.myStore.appmemutree,
+                        store: this.myStore.appmenutree,
                         multiSelect: true,
                         rootVisible: false,
-                        useArrows: true,
+                        //useArrows: true,
                         loadMask: true,
                         columns: [{
                             text: '<center>UUID</center>',
                             flex: 2,
                             sortable: false,
-                            dataIndex: 'UUID',
+                            dataIndex: 'UID值',
                             hidden: true
                         }, {
                             xtype: 'treecolumn',
@@ -451,31 +463,31 @@ Ext.define('WS.GroupWindow', {
                             text: "<center>預設頁面</center>",
                             dataIndex: 'DEFAULT_PAGE_CHECKED',
                             align: 'center',
-                            flex: 0.5,
+                            flex: 1,
                             xtype: 'checkcolumn',
                             listeners: {
                                 'checkchange': function(obj, rowIndex, checked) {
-                                    var grid = obj.up().view,
-                                        store = grid.store,
-                                        record = store.getAt(rowIndex),
-                                        uuid = record.data.UUID,
-                                        mainWin = grid.up('window'),
-                                        is_default_page = record.data.IS_DEFAULT_PAGE;
-                                    if (!is_default_page) {
-                                        var _item = Ext.get(grid.all.elements[rowIndex].childNodes[0].childNodes[0].childNodes[2].childNodes[0]);
-                                        if (_item != null) {
-                                            _item.remove();
-                                        };
-                                    } else {
-                                        WS.AuthorityAction.setGroupAppmenuIsDefaultPage(uuid,
-                                            mainWin.param.uuid, checked,
-                                            function(data) {
-                                                /*若是勾選*/
-                                                if (checked) {
-                                                    record.set('checked', checked);
-                                                }
-                                            });
-                                    };
+                                    // var grid = obj.up().view,
+                                    //     store = grid.store,
+                                    //     record = store.getAt(rowIndex),
+                                    //     uuid = record.data.UUID,
+                                    //     mainWin = grid.up('window'),
+                                    //     is_default_page = record.data.IS_DEFAULT_PAGE;
+                                    // if (!is_default_page) {
+                                    //     var _item = Ext.get(grid.all.elements[rowIndex].childNodes[0].childNodes[0].childNodes[2].childNodes[0]);
+                                    //     if (_item != null) {
+                                    //         _item.remove();
+                                    //     };
+                                    // } else {
+                                    //     WS.AuthorityAction.setGroupAppmenuIsDefaultPage(uuid,
+                                    //         mainWin.param.uuid, checked,
+                                    //         function(data) {
+                                    //             /*若是勾選*/
+                                    //             if (checked) {
+                                    //                 record.set('checked', checked);
+                                    //             };
+                                    //         });
+                                    // };
                                 }
                             },
                             sortable: false,
@@ -485,6 +497,7 @@ Ext.define('WS.GroupWindow', {
                             flex: 1,
                             dataIndex: 'DESCRIPTION',
                             align: 'left',
+                            hidden: true,
                             sortable: false
                         }, {
                             text: '<center>虛擬路徑</center>',
@@ -498,102 +511,12 @@ Ext.define('WS.GroupWindow', {
                             dataIndex: 'PARAMETER_CLASS',
                             align: 'left',
                             sortable: false
-                        }],
-                        listeners: {
-                            beforeload: function(tree, node) {
-                                // canred update ing
-                                // if (node.isComplete() == false) {
-                                //     if (node.getParams()["UUID"] != undefined) {
-                                //         thisTreeStore.getProxy().setExtraParam('UUID', node.getParams()["UUID"]);
-                                //     } else {
-                                //         thisTreeStore.getProxy().setExtraParam('UUID', node.config.node.data["UUID"]);
-
-                                //     }
-                                //     thisTreeStore.getProxy().setExtraParam('GROUPHEADUUID', Ext.getCmp('ExtGroupHeadForm').uuid);
-                                // }
-                            },
-                            checkchange: function(a, b, c, d) {
-                                var mainWin = this.up('window'),
-                                    oUuid = a.data.UUID,
-                                    _group_head_uuid = mainWin.param.uuid;
-                                if (a.data.checked == true) {
-                                    /*表加入*/
-                                    WS.AuthorityAction.setGroupAppmenu(oUuid, _group_head_uuid, "Y", function(ret) {
-                                        setParentsChecked(a, a.data.checked);
-                                    });
-                                } else {
-                                    WS.AuthorityAction.setGroupAppmenu(oUuid, _group_head_uuid, "N", function(ret) {
-                                        setChildrenUnchecked(a, a.data.checked);
-                                        /*可以勾選是否為is_default_page*/
-                                        var _is_default_page = a.data.IS_DEFAULT_PAGE;
-                                        /*是否勾選為default_page，因為是取消check，所以若有check，則需移除
-                                        var _default_page_checked = a.data.DEFAULT_PAGE_CHECKED;*/
-                                        if (_is_default_page && _default_page_checked) {
-                                            var _tree = this.down('#appMenuTree');
-                                            var _rowNumber = _tree.view.store.indexOf(a);
-                                            Ext.get(Ext.get(_tree.view.all.elements[_rowNumber].childNodes[2].id)).checked = false;
-                                        }
-                                    }, mainWin);
-                                }
-                            },
-                            itemclick: function(view, record, item, index, e) {
-                                /*
-                                 if (record.isLeaf()) {
-                                 var nodeId = record.raw.id;//获取点击的节点id
-                                 var nodeText = record.raw.text;//获取点击的节点text
-                                 alert(nodeId);
-                                 }
-                                 */
-                            },
-                            afteritemexpand: function(node, index, item, eOpts) {
-                                var mainWin = this.up('window'),
-                                    queryUuid = mainWin.param.uuid;
-                                if (queryUuid != undefined) {
-                                    var _default_page_checked = node.data.DEFAULT_PAGE_CHECKED,
-                                        _is_default_page = node.data.IS_DEFAULT_PAGE,
-                                        _tree = mainWin.down('#appMenuTree'),
-                                        _childNode = node.childNodes,
-                                        _childNodeCount = _childNode.length;
-                                    if (_childNodeCount > 0) {
-                                        for (var i = 0; i < _childNodeCount; i++) {
-                                            var item_is_default_page = _childNode[i].data.IS_DEFAULT_PAGE,
-                                                _rowNumber = _tree.view.store.indexOf(_childNode[i]);
-                                            Ext.get(Ext.get(_tree.view.all.elements[_rowNumber].childNodes[2].childNodes[0].children[0]).id).remove();
-                                        }
-                                    }
-                                    if (!_is_default_page) {
-                                        var rowNumber = _tree.view.store.indexOf(node);
-                                        Ext.get(Ext.get(_tree.view.all.elements[rowNumber].childNodes[2].childNodes[0].children[0]).id).remove();
-                                    }
-                                }
-                            },
-                            afterlayout: function(obj, eOpts) {
-                                /*處理root的下一層*/
-                                var mainWin = this.up('window'),
-                                    _tree = mainWin.down('#appMenuTree'),
-                                    node = _tree.view.node,
-                                    is_root = _tree.view.node.data.root;
-                                if (is_root && node.childNodes.length > 0) {
-                                    node.eachChild(function(n) {
-                                        var _is_default_page = n.data.IS_DEFAULT_PAGE,
-                                            _rowNumber = _tree.view.store.indexOf(n);
-                                        if (_rowNumber != -1 && !_is_default_page) {
-                                            //var _item = Ext.get(_tree.view.all.elements[_rowNumber].childNodes[2].childNodes[0].children[0]);
-                                            var _item = Ext.get(_tree.view.all.elements[_rowNumber].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[0]);
-                                            if (_item != null) {
-                                                Ext.get(_item.id).remove();
-                                            };
-                                        };
-                                    });
-                                }
-                            }
-                        }
+                        }]
                     }]
-
                 }]
             }, {
                 title: '使用者維護',
-                icon: SYSTEM_URL_ROOT + '/css/images/man.png',
+                icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',
                 items: [{
                     xtype: 'panel',
                     id: 'myUserPanel',
@@ -615,7 +538,7 @@ Ext.define('WS.GroupWindow', {
                             items: [{
                                 xtype: "textfield",
                                 name: "_txtSearch",
-                                itemIdL: 'txtSearch',
+                                itemId: 'txtSearch',
                                 fieldLabel: '關鍵字',
                                 width: 200,
                                 enableKeyEvents: true,
@@ -630,7 +553,9 @@ Ext.define('WS.GroupWindow', {
                                 xtype: 'button',
                                 itemId: 'bnt_Query',
                                 margin: '0 0 0 10',
-                                text: '<img src="../../../css/custImages/search.gif" height="15"  style="vertical-align:middle"> 查詢',
+                                text: '查詢',
+                                icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
+                                width: 80,
                                 listeners: {
                                     "click": this.fnQuery
                                 }
@@ -773,36 +698,26 @@ Ext.define('WS.GroupWindow', {
                 store: this.myStore.appmenutree
             });
             myMask.show();
-            if (this.uuid != undefined) {
+            if (this.param.uuid != undefined) {
                 /*When 編輯/刪除資料*/
                 var queryUuid = this.param.uuid;
                 mainWin.down('#groupHeadId').setDisabled(true);
                 mainWin.down('#groupHeadForm').getForm().load({
                     params: {
-                        'pUuid': this.uuid
+                        'pUuid': this.param.uuid
                     },
                     success: function(response, a, b) {
+
                         WS.AuthorityAction.loadTreeRoot(
                             this.down('#groupheafFormApplicationHead').getValue(),
                             function(data) {
-                                thisTreeStore.load({
+                                this.myStore.appmenutree.load({
                                     params: {
                                         UUID: data.UUID,
-                                        GROUPHEADUUID: queryUuid
+                                        GROUPHEADUUID: this.param.uuid
                                     }
                                 });
-                                AppMenuVTaskFlag = true;
-                            });
-
-                        if (LoadDataTask) {
-                            storeAttendantInGroupAttendant.getProxy().setExtraParam('group_head_uuid', queryUuid);
-                            storeAttendantInGroupAttendant.getProxy().setExtraParam('company_uuid', COMPANYUUID);
-                            storeAttendantInGroupAttendant.load({
-                                callback: function() {
-                                    LoadDataTask = false;
-                                }
-                            });
-                        }
+                            }, this);
                     },
                     failure: function(response, a, b) {
                         r = Ext.decode(response.responseText);
@@ -812,15 +727,13 @@ Ext.define('WS.GroupWindow', {
                 });
             } else {
                 /*When 新增資料*/
+                mainWin.down('#appMenuTree').getRootNode().removeAll();
                 mainWin.down('#groupHeadId').setDisabled(false);
                 mainWin.down('#groupheafFormApplicationHead').setDisabled(false);
                 mainWin.down('#groupHeadForm').getForm().reset();
-                mainWin.down('#appMenuTree').getRootNode().removeAll();
-                this.myStore.attendantnotingroupattendant.removeAll();
-                this.myStore.attendantingroupattendant.removeAll();
                 mainWin.down('#bnt_Query').setDisabled(true);
                 mainWin.down('#bnt_Delete').setDisabled(true);
-            }
+            };
         },
         'close': function() {
             Ext.getBody().unmask();

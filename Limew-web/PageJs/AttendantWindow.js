@@ -3,6 +3,7 @@ Ext.define('WS.AttendantWindow', {
     extend: 'Ext.window.Window',
     icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',
     title: '人員維護',
+    closable:false,
     closeAction: 'destroy',
     param: {
         uuid: undefined
