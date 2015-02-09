@@ -9,8 +9,6 @@
 
 namespace Limew
 {
-
-
     public partial class Default
     {
     }

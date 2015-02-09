@@ -14,7 +14,6 @@ namespace Limew
         {
 
         }
-
         public string getCompany()
         {
             if (Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == false)

@@ -61,14 +61,11 @@ namespace Limew
                                     newUrl += arrUrl[i] + "/";
                                 }
                             }
-
                             //newUrl = newUrl.Replace("localhost","10.11.80.145");
                             newUrl += "Router.ashx";
                             rem += "url: \"" + newUrl + "\",";
                             rem += "type:\"remoting\",";
                             rem += "timeout:" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectTimeOut.ToString() + ",";
-
-
                             string json = DirectProxyGenerator.generateDirectApi(className);
                             rem += json;
                             rem += "};";
@@ -83,7 +80,6 @@ namespace Limew
                             {
                                 rem = "(function(){" + rem + "})();";
                             }
-
                             sb.Append(rem);
                         }
                     }
@@ -113,7 +109,6 @@ namespace Limew
                             newUrl += arrUrl[i] + "/";
                         }
                     }
-
                     //newUrl = newUrl.Replace("localhost","10.11.80.145");
                     newUrl += "Router.ashx";
                     rem += "url: \"" + newUrl + "\",";
@@ -126,24 +121,17 @@ namespace Limew
                     rem += "name:\"" + proxy.REDIRECT_PROXY_METHOD.Split(',')[0] + "\",";
                     rem += "len:" + proxy.REDIRECT_PROXY_METHOD.Split(',')[1] + "";
                     rem += "}";
-                    //rem += string.Format("{\"{0}\":\"{1}\",\"len\":{2}}", proxy.REDIRECT_PROXY_ACTION, proxy.REDIRECT_PROXY_METHOD.Split(',')[0], proxy.REDIRECT_PROXY_METHOD.Split(',')[1]);
                     rem += "]";
                     rem += "}";
-
-
                     rem += "};";
-                    rem = Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + proxy.PROXY_ACTION + " =" + rem;
-                    //rem = " Ext.ns('" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "');(function(){" + rem + "})();";
+                    rem = Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + proxy.PROXY_ACTION + " =" + rem;                   
                     rem = "(function(){" + rem + "})();";
                     sb.Append(rem);
                 }
             }
-
             ss.setObject("PROXY", sb.ToString());
-
             context.Response.Write(sb.ToString());
         }
-
         public bool IsReusable
         {
             get

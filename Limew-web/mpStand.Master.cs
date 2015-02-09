@@ -32,7 +32,6 @@ namespace Limew
                 }
             }
         }
-
         /// <summary>
         /// 取得登入者人員資料
         /// </summary>
@@ -48,7 +47,6 @@ namespace Limew
                 return null;
             }
         }
-
         #region setMenu
         private void setMenu(string attendant_uuid, IList<AuthorityMenuV_Record> menuList)
         {
@@ -69,7 +67,7 @@ namespace Limew
 
                 string items = getMenuHTML(menuList, new_menuQuery);
                 html += "<ul class='sf-menu'>" + items + "</ul>";
-                menu.InnerHtml = html;//"<ul class='sf-menu'><li><a>溫室氣體盤查邊界設定</a><ul><li><a href='http://localhost/GHG/organization/organization_query.aspx'>組織邊界及營運邊界維護</a></li></ul></li><li><a>基本參數管理</a><ul><li><a href='http://localhost/GHG/ghg_type/ghg_type_query.aspx'>溫室氣體涵蓋種類維護</a></li><li><a href='http://localhost/GHG/method/method_query.aspx'>評估報告出處及年份維護</a></li><li><a href='http://localhost/GHG/reason/reason_query.aspx'>係數種類維護</a></li><li><a href='http://localhost/GHG/gwp/gwp_query.aspx'>全球暖化潛勢(GWP)值維護</a></li><li><a href='http://localhost/GHG/region/region_query.aspx'>地區維護</a></li><li><a href='http://localhost/GHG/factor/factor_query.aspx'>排放係數維護</a></li><li><a href='http://localhost/GHG/emission_source_type/emission_source_type_query.aspx'>排放源型式維護</a></li><li><a href='http://localhost/GHG/mfg_process/mfg_process_query.aspx'>製程代碼及名稱維護</a></li><li><a href='http://localhost/GHG/facility/facility_query.aspx'>設備代碼及名稱維護</a></li><li><a href='http://localhost/GHG/material/material_query.aspx'>原料別維護</a></li><li><a href='http://localhost/GHG/industry/industry_category_query.aspx'>行業別維護</a></li><li><a href='http://localhost/GHG/administrative_area/administrative_area.aspx'>縣市鄉鎮維護</a></li></ul></li><li><a>溫室氣體盤查報告書資訊管理</a><ul><li><a href='http://localhost/GHG/intended_user/intended_user_query.aspx'>預期使用者維護</a></li><li><a href='http://localhost/GHG/job/job_query.aspx'>專案工作維護</a></li><li><a href='http://localhost/GHG/title/title_query.aspx'>盤查專案推動小組維護</a></li></ul></li><li><a>排放源管理</a><ul><li><a href='http://localhost/GHG/emission/emission_data_list_query.aspx'>排放源活動數據</a></li></ul></li><li><a>盤查作業</a><ul><li><a href='http://localhost/GHG/project/project_query.aspx'><img style='height:16px;'src='http://localhost/GHG/css/custImages/project.gif'/>專案</a></li><li><a href='http://localhost/GHG/project/project2_query.aspx'><img style='height:16px;'src='http://localhost/GHG/css/custImages/project.gif'/>專案(營運邊界)</a></li><li><a href='http://localhost/GHG/project/overview.aspx'>專案總覽</a></li></ul></li><li><a href='http://localhost/GHG/product/product_query.aspx'>產品維護</a></li><li><a>管理者</a><ul><li><a>基本資料維護</a><ul><li><a href='http://localhost/GHG/admin/basic/company.aspx'>公司維護</a></li><li><a href='http://localhost/GHG/admin/basic/dept.aspx'>部門維護</a></li><li><a href='http://localhost/GHG/admin/basic/attendant.aspx'>人員維護</a></li></ul></li><li><a>系統設定</a><ul><li><a href='http://localhost/GHG/admin/system/system.aspx'>系統</a></li><li><a href='http://localhost/GHG/admin/system/function.aspx'>功能</a></li><li><a href='http://localhost/GHG/admin/system/sitemap.aspx'>Site Map</a></li><li><a href='http://localhost/GHG/admin/system/menu.aspx'>選單</a></li></ul></li></ul></li><ul>";
+                menu.InnerHtml = html;
             }
         }
         #endregion setMenu
@@ -91,11 +89,10 @@ namespace Limew
                     string action_mode = r.ACTION_MODE;
                     string _appmenu_uuid = r.APPMENU_UUID;
                     string _uuid = r.UUID;
-
                     //url加上參數
-                    if (url.Trim().Length > 0 && parameter.Trim().Length > 0)
+                    if (url.Trim().Length > 0 && parameter.Trim().Length > 0){
                         url = url + "?" + parameter;
-
+                    }
                     if (url.Trim().Length > 0 && action_mode.Trim().Length > 0)
                     {
                         if (url.IndexOf('?') > 0)
@@ -103,23 +100,25 @@ namespace Limew
                         else
                             url = url + "?ACTION=" + action_mode;
                     }
-
                     ret += "<li><a";
-
                     //是否有URL & 圖片
                     if (url.Trim().Length > 0)
                     {
-                        if (image.Trim().Length > 0)
+                        if (image.Trim().Length > 0){
                             ret += " href='" + ResolveUrl(url) + "'><img style='height:14px;' src='" + ResolveUrl(image) + "' />" + name + "</a>";
-                        else
+                        }
+                        else{
                             ret += " href='" + ResolveUrl(url) + "'>" + name + "</a>";
+                        }
                     }
                     else
                     {
-                        if (image.Trim().Length > 0)
+                        if (image.Trim().Length > 0){
                             ret += "><img style='height:14px;' src='" + ResolveUrl(image) + "' />" + name + "</a>";
-                        else
+                        }
+                        else{
                             ret += ">" + name + "</a>";
+                        }
                     }
 
                     if (hasChild == "Y")
@@ -129,7 +128,6 @@ namespace Limew
                        where _menu.APPMENU_UUID == _uuid
                        orderby _menu.ORD
                        select _menu;
-
                         if (_menuQuery.Count() > 0)
                         {
                             ret += "<ul>";

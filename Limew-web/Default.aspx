@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mpStand.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Limew.Default" EnableViewState="false"  %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="Div1" style="float:left;margin-bottom:5px;margin-top:5px;">    
@@ -16,9 +15,7 @@ Ext.onReady(function() {
             account:'<%= getAccount() %>',
             password:'<%= getPassword() %>'
         }
-    });  
-
-    
+    });      
     /*設定登入物件的相關參數*/
     WS_LOGONPANEL.urlSuccess = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().DefaultPage)%>';
     WS_LOGONPANEL.urlFail = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().NoPermissionPage)%>';
