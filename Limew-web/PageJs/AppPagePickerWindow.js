@@ -1,7 +1,7 @@
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                                 [NO]
+1.Model 要集中                                 [YES]
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 4.不可以有 getCmp                              [YES]
@@ -172,6 +172,7 @@ Ext.define('WS.AppPagePickerWindow', {
     listeners: {
         'show': function() {
             Ext.getBody().mask();
+            this.down('#btnQuery').handler(this.down('#btnQuery'));
         },
         'close': function() {
             this.closeEvent();

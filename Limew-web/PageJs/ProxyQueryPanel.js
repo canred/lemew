@@ -304,5 +304,18 @@ Ext.define('WS.ProxyQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    },
+    listeners:{
+        afterrender:function(obj,eOpts){
+            this.myStore.application.load({
+                callback : function(obj) {
+                    if(obj.length>0){
+                        this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                    };
+                    this.down('#btnQuery').handler(this.down('#btnQuery'));
+                },
+                scope:this
+            });
+        }
     }
 });

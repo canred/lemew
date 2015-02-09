@@ -3,7 +3,7 @@ var WS_SITEMAPQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                                 [NO]
+1.Model 要集中                                 [YES]
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 4.不可以有 getCmp                              [YES]
@@ -27,7 +27,7 @@ Ext.define('WS.SitemapQueryPanel', {
         tree: undefined,
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
-            autoLoad: true,
+            autoLoad: false,
             model: 'APPLICATION',
             pageSize: 10,
             proxy: {
@@ -54,13 +54,6 @@ Ext.define('WS.SitemapQueryPanel', {
                         });
                     }
                 }
-            },
-            listeners: {
-                // load: function() {
-                //     if (storeApplication.getCount() > 0) {
-                //         Ext.getCmp('cmbApplication').setValue(storeApplication.data.getAt(0).data['UUID']);
-                //     }
-                // }
             },
             remoteSort: true,
             sorters: [{
@@ -328,5 +321,18 @@ Ext.define('WS.SitemapQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    },
+    listeners:{
+        afterrender:function(obj,eOpts){
+            this.myStore.application.load({
+                callback : function(obj) {
+                    console.log(obj);
+                    if(obj.length>0){
+                        this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                    };
+                },
+                scope:this
+            });
+        }
     }
 });

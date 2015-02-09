@@ -297,7 +297,7 @@ Ext.define('WS.MenuWindow', {
                 padding: 5,
                 editable: false,
                 hidden: false,
-                store: this.storeSiteMap
+                store: this.myStore.sitemap
             }, {
                 fieldLabel: '父選單',
                 labelAlign: 'right',
@@ -309,7 +309,7 @@ Ext.define('WS.MenuWindow', {
                 padding: 5,
                 editable: false,
                 hidden: false,
-                store: this.storeMenu,
+                store: this.myStore.menu,
                 value: ' '
             }, {
                 xtype: 'fieldcontainer',
@@ -577,7 +577,7 @@ Ext.define('WS.MenuWindow', {
             Ext.getBody().mask();
             this.myMask = new Ext.LoadMask(this.down('#AppMenuForm'), {
                 msg: "資料載入中，請稍等...",
-                store: this.storeMenu,
+                store: this.myStore.menu,
                 removeMask: true
             });
             this.myMask.show();
@@ -615,9 +615,10 @@ Ext.define('WS.MenuWindow', {
             } else {
                 this.down('#btnDelete').setDisabled(true);
                 this.down('#AppMenuForm').getForm().reset();
-                this.down('#APPMENU_UUID').setValue(this.parentUuid);
+                this.down('#APPMENU_UUID').setValue(this.param.parentUuid);
                 this.down('#APPLICATION_HEAD_UUID').setValue(this.param.applicationHeadUuid);
                 this.down('#UUID').setValue('');
+                this.myMask.hide();
             };
         },
         'close': function() {

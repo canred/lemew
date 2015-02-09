@@ -3,7 +3,7 @@ var WS_APPPAGEQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                                 [NO]
+1.Model 要集中                                 [YES]
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 */
@@ -98,7 +98,7 @@ Ext.define('WS.AppPageQueryPanel', {
     fnCallBackReloadGrid: function(main) {
         /*this是由scope來的*/
         this.down("#grdAppPage").getStore().load();
-        this.subWinAppPage.un('closeEvent', this.fnCallBackReloadGrid);
+        //this.subWinAppPage.un('closeEvent', this.fnCallBackReloadGrid);
     },
     initComponent: function() {
         if (Ext.isEmpty(this.subWinAppPage)) {
@@ -106,7 +106,7 @@ Ext.define('WS.AppPageQueryPanel', {
                 title: '系統提示',
                 icon: Ext.MessageBox.WARNING,
                 buttons: Ext.Msg.OK,
-                msg: '未實現subWinAppPage物件,無法進行編輯操作!'
+                msg: '未實現 subWinAppPage 物件,無法進行編輯操作!'
             });
             return;
         };
@@ -139,7 +139,6 @@ Ext.define('WS.AppPageQueryPanel', {
                             if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
                             };
-
                         }
                     }
                 }, {
@@ -216,17 +215,17 @@ Ext.define('WS.AppPageQueryPanel', {
                                     title: '系統訊息',
                                     icon: Ext.MessageBox.INFO,
                                     buttons: Ext.Msg.OK,
-                                    msg: '未實現subWinAppPage物件,無法進行編輯操作!'
+                                    msg: '未實現 subWinAppPage 物件,無法進行編輯操作!'
                                 });
                                 return false;
                             };
-                            /*註冊事件*/
-                            main.subWinAppPage.on('closeEvent', main.fnCallBackReloadGrid, main);
-                            /*設定屬性*/
-                            //main.subWinAppPage.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                            /*設定參數*/
-                            main.subWinAppPage.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
-                            main.subWinAppPage.show();
+                            var subWin = Ext.create(main.subWinAppPage,{
+                                param:{
+                                    uuid:grid.getStore().getAt(rowIndex).data.UUID
+                                }
+                            });
+                            subWin.on('closeEvent', main.fnCallBackReloadGrid, main);
+                            subWin.show();
                         }
                     }],
                     sortable: false,
@@ -289,21 +288,35 @@ Ext.define('WS.AppPageQueryPanel', {
                                 title: '系統訊息',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                msg: '未實現subWinAppPage物件,無法進行編輯操作!'
+                                msg: '未實現 subWinAppPage 物件,無法進行編輯操作!'
                             });
                             return false;
                         };
-                        /*註冊事件*/
-                        main.subWinAppPage.on('closeEvent', main.fnCallBackReloadGrid, main);
-                        /*設定屬性*/
-                        //main.subWinAppPage.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                        /*設定參數*/
-                        main.subWinAppPage.param.uuid = undefined;
-                        main.subWinAppPage.show();
+                        var subWin = Ext.create(main.subWinAppPage,{
+                            param:{
+                                uuid:undefined
+                            }
+                        })
+                        subWin.on('closeEvent', main.fnCallBackReloadGrid, main);
+                        subWin.show();
                     }
                 }]
             }]
         }];
         this.callParent(arguments);
+    },
+    listeners:{
+        afterrender:function(obj,eOpts){
+            this.myStore.application.load({
+                callback : function(obj) {
+                    console.log(obj[0]);
+                    if(obj.length>0){
+                        this.down('#function_Query_Application').setValue(obj[0].data.UUID);
+                        this.down('#btnQuery').handler(this.down('#btnQuery'));
+                    };
+                },
+                scope:this
+            })
+        }
     }
 });

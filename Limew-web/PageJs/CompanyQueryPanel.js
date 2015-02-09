@@ -3,9 +3,10 @@ var WS_COMPANYQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                                 [NO]
+1.Model 要集中                                 [YES]
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
+4.自動Query 資料                               [YES]
 */
 /*columns 使用default*/
 Ext.define('WS.CompanyQueryPanel', {
@@ -70,7 +71,7 @@ Ext.define('WS.CompanyQueryPanel', {
                 title: '系統提示',
                 icon: Ext.MessageBox.WARNING,
                 buttons: Ext.Msg.OK,
-                msg: '未實現subWinCompany物件,無法進行編輯操作!'
+                msg: '未實現 subWinCompany 物件,無法進行編輯操作!'
             });
             return false;
         };
@@ -184,7 +185,7 @@ Ext.define('WS.CompanyQueryPanel', {
                                     title: '系統訊息',
                                     icon: Ext.MessageBox.INFO,
                                     buttons: Ext.Msg.OK,
-                                    msg: '未實現subWinCompany物件,無法進行編輯操作!'
+                                    msg: '未實現 subWinCompany 物件,無法進行編輯操作!'
                                 });
                                 return false;
                             };
@@ -241,7 +242,7 @@ Ext.define('WS.CompanyQueryPanel', {
                                 title: '系統訊息',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                msg: '未實現subWinCompany物件,無法進行編輯操作!'
+                                msg: '未實現 subWinCompany 物件,無法進行編輯操作!'
                             });
                             return false;
                         };
@@ -288,5 +289,13 @@ Ext.define('WS.CompanyQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    }
+    ,
+    listeners:{
+        afterrender:function(obj,eOpts){
+            this.myStore.company.load({                
+                scope:this
+            });
+        }
     }
 });

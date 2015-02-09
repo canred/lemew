@@ -3,7 +3,7 @@ var WS_GROUPQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                                 [NO]
+1.Model 要集中                                 [YES]
 2.panel 的title要換成icon , title的方式        [YES]
 3.add 的icon要換成icon , title的方式           [YES]
 4.getCmp 不可能有
@@ -336,5 +336,18 @@ Ext.define('WS.GroupQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    },
+    listeners:{
+        afterrender:function(){
+            this.myStore.application.load({
+                callback : function(obj) {
+                    if(obj.length>0){
+                      this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                    };                    
+                    this.down('#btnQuery').handler(this.down('#btnQuery'));
+                },
+                scope:this
+            });
+        }
     }
 });

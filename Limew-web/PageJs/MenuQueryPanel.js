@@ -10,8 +10,10 @@ var WS_MENUQUERYPANEL;
 5.有一段程式碼不確定 line 69
 6. tree 要改變一次顯示                         [YES]
 7. 如果menu不是有效要表現出來                  [YES]
-8. 新增子節點的功能未完成                      [NO]
-9. 子視窗的功能未完成
+8. 新增子節點的功能未完成                      [YES]
+9. 子視窗的功能未完成                          [YES]  
+10.新增畫面開啟後自動選擇系統                  [YES]  
+11.加上一個LoadMask當資料正在讀取時            [NO] 
 */
 /*columns 使用default*/
 Ext.define('WS.MenuQueryPanel', {
@@ -22,12 +24,10 @@ Ext.define('WS.MenuQueryPanel', {
     lan: {},
     /*參數擴展*/
     param: {
-        PARENTUUID: undefined,
-        AppMenuTaskFlag: undefined
+        PARENTUUID: undefined        
     },
     /*值擴展*/
     val: {},
-    AppMenuTask: undefined,
     /*物件會用到的Store物件*/
     myStore: {
         tree: undefined,
@@ -67,6 +67,9 @@ Ext.define('WS.MenuQueryPanel', {
             }]
         })
     },
+    fnCallBackCloseEvent: function() {
+        this.fnQuery(this);
+    },
     fnQuery: function(obj) {
         /*obj要是主體*/
         WS.MenuAction.loadTreeRoot(obj.down('#cmbApplication').getValue(), function(data) {
@@ -78,8 +81,7 @@ Ext.define('WS.MenuQueryPanel', {
                     params: {
                         'UUID': data.UUID
                     }
-                });
-                this.param.AppMenuTaskFlag = true;
+                });                
             }
         }, obj);
     },
@@ -118,45 +120,44 @@ Ext.define('WS.MenuQueryPanel', {
         /*設定參數*/
         subWin.show();
     },
-    fnAddMenuChild: function(parentMenuUuid) {},
+    fnAddMenuChild: function(parentMenuUuid) {
+        /*要把scope變成SitemapQueryPanel主體*/
+        if (!this.fnCheckSubComponent()) {
+            return false;
+        };
+        this.param.PARENTUUID = parentMenuUuid;
+        var subWin = Ext.create(this.subWinMenuWindow, {
+            subWinProxyPickerWindow: 'WS.ProxyPickerWindow',
+            param: {
+                uuid: undefined,
+                parentUuid: parentMenuUuid,
+                applicationHeadUuid: this.down('#cmbApplication').getValue()
+            }
+        });
+        /*註冊事件*/
+        subWin.on('closeEvent', this.fnCallBackCloseEvent, this);
+        /*設定參數*/
+        subWin.show();
+    },
     fnOpenOrgn: function(uuid, parendUuid) {
         /*要把scope變成SitemapQueryPanel主體*/
     },
-    fnRemoveMenu: function(menuUuid) {
-        /*要把scope變成SitemapQueryPanel主體*/
+    fnRemoveMenu: function(mainPanel, menuUuid) {
+        Ext.Msg.show({
+            title: '刪除節點操作',
+            msg: '確定執行刪除動作?',
+            buttons: Ext.Msg.YESNO,
+            fn: function(btn) {
+                if (btn == "yes") {
+                    WS.MenuAction.deleteAppMenu(menuUuid, function(json) {
+                        mainPanel.fnQuery(mainPanel);
+                    });
+                }
+            }
+        });
     },
     initComponent: function() {
-
-        var a = function(A, B) {
-            A = {};
-            A.setAttr = function(a) {
-                a.name = 'Chiawen';
-                a.year = 99;
-            }(A);
-            return B(A);
-        }(a, function(A) {
-            A.sayHello=function(){
-                alert(A.name+' Hello ');
-            };
-            A.sayOk = function(){
-                alert(A.name+' OK');
-            };
-            return A;
-        });
-        a.sayHello();
-
-        this.myStore.tree = Ext.create('WS.MenuTreeStore', {});
-        this.AppMenuTask = {
-            run: function() {
-                if (this.param.AppMenuTaskFlag == true) {
-                    this.down("#AppMenuTree").expandAll();
-                    this.param.AppMenuTaskFlag = false;
-                };
-            },
-            interval: 1000,
-            scope: this
-        };
-        Ext.TaskManager.start(this.AppMenuTask);
+        this.myStore.tree = Ext.create('WS.MenuTreeStore', {});      
         if (!this.fnCheckSubComponent()) {
             return false;
         };
@@ -186,7 +187,6 @@ Ext.define('WS.MenuQueryPanel', {
                         'change': function(obj, value) {
                             var mainPanel = this.up('panel').up('panel');
                             mainPanel.fnQuery(mainPanel);
-                            mainPanel.param.AppMenuTaskFlag = true;
                         }
                     }
                 }]
@@ -197,31 +197,25 @@ Ext.define('WS.MenuQueryPanel', {
                 icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
                 handler: function() {
                     var mainPanel = this.up('panel').up('panel');
-                    WS.MenuAction.loadTreeRoot(Ext.getCmp('cmbApplication').getValue(), function(data) {
+                    WS.MenuAction.loadTreeRoot(mainPanel.down('#cmbApplication').getValue(), function(data) {
                         PARENTUUID = data.UUID;
-                        /*appMenuForm 變量保存在 Ext.AppMenuForm.js當中*/
-                        if (appMenuForm == undefined) {
-                            appMenuForm = Ext.create('AppMenuForm');
-                            appMenuForm.pApplicationHeadUuid = Ext.getCmp('cmbApplication').getValue();
-                            /*載入關閉後的事件*/
-                            appMenuForm.on('closeEvent', function(obj) {
-                                /*重新整理畫面的內容*/
-                                var btnQuery = Ext.getCmp('menu.Query.Button');
-                                btnQuery.handler.call(btnQuery.scope);
-                            });
-                            /*設定開啟事內的條件*/
-                            appMenuForm.uuid = undefined;
-                            appMenuForm.parentUuid = PARENTUUID;
-                            appMenuForm.applicationHeadUuid = Ext.getCmp('cmbApplication').getValue();
-                            appMenuForm.show();
-                        } else {
-                            appMenuForm.uuid = undefined;
-                            appMenuForm.parentUuid = PARENTUUID;
-                            appMenuForm.applicationHeadUuid = Ext.getCmp('cmbApplication').getValue();
-                            appMenuForm.show();
-                        }
+                        if (!this.fnCheckSubComponent()) {
+                            return false;
+                        };
+                        this.param.PARENTUUID = PARENTUUID;
+                        var subWin = Ext.create(this.subWinMenuWindow, {
+                            subWinProxyPickerWindow: 'WS.ProxyPickerWindow',
+                            param: {
+                                uuid: undefined,
+                                parentUuid:PARENTUUID,
+                                applicationHeadUuid: this.down('#cmbApplication').getValue()
+                            }
+                        });
+                        /*註冊事件*/
+                        subWin.on('closeEvent', this.fnCallBackCloseEvent, this);
+                        /*設定參數*/
+                        subWin.show();
                     }, mainPanel);
-                    mainPanel.param.AppMenuTaskFlag = true;
                 }
             }, {
                 xtype: 'treepanel',
@@ -285,7 +279,7 @@ Ext.define('WS.MenuQueryPanel', {
                         handler: function(grid, rowIndex, colIndex) {
                             var mainPanel = grid.up('panel').up('panel').up('panel'),
                                 uuid = grid.getStore().getAt(rowIndex).data.UUID;;
-                            mainPanel.fnRemoveMenu(uuid);
+                            mainPanel.fnRemoveMenu(mainPanel, uuid);
                         }
                     }],
                     hideable: false
@@ -293,5 +287,18 @@ Ext.define('WS.MenuQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    }
+    ,
+    listeners:{
+        'afterrender':function(obj,eOpts){            
+            obj.myStore.application.load({
+                'callback' : function(obj) {
+                    if(obj.length>0){
+                       this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                    };
+                },
+                'scope':this
+            })
+        }
     }
 });

@@ -3,7 +3,7 @@ var WS_ATTENDANTQUERYPANEL;
 /*WS.CompanyQueryPanel物件類別*/
 /*TODO*/
 /*
-1.Model 要集中                 [NO]
+1.Model 要集中                 [YES]
 2.不可以有任何的 getCmp 字眼   [YES]
 */
 /*columns 使用default*/
@@ -160,13 +160,15 @@ Ext.define('WS.AttendantQueryPanel', {
                                 return false;
                             };
                             /*註冊事件*/
-                            main.subWinAttendant.on('closeEvent', function(obj) {
+                            var subWin = Ext.create(main.subWinAttendant,{
+                                param:{
+                                    uuid:grid.getStore().getAt(rowIndex).data.UUID
+                                }
+                            })
+                            subWin.on('closeEvent', function(obj) {
                                 main.down("#grdAttendantQuery").getStore().load();
-                            }, main);
-                            /*設定屬性*/
-                            /*設定參數*/
-                            main.subWinAttendant.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
-                            main.subWinAttendant.show();
+                            }, main);                            
+                            subWin.show();
                         }
                     }],
                     sortable: false,
@@ -216,14 +218,16 @@ Ext.define('WS.AttendantQueryPanel', {
                             });
                             return false;
                         };
+                        var subWin = Ext.create(main.subWinAttendant,{
+                            param:{
+                                uuid:undefined
+                            }
+                        });
                         /*註冊事件*/
-                        main.subWinAttendant.on('closeEvent', function(obj) {
+                        subWin.on('closeEvent', function(obj) {
                             main.down("#grdAttendantQuery").getStore().load();
-                        }, main);
-                        /*設定屬性*/
-                        /*設定參數*/
-                        main.subWinAttendant.param.uuid = undefined;
-                        main.subWinAttendant.show();
+                        }, main);                        
+                        subWin.show();
                     }
                 }, {
                     icon: SYSTEM_URL_ROOT + '/css/images/cloudsync16x16.png',
@@ -291,5 +295,12 @@ Ext.define('WS.AttendantQueryPanel', {
             }]
         }];
         this.callParent(arguments);
+    },
+    listeners:{
+        afterrender:function(obj,eOpts){
+            this.myStore.attendantV.load({                
+                scope:this
+            });
+        }
     }
 });
