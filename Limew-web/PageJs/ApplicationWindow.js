@@ -1,5 +1,4 @@
 var WS_APPLICATIONWINDOW;
-/*columns 使用default*/
 Ext.define('WS.ApplicationWindow', {
     extend: 'Ext.window.Window',
     title: '系統維護',
@@ -100,8 +99,7 @@ Ext.define('WS.ApplicationWindow', {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
                 handler: function() {
-                    var mainWin = this.up('window');
-                    var form = mainWin.down("#ApplicationForm").getForm();
+                    var mainWin = this.up('window'),form = mainWin.down("#ApplicationForm").getForm();
                     if (form.isValid() == false) {
                         return;
                     };

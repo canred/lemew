@@ -55,9 +55,10 @@ Ext.define('WS.LogonPanel', {
                 enableKeyEvents: true,
                 listeners: {
                     keyup: function(e, t, eOpts) {
-                        if (t.button == 12) {
+                        var keyCode = t.parentEvent.keyCode;
+                        if (keyCode == Ext.event.Event.ENTER) {
                             WS_LOGONPANEL.down("bntLogin").handler();
-                        }
+                        };
                     }
                 }
             }, {
@@ -74,9 +75,10 @@ Ext.define('WS.LogonPanel', {
                 enableKeyEvents: true,
                 listeners: {
                     keyup: function(e, t, eOpts) {
-                        if (t.button == 12) {
+                        var keyCode = t.parentEvent.keyCode;
+                        if (keyCode == Ext.event.Event.ENTER) {
                             WS_LOGONPANEL.down("bntLogin").handler();
-                        }
+                        };
                     }
                 }
             }, {
@@ -94,9 +96,10 @@ Ext.define('WS.LogonPanel', {
                 enableKeyEvents: true,
                 listeners: {
                     keyup: function(e, t, eOpts) {
-                        if (t.button == 12) {
+                        var keyCode = t.parentEvent.keyCode;
+                        if (keyCode == Ext.event.Event.ENTER) {
                             WS_LOGONPANEL.down("bntLogin").handler();
-                        }
+                        };
                     }
                 }
             }, {
@@ -147,13 +150,13 @@ Ext.define('WS.LogonPanel', {
                                     Ext.Msg.alert('密碼取回', '您的密碼已寄至：' + res.result.email);
                                 } else {
                                     Ext.Msg.alert('密碼取回', '無此帳號資訊!')
-                                }
+                                };
                             },
                             failure: function(obj, res) {
                                 WS_LOGONPANEL.down('#ExtLogonForm').getForm().api.submit = WS.UserAction.logon;
                             }
                         });
-                    }
+                    };
                 }
             }, {
                 text: '登入',
@@ -179,17 +182,17 @@ Ext.define('WS.LogonPanel', {
                                                 Ext.Msg.alert('Logon Failure', '請檢查您的帳號密碼是否正確。');
                                             } else {
                                                 location.href = urlFail;
-                                            }
-                                        }
+                                            };
+                                        };
                                     },
                                     failure: function(obj, res) {
                                         Ext.getBody().unmask();
                                         if (res.failureType === Ext.form.Action.CONNECT_FAILURE) {
                                             Ext.Msg.alert('Logon Failure', '請檢查您的帳號密碼是否正確。');
-                                        }
+                                        };
                                         if (res.failureType === Ext.form.Action.SERVER_INVALID) {
                                             Ext.Msg.alert('Warning', res.result.errormsg);
-                                        }
+                                        };
                                         if (!res.result.success) {
                                             Ext.MessageBox.show({
                                                 title: 'Warning',
@@ -197,7 +200,7 @@ Ext.define('WS.LogonPanel', {
                                                 buttons: Ext.Msg.OK,
                                                 msg: res.result.message
                                             });
-                                        }
+                                        };
                                     }
                                 });
                             } else {
@@ -208,7 +211,7 @@ Ext.define('WS.LogonPanel', {
                                     buttons: Ext.Msg.OK
                                 });
                                 Ext.getBody().unmask();
-                            }
+                            };
                         } catch (ex) {
                             Ext.MessageBox.show({
                                 title: '發生異常錯誤',
@@ -223,8 +226,5 @@ Ext.define('WS.LogonPanel', {
             }]
         }];
         me.callParent(arguments);
-    },
-    closeEvent: function() {
-        //this.fireEvent('closeEvent', this);
     }
 });

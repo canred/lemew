@@ -52,7 +52,7 @@ Ext.define('WS.MenuWindow', {
             listeners: {
                 load: function() {
                     this.insert(0, new this.model({
-                        'NAME': 'Empty',
+                        'NAME': 'noData',
                         'UUID': ''
                     }));
                 }
@@ -517,9 +517,9 @@ Ext.define('WS.MenuWindow', {
                                                     icon: Ext.MessageBox.ERROR,
                                                     buttons: Ext.Msg.OK
                                                 });
-                                            }
+                                            };
                                         });
-                                    }
+                                    };
                                 });
                             }
                         }],

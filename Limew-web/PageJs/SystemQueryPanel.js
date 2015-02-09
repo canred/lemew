@@ -136,14 +136,14 @@ Ext.define('WS.SystemQueryPanel', {
                         tooltip: '*編輯',
                         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            var subWin = Ext.create(main.subWinApplication,{
-                                param:{
-                                    uuid : grid.getStore().getAt(rowIndex).data.UUID
-                                }
-                            });
+                            var main = grid.up('panel').up('panel').up('panel'),
+                                subWin = Ext.create(main.subWinApplication, {
+                                    param: {
+                                        uuid: grid.getStore().getAt(rowIndex).data.UUID
+                                    }
+                                });
                             subWin.on('closeEvent', function(obj) {
-                                main.myStore.application.load();                                
+                                main.myStore.application.load();
                             });
                             subWin.show();
                         }
@@ -198,27 +198,26 @@ Ext.define('WS.SystemQueryPanel', {
                     text: '新增',
                     icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
                     handler: function() {
-                        var mainPanel = this.up('panel').up('panel').up('panel');
-                        var subWin = Ext.create(mainPanel.subWinApplication,{
-                            param:{
-                                uuid:undefined
-                            }
-                        });
+                        var mainPanel = this.up('panel').up('panel').up('panel'),
+                            subWin = Ext.create(mainPanel.subWinApplication, {
+                                param: {
+                                    uuid: undefined
+                                }
+                            });
                         subWin.on('closeEvent', function(obj) {
-                            mainPanel.myStore.application.load();                            
-                        });                        
+                            mainPanel.myStore.application.load();
+                        });
                         subWin.show();
                     }
                 }]
             }]
         }];
         this.callParent(arguments);
-    }
-    ,
-    listeners:{
-        afterrender:function(obj,eOpts){
+    },
+    listeners: {
+        afterrender: function(obj, eOpts) {
             this.myStore.application.load({
-                scope:this
+                scope: this
             })
         }
     }

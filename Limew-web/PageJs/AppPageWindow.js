@@ -17,21 +17,7 @@ Ext.define('WS.AppPageWindow', {
         application: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('APPLICATION', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'NAME',
-                    'DESCRIPTION',
-                    'ID',
-                    'CREATE_USER',
-                    'UPDATE_USER',
-                    'WEB_SITE',
-                    'UUID'
-                ]
-            }),
+            model: 'APPLICATION',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -181,11 +167,11 @@ Ext.define('WS.AppPageWindow', {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
                 handler: function() {
-                    var mainWin = this.up('window');
-                    var form = mainWin.down('#AppPageForm').getForm();
+                    var mainWin = this.up('window'),
+                        form = mainWin.down('#AppPageForm').getForm();
                     if (form.isValid() == false) {
                         return;
-                    }
+                    };
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, jsonObj) {
@@ -267,8 +253,7 @@ Ext.define('WS.AppPageWindow', {
                         this.down('#AppPageForm').getForm().load({
                             params: {
                                 'pUuid': this.param.uuid
-                            },
-                            success: function(response, jsonObj, b) {},
+                            },                            
                             failure: function(form, jsonObj) {
                                 Ext.MessageBox.show({
                                     title: 'Warning',

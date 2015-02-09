@@ -16,7 +16,6 @@
 13.當是編輯的狀態要等到所有的資料都已經ready
    才可以開啟維護模式
 */
-
 /*columns 使用default*/
 Ext.define('WS.GroupWindow', {
     extend: 'Ext.window.Window',
@@ -42,19 +41,7 @@ Ext.define('WS.GroupWindow', {
         applicationheadheadv: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: true,
-            model: Ext.define('APPLICATIONHEADV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'NAME',
-                    'DESCRIPTION',
-                    'WEB_SITE',
-                    'ID'
-                ]
-            }),
+            model: 'APPLICATIONHEADV',
             pageSize: 9999,
             proxy: {
                 type: 'direct',
@@ -90,45 +77,7 @@ Ext.define('WS.GroupWindow', {
         attendantnotingroupattendant: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('ATTEDNANTVV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'COMPANY_ID',
-                    'COMPANY_C_NAME',
-                    'COMPANY_E_NAME',
-                    'DEPARTMENT_ID',
-                    'DEPARTMENT_C_NAME',
-                    'DEPARTMENT_E_NAME',
-                    'SITE_ID',
-                    'SITE_C_NAME',
-                    'SITE_E_NAME',
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'COMPANY_UUID',
-                    'ACCOUNT',
-                    'C_NAME',
-                    'E_NAME',
-                    'EMAIL',
-                    'PASSWORD',
-                    'IS_SUPPER',
-                    'IS_ADMIN',
-                    'CODE_PAGE',
-                    'DEPARTMENT_UUID',
-                    'PHONE',
-                    'SITE_UUID',
-                    'GENDER',
-                    'BIRTHDAY',
-                    'HIRE_DATE',
-                    'QUIT_DATE',
-                    'IS_MANAGER',
-                    'IS_DIRECT',
-                    'GRADE',
-                    'ID',
-                    'IS_DEFAULT_PASS'
-                ]
-            }),
+            model: 'ATTEDNANTVV',
             pageSize: 9999,
             proxy: {
                 type: 'direct',
@@ -141,7 +90,7 @@ Ext.define('WS.GroupWindow', {
                 paramsAsHash: true,
                 paramOrder: ['company_uuid', 'group_head_uuid', 'keyword', 'is_active', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    company_uuid: '', //要回頭設定這一個值
+                    company_uuid: '',
                     group_head_uuid: '',
                     keyword: '',
                     is_active: 'Y'
@@ -167,45 +116,7 @@ Ext.define('WS.GroupWindow', {
         attendantingroupattendant: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('ATTEDNANTVV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'COMPANY_ID',
-                    'COMPANY_C_NAME',
-                    'COMPANY_E_NAME',
-                    'DEPARTMENT_ID',
-                    'DEPARTMENT_C_NAME',
-                    'DEPARTMENT_E_NAME',
-                    'SITE_ID',
-                    'SITE_C_NAME',
-                    'SITE_E_NAME',
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'COMPANY_UUID',
-                    'ACCOUNT',
-                    'C_NAME',
-                    'E_NAME',
-                    'EMAIL',
-                    'PASSWORD',
-                    'IS_SUPPER',
-                    'IS_ADMIN',
-                    'CODE_PAGE',
-                    'DEPARTMENT_UUID',
-                    'PHONE',
-                    'SITE_UUID',
-                    'GENDER',
-                    'BIRTHDAY',
-                    'HIRE_DATE',
-                    'QUIT_DATE',
-                    'IS_MANAGER',
-                    'IS_DIRECT',
-                    'GRADE',
-                    'ID',
-                    'IS_DEFAULT_PASS'
-                ]
-            }),
+            model: 'ATTEDNANTVV',
             pageSize: 9999,
             proxy: {
                 type: 'direct',
@@ -252,7 +163,6 @@ Ext.define('WS.GroupWindow', {
     autoScroll: true,
     initComponent: function() {
         this.items = [Ext.create('Ext.form.Panel', {
-
             api: {
                 load: WS.GroupHeadAction.info,
                 submit: WS.GroupHeadAction.submit
@@ -354,7 +264,6 @@ Ext.define('WS.GroupWindow', {
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
-
                             this.down('#groupheafFormApplicationHead').setDisabled(false);
                             this.down('#bnt_Query').setDisabled(false);
                             this.down('#bnt_Delete').setDisabled(false);
@@ -439,7 +348,6 @@ Ext.define('WS.GroupWindow', {
                         store: this.myStore.appmenutree,
                         multiSelect: true,
                         rootVisible: false,
-                        //useArrows: true,
                         loadMask: true,
                         columns: [{
                             text: '<center>UUID</center>',
@@ -590,9 +498,7 @@ Ext.define('WS.GroupWindow', {
                                             dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('account') : ' on empty view',
                                             attendant_uuid = data.records[0].get('UUID'),
                                             group_head_uuid = mainWin.param.uuid;
-                                        WS.GroupAttendantAction.destroyBy(group_head_uuid, attendant_uuid, function(data) {
-
-                                        });
+                                        WS.GroupAttendantAction.destroyBy(group_head_uuid, attendant_uuid, function(data) {});
                                     }
                                 },
                             },
@@ -640,9 +546,7 @@ Ext.define('WS.GroupWindow', {
                                             dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('uuid') : ' on empty view',
                                             attendant_uuid = data.records[0].get('UUID'),
                                             group_head_uuid = mainWin.param.uuid;
-                                        WS.GroupAttendantAction.addAttendnatGroupHead(group_head_uuid, attendant_uuid, function(data) {
-
-                                        });
+                                        WS.GroupAttendantAction.addAttendnatGroupHead(group_head_uuid, attendant_uuid, function(data) {});
                                     }
                                 }
                             },

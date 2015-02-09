@@ -12,7 +12,6 @@ var WS_GROUPQUERYPANEL;
 Ext.define('WS.GroupQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
-    subWinCompany: undefined,
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
@@ -95,15 +94,6 @@ Ext.define('WS.GroupQueryPanel', {
                     }
                 }
             },
-            listeners: {
-                load: function() {
-                    // this.insert(0, new this.model({
-                    //     'NAME': '全部',
-                    //     'UUID': ''
-                    // }));
-                    // Ext.getCmp('cmbApplication').setValue('');
-                }
-            },
             sorters: [{
                 property: 'NAME',
                 direction: 'ASC'
@@ -115,19 +105,10 @@ Ext.define('WS.GroupQueryPanel', {
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     initComponent: function() {
-        // if (Ext.isEmpty(this.subWinCompany)) {
-        //     Ext.MessageBox.show({
-        //         title: '系統提示',
-        //         icon: Ext.MessageBox.WARNING,
-        //         buttons: Ext.Msg.OK,
-        //         msg: '未實現subWinCompany物件,無法進行編輯操作!'
-        //     });
-        //     return false;
-        // };
         this.items = [{
             xtype: 'panel',
             title: '權限維護',
-            icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png', 
+            icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png',
             frame: true,
             autoWidth: true,
             height: $(document).height() - 150,
@@ -224,7 +205,6 @@ Ext.define('WS.GroupQueryPanel', {
                             store = mainPanel.myStore.grouphead,
                             proxy = store.getProxy(),
                             application = mainPanel.down("#cmbApplication").getValue();
-
                         if (Ext.isEmpty(application)) {
                             Ext.MessageBox.show({
                                 title: '系統提示',
@@ -234,7 +214,6 @@ Ext.define('WS.GroupQueryPanel', {
                             });
                             return false;
                         };
-
                         proxy.setExtraParam('company_uuid', mainPanel.param.companyUuid);
                         proxy.setExtraParam('application_head_uuid', mainPanel.down('#cmbApplication').getValue());
                         proxy.setExtraParam('attendant_uuid', mainPanel.val.attendantUuid);
@@ -337,16 +316,16 @@ Ext.define('WS.GroupQueryPanel', {
         }];
         this.callParent(arguments);
     },
-    listeners:{
-        afterrender:function(){
+    listeners: {
+        afterrender: function() {
             this.myStore.application.load({
-                callback : function(obj) {
-                    if(obj.length>0){
-                      this.down('#cmbApplication').setValue(obj[0].data.UUID);
-                    };                    
+                callback: function(obj) {
+                    if (obj.length > 0) {
+                        this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                    };
                     this.down('#btnQuery').handler(this.down('#btnQuery'));
                 },
-                scope:this
+                scope: this
             });
         }
     }

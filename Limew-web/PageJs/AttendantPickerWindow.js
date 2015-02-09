@@ -9,45 +9,7 @@ Ext.define('WS.AttendantPickerWindow', {
         attendant: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: true,
-            model: Ext.define('ATTEDNANTVV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'COMPANY_ID',
-                    'COMPANY_C_NAME',
-                    'COMPANY_E_NAME',
-                    'DEPARTMENT_ID',
-                    'DEPARTMENT_C_NAME',
-                    'DEPARTMENT_E_NAME',
-                    'SITE_ID',
-                    'SITE_C_NAME',
-                    'SITE_E_NAME',
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'COMPANY_UUID',
-                    'ACCOUNT',
-                    'C_NAME',
-                    'E_NAME',
-                    'EMAIL',
-                    'PASSWORD',
-                    'IS_SUPPER',
-                    'IS_ADMIN',
-                    'CODE_PAGE',
-                    'DEPARTMENT_UUID',
-                    'PHONE',
-                    'SITE_UUID',
-                    'GENDER',
-                    'BIRTHDAY',
-                    'HIRE_DATE',
-                    'QUIT_DATE',
-                    'IS_MANAGER',
-                    'IS_DIRECT',
-                    'GRADE',
-                    'ID',
-                    'IS_DEFAULT_PASS'
-                ]
-            }),
+            model: 'ATTEDNANTVV',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -74,10 +36,7 @@ Ext.define('WS.AttendantPickerWindow', {
                         });
                     }
                 }
-            },
-            listeners: {
-                load: function() {}
-            },
+            },            
             remoteSort: true,
             sorters: [{
                 property: 'C_NAME',
@@ -112,10 +71,11 @@ Ext.define('WS.AttendantPickerWindow', {
                     margin: '0 0 0 5',
                     enableKeyEvents: true,
                     listeners: {
-                        keyup: function(e, t, eOpts) {
-                            if (t.button == 12) {
-                                this.up('panel').down('#btnQuery').handler();
-                            }
+                        keyup: function(e, t, eOpts) {                            
+                            var keyCode = t.parentEvent.keyCode,mainPanel=this.up('panel');
+                            if (keyCode == Ext.event.Event.ENTER) {
+                                mainPanel.down("#btnQuery").handler();
+                            };
                         }
                     }
                 }, {
@@ -181,10 +141,7 @@ Ext.define('WS.AttendantPickerWindow', {
                     displayInfo: true,
                     displayMsg: '第{0}~{1}資料/共{2}筆',
                     emptyMsg: "無資料顯示"
-                }),
-                listeners: {
-                    'beforerender': function() {}
-                },
+                }),                
                 tbarCfg: {
                     buttonAlign: 'right'
                 }

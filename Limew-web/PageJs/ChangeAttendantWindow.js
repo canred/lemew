@@ -28,45 +28,7 @@ Ext.define('WS.ChangeAttendantWindow', {
         attendantV: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: Ext.define('ATTEDNANTVV', {
-                extend: 'Ext.data.Model',
-                fields: [
-                    'COMPANY_ID',
-                    'COMPANY_C_NAME',
-                    'COMPANY_E_NAME',
-                    'DEPARTMENT_ID',
-                    'DEPARTMENT_C_NAME',
-                    'DEPARTMENT_E_NAME',
-                    'SITE_ID',
-                    'SITE_C_NAME',
-                    'SITE_E_NAME',
-                    'UUID',
-                    'CREATE_DATE',
-                    'UPDATE_DATE',
-                    'IS_ACTIVE',
-                    'COMPANY_UUID',
-                    'ACCOUNT',
-                    'C_NAME',
-                    'E_NAME',
-                    'EMAIL',
-                    'PASSWORD',
-                    'IS_SUPPER',
-                    'IS_ADMIN',
-                    'CODE_PAGE',
-                    'DEPARTMENT_UUID',
-                    'PHONE',
-                    'SITE_UUID',
-                    'GENDER',
-                    'BIRTHDAY',
-                    'HIRE_DATE',
-                    'QUIT_DATE',
-                    'IS_MANAGER',
-                    'IS_DIRECT',
-                    'GRADE',
-                    'ID',
-                    'IS_DEFAULT_PASS'
-                ]
-            }),
+            model: 'ATTEDNANTVV',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -97,11 +59,10 @@ Ext.define('WS.ChangeAttendantWindow', {
                 title: '系統提示',
                 icon: Ext.MessageBox.INFO,
                 buttons: Ext.Msg.OK,
-                msg: '參數設定錯誤，初始化需要successDirectToUrl'
+                msg: '參數設定錯誤，初始化需要 successDirectToUrl '
             });
             return;
         };
-
         this.items = [{
             xtype: 'panel',
             padding: 5,
@@ -145,8 +106,9 @@ Ext.define('WS.ChangeAttendantWindow', {
                             listeners: {
                                 exception: function(proxy, response, operation) {
                                     var errMsg = response.result.message;
-                                    if (!errMsg)
+                                    if (!errMsg){
                                         errMsg = 'System error 1501292211';
+                                    };
                                     Ext.MessageBox.show({
                                         title: 'REMOTE EXCEPTON-1501292212',
                                         msg: errMsg,
@@ -233,7 +195,7 @@ Ext.define('WS.ChangeAttendantWindow', {
                             WS.UserAction.changeAccount(companyUuid, attendantUuid, function(josnObj) {
                                 if (josnObj.success != undefined) {
                                     location.href = this.param.successDirectToUrl;
-                                }
+                                };
                             }, grid.up('window'));
                         }
                     }],
@@ -271,19 +233,10 @@ Ext.define('WS.ChangeAttendantWindow', {
             }]
         }];
         this.callParent(arguments);
-    },
-    closeEvent: function() {
-        //this.fireEvent('closeEvent', this);
-    },
-    listeners: {
-        'beforeshow': function() {
-        },
-        'afterrender': function() {
-            /*畫面開啟後載入資料*/
+    },    
+    listeners: {      
+        'afterrender': function() {            
             Ext.getBody().mask();
-        },        
-        'close': function() {
-            //this.closeEvent();
         }
     }
 });

@@ -155,7 +155,7 @@ Ext.define('WS.CompanyWindow', {
                                             buttons: Ext.Msg.OK,
                                             msg: jsonObj.result.message
                                         });
-                                    }
+                                    };
                                 });
                             }
                         }]
@@ -197,7 +197,7 @@ Ext.define('WS.CompanyWindow', {
                     var form = this.up('window').down("#CompanyForm").getForm();
                     if (form.isValid() == false) {
                         return;
-                    }
+                    };
                     this.up('window').down('#ID').setDisabled(false);
                     form.submit({
                         waitMsg: '更新中...',
@@ -255,13 +255,13 @@ Ext.define('WS.CompanyWindow', {
                                 buttons: Ext.Msg.OK,
                                 msg: jsonObj.result.message
                             });
-                        }
+                        };
                     }
                 });
             } else {
                 this.down('#ID').setDisabled(false);
                 this.down("#CompanyForm").getForm().reset();
-            }
+            };
         },
         'hide': function() {
             Ext.getBody().unmask();

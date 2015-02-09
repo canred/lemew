@@ -138,7 +138,7 @@ Ext.define('WS.CompanyQueryPanel', {
                 }, {
                     xtype: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
-                    text: '查詢', 
+                    text: '查詢',
                     margin: '0 0 0 20',
                     itemId: 'btnQuery',
                     width: 80,
@@ -158,8 +158,9 @@ Ext.define('WS.CompanyQueryPanel', {
                     text: '清除',
                     tooltip: '*清除目前所有的條件查詢',
                     handler: function() {
-                        this.up('panel').down("#txt_search").setValue('');
-                        this.up('panel').down("#cmb_isActive").setValue('Y');
+                        var mainPanel = this.up('panel');
+                        mainPanel.down("#txt_search").setValue('');
+                        mainPanel.down("#cmb_isActive").setValue('Y');
                     }
                 }]
             }, {
@@ -189,12 +190,10 @@ Ext.define('WS.CompanyQueryPanel', {
                                 });
                                 return false;
                             };
-                            /*註冊事件*/
-                            var subWin = Ext.create(main.subWinCompany,{});
+                            var subWin = Ext.create(main.subWinCompany, {});
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdCompanyQuery").getStore().load();
                             }, main);
-                            /*設定參數*/
                             subWin.param.uuid = grid.getStore().getAt(rowIndex).data.UUID;
                             subWin.show();
                         }
@@ -247,14 +246,14 @@ Ext.define('WS.CompanyQueryPanel', {
                             return false;
                         };
                         /*註冊事件*/
-                        var subWin = Ext.create(main.subWinCompany,{});
+                        var subWin = Ext.create(main.subWinCompany, {
+                            param: {
+                                uuid: undefined
+                            }
+                        });
                         subWin.on('closeEvent', function(obj) {
                             main.down("#grdCompanyQuery").getStore().load();
                         }, main);
-                        /*設定屬性*/
-                        subWin.setTitle('<img src="' + SYSTEM_URL_ROOT + '/css/images/company.png" style="height:20px;vertical-align:middle;margin-right:5px;">公司【維護】');
-                        /*設定參數*/
-                        subWin.param.uuid = undefined;
                         subWin.show();
                     }
                 }, {
@@ -289,12 +288,11 @@ Ext.define('WS.CompanyQueryPanel', {
             }]
         }];
         this.callParent(arguments);
-    }
-    ,
-    listeners:{
-        afterrender:function(obj,eOpts){
-            this.myStore.company.load({                
-                scope:this
+    },
+    listeners: {
+        afterrender: function(obj, eOpts) {
+            this.myStore.company.load({
+                scope: this
             });
         }
     }

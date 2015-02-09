@@ -164,7 +164,7 @@ Ext.define('WS.AttendantQueryPanel', {
                                 param:{
                                     uuid:grid.getStore().getAt(rowIndex).data.UUID
                                 }
-                            })
+                            });
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdAttendantQuery").getStore().load();
                             }, main);                            

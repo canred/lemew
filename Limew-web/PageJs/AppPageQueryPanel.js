@@ -96,9 +96,7 @@ Ext.define('WS.AppPageQueryPanel', {
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     fnCallBackReloadGrid: function(main) {
-        /*this是由scope來的*/
         this.down("#grdAppPage").getStore().load();
-        //this.subWinAppPage.un('closeEvent', this.fnCallBackReloadGrid);
     },
     initComponent: function() {
         if (Ext.isEmpty(this.subWinAppPage)) {
@@ -135,9 +133,9 @@ Ext.define('WS.AppPageQueryPanel', {
                     itemId: 'function_Query_Application',
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            var keyCode = t.parentEvent.keyCode;
+                            var keyCode = t.parentEvent.keyCode,mainPanel=this.up('panel');
                             if (keyCode == Ext.event.Event.ENTER) {
-                                this.up('panel').down("#btnQuery").handler();
+                                mainPanel.down("#btnQuery").handler();
                             };
                         }
                     }
@@ -150,14 +148,12 @@ Ext.define('WS.AppPageQueryPanel', {
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            var keyCode = t.parentEvent.keyCode;
+                            var keyCode = t.parentEvent.keyCode,mainPanel=this.up('panel');
                             if (keyCode == Ext.event.Event.ENTER) {
-                                this.up('panel').down("#btnQuery").handler();
+                                mainPanel.down("#btnQuery").handler();
                             };
-
                         }
                     }
-
                 }, {
                     xtype: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
@@ -166,9 +162,7 @@ Ext.define('WS.AppPageQueryPanel', {
                     margin: '0 5 0 5',
                     itemId: 'btnQuery',
                     handler: function() {
-                        var main = this.up('panel').up('panel');
-                        var _txtSearch = main.down("#txt_search").getValue();
-                        var _application = main.down("#function_Query_Application").getValue();
+                        var main = this.up('panel').up('panel'),_txtSearch = main.down("#txt_search").getValue(),_application = main.down("#function_Query_Application").getValue();
                         if (Ext.isEmpty(_application)) {
                             Ext.MessageBox.show({
                                 title: '系統提示',
@@ -296,7 +290,7 @@ Ext.define('WS.AppPageQueryPanel', {
                             param:{
                                 uuid:undefined
                             }
-                        })
+                        });
                         subWin.on('closeEvent', main.fnCallBackReloadGrid, main);
                         subWin.show();
                     }

@@ -11,7 +11,8 @@ Ext.define('WS.LogoutPanel', {
             layout: 'form',
             frame: true,
             autoWidth: true,
-            title: '<img src="./css/custimages/contact2.gif" style="height:16px;margin-bottom:8px;margin-right:10px;" align="middle">系統登出',
+            title: '系統登出',
+            icon: SYSTEM_URL_ROOT + '/css/images/contact2.gif',
             bodyPadding: '5 5 5 5',
             defaultType: 'label',
             items: [{
@@ -43,7 +44,7 @@ Ext.define('WS.LogoutPanel', {
                             });
                         } else {
                             location.href = _logonUrl;
-                        }
+                        };
                     }
                 }]
             }]

@@ -1,4 +1,3 @@
-   
 Ext.define('Model.AppMenu', {
         extend: 'Ext.data.Model',
         fields: [{
@@ -13,7 +12,6 @@ Ext.define('Model.AppMenu', {
             name: 'ORD'
         }]
     });
-
 Ext.define('WS.MenuTreeStore', {
     extend: 'Ext.data.TreeStore',
     root: {

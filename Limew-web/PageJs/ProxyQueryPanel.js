@@ -52,16 +52,7 @@ Ext.define('WS.ProxyQueryPanel', {
                         });
                     }
                 }
-            },
-            listeners: {
-                load: function() {
-                    // if (storeApplication.getCount() > 0) {
-                    //     Ext.getCmp('cmbApplication').setValue(storeApplication.data.getAt(0).data['UUID']);
-                    //     storeProxy.getProxy().setExtraParam('pApplicationHeadUuid', Ext.getCmp('cmbApplication').getValue());
-                    //     storeProxy.load();
-                    // }
-                }
-            },
+            },           
             remoteSort: true,
             sorters: [{
                 property: 'NAME'
@@ -108,15 +99,16 @@ Ext.define('WS.ProxyQueryPanel', {
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     initComponent: function() {
-        // if (Ext.isEmpty(this.subWinProxy)) {
-        //     Ext.MessageBox.show({
-        //         title: '系統提示',
-        //         icon: Ext.MessageBox.WARNING,
-        //         buttons: Ext.Msg.OK,
-        //         msg: '未實現 subWinProxy 物件,無法進行編輯操作!'
-        //     });
-        //     return false;
-        // };
+        if (Ext.isEmpty(this.subWinProxy)) {
+            Ext.MessageBox.show({
+                title: '系統提示',
+                icon: Ext.MessageBox.WARNING,
+                buttons: Ext.Msg.OK,
+                msg: '未實現 subWinProxy 物件,無法進行編輯操作!'
+            });
+            return false;
+        };
+        
         this.items = [{
             xtype: 'panel',
             title: '資源',

@@ -6,7 +6,6 @@
 3.add 的icon要換成icon , title的方式           [YES]
 4.不可以有 getCmp                              [YES]
 5.有一段程式碼不確定 line 69
-
 */
 /*columns 使用default*/
 Ext.define('WS.AppPagePickerWindow', {
@@ -83,7 +82,7 @@ Ext.define('WS.AppPagePickerWindow', {
                         keyup: function(obj, t) {
                             if (t.button == 12) {
                                 this.up('panel').down("#btnQuery").handler();
-                            }
+                            };
                         }
                     }
                 }, {

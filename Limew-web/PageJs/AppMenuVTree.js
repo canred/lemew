@@ -26,26 +26,23 @@
          }
      }]
  });
-
  Ext.define('WS.AppMenuVTree', {
      extend: 'Ext.data.TreeStore',
      root: {
          expanded: true
      },
      autoLoad: false,
-     autoSync:false,
+     autoSync: false,
      successProperty: 'success',
      model: 'TreeAppMenu',
      nodeParam: 'NAME_ZH_TW',
-     //nodeParam: 'id',
      proxy: {
          paramOrder: ['UUID', 'GROUPHEADUUID'],
          type: 'direct',
          directFn: WS.AuthorityAction.loadAppmenuTree2,
          extraParams: {
-             "UUID": 'aaa',
-             "GROUPHEADUUID": 'aaa'
+             "UUID": 'noData',
+             "GROUPHEADUUID": 'noData'
          }
      }
  });
-

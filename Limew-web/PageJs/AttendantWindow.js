@@ -192,7 +192,7 @@ Ext.define('WS.AttendantWindow', {
                         form = _main.getForm();
                     if (form.isValid() == false) {
                         return;
-                    }
+                    };
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
@@ -247,7 +247,7 @@ Ext.define('WS.AttendantWindow', {
                                 buttons: Ext.Msg.OK,
                                 msg: jsonObj.result.message
                             });
-                        }
+                        };
                     }
                 });
             } else {

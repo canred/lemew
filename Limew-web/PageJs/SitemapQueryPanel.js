@@ -143,10 +143,7 @@ Ext.define('WS.SitemapQueryPanel', {
                             });
                         } else {
                             this.fnQuery(this);
-                            // var btnQuery = this.down('#btnQuery')
-                            // btnQuery.handler.call(btnQuery.scope)
-                            // SiteMapVTaskFlag = true;
-                        }
+                        };
                     }, this);
                 };
             },
@@ -184,10 +181,6 @@ Ext.define('WS.SitemapQueryPanel', {
                         'change': function(obj, value) {
                             var mainPanel = this.up('panel').up('panel');
                             mainPanel.fnQuery(mainPanel);
-                            //console.log(this.up('panel').fnQuery);
-                            // var btnQuery = this.up('panel').down("#btnQuery");
-                            // btnQuery.handler();
-                            // SiteMapVTaskFlag = true;
                         }
                     }
                 }]
@@ -199,10 +192,9 @@ Ext.define('WS.SitemapQueryPanel', {
                 handler: function() {
                     var mainPanel = this.up('panel').up('panel'),
                         application = mainPanel.down("#cmbApplication").getValue();
-
-                    if (!mainPanel.fnCheckSubComponent())
+                    if (!mainPanel.fnCheckSubComponent()) {
                         return false;
-
+                    };
                     if (Ext.isEmpty(application)) {
                         Ext.MessageBox.show({
                             title: '系統提示',
@@ -211,7 +203,7 @@ Ext.define('WS.SitemapQueryPanel', {
                             msg: '請先選擇系統欄位!'
                         });
                         return false;
-                    }
+                    };
                     WS.SiteMapAction.loadTreeRoot(application, function(data) {
                         this.param.PARENTUUID = data.UUID;
                         var application = this.down('#cmbApplication').getValue();
@@ -258,9 +250,6 @@ Ext.define('WS.SitemapQueryPanel', {
                             var mainPanel = grid.up('panel').up('panel').up('panel'),
                                 uuid = grid.getStore().getAt(rowIndex).data.UUID;
                             mainPanel.fnOpenOrgn(undefined, uuid);
-                            //var main = grid.up('panel').up('panel').up('panel');
-                            //取得當前行的欄位資訊
-                            //grid.getStore().getAt(rowIndex).data.UUID;            
                         }
                     }, {
                         tooltip: '*刪除此節點',
@@ -270,9 +259,6 @@ Ext.define('WS.SitemapQueryPanel', {
                             var mainPanel = grid.up('panel').up('panel').up('panel'),
                                 uuid = grid.getStore().getAt(rowIndex).data.UUID;;
                             mainPanel.fnDelSitemap(uuid);
-                            //var main = grid.up('panel').up('panel').up('panel');                            
-                            //取得當前行的欄位資訊
-                            //grid.getStore().getAt(rowIndex).data.UUID;            
                         }
                     }],
                     sortable: false,
@@ -287,8 +273,8 @@ Ext.define('WS.SitemapQueryPanel', {
                                 treeStore.getProxy().setExtraParam('UUID', node.getParams()["UUID"]);
                             } else {
                                 treeStore.getProxy().setExtraParam('UUID', node.config.node.data["UUID"]);
-                            }
-                        }
+                            };
+                        };
                     },
                     checkchange: function(a, b, c, d) {
                         var oUuid = a.data.UUID;
@@ -302,7 +288,7 @@ Ext.define('WS.SitemapQueryPanel', {
                                         icon: Ext.MessageBox.WARNING,
                                         buttons: Ext.Msg.OK
                                     });
-                                }
+                                };
                             });
                         } else {
                             WS.SiteMapAction.setSiteMapIsActive(oUuid, "0", function(ret) {
@@ -313,25 +299,25 @@ Ext.define('WS.SitemapQueryPanel', {
                                         icon: Ext.MessageBox.WARNING,
                                         buttons: Ext.Msg.OK
                                     });
-                                }
+                                };
                             });
-                        }
+                        };
                     }
                 }
             }]
         }];
         this.callParent(arguments);
     },
-    listeners:{
-        afterrender:function(obj,eOpts){
+    listeners: {
+        afterrender: function(obj, eOpts) {
             this.myStore.application.load({
-                callback : function(obj) {
+                callback: function(obj) {
                     console.log(obj);
-                    if(obj.length>0){
+                    if (obj.length > 0) {
                         this.down('#cmbApplication').setValue(obj[0].data.UUID);
                     };
                 },
-                scope:this
+                scope: this
             });
         }
     }

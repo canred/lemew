@@ -24,7 +24,7 @@ Ext.define('WS.MenuQueryPanel', {
     lan: {},
     /*參數擴展*/
     param: {
-        PARENTUUID: undefined        
+        PARENTUUID: undefined
     },
     /*值擴展*/
     val: {},
@@ -81,8 +81,8 @@ Ext.define('WS.MenuQueryPanel', {
                     params: {
                         'UUID': data.UUID
                     }
-                });                
-            }
+                });
+            };
         }, obj);
     },
     fnActiveRender: function(value, id, r) {
@@ -134,13 +134,8 @@ Ext.define('WS.MenuQueryPanel', {
                 applicationHeadUuid: this.down('#cmbApplication').getValue()
             }
         });
-        /*註冊事件*/
         subWin.on('closeEvent', this.fnCallBackCloseEvent, this);
-        /*設定參數*/
         subWin.show();
-    },
-    fnOpenOrgn: function(uuid, parendUuid) {
-        /*要把scope變成SitemapQueryPanel主體*/
     },
     fnRemoveMenu: function(mainPanel, menuUuid) {
         Ext.Msg.show({
@@ -157,7 +152,7 @@ Ext.define('WS.MenuQueryPanel', {
         });
     },
     initComponent: function() {
-        this.myStore.tree = Ext.create('WS.MenuTreeStore', {});      
+        this.myStore.tree = Ext.create('WS.MenuTreeStore', {});
         if (!this.fnCheckSubComponent()) {
             return false;
         };
@@ -207,7 +202,7 @@ Ext.define('WS.MenuQueryPanel', {
                             subWinProxyPickerWindow: 'WS.ProxyPickerWindow',
                             param: {
                                 uuid: undefined,
-                                parentUuid:PARENTUUID,
+                                parentUuid: PARENTUUID,
                                 applicationHeadUuid: this.down('#cmbApplication').getValue()
                             }
                         });
@@ -287,17 +282,16 @@ Ext.define('WS.MenuQueryPanel', {
             }]
         }];
         this.callParent(arguments);
-    }
-    ,
-    listeners:{
-        'afterrender':function(obj,eOpts){            
+    },
+    listeners: {
+        'afterrender': function(obj, eOpts) {
             obj.myStore.application.load({
-                'callback' : function(obj) {
-                    if(obj.length>0){
-                       this.down('#cmbApplication').setValue(obj[0].data.UUID);
+                'callback': function(obj) {
+                    if (obj.length > 0) {
+                        this.down('#cmbApplication').setValue(obj[0].data.UUID);
                     };
                 },
-                'scope':this
+                'scope': this
             })
         }
     }
