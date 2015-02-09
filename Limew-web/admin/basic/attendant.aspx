@@ -5,14 +5,12 @@
 <script language="javascript" type="text/javascript">
 Ext.onReady(function() {    
     /*實例化人員編輯的物件*/    
-    var subWinAttendant = Ext.create('WS.AttendantWindow',{});
-
     WS_ATTENDANTQUERYPANEL = Ext.create('WS.AttendantQueryPanel',{
         param:{
             companyUuid:'<%= getUser().COMPANY_UUID %>'
         },
         /*將實例化的人員編輯物件傳入*/
-        'subWinAttendant':subWinAttendant
+        'subWinAttendant':'WS.AttendantWindow'
     });
 
     WS_ATTENDANTQUERYPANEL.render('divMain');

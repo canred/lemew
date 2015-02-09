@@ -3,7 +3,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script language="javascript" type="text/javascript">
 Ext.onReady(function () {
-    WS_PROXYQUERYPANEL = Ext.create('WS.ProxyQueryPanel',{});
+	alert('ProxyWindow未實現');
+    WS_PROXYQUERYPANEL = Ext.create('WS.ProxyQueryPanel',{
+    	//subWinProxy:'WS.'
+    });
     WS_PROXYQUERYPANEL.render('divMain');
 });
 </script>
