@@ -16,7 +16,7 @@
     <meta name="keywords" content="website, css, center, margin, centered, content, simply, screen, page, today, auto, left, attributes, setup, float, file, container, looked, code, line" />
     <link rel="stylesheet" href="<%= Page.ResolveUrl("~/css/mpStand.css")%>" type="text/css" />
     <link rel="stylesheet" href="<%= Page.ResolveUrl("~/css/menu.css")%>" type="text/css" />
-    <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/jquery-1.4.1.js")%>'></script>
+    <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/jquery.js")%>'></script>
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/superfish.js")%>'></script>
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/supersubs.js")%>'></script>
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/js/InitialiseMenu.js")%>'></script> 
@@ -54,42 +54,22 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SiteMapAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
-            
-            
-
-    
-    
-
-            
-            // Ext.Loader.loadScript([                
-            //   SYSTEM_URL_ROOT +'/pagejs/AttendantQueryPanel.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/AttendantWindow.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/ApplicationWindow.js',              
-            //   SYSTEM_URL_ROOT +'/pagejs/CompanyQueryPanel.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/CompanyWindow.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/ChangeAttendantWindow.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/LogonPanel.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/LogoutPanel.js',
-            //   SYSTEM_URL_ROOT +'/pagejs/SystemQueryPanel.js',              
-            // ]);            
         });
-
     </script>
 	<style type ="text/css">
-    .x-tip {
-        width: auto !important;
-    }
-    .x-tip-body {
-        width: auto !important;
-    }
-    .x-tip-body span {
-        width: auto !important;
-    }
-    .pure-button-error  {
-        background: rgb(202, 60, 60); /* this is an orange */
-    }
+        .x-tip {
+            width: auto !important;
+        }
+        .x-tip-body {
+            width: auto !important;
+        }
+        .x-tip-body span {
+            width: auto !important;
+        }
+        .pure-button-error  {
+            background: rgb(202, 60, 60); /* this is an orange */
+        }
     </style>
-
     <asp:ContentPlaceHolder ID="head" runat="server">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </asp:ContentPlaceHolder>  
