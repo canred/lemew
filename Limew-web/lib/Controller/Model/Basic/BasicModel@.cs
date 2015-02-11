@@ -2064,6 +2064,24 @@ namespace Limew.Model.Basic
                 throw ex;
             }
         }
+
+        public IList<GroupAppmenu_Record> getGroupAppmenu_By_AppMenuUuid(string pAppMenuUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Basic.Table.GroupAppmenu groupappmenu = new Limew.Model.Basic.Table.GroupAppmenu(dbc);
+                return groupappmenu.Where(new SQLCondition(groupappmenu)
+                    .Equal(groupappmenu.APPMENU_UUID, pAppMenuUuid)
+                    ).FetchAll<GroupAppmenu_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
     }
 }
 

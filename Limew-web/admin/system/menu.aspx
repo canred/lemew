@@ -17,6 +17,6 @@ Ext.onReady(function () {
     WS_MENUQUERYPANEL.render('divMain');
 });
 </script>			
-div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
+<div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
 <script type="text/javascript" src='<%= Page.ResolveUrl("~/pageJs/keeySession.js")%>'></script>           
 </asp:Content>

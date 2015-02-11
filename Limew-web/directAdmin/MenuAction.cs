@@ -603,8 +603,14 @@ public class MenuAction : BaseAction
             if (dtAppmenu.AllRecord().Count > 0)
             {
                 /*將List<RecordBase>變成JSON字符串*/
-                var drSitemap = dtAppmenu.AllRecord().First();
-                drSitemap.gotoTable().Delete(drSitemap);
+                var drAppmenu = dtAppmenu.AllRecord().First();
+                var drsGroupAppmenu = modBasic.getGroupAppmenu_By_AppMenuUuid(drAppmenu.UUID);
+                if (drsGroupAppmenu.Count > 0) {
+                    foreach (var item in drsGroupAppmenu) {
+                        item.gotoTable().Delete(item);
+                    }
+                }
+                drAppmenu.gotoTable().Delete(drAppmenu);
                 return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
             }
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("delete SiteMap record fail."));

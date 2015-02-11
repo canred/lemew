@@ -18,6 +18,21 @@ Ext.define('APPLICATION', {
         'UUID'
     ]
 });
+Ext.define('APPLICATIONHEADV', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CREATE_DATE',
+        'CREATE_USER',
+        'DESCRIPTION',
+        'ID',
+        'IS_ACTIVE',
+        'NAME',
+        'UPDATE_DATE',
+        'UPDATE_USER',
+        'UUID',
+        'WEB_SITE'
+    ]
+});
 Ext.define('APPPAGE', {
     extend: 'Ext.data.Model',
     fields: [

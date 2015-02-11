@@ -1,4 +1,3 @@
-/*WS.ChangeAttendantWindow*/
 /*TODO*/
 /*
 1.Model 要集中                                 [NO]
@@ -6,13 +5,14 @@
 3.add 的icon要換成icon , title的方式           [YES]
 4. getCmp
 5. tree 要改變一次顯示                         [YES]
-6. 左右拉的功能未完成
-7. 新增的測式未完成
-8. 刪除的測式未完成
-9. 勾選測式
-10.有一些程式碼已經沒有在使用了哦，要刪除
-11.預設頁面的功能也消取
-12.icon & title 
+6. 左右拉的功能未完成                          [YES]
+7. 新增的測式未完成                            [YES]
+   7.1  勾選功能失效                           [YES]
+8. 刪除的測式未完成                            [YES]
+9. 勾選測式                                    [YES]
+10.有一些程式碼已經沒有在使用了哦，要刪除      [YES]
+11.預設頁面的功能                              [YES]
+12.icon & title                                [YES]
 13.當是編輯的狀態要等到所有的資料都已經ready
    才可以開啟維護模式
 */
@@ -37,6 +37,7 @@ Ext.define('WS.GroupWindow', {
         proxy.setExtraParam('company_uuid', mainWin.param.companyUuid);
         store.loadPage(1);
     },
+
     myStore: {
         applicationheadheadv: Ext.create('Ext.data.Store', {
             successProperty: 'success',
@@ -154,6 +155,20 @@ Ext.define('WS.GroupWindow', {
         }),
         appmenutree: Ext.create('WS.AppMenuVTree', {})
     },
+    fnSetParentsChecked: function(obj, checked) {
+        obj.set('checked', checked);
+        if (!obj.parentNode.data.root) {
+            this.fnSetParentsChecked(obj.parentNode, checked);
+        };
+    },
+    fnSetChildrenUnchecked: function(obj, checked) {
+        obj.set('checked', checked);
+        if (obj.childNodes.length > 0) {
+            for (var i = 0; i < obj.childNodes.length; i++) {
+                this.fnSetChildrenUnchecked(obj.childNodes[i], checked);
+            }
+        };
+    },
     width: 1000,
     height: 700,
     maxWidth: 930,
@@ -261,6 +276,12 @@ Ext.define('WS.GroupWindow', {
                     if (form.isValid() == false) {
                         return;
                     };
+                    if (Ext.isEmpty(mainWin.down('#groupHeadFormUuid').getValue())) {
+                        mainWin.param.isNew = true;
+                    } else {
+                        mainWin.param.isNew = false;
+                    };
+
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
@@ -268,15 +289,28 @@ Ext.define('WS.GroupWindow', {
                             this.down('#bnt_Query').setDisabled(false);
                             this.down('#bnt_Delete').setDisabled(false);
                             var mainWin = this;
-                            Ext.MessageBox.show({
-                                title: '維護群組定義',
-                                msg: '操作完成',
-                                icon: Ext.MessageBox.INFO,
-                                buttons: Ext.Msg.OK,
-                                fn: function() {
-                                    mainWin.down('#groupHeadFormUuid').setValue(action.result.UUID);
-                                }
-                            });
+                            if (!mainWin.param.isNew) {
+                                Ext.MessageBox.show({
+                                    title: '維護群組定義',
+                                    msg: '操作完成',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    fn: function() {
+                                        mainWin.down('#groupHeadFormUuid').setValue(action.result.UUID);
+                                    }
+                                });
+                            } else {
+                                Ext.MessageBox.show({
+                                    title: '維護群組定義',
+                                    msg: '新增操作完成，系統將自動關閉視窗,請由編輯功能進入再完成相關設定!',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    fn: function() {
+                                        mainWin.close();
+                                    }
+                                });
+                            };
+
                         },
                         failure: function(form, action) {
                             Ext.MessageBox.show({
@@ -319,6 +353,7 @@ Ext.define('WS.GroupWindow', {
             }]
         }), {
             xtype: 'tabpanel',
+            itemId:'tabMain',
             plain: true,
             padding: 10,
             border: true,
@@ -375,27 +410,18 @@ Ext.define('WS.GroupWindow', {
                             xtype: 'checkcolumn',
                             listeners: {
                                 'checkchange': function(obj, rowIndex, checked) {
-                                    // var grid = obj.up().view,
-                                    //     store = grid.store,
-                                    //     record = store.getAt(rowIndex),
-                                    //     uuid = record.data.UUID,
-                                    //     mainWin = grid.up('window'),
-                                    //     is_default_page = record.data.IS_DEFAULT_PAGE;
-                                    // if (!is_default_page) {
-                                    //     var _item = Ext.get(grid.all.elements[rowIndex].childNodes[0].childNodes[0].childNodes[2].childNodes[0]);
-                                    //     if (_item != null) {
-                                    //         _item.remove();
-                                    //     };
-                                    // } else {
-                                    //     WS.AuthorityAction.setGroupAppmenuIsDefaultPage(uuid,
-                                    //         mainWin.param.uuid, checked,
-                                    //         function(data) {
-                                    //             /*若是勾選*/
-                                    //             if (checked) {
-                                    //                 record.set('checked', checked);
-                                    //             };
-                                    //         });
-                                    // };
+                                    var mainWin = this.up('window'),
+                                        store = mainWin.myStore.appmenutree,
+                                        record = store.getAt(rowIndex),
+                                        pUuid = record.data.UUID,
+                                        pIsDefaultPage = record.data.IS_DEFAULT_PAGE;
+                                    WS.AuthorityAction.setGroupAppmenuIsDefaultPage(pUuid,
+                                        mainWin.param.uuid, checked,
+                                        function(data) {
+                                            if (checked) {
+                                                record.set('checked', checked);
+                                            };
+                                        });
                                 }
                             },
                             sortable: false,
@@ -419,7 +445,30 @@ Ext.define('WS.GroupWindow', {
                             dataIndex: 'PARAMETER_CLASS',
                             align: 'left',
                             sortable: false
-                        }]
+                        }],
+                        listeners: {
+                            checkchange: function(node, checked, eOpts) {
+                                var mainWin = this.up('window'),
+                                    pGroupHeadUuid = mainWin.param.uuid,
+                                    pUuid = node.data.UUID;
+                                if (node.data.checked == true) {
+                                    WS.AuthorityAction.setGroupAppmenu(pUuid, pGroupHeadUuid, "Y", function(ret) {
+                                        this.fnSetParentsChecked(node, node.data.checked);
+                                    }, mainWin);
+                                } else {
+                                    WS.AuthorityAction.setGroupAppmenu(pUuid, pGroupHeadUuid, "N", function(ret) {
+                                        this.fnSetChildrenUnchecked(node, node.data.checked);
+                                        var _is_default_page = node.data.IS_DEFAULT_PAGE;
+                                        if (_is_default_page && _default_page_checked) {
+                                            var _tree = this.down('#appMenuTree');
+                                            var _rowNumber = _tree.view.store.indexOf(node);
+                                            Ext.get(Ext.get(_tree.view.all.elements[_rowNumber].childNodes[3].id)).checked = false;
+                                        };
+                                    }, mainWin);
+
+                                };
+                            }
+                        }
                     }]
                 }]
             }, {
@@ -489,8 +538,6 @@ Ext.define('WS.GroupWindow', {
                             viewConfig: {
                                 plugins: {
                                     ptype: 'gridviewdragdrop',
-                                    dragGroup: 'firstGridDDGroup',
-                                    dropGroup: 'secondGridDDGroup'
                                 },
                                 listeners: {
                                     drop: function(node, data, dropRec, dropPosition) {
@@ -505,7 +552,7 @@ Ext.define('WS.GroupWindow', {
                             width: '50%',
                             store: this.myStore.attendantnotingroupattendant,
                             columns: [{
-                                header: "繁體名稱",
+                                header: "名稱",
                                 sortable: true,
                                 width: '20%',
                                 dataIndex: 'C_NAME'
@@ -537,8 +584,6 @@ Ext.define('WS.GroupWindow', {
                             viewConfig: {
                                 plugins: {
                                     ptype: 'gridviewdragdrop',
-                                    dragGroup: 'secondGridDDGroup',
-                                    dropGroup: 'firstGridDDGroup'
                                 },
                                 listeners: {
                                     drop: function(node, data, dropRec, dropPosition) {
@@ -553,7 +598,7 @@ Ext.define('WS.GroupWindow', {
                             width: '50%',
                             store: this.myStore.attendantingroupattendant,
                             columns: [{
-                                header: "繁體名稱",
+                                header: "名稱",
                                 sortable: true,
                                 width: '20%',
                                 dataIndex: 'C_NAME'
@@ -578,7 +623,6 @@ Ext.define('WS.GroupWindow', {
                             stripeRows: true,
                             title: '已選取人員'
                         }]
-
                     }]
                 }]
             }]
@@ -595,6 +639,11 @@ Ext.define('WS.GroupWindow', {
             if (this.param.companyUuid == undefined) {
                 WS.UserAction.getUserInfo(function(jsonObj) {
                     mainWin.param.companyUuid = jsonObj.COMPANY_UUID;
+                    var store = mainWin.myStore.attendantingroupattendant,
+                        proxy = store.getProxy();
+                    proxy.setExtraParam('group_head_uuid', mainWin.param.uuid);
+                    proxy.setExtraParam('company_uuid', mainWin.param.companyUuid);
+                    store.loadPage(1);
                 });
             };
             myMask = new Ext.LoadMask(mainWin.down('#AppMenuPanel'), {
@@ -637,6 +686,7 @@ Ext.define('WS.GroupWindow', {
                 mainWin.down('#groupHeadForm').getForm().reset();
                 mainWin.down('#bnt_Query').setDisabled(true);
                 mainWin.down('#bnt_Delete').setDisabled(true);
+                mainWin.down('#tabMain').setDisabled(true);
             };
         },
         'close': function() {
