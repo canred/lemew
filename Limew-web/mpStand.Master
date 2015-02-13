@@ -23,6 +23,7 @@
     <script type="text/javascript" src='<%= Page.ResolveUrl("~/Proxy.ashx")%>'></script>
     <!--引入ExtJs相關的設定-->
     <script language="javascript" type="text/javascript">    
+        // 要引入一個UTIL變量
         // /*設定ExtJs ux路徑*/
         Ext.Loader.setPath('Ext.ux', SYSTEM_URL_ROOT + '/js/ux');
         Ext.Loader.setPath('WS', SYSTEM_URL_ROOT + '/pagejs');
@@ -36,6 +37,9 @@
             Ext.Loader.loadScript([                
               SYSTEM_URL_ROOT +'/pagejs/AllModel.js'
             ]);     
+
+            /*初始化UTIL類*/
+            UTIL = Ext.create('WS.Util');
             //引入ExtJs Direct Provider
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ApplicationAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ADAction"));

@@ -9,6 +9,7 @@
         	}        	
         });
         WS_CHANGEATTENDANTWINDOW.show();
+        UTIL.session.fnKeep();
     });
 </script>			
 <center>

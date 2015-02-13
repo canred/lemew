@@ -9,8 +9,8 @@ Ext.onReady(function () {
     });
     WS_PROXYQUERYPANEL.render('divMain');
 });
+UTIL.session.fnKeep();
 </script>
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
-<script type="text/javascript" src='<%= Page.ResolveUrl("~/pageJs/keeySession.js")%>'></script>
 </asp:Content>
 

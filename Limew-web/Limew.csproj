@@ -10276,6 +10276,17 @@
     <Content Include="Warming\NoPermission.aspx" />
     <Content Include="Web.config" />
     <Content Include="css\custImages\logo.psd" />
+    <Content Include="lib\Controller\Design\Lw.xsc">
+      <DependentUpon>Lw.xsd</DependentUpon>
+    </Content>
+    <None Include="lib\Controller\Design\Lw.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Lw.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="lib\Controller\Design\Lw.xss">
+      <DependentUpon>Lw.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Limew.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -10364,6 +10375,46 @@
     <Compile Include="lib\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="lib\Controller\Design\Lw.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lw.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="lib\Controller\Model\Lw\LwModel%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\LwModel.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Cust%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Cust.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrder%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrder.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderDetail%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderDetail.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderStatus%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderStatus.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Gcategory%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Gcategory.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Goods%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Goods.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\PayMethod%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\PayMethod.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\PaySataus%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\PaySataus.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrderDetail_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrderStatus_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrder_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\Cust_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\Gcategory_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\Goods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\PayMethod_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\PaySataus_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\ShippingStatus_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\SupplierGoods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\Supplier_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\ShippingStatus%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\ShippingStatus.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Supplier%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Supplier.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\SupplierGoods%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\SupplierGoods.cs" />
     <Compile Include="lib\StoreSession.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
