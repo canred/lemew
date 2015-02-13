@@ -1,6 +1,6 @@
 ﻿
 Ext.onReady(function() {
-    Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UserAction"));
+    
     var MainTask = {
         run: function() {
             WS.UserAction.keepSession(function(data) {

@@ -281,7 +281,6 @@ Ext.define('WS.GroupWindow', {
                     } else {
                         mainWin.param.isNew = false;
                     };
-
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
@@ -310,7 +309,6 @@ Ext.define('WS.GroupWindow', {
                                     }
                                 });
                             };
-
                         },
                         failure: function(form, action) {
                             Ext.MessageBox.show({
@@ -353,7 +351,7 @@ Ext.define('WS.GroupWindow', {
             }]
         }), {
             xtype: 'tabpanel',
-            itemId:'tabMain',
+            itemId: 'tabMain',
             plain: true,
             padding: 10,
             border: true,
