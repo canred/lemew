@@ -45,11 +45,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LK">
+    <Reference Include="LK, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>refDll\LK.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json.Net35, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -104,11 +105,7 @@
     <Content Include="js\bootstrap-files.js" />
     <Content Include="js\bootstrap-manifest.js" />
     <Content Include="js\chart\canred.js" />
-    <Content Include="js\ext-all-rtl-sandbox-debug.js" />
-    <Content Include="js\ext-all-rtl-sandbox.js" />
-    <Content Include="js\ext-all-sandbox-debug.js" />
-    <Content Include="js\ext-all-sandbox.js" />
-    <Content Include="js\ext-bootstrap.js" />
+    <Content Include="js\jquery.js" />
     <Content Include="js\packages\ext-aria\.sencha\package\Boot.js" />
     <Content Include="js\packages\ext-aria\.sencha\package\bootstrap-impl.xml" />
     <Content Include="js\packages\ext-aria\.sencha\package\build-impl.xml" />
@@ -10268,10 +10265,31 @@
     <Content Include="js\ux\Explorer.js" />
     <Content Include="js\ux\google\Api.js" />
     <Content Include="js\ux\google\Feeds.js" />
-    <Content Include="PageJs\Ext.Logon.js" />
-    <Content Include="PageJs\Ext.NoPermission.js" />
-    <Content Include="PageJs\Ext.ScheduleForm.js" />
-    <Content Include="PageJs\Ext.SystemInfo.js" />
+    <Content Include="PageJs\AllModel.js" />
+    <Content Include="PageJs\ApplicationWindow.js" />
+    <Content Include="PageJs\AppMenuVTree.js" />
+    <Content Include="PageJs\AppPagePickerWindow.js" />
+    <Content Include="PageJs\AppPageQueryPanel.js" />
+    <Content Include="PageJs\AppPageWindow.js" />
+    <Content Include="PageJs\AttendantPickerWindow.js" />
+    <Content Include="PageJs\AttendantQueryPanel.js" />
+    <Content Include="PageJs\AttendantWindow.js" />
+    <Content Include="PageJs\ChangeAttendantWindow.js" />
+    <Content Include="PageJs\CompanyQueryPanel.js" />
+    <Content Include="PageJs\CompanyWindow.js" />
+    <Content Include="PageJs\GroupQueryPanel.js" />
+    <Content Include="PageJs\GroupWindow.js" />
+    <Content Include="PageJs\LogonPanel.js" />
+    <Content Include="PageJs\LogoutPanel.js" />
+    <Content Include="PageJs\MenuQueryPanel.js" />
+    <Content Include="PageJs\MenuTreeStore.js" />
+    <Content Include="PageJs\MenuWindow.js" />
+    <Content Include="PageJs\ProxyPickerWindow.js" />
+    <Content Include="PageJs\ProxyQueryPanel.js" />
+    <Content Include="PageJs\SitemapQueryPanel.js" />
+    <Content Include="PageJs\SitemapTreeStore.js" />
+    <Content Include="PageJs\SystemQueryPanel.js" />
+    <Content Include="PageJs\Util.js" />
     <Content Include="refDll\log4net.xml" />
     <Content Include="Warming\NoPermission.aspx" />
     <Content Include="Web.config" />
@@ -10687,7 +10705,9 @@
     <Content Include="admin\system\sitemap.aspx" />
     <Content Include="admin\system\system.aspx" />
     <Content Include="Configs\SMTP.config" />
-    <None Include="Configs\UserInfo.config" />
+    <None Include="Configs\UserInfo.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="css\custImages\1368535722_14_Add.png" />
     <Content Include="css\custImages\active.gif" />
     <Content Include="css\custImages\active.png" />
@@ -10778,52 +10798,7 @@
     <Content Include="js\chart\theme\Theme.js" />
     <Content Include="js\chart\Tip.js" />
     <Content Include="js\chart\TipSurface.js" />
-    <Content Include="js\ext-all-debug.js" />
-    <Content Include="js\ext-all-rtl-debug.js" />
-    <Content Include="js\ext-all-rtl.js" />
     <Content Include="js\ext-all.js" />
-    <Content Include="js\ext-debug-w-comments.js" />
-    <Content Include="js\ext-debug.js" />
-    <Content Include="js\ext.js" />
-    <Content Include="js\file-header.js" />
-    <Content Include="js\InitialiseMenu.js" />
-    <Content Include="js\jquery-1.4.1.js" />
-    <Content Include="js\jquery-1.4.1.min.js" />
-    <Content Include="js\jquery.cookie.js" />
-    <Content Include="js\jquery.datepick.js" />
-    <Content Include="js\jquery.dimensions.js" />
-    <Content Include="js\jquery.filestyle.js" />
-    <Content Include="js\jquery.flot.crosshair.js" />
-    <Content Include="js\jquery.flot.fillbetween.js" />
-    <Content Include="js\jquery.flot.image.js" />
-    <Content Include="js\jquery.flot.js" />
-    <Content Include="js\jquery.flot.min.js" />
-    <Content Include="js\jquery.flot.navigate.js" />
-    <Content Include="js\jquery.flot.pie.js" />
-    <Content Include="js\jquery.flot.pie.min.js" />
-    <Content Include="js\jquery.flot.resize.js" />
-    <Content Include="js\jquery.flot.selection.js" />
-    <Content Include="js\jquery.flot.stack.js" />
-    <Content Include="js\jquery.flot.symbol.js" />
-    <Content Include="js\jquery.flot.threshold.js" />
-    <Content Include="js\jquery.Guid.js" />
-    <Content Include="js\jquery.metadata.js" />
-    <Content Include="js\jquery.overlay.js" />
-    <Content Include="js\jquery.scrollable.js" />
-    <Content Include="js\jquery.tabs.js" />
-    <Content Include="js\jquery.timepickr.js" />
-    <Content Include="js\jquery.timer.js" />
-    <Content Include="js\jquery.tools.js" />
-    <Content Include="js\jquery.tooltip.js" />
-    <Content Include="js\jquery.treeview.js" />
-    <Content Include="js\jquery.ui.accordion.js" />
-    <Content Include="js\jquery.ui.core.js" />
-    <Content Include="js\jquery.ui.draggable.js" />
-    <Content Include="js\jquery.ui.droppable.js" />
-    <Content Include="js\jquery.ui.mouse.js" />
-    <Content Include="js\jquery.ui.resizable.js" />
-    <Content Include="js\jquery.ui.widget.js" />
-    <Content Include="js\jquery.url.js" />
     <Content Include="js\locale\ext-lang-zh_TW.js" />
     <Content Include="js\resources\css\ext-all-access-debug.css" />
     <Content Include="js\resources\css\ext-all-access-rtl-debug.css" />
@@ -14045,7 +14020,6 @@
     <Content Include="js\shared\screens\writer-thumb.png" />
     <Content Include="js\shared\states.js" />
     <Content Include="js\superfish.js" />
-    <Content Include="js\supersubs.js" />
     <Content Include="js\system-Config.js" />
     <Content Include="js\ux\ajax\DataSimlet.js" />
     <Content Include="js\ux\ajax\JsonSimlet.js" />
@@ -14136,16 +14110,6 @@
     <Content Include="js\ux\TabScrollerMenu.js" />
     <Content Include="js\ux\ToolbarDroppable.js" />
     <Content Include="js\ux\TreePicker.js" />
-    <Content Include="PageJs\Ext.ApplicationHeadForm.js" />
-    <Content Include="PageJs\Ext.AppMenuForm.js" />
-    <Content Include="PageJs\Ext.AppPageForm.js" />
-    <Content Include="PageJs\Ext.AppPagePicker.js" />
-    <Content Include="PageJs\Ext.AttendantForm.js" />
-    <Content Include="PageJs\Ext.AttendantPicker.js" />
-    <Content Include="PageJs\Ext.CompanyForm.js" />
-    <Content Include="PageJs\Ext.DepartmentForm.js" />
-    <Content Include="PageJs\Ext.GroupHeadForm.js" />
-    <Content Include="PageJs\keeySession.js" />
     <Content Include="refDll\log4net.dll" />
     <Content Include="refDll\MySql.Data.dll" />
     <Content Include="refDll\Newtonsoft.Json.Net35.dll" />
@@ -15032,8 +14996,6 @@
     <Content Include="initDataBase\SQL\MYSQL\DATA\key.txt" />
     <Content Include="initDataBase\SQL\ORACLE\DATA\key.txt" />
     <Content Include="PageJs\ext-error-log.js" />
-    <Content Include="PageJs\Ext.ProxyForm.js" />
-    <Content Include="PageJs\Ext.ProxyPicker.js" />
     <Content Include="js\System-Config.ashx" />
     <Content Include="js\shared\states_remote\states.php" />
     <Content Include="js\resources\sencha-amf\build\resources\Readme.md" />
