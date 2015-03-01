@@ -37,7 +37,6 @@ Ext.define('WS.GroupWindow', {
         proxy.setExtraParam('company_uuid', mainWin.param.companyUuid);
         store.loadPage(1);
     },
-
     myStore: {
         applicationheadheadv: Ext.create('Ext.data.Store', {
             successProperty: 'success',

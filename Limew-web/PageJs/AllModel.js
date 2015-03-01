@@ -151,3 +151,214 @@ Ext.define('V_APPMENU_PROXY_MAP', {
         'APPMENU_UUID',
     ]
 });
+
+
+/*Limew*/
+Ext.define('CUST', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_UUID',
+        'CUST_NAME',
+        'CUST_TEL',
+        'CUST_FAX',
+        'CUST_ADDRESS',
+        'CUST_SALES_NAME',
+        'CUST_SALES_PHONE',
+        'CUST_SALES_EMAIL',
+        'CUST_PS',
+        'CUST_LEVEL',
+        'CUST_IS_ACTIVE',
+        'CUST_LAST_BUY'
+    ]
+});
+
+Ext.define('CUST_ORG', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORG_UUID',
+        'CUST_UUID',
+        'CUST_ORG_SALES_NAME',
+        'CUST_ORG_SALES_PHONE',
+        'CUST_ORG_SALES_EMAIL',
+        'CUST_ORG_PS',
+        'CUST_ORG_NAME',
+        'CUST_ORG_IS_ACTIVE'
+    ]
+});
+
+Ext.define('CUST_ORDER', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORDER_UUID',
+        'CUST_ORDER_CR',
+        'CUST_ORDER_ID',
+        'CUST_ORDER_TOTAL_PRICE',
+        'CUST_ORDER_STATUS_UUID',
+        'CUST_ORDER_IS_ACTIVE',
+        'CUST_UUID',
+        'CUST_ORDER_TYPE',
+        'CUST_ORDER_CUST_NAME',
+        'CUST_ORDER_DEPT',
+        'CUST_ORDER_USER_NAME',
+        'CUST_ORDER_USER_PHONE',
+        'CUST_ORDER_PURCHASE_AMOUNT',
+        'CUST_ORDER_PRINT_USER_NAME',
+        'CUST_ORDER_SHIPPING_DATE',
+        'SHIPPING_STATUS_UUID',
+        'CUST_ORDER_PO_NUMBER',
+        'PAY_STATUS_UUID',
+        'PAY_METHOD_UUID',
+        'CUST_ORDER_INVOICE_NUMBER',
+        'CUST_ORDER_LIMIT_DATE',
+        'CUST_ORG_UUID'
+    ]
+});
+
+
+
+
+Ext.define('GOODS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'GOODS_UUID',
+        'GOODS_SN',
+        'GOODS_COST',
+        'GOODS_SALE',
+        'GOODS_PRICE',
+        'GOODS_FOCUS',
+        'GOODS_IS_ACTIVE',
+        'SUPPLIER_UUID',
+        'GCATEGORY_UUID',
+        'GOODS_NAME',
+        'GOODS_PS'
+    ]
+});
+
+Ext.define('SUPPLIER', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'SUPPLIER_UUID',
+        'SUPPLIER_NAME',
+        'SUPPLIER_TEL',
+        'SUPPLIER_FAX',
+        'SUPPLIER_ADDRESS',
+        'SUPPLIER_CONTACT_NAME',
+        'SUPPLIER_SALES_NAME',
+        'SUPPLIER_SALES_PHONE',
+        'SUPPLIER_CONTACT_PHONE',
+        'SUPPLIER_CONTACT_EMAIL',
+        'SUPPLIER_SALES_EMAIL',
+        'SUPPLIER_PS',
+        'SUPPLIER_IS_ACTIVE'
+    ]
+});
+
+Ext.define('SUPPLIER_GOODS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'SUPPLIER_UUID',
+        'SUPPLIER_GOODS_UUID',
+        'UNIT_UUID',
+        'SUPPLIER_GOODS_SPEC',
+        'SUPPLIER_GOODS_SN',
+        'SUPPLIER_GOODS_PRICE',
+        'SUPPLIER_GOODS_NAME',
+        'SUPPLIER_GOODS_IS_ACTIVE',
+        'SUPPLIER_GOODS_COST'
+    ]
+});
+
+Ext.define('V_GOODS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'GOODS_UUID',
+        'GOODS_SN',
+        'GOODS_COST',
+        'GOODS_SALE',
+        'GOODS_PRICE',
+        'GOODS_FOCUS',
+        'GOODS_NAME',
+        'GOODS_IS_ACTIVE',
+        'SUPPLIER_UUID',
+        'SUPPLIER_NAME',
+        'SUPPLIER_PS',
+        'GCATEGORY_UUID',
+        'GCATEGORY_NAME',
+        'GCATEGORY_FULL_NAME',
+        'GOODS_PS'
+    ]
+});
+
+
+Ext.define('V_CUST_ORDER', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORDER_UUID',
+        'CUST_ORDER_CR',
+        'CUST_ORDER_ID',
+        'CUST_ORDER_TOTAL_PRICE',
+        'CUST_ORDER_STATUS_UUID',
+        'CUST_ORDER_IS_ACTIVE',
+        'CUST_UUID',
+        'CUST_ORDER_TYPE',
+        'CUST_ORDER_CUST_NAME',
+        'CUST_ORDER_DEPT',
+        'CUST_ORDER_USER_NAME',
+        'CUST_ORDER_USER_PHONE',
+        'CUST_ORDER_PURCHASE_AMOUNT',
+        'CUST_ORDER_PRINT_USER_NAME',
+        'CUST_ORDER_SHIPPING_DATE',
+        'SHIPPING_STATUS_UUID',
+        'CUST_ORDER_PO_NUMBER',
+        'PAY_STATUS_UUID',
+        'PAY_METHOD_UUID',
+        'CUST_ORDER_INVOICE_NUMBER',
+        'CUST_ORDER_LIMIT_DATE',
+        'CUST_ORG_UUID',
+        'CUST_ORDER_HAS_TAX',
+        'CUST_NAME',
+        'CUST_ADDRESS',
+        'CUST_FAX',
+        'CUST_IS_ACTIVE',
+        'CUST_LAST_BUY',
+        'CUST_PS',
+        'CUST_SALES_EMAIL',
+        'CUST_SALES_NAME',
+        'CUST_SALES_PHONE',
+        'CUST_TEL',
+        'PAY_STATUS_NAME',
+        'PAY_METHOD_NAME',
+        'CUST_ORG_SALES_NAME',
+        'CUST_ORG_SALES_PHONE',
+        'CUST_ORG_SALES_EMAIL',
+        'CUST_ORG_PS',
+        'CUST_ORG_NAME',
+        'CUST_ORG_IS_ACTIVE'
+    ]
+});
+
+Ext.define('V_SUPPLIER_GOODS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'SUPPLIER_NAME',
+        'SUPPLIER_GOODS_UUID',
+        'SUPPLIER_GOODS_NAME',
+        'UNIT_UUID',
+        'SUPPLIER_GOODS_SN',
+        'SUPPLIER_GOODS_PRICE',
+        'SUPPLIER_GOODS_COST',
+        'SUPPLIER_GOODS_IS_ACTIVE',
+        'SUPPLIER_UUID',
+        'SUPPLIER_GOODS',
+        'UNIT_NAME'
+    ]
+});
+
+Ext.define('UNIT', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'UNIT_UUID',
+        'UNIT_NAME',
+        'UNIT_IS_ACTIVE'
+    ]
+});

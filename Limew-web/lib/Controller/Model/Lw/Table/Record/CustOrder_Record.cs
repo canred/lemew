@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("CUST_ORDER", false)]
+	[TableView("CUST_ORDER", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class CustOrder_Record : RecordBase{
@@ -28,13 +28,16 @@ namespace Limew.Model.Lw.Table.Record
 		string _CUST_ORDER_USER_NAME=null;
 		string _CUST_ORDER_USER_PHONE=null;
 		string _CUST_ORDER_PURCHASE_AMOUNT=null;
-		int? _CUST_ORDER_PRINT_USER_NAME=null;
-		string _CUST_ORDER_TYPEB_ID=null;
+		string _CUST_ORDER_PRINT_USER_NAME=null;
 		DateTime? _CUST_ORDER_SHIPPING_DATE=null;
 		string _SHIPPING_STATUS_UUID=null;
-		string _CUST_ORDER_INVOICE_NO=null;
-		string _PAY_SATAUS_UUID=null;
+		string _CUST_ORDER_INVOICE_NUMBER=null;
+		string _PAY_STATUS_UUID=null;
 		string _PAY_METHOD_UUID=null;
+		string _CUST_ORDER_PO_NUMBER=null;
+		DateTime? _CUST_ORDER_LIMIT_DATE=null;
+		string _CUST_ORG_UUID=null;
+		short? _CUST_ORDER_HAS_TAX=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORDER_UUID",true,typeof(string))]
@@ -206,8 +209,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_PRINT_USER_NAME",false,typeof(int?))]
-		public int? CUST_ORDER_PRINT_USER_NAME
+		[ColumnName("CUST_ORDER_PRINT_USER_NAME",false,typeof(string))]
+		public string CUST_ORDER_PRINT_USER_NAME
 		{
 			set
 			{
@@ -216,19 +219,6 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _CUST_ORDER_PRINT_USER_NAME;
-			}
-		}
-
-		[ColumnName("CUST_ORDER_TYPEB_ID",false,typeof(string))]
-		public string CUST_ORDER_TYPEB_ID
-		{
-			set
-			{
-				_CUST_ORDER_TYPEB_ID=value;
-			}
-			get
-			{
-				return _CUST_ORDER_TYPEB_ID;
 			}
 		}
 
@@ -258,29 +248,29 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_INVOICE_NO",false,typeof(string))]
-		public string CUST_ORDER_INVOICE_NO
+		[ColumnName("CUST_ORDER_INVOICE_NUMBER",false,typeof(string))]
+		public string CUST_ORDER_INVOICE_NUMBER
 		{
 			set
 			{
-				_CUST_ORDER_INVOICE_NO=value;
+				_CUST_ORDER_INVOICE_NUMBER=value;
 			}
 			get
 			{
-				return _CUST_ORDER_INVOICE_NO;
+				return _CUST_ORDER_INVOICE_NUMBER;
 			}
 		}
 
-		[ColumnName("PAY_SATAUS_UUID",false,typeof(string))]
-		public string PAY_SATAUS_UUID
+		[ColumnName("PAY_STATUS_UUID",false,typeof(string))]
+		public string PAY_STATUS_UUID
 		{
 			set
 			{
-				_PAY_SATAUS_UUID=value;
+				_PAY_STATUS_UUID=value;
 			}
 			get
 			{
-				return _PAY_SATAUS_UUID;
+				return _PAY_STATUS_UUID;
 			}
 		}
 
@@ -294,6 +284,58 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _PAY_METHOD_UUID;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_PO_NUMBER",false,typeof(string))]
+		public string CUST_ORDER_PO_NUMBER
+		{
+			set
+			{
+				_CUST_ORDER_PO_NUMBER=value;
+			}
+			get
+			{
+				return _CUST_ORDER_PO_NUMBER;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_LIMIT_DATE",false,typeof(DateTime?))]
+		public DateTime? CUST_ORDER_LIMIT_DATE
+		{
+			set
+			{
+				_CUST_ORDER_LIMIT_DATE=value;
+			}
+			get
+			{
+				return _CUST_ORDER_LIMIT_DATE;
+			}
+		}
+
+		[ColumnName("CUST_ORG_UUID",false,typeof(string))]
+		public string CUST_ORG_UUID
+		{
+			set
+			{
+				_CUST_ORG_UUID=value;
+			}
+			get
+			{
+				return _CUST_ORG_UUID;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_HAS_TAX",false,typeof(short?))]
+		public short? CUST_ORDER_HAS_TAX
+		{
+			set
+			{
+				_CUST_ORDER_HAS_TAX=value;
+			}
+			get
+			{
+				return _CUST_ORDER_HAS_TAX;
 			}
 		}
 		public CustOrder_Record Clone(){
@@ -334,6 +376,24 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180347*/
+		public List<VCustOrder_Record> Link_VCustOrder_By_CustOrderUuid()
+		{
+			try{
+				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VCustOrder ___table = new VCustOrder(dbc);
+				ret=(List<VCustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.CUST_ORDER_UUID,this.CUST_ORDER_UUID))
+					.FetchAll<VCustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180348*/
 		public List<CustOrderDetail_Record> Link_CustOrderDetail_By_CustOrderUuid(OrderLimit limit)
 		{
@@ -347,6 +407,26 @@ namespace Limew.Model.Lw.Table.Record
 					.Order(limit)
 					.Limit(limit)
 					.FetchAll<CustOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180348*/
+		public List<VCustOrder_Record> Link_VCustOrder_By_CustOrderUuid(OrderLimit limit)
+		{
+			try{
+				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VCustOrder ___table = new VCustOrder(dbc);
+				ret=(List<VCustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.CUST_ORDER_UUID,this.CUST_ORDER_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<VCustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -415,6 +495,23 @@ namespace Limew.Model.Lw.Table.Record
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.SHIPPING_STATUS_UUID,this.SHIPPING_STATUS_UUID))
 					.FetchAll<ShippingStatus_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		public List<CustOrg_Record> Link_CustOrg_By_CustOrgUuid()
+		{
+			try{
+				List<CustOrg_Record> ret= new List<CustOrg_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrg ___table = new CustOrg(dbc);
+				ret=(List<CustOrg_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.CUST_ORG_UUID,this.CUST_ORG_UUID))
+					.FetchAll<CustOrg_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -502,6 +599,26 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180404*/
+		public List<CustOrg_Record> Link_CustOrg_By_CustOrgUuid(OrderLimit limit)
+		{
+			try{
+				List<CustOrg_Record> ret= new List<CustOrg_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrg ___table = new CustOrg(dbc);
+				ret=(List<CustOrg_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.CUST_ORG_UUID,this.CUST_ORG_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<CustOrg_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180357*/
 		public CustOrderDetail LinkFill_CustOrderDetail_By_CustOrderUuid()
 		{
@@ -515,12 +632,38 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180357*/
+		public VCustOrder LinkFill_VCustOrder_By_CustOrderUuid()
+		{
+			try{
+				var data = Link_VCustOrder_By_CustOrderUuid();
+				VCustOrder ret=new VCustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180358*/
 		public CustOrderDetail LinkFill_CustOrderDetail_By_CustOrderUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_CustOrderDetail_By_CustOrderUuid(limit);
 				CustOrderDetail ret=new CustOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public VCustOrder LinkFill_VCustOrder_By_CustOrderUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_VCustOrder_By_CustOrderUuid(limit);
+				VCustOrder ret=new VCustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){
@@ -580,6 +723,19 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*2013031800428*/
+		public CustOrg LinkFill_CustOrg_By_CustOrgUuid()
+		{
+			try{
+				var data = Link_CustOrg_By_CustOrgUuid();
+				CustOrg ret=new CustOrg(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180429*/
 		public Cust LinkFill_Cust_By_CustUuid(OrderLimit limit)
 		{
@@ -625,6 +781,19 @@ namespace Limew.Model.Lw.Table.Record
 			try{
 				var data = Link_ShippingStatus_By_ShippingStatusUuid(limit);
 				ShippingStatus ret=new ShippingStatus(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180429*/
+		public CustOrg LinkFill_CustOrg_By_CustOrgUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_CustOrg_By_CustOrgUuid(limit);
+				CustOrg ret=new CustOrg(data);
 				return ret;
 			}
 			catch (Exception ex){

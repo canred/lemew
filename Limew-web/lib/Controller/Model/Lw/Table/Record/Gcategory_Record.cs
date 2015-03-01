@@ -138,6 +138,24 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180347*/
+		public List<VGoods_Record> Link_VGoods_By_GcategoryUuid()
+		{
+			try{
+				List<VGoods_Record> ret= new List<VGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VGoods ___table = new VGoods(dbc);
+				ret=(List<VGoods_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.GCATEGORY_UUID,this.GCATEGORY_UUID))
+					.FetchAll<VGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180348*/
 		public List<Goods_Record> Link_Goods_By_GcategoryUuid(OrderLimit limit)
 		{
@@ -158,6 +176,26 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180348*/
+		public List<VGoods_Record> Link_VGoods_By_GcategoryUuid(OrderLimit limit)
+		{
+			try{
+				List<VGoods_Record> ret= new List<VGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VGoods ___table = new VGoods(dbc);
+				ret=(List<VGoods_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.GCATEGORY_UUID,this.GCATEGORY_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<VGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180357*/
 		public Goods LinkFill_Goods_By_GcategoryUuid()
 		{
@@ -171,12 +209,38 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180357*/
+		public VGoods LinkFill_VGoods_By_GcategoryUuid()
+		{
+			try{
+				var data = Link_VGoods_By_GcategoryUuid();
+				VGoods ret=new VGoods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180358*/
 		public Goods LinkFill_Goods_By_GcategoryUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_Goods_By_GcategoryUuid(limit);
 				Goods ret=new Goods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public VGoods LinkFill_VGoods_By_GcategoryUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_VGoods_By_GcategoryUuid(limit);
+				VGoods ret=new VGoods(data);
 				return ret;
 			}
 			catch (Exception ex){

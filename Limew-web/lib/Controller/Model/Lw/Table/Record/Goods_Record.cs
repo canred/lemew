@@ -25,6 +25,7 @@ namespace Limew.Model.Lw.Table.Record
 		string _SUPPLIER_UUID=null;
 		string _GCATEGORY_UUID=null;
 		string _GOODS_NAME=null;
+		string _GOODS_PS=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("GOODS_UUID",true,typeof(string))]
@@ -156,6 +157,19 @@ namespace Limew.Model.Lw.Table.Record
 				return _GOODS_NAME;
 			}
 		}
+
+		[ColumnName("GOODS_PS",false,typeof(string))]
+		public string GOODS_PS
+		{
+			set
+			{
+				_GOODS_PS=value;
+			}
+			get
+			{
+				return _GOODS_PS;
+			}
+		}
 		public Goods_Record Clone(){
 			try{
 				return this.Clone<Goods_Record>(this);
@@ -194,6 +208,24 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180347*/
+		public List<VGoods_Record> Link_VGoods_By_GoodsUuid()
+		{
+			try{
+				List<VGoods_Record> ret= new List<VGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VGoods ___table = new VGoods(dbc);
+				ret=(List<VGoods_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
+					.FetchAll<VGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180348*/
 		public List<CustOrderDetail_Record> Link_CustOrderDetail_By_GoodsUuid(OrderLimit limit)
 		{
@@ -207,6 +239,26 @@ namespace Limew.Model.Lw.Table.Record
 					.Order(limit)
 					.Limit(limit)
 					.FetchAll<CustOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180348*/
+		public List<VGoods_Record> Link_VGoods_By_GoodsUuid(OrderLimit limit)
+		{
+			try{
+				List<VGoods_Record> ret= new List<VGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VGoods ___table = new VGoods(dbc);
+				ret=(List<VGoods_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<VGoods_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -264,12 +316,38 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
+		/*201303180357*/
+		public VGoods LinkFill_VGoods_By_GoodsUuid()
+		{
+			try{
+				var data = Link_VGoods_By_GoodsUuid();
+				VGoods ret=new VGoods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180358*/
 		public CustOrderDetail LinkFill_CustOrderDetail_By_GoodsUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_CustOrderDetail_By_GoodsUuid(limit);
 				CustOrderDetail ret=new CustOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public VGoods LinkFill_VGoods_By_GoodsUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_VGoods_By_GoodsUuid(limit);
+				VGoods ret=new VGoods(data);
 				return ret;
 			}
 			catch (Exception ex){

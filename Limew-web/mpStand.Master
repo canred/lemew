@@ -55,6 +55,13 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SiteMapAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
+
+            //引入Limew Direct Provider
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GoodsAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GcategoryAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SupplierAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UnitAction"));
         });
     </script>
 	<style type ="text/css">

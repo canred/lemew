@@ -31,7 +31,7 @@ namespace Limew.Model.Lw.Table
 		/*欄位資訊 Start*/
 		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
 		public string SUPPLIER_GOODS_NAME {get{return "SUPPLIER_GOODS_NAME" ; }}
-		public string SUPPLIER_GOODS_UNIT {get{return "SUPPLIER_GOODS_UNIT" ; }}
+		public string UNIT_UUID {get{return "UNIT_UUID" ; }}
 		public string SUPPLIER_GOODS_SN {get{return "SUPPLIER_GOODS_SN" ; }}
 		public string SUPPLIER_GOODS_SPEC {get{return "SUPPLIER_GOODS_SPEC" ; }}
 		public string SUPPLIER_GOODS_PRICE {get{return "SUPPLIER_GOODS_PRICE" ; }}
@@ -219,6 +219,54 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
+		/*201303180320*/
+		public List<VSupplierGoods_Record> Link_VSupplierGoods_By_SupplierGoodsUuid()
+		{
+			try{
+				List<VSupplierGoods_Record> ret= new List<VSupplierGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VSupplierGoods ___table = new VSupplierGoods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_GOODS_UUID,item.SUPPLIER_GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<VSupplierGoods_Record>)
+						___table.Where(condition)
+						.FetchAll<VSupplierGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180321*/
+		public List<VSupplierGoods_Record> Link_VSupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
+		{
+			try{
+				List<VSupplierGoods_Record> ret= new List<VSupplierGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				VSupplierGoods ___table = new VSupplierGoods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_GOODS_UUID,item.SUPPLIER_GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<VSupplierGoods_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<VSupplierGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		public List<Supplier_Record> Link_Supplier_By_SupplierUuid()
 		{
 			try{
@@ -234,6 +282,28 @@ namespace Limew.Model.Lw.Table
 				ret=(List<Supplier_Record>)
 						___table.Where(condition)
 						.FetchAll<Supplier_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		public List<Unit_Record> Link_Unit_By_UnitUuid()
+		{
+			try{
+				List<Unit_Record> ret= new List<Unit_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Unit ___table = new Unit(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.UNIT_UUID,item.UNIT_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Unit_Record>)
+						___table.Where(condition)
+						.FetchAll<Unit_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -266,6 +336,57 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*201303180340*/
+		public List<Unit_Record> Link_Unit_By_UnitUuid(OrderLimit limit)
+		{
+			try{
+				List<Unit_Record> ret= new List<Unit_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Unit ___table = new Unit(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.UNIT_UUID,item.UNIT_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Unit_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<Unit_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180324*/
+		public VSupplierGoods LinkFill_VSupplierGoods_By_SupplierGoodsUuid()
+		{
+			try{
+				var data = Link_VSupplierGoods_By_SupplierGoodsUuid();
+				VSupplierGoods ret=new VSupplierGoods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180325*/
+		public VSupplierGoods LinkFill_VSupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_VSupplierGoods_By_SupplierGoodsUuid(limit);
+				VSupplierGoods ret=new VSupplierGoods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180336*/
 		public Supplier LinkFill_Supplier_By_SupplierUuid()
 		{
@@ -279,12 +400,38 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*201303180336*/
+		public Unit LinkFill_Unit_By_UnitUuid()
+		{
+			try{
+				var data = Link_Unit_By_UnitUuid();
+				Unit ret=new Unit(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*201303180337*/
 		public Supplier LinkFill_Supplier_By_SupplierUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_Supplier_By_SupplierUuid(limit);
 				Supplier ret=new Supplier(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180337*/
+		public Unit LinkFill_Unit_By_UnitUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_Unit_By_UnitUuid(limit);
+				Unit ret=new Unit(data);
 				return ret;
 			}
 			catch (Exception ex){

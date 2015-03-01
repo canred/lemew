@@ -228,7 +228,7 @@ Ext.define('WS.CompanyWindow', {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                 text: '關閉',
                 handler: function() {
-                    this.up('window').hide();
+                    this.up('window').close();
                 }
             }]
         })]
@@ -263,7 +263,7 @@ Ext.define('WS.CompanyWindow', {
                 this.down("#CompanyForm").getForm().reset();
             };
         },
-        'hide': function() {
+        'close': function() {
             Ext.getBody().unmask();
             this.closeEvent();
         }
