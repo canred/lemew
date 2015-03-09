@@ -36,7 +36,8 @@ namespace Limew.Model.Lw
                 dbc = LK.Config.DataBase.Factory.getInfo();
                 CustOrderDetail table = new CustOrderDetail(dbc);
                 var sc = new SQLCondition(table);
-                sc.Equal(table.CUST_ORDER_UUID, pCustOrderUuid);
+                sc.Equal(table.CUST_ORDER_UUID, pCustOrderUuid).And()
+                    .Equal(table.CUST_ORDER_DETAIL_IS_ACTIVE,1);
                 return table.Where(sc)
                     .Limit(orderLimit)
                     .FetchAll < CustOrderDetail_Record>();
@@ -637,5 +638,251 @@ namespace Limew.Model.Lw
             }
         }
 
+        public int getCustOrderStatus_By_Keyword_Count(string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrderStatus table = new CustOrderStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.CUST_ORDER_STATUS_NAME, pKeyword)
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<CustOrderStatus_Record> getCustOrderStatus_By_Keyword(string pKeyword,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrderStatus table = new CustOrderStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.CUST_ORDER_STATUS_NAME, pKeyword)
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<CustOrderStatus_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getPayStatus_By_Keyword_Count(string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                PayStatus table = new PayStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.PAY_STATUS_NAME, pKeyword)
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<PayStatus_Record> getPayStatus_By_Keyword(string pKeyword,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                PayStatus table = new PayStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.PAY_STATUS_NAME, pKeyword)
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<PayStatus_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getPayMethod_By_Keyword_Count(string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                PayMethod table = new PayMethod(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.PAY_METHOD_NAME, pKeyword)
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<PayMethod_Record> getPayMethod_By_Keyword(string pKeyword, OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                PayMethod table = new PayMethod(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.PAY_METHOD_NAME, pKeyword)
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<PayMethod_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+
+        public int getShippingStatus_By_Keyword_Count(string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                ShippingStatus table = new ShippingStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.SHIPPING_STATUS_NAME, pKeyword)
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<ShippingStatus_Record> getShippingStatus_By_Keyword(string pKeyword, OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                ShippingStatus table = new ShippingStatus(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.SHIPPING_STATUS_NAME, pKeyword)
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<ShippingStatus_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<File_Record> getFile_By_FilegroupUuid(string pFILEGROUP_UUID)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
+                return file.Where(new SQLCondition(file)
+                    .Equal(file.FILEGROUP_UUID, pFILEGROUP_UUID))
+                    .FetchAll<File_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getVFilegroup_By_Keyword_Count(string pFilegroupUuid,string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VFilegroup table = new VFilegroup(dbc);
+                return table.Where(new SQLCondition(table)
+                    .Equal(table.FILEGROUP_UUID,pFilegroupUuid)
+                    .And()
+                    .L()
+                    .iBLike(table.FILE_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.FILE_PS,pKeyword)
+                    .R()
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<VFilegroup_Record> getVFilegroup_By_Keyword(string pFilegroupUuid,string pKeyword,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VFilegroup table = new VFilegroup(dbc);
+                return table.Where(new SQLCondition(table).Equal(table.FILEGROUP_UUID, pFilegroupUuid)
+                    .And()
+                    .L()
+                    .iBLike(table.FILE_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.FILE_PS, pKeyword)
+                    .R()
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<VFilegroup_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getVCustOrderDetail_By_CustOrderUuid_Count(string pCustOrderUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VCustOrderDetail table = new VCustOrderDetail(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.CUST_ORDER_UUID, pCustOrderUuid)
+                    .And()
+                    .Equal(table.CUST_ORDER_DETAIL_IS_ACTIVE,1);
+                return table.Where(sc)
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<VCustOrderDetail_Record> getVCustOrderDetail_By_CustOrderUuid(string pCustOrderUuid,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VCustOrderDetail table = new VCustOrderDetail(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.CUST_ORDER_UUID, pCustOrderUuid)
+                    .And()
+                    .Equal(table.CUST_ORDER_DETAIL_IS_ACTIVE, 1);
+                return table.Where(sc)
+                    .Limit(orderlimit)
+                    .FetchAll<VCustOrderDetail_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
 	}
 }

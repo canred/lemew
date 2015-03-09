@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("CUST_ORDER", true)]
+	[TableView("CUST_ORDER", false)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class CustOrder_Record : RecordBase{
@@ -31,13 +31,15 @@ namespace Limew.Model.Lw.Table.Record
 		string _CUST_ORDER_PRINT_USER_NAME=null;
 		DateTime? _CUST_ORDER_SHIPPING_DATE=null;
 		string _SHIPPING_STATUS_UUID=null;
-		string _CUST_ORDER_INVOICE_NUMBER=null;
+		string _CUST_ORDER_PO_NUMBER=null;
 		string _PAY_STATUS_UUID=null;
 		string _PAY_METHOD_UUID=null;
-		string _CUST_ORDER_PO_NUMBER=null;
+		string _CUST_ORDER_INVOICE_NUMBER=null;
 		DateTime? _CUST_ORDER_LIMIT_DATE=null;
 		string _CUST_ORG_UUID=null;
-		short? _CUST_ORDER_HAS_TAX=null;
+		int? _CUST_ORDER_HAS_TAX=null;
+		string _CUST_ORDER_PS=null;
+		string _COMPANY_UUID=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORDER_UUID",true,typeof(string))]
@@ -248,16 +250,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_INVOICE_NUMBER",false,typeof(string))]
-		public string CUST_ORDER_INVOICE_NUMBER
+		[ColumnName("CUST_ORDER_PO_NUMBER",false,typeof(string))]
+		public string CUST_ORDER_PO_NUMBER
 		{
 			set
 			{
-				_CUST_ORDER_INVOICE_NUMBER=value;
+				_CUST_ORDER_PO_NUMBER=value;
 			}
 			get
 			{
-				return _CUST_ORDER_INVOICE_NUMBER;
+				return _CUST_ORDER_PO_NUMBER;
 			}
 		}
 
@@ -287,16 +289,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_PO_NUMBER",false,typeof(string))]
-		public string CUST_ORDER_PO_NUMBER
+		[ColumnName("CUST_ORDER_INVOICE_NUMBER",false,typeof(string))]
+		public string CUST_ORDER_INVOICE_NUMBER
 		{
 			set
 			{
-				_CUST_ORDER_PO_NUMBER=value;
+				_CUST_ORDER_INVOICE_NUMBER=value;
 			}
 			get
 			{
-				return _CUST_ORDER_PO_NUMBER;
+				return _CUST_ORDER_INVOICE_NUMBER;
 			}
 		}
 
@@ -326,8 +328,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_HAS_TAX",false,typeof(short?))]
-		public short? CUST_ORDER_HAS_TAX
+		[ColumnName("CUST_ORDER_HAS_TAX",false,typeof(int?))]
+		public int? CUST_ORDER_HAS_TAX
 		{
 			set
 			{
@@ -336,6 +338,32 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _CUST_ORDER_HAS_TAX;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_PS",false,typeof(string))]
+		public string CUST_ORDER_PS
+		{
+			set
+			{
+				_CUST_ORDER_PS=value;
+			}
+			get
+			{
+				return _CUST_ORDER_PS;
+			}
+		}
+
+		[ColumnName("COMPANY_UUID",false,typeof(string))]
+		public string COMPANY_UUID
+		{
+			set
+			{
+				_COMPANY_UUID=value;
+			}
+			get
+			{
+				return _COMPANY_UUID;
 			}
 		}
 		public CustOrder_Record Clone(){
@@ -376,24 +404,6 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		/*201303180347*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_CustOrderUuid()
-		{
-			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORDER_UUID,this.CUST_ORDER_UUID))
-					.FetchAll<VCustOrder_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180348*/
 		public List<CustOrderDetail_Record> Link_CustOrderDetail_By_CustOrderUuid(OrderLimit limit)
 		{
@@ -414,211 +424,6 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		/*201303180348*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_CustOrderUuid(OrderLimit limit)
-		{
-			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORDER_UUID,this.CUST_ORDER_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<VCustOrder_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<Cust_Record> Link_Cust_By_CustUuid()
-		{
-			try{
-				List<Cust_Record> ret= new List<Cust_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Cust ___table = new Cust(dbc);
-				ret=(List<Cust_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_UUID,this.CUST_UUID))
-					.FetchAll<Cust_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<CustOrderStatus_Record> Link_CustOrderStatus_By_CustOrderStatusUuid()
-		{
-			try{
-				List<CustOrderStatus_Record> ret= new List<CustOrderStatus_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrderStatus ___table = new CustOrderStatus(dbc);
-				ret=(List<CustOrderStatus_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORDER_STATUS_UUID,this.CUST_ORDER_STATUS_UUID))
-					.FetchAll<CustOrderStatus_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<PayMethod_Record> Link_PayMethod_By_PayMethodUuid()
-		{
-			try{
-				List<PayMethod_Record> ret= new List<PayMethod_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				PayMethod ___table = new PayMethod(dbc);
-				ret=(List<PayMethod_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.PAY_METHOD_UUID,this.PAY_METHOD_UUID))
-					.FetchAll<PayMethod_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<ShippingStatus_Record> Link_ShippingStatus_By_ShippingStatusUuid()
-		{
-			try{
-				List<ShippingStatus_Record> ret= new List<ShippingStatus_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				ShippingStatus ___table = new ShippingStatus(dbc);
-				ret=(List<ShippingStatus_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SHIPPING_STATUS_UUID,this.SHIPPING_STATUS_UUID))
-					.FetchAll<ShippingStatus_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<CustOrg_Record> Link_CustOrg_By_CustOrgUuid()
-		{
-			try{
-				List<CustOrg_Record> ret= new List<CustOrg_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrg ___table = new CustOrg(dbc);
-				ret=(List<CustOrg_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORG_UUID,this.CUST_ORG_UUID))
-					.FetchAll<CustOrg_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<Cust_Record> Link_Cust_By_CustUuid(OrderLimit limit)
-		{
-			try{
-				List<Cust_Record> ret= new List<Cust_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Cust ___table = new Cust(dbc);
-				ret=(List<Cust_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_UUID,this.CUST_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<Cust_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<CustOrderStatus_Record> Link_CustOrderStatus_By_CustOrderStatusUuid(OrderLimit limit)
-		{
-			try{
-				List<CustOrderStatus_Record> ret= new List<CustOrderStatus_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrderStatus ___table = new CustOrderStatus(dbc);
-				ret=(List<CustOrderStatus_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORDER_STATUS_UUID,this.CUST_ORDER_STATUS_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<CustOrderStatus_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<PayMethod_Record> Link_PayMethod_By_PayMethodUuid(OrderLimit limit)
-		{
-			try{
-				List<PayMethod_Record> ret= new List<PayMethod_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				PayMethod ___table = new PayMethod(dbc);
-				ret=(List<PayMethod_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.PAY_METHOD_UUID,this.PAY_METHOD_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<PayMethod_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<ShippingStatus_Record> Link_ShippingStatus_By_ShippingStatusUuid(OrderLimit limit)
-		{
-			try{
-				List<ShippingStatus_Record> ret= new List<ShippingStatus_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				ShippingStatus ___table = new ShippingStatus(dbc);
-				ret=(List<ShippingStatus_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SHIPPING_STATUS_UUID,this.SHIPPING_STATUS_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<ShippingStatus_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<CustOrg_Record> Link_CustOrg_By_CustOrgUuid(OrderLimit limit)
-		{
-			try{
-				List<CustOrg_Record> ret= new List<CustOrg_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrg ___table = new CustOrg(dbc);
-				ret=(List<CustOrg_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.CUST_ORG_UUID,this.CUST_ORG_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<CustOrg_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180357*/
 		public CustOrderDetail LinkFill_CustOrderDetail_By_CustOrderUuid()
 		{
@@ -632,168 +437,12 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		/*201303180357*/
-		public VCustOrder LinkFill_VCustOrder_By_CustOrderUuid()
-		{
-			try{
-				var data = Link_VCustOrder_By_CustOrderUuid();
-				VCustOrder ret=new VCustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180358*/
 		public CustOrderDetail LinkFill_CustOrderDetail_By_CustOrderUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_CustOrderDetail_By_CustOrderUuid(limit);
 				CustOrderDetail ret=new CustOrderDetail(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180358*/
-		public VCustOrder LinkFill_VCustOrder_By_CustOrderUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_VCustOrder_By_CustOrderUuid(limit);
-				VCustOrder ret=new VCustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public Cust LinkFill_Cust_By_CustUuid()
-		{
-			try{
-				var data = Link_Cust_By_CustUuid();
-				Cust ret=new Cust(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public CustOrderStatus LinkFill_CustOrderStatus_By_CustOrderStatusUuid()
-		{
-			try{
-				var data = Link_CustOrderStatus_By_CustOrderStatusUuid();
-				CustOrderStatus ret=new CustOrderStatus(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public PayMethod LinkFill_PayMethod_By_PayMethodUuid()
-		{
-			try{
-				var data = Link_PayMethod_By_PayMethodUuid();
-				PayMethod ret=new PayMethod(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public ShippingStatus LinkFill_ShippingStatus_By_ShippingStatusUuid()
-		{
-			try{
-				var data = Link_ShippingStatus_By_ShippingStatusUuid();
-				ShippingStatus ret=new ShippingStatus(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public CustOrg LinkFill_CustOrg_By_CustOrgUuid()
-		{
-			try{
-				var data = Link_CustOrg_By_CustOrgUuid();
-				CustOrg ret=new CustOrg(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public Cust LinkFill_Cust_By_CustUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_Cust_By_CustUuid(limit);
-				Cust ret=new Cust(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public CustOrderStatus LinkFill_CustOrderStatus_By_CustOrderStatusUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_CustOrderStatus_By_CustOrderStatusUuid(limit);
-				CustOrderStatus ret=new CustOrderStatus(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public PayMethod LinkFill_PayMethod_By_PayMethodUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_PayMethod_By_PayMethodUuid(limit);
-				PayMethod ret=new PayMethod(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public ShippingStatus LinkFill_ShippingStatus_By_ShippingStatusUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_ShippingStatus_By_ShippingStatusUuid(limit);
-				ShippingStatus ret=new ShippingStatus(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public CustOrg LinkFill_CustOrg_By_CustOrgUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_CustOrg_By_CustOrgUuid(limit);
-				CustOrg ret=new CustOrg(data);
 				return ret;
 			}
 			catch (Exception ex){

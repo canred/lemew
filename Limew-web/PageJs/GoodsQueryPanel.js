@@ -15,15 +15,12 @@ Ext.define('WS.GoodsQueryPanel', {
     subWinGoods: undefined,
     /*語言擴展*/
     lan: {},
-    /*參數擴展*/
-    param: {
-        showADSync: true
-    },
+    /*參數擴展*/   
     /*值擴展*/
     val: {},
     /*物件會用到的Store物件*/
     myStore: {
-        company: Ext.create('Ext.data.Store', {
+        vgoods: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
             model: 'V_GOODS',
@@ -136,7 +133,7 @@ Ext.define('WS.GoodsQueryPanel', {
                 }]
             }, {
                 xtype: 'gridpanel',
-                store: this.myStore.company,
+                store: this.myStore.vgoods,
                 itemId: 'grdSupplierQuery',
                 border: true,
                 height: $(document).height() - 240,
@@ -233,7 +230,7 @@ Ext.define('WS.GoodsQueryPanel', {
                     buttonAlign: 'right'
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    store: this.myStore.company,
+                    store: this.myStore.vgoods,
                     displayInfo: true,
                     displayMsg: '第{0}~{1}資料/共{2}筆',
                     emptyMsg: "無資料顯示"
@@ -271,7 +268,7 @@ Ext.define('WS.GoodsQueryPanel', {
     },
     listeners: {
         afterrender: function(obj, eOpts) {
-            this.myStore.company.load({
+            this.myStore.vgoods.load({
                 scope: this
             });
         }

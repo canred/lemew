@@ -191,24 +191,6 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180347*/
-		public List<CustOrderDetail_Record> Link_CustOrderDetail_By_GoodsUuid()
-		{
-			try{
-				List<CustOrderDetail_Record> ret= new List<CustOrderDetail_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrderDetail ___table = new CustOrderDetail(dbc);
-				ret=(List<CustOrderDetail_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
-					.FetchAll<CustOrderDetail_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180347*/
 		public List<VGoods_Record> Link_VGoods_By_GoodsUuid()
 		{
 			try{
@@ -219,26 +201,6 @@ namespace Limew.Model.Lw.Table.Record
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
 					.FetchAll<VGoods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180348*/
-		public List<CustOrderDetail_Record> Link_CustOrderDetail_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				List<CustOrderDetail_Record> ret= new List<CustOrderDetail_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrderDetail ___table = new CustOrderDetail(dbc);
-				ret=(List<CustOrderDetail_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<CustOrderDetail_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -304,37 +266,11 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180357*/
-		public CustOrderDetail LinkFill_CustOrderDetail_By_GoodsUuid()
-		{
-			try{
-				var data = Link_CustOrderDetail_By_GoodsUuid();
-				CustOrderDetail ret=new CustOrderDetail(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180357*/
 		public VGoods LinkFill_VGoods_By_GoodsUuid()
 		{
 			try{
 				var data = Link_VGoods_By_GoodsUuid();
 				VGoods ret=new VGoods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180358*/
-		public CustOrderDetail LinkFill_CustOrderDetail_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_CustOrderDetail_By_GoodsUuid(limit);
-				CustOrderDetail ret=new CustOrderDetail(data);
 				return ret;
 			}
 			catch (Exception ex){

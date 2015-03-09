@@ -32,34 +32,6 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.CustOrder getCustOrder_By_CustOrderUuid(string pCUST_ORDER_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.CustOrder custorder = new Limew.Model.Lw.Table.CustOrder(dbc);
-				custorder.Fill_By_PK(pCUST_ORDER_UUID);
-				return custorder;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.CustOrderDetail getCustOrderDetail_By_CusrOrderDetailUuid(string pCUSR_ORDER_DETAIL_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.CustOrderDetail custorderdetail = new Limew.Model.Lw.Table.CustOrderDetail(dbc);
-				custorderdetail.Fill_By_PK(pCUSR_ORDER_DETAIL_UUID);
-				return custorderdetail;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
 		public Limew.Model.Lw.Table.CustOrderStatus getCustOrderStatus_By_CustOrderStatusUuid(string pCUST_ORDER_STATUS_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
@@ -220,6 +192,104 @@ namespace Limew.Model.Lw
 				Limew.Model.Lw.Table.VCustOrder vcustorder = new Limew.Model.Lw.Table.VCustOrder(dbc);
 				vcustorder.Fill_By_PK(pCUST_ORDER_UUID);
 				return vcustorder;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.CustOrder getCustOrder_By_CustOrderUuid(string pCUST_ORDER_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.CustOrder custorder = new Limew.Model.Lw.Table.CustOrder(dbc);
+				custorder.Fill_By_PK(pCUST_ORDER_UUID);
+				return custorder;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.CustOrderDetail getCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.CustOrderDetail custorderdetail = new Limew.Model.Lw.Table.CustOrderDetail(dbc);
+				custorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
+				return custorderdetail;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.PayStatus getPayStatus_By_PayStatusUuid(string pPAY_STATUS_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.PayStatus paystatus = new Limew.Model.Lw.Table.PayStatus(dbc);
+				paystatus.Fill_By_PK(pPAY_STATUS_UUID);
+				return paystatus;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.Filegroup getFilegroup_By_FilegroupUuid(string pFILEGROUP_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.Filegroup filegroup = new Limew.Model.Lw.Table.Filegroup(dbc);
+				filegroup.Fill_By_PK(pFILEGROUP_UUID);
+				return filegroup;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.File getFile_By_FileUuid(string pFILE_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
+				file.Fill_By_PK(pFILE_UUID);
+				return file;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VFilegroup getVFilegroup_By_FileUuid(string pFILE_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VFilegroup vfilegroup = new Limew.Model.Lw.Table.VFilegroup(dbc);
+				vfilegroup.Fill_By_PK(pFILE_UUID);
+				return vfilegroup;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustOrderDetail getVCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustOrderDetail vcustorderdetail = new Limew.Model.Lw.Table.VCustOrderDetail(dbc);
+				vcustorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
+				return vcustorderdetail;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

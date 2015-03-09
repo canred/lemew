@@ -172,6 +172,36 @@ Ext.define('CUST', {
     ]
 });
 
+Ext.define('CUST_ORDER_DETAIL', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORDER_DETAIL_UUID',
+        'CUST_ORDER_UUID',
+        'GOODS_UUID',
+        'CUST_ORDER_DETAIL_GOODS_NAME',
+        'CUST_ORDER_DETAIL_COUNT',
+        'CUST_ORDER_DETAIL_UNIT',
+        'CUST_ORDER_DETAIL_PRICE',
+        'CUST_ORDER_DETAIL_TOTAL_PRICE',
+        'CUST_ORDER_DETAIL_PS',
+        'CUST_ORDER_DETAIL_CR',
+        'CUST_ORDER_DETAIL_CUSTOMIZED',
+        'FILEGROUP_UUID',
+        'SUPPLIER_GOODS_UUID',
+        'CUST_ORDER_DETAIL_IS_ACTIVE'
+    ]
+});
+
+Ext.define('CUST_ORDER_STATUS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORDER_STATUS_UUID',
+        'CUST_ORDER_STATUS_NAME',
+        'CUST_ORDER_STATUS_ORD',
+        'CUST_ORDER_STATUS_IS_ACTIVE'
+    ]
+});
+
 Ext.define('CUST_ORG', {
     extend: 'Ext.data.Model',
     fields: [
@@ -189,6 +219,7 @@ Ext.define('CUST_ORG', {
 Ext.define('CUST_ORDER', {
     extend: 'Ext.data.Model',
     fields: [
+        'COMPANY_UUID',
         'CUST_ORDER_UUID',
         'CUST_ORDER_CR',
         'CUST_ORDER_ID',
@@ -210,12 +241,34 @@ Ext.define('CUST_ORDER', {
         'PAY_METHOD_UUID',
         'CUST_ORDER_INVOICE_NUMBER',
         'CUST_ORDER_LIMIT_DATE',
-        'CUST_ORG_UUID'
+        'CUST_ORG_UUID',
+        'CUST_ORDER_PS'
     ]
 });
 
 
+Ext.define('FILEGROUP', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'FILEGROUP_UUID',
+        'FILEGROUP_DISPLAY_NAME',
+        'FILE_COUNT',
+        'FILEGROUP_TAG'
+    ]
+});
 
+Ext.define('FILE', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'FILE_UUID',
+        'FILE_NAME',
+        'FILE_URL',
+        'FILE_PS',
+        'FILE_PATH',
+        'FILEGROUP_UUID',
+        'FILE_CR'
+    ]
+});
 
 Ext.define('GOODS', {
     extend: 'Ext.data.Model',
@@ -231,6 +284,15 @@ Ext.define('GOODS', {
         'GCATEGORY_UUID',
         'GOODS_NAME',
         'GOODS_PS'
+    ]
+});
+
+Ext.define('SHIPPING_STATUS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'SHIPPING_STATUS_UUID',
+        'SHIPPING_STATUS_ORD',
+        'SHIPPING_STATUS_NAME'
     ]
 });
 
@@ -265,6 +327,24 @@ Ext.define('SUPPLIER_GOODS', {
         'SUPPLIER_GOODS_NAME',
         'SUPPLIER_GOODS_IS_ACTIVE',
         'SUPPLIER_GOODS_COST'
+    ]
+});
+
+Ext.define('PAY_STATUS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'PAY_STATUS_UUID',
+        'PAY_STATUS_ORD',
+        'PAY_STATUS_NAME'
+    ]
+});
+
+Ext.define('PAY_METHOD', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'PAY_METHOD_UUID',
+        'PAY_METHOD_ORD',
+        'PAY_METHOD_NAME'
     ]
 });
 
@@ -337,6 +417,53 @@ Ext.define('V_CUST_ORDER', {
     ]
 });
 
+Ext.define('V_CUST_ORDER_DETAIL', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ORDER_DETAIL_UUID',
+        'CUST_ORDER_UUID',
+        'GOODS_UUID',
+        'CUST_ORDER_DETAIL_GOODS_NAME',
+        'CUST_ORDER_DETAIL_COUNT',
+        'CUST_ORDER_DETAIL_UNIT',
+        'CUST_ORDER_DETAIL_PRICE',
+        'CUST_ORDER_DETAIL_TOTAL_PRICE',
+        'CUST_ORDER_DETAIL_PS',
+        'CUST_ORDER_DETAIL_CR',
+        'CUST_ORDER_DETAIL_CUSTOMIZED',
+        'FILEGROUP_UUID',
+        'SUPPLIER_GOODS_UUID',
+        'CUST_ORDER_DETAIL_IS_ACTIVE',
+        'GCATEGORY_FULL_NAME',
+        'GCATEGORY_NAME',
+        'GCATEGORY_UUID',
+        'GOODS_NAME',
+        'GOODS_PRICE',
+        'GOODS_PS',
+        'GOODS_SN',
+        'SUPPLIER_GOODS_NAME',
+        'SUPPLIER_GOODS_PRICE',
+        'SUPPLIER_GOODS_SN',
+        'SUPPLIER_GOODS_UNIT_UUID',
+        'UNIT_NAME'
+    ]
+});
+Ext.define('V_FILEGROUP', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'FILE_UUID',
+        'FILE_NAME',
+        'FILE_URL',
+        'FILE_PS',
+        'FILE_PATH',
+        'FILEGROUP_UUID',
+        'FILE_CR',
+        'FILEGROUP_DISPLAY_NAME',
+        'FILE_COUNT',
+        'FILEGROUP_TAG'
+    ]
+});
+
 Ext.define('V_SUPPLIER_GOODS', {
     extend: 'Ext.data.Model',
     fields: [
@@ -353,6 +480,7 @@ Ext.define('V_SUPPLIER_GOODS', {
         'UNIT_NAME'
     ]
 });
+
 
 Ext.define('UNIT', {
     extend: 'Ext.data.Model',

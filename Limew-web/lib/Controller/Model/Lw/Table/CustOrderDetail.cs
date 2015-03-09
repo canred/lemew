@@ -29,16 +29,20 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUSR_ORDER_DETAIL_UUID {get{return "CUSR_ORDER_DETAIL_UUID" ; }}
+		public string CUST_ORDER_DETAIL_UUID {get{return "CUST_ORDER_DETAIL_UUID" ; }}
 		public string CUST_ORDER_UUID {get{return "CUST_ORDER_UUID" ; }}
 		public string GOODS_UUID {get{return "GOODS_UUID" ; }}
-		public string CUST_ORDER_DETAIL_GOOGDS_NAME {get{return "CUST_ORDER_DETAIL_GOOGDS_NAME" ; }}
+		public string CUST_ORDER_DETAIL_GOODS_NAME {get{return "CUST_ORDER_DETAIL_GOODS_NAME" ; }}
 		public string CUST_ORDER_DETAIL_COUNT {get{return "CUST_ORDER_DETAIL_COUNT" ; }}
 		public string CUST_ORDER_DETAIL_UNIT {get{return "CUST_ORDER_DETAIL_UNIT" ; }}
 		public string CUST_ORDER_DETAIL_PRICE {get{return "CUST_ORDER_DETAIL_PRICE" ; }}
 		public string CUST_ORDER_DETAIL_TOTAL_PRICE {get{return "CUST_ORDER_DETAIL_TOTAL_PRICE" ; }}
 		public string CUST_ORDER_DETAIL_PS {get{return "CUST_ORDER_DETAIL_PS" ; }}
 		public string CUST_ORDER_DETAIL_CR {get{return "CUST_ORDER_DETAIL_CR" ; }}
+		public string CUST_ORDER_DETAIL_CUSTOMIZED {get{return "CUST_ORDER_DETAIL_CUSTOMIZED" ; }}
+		public string FILEGROUP_UUID {get{return "FILEGROUP_UUID" ; }}
+		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string CUST_ORDER_DETAIL_IS_ACTIVE {get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrderDetail_Record CurrentRecord(){
@@ -86,12 +90,12 @@ namespace Limew.Model.Lw.Table
 		/*固定的方法，但名稱需變更 End*/
 		/*有關PK的方法*/
 		//TEMPLATE TABLE 201303180156
-		public CustOrderDetail Fill_By_PK(string pcusr_order_detail_uuid){
+		public CustOrderDetail Fill_By_PK(string pcust_order_detail_uuid){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>()  ;  
 				_All_Record = ret;
 				if (_All_Record.Count > 0){
@@ -106,12 +110,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 201303180156
-		public CustOrderDetail Fill_By_PK(string pcusr_order_detail_uuid,DB db){
+		public CustOrderDetail Fill_By_PK(string pcust_order_detail_uuid,DB db){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>(db)  ;  
 				_All_Record = ret;
 				if (_All_Record.Count > 0){
@@ -126,12 +130,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319042
-		public CustOrderDetail_Record Fetch_By_PK(string pcusr_order_detail_uuid){
+		public CustOrderDetail_Record Fetch_By_PK(string pcust_order_detail_uuid){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>()  ;  
 				return ret.First();
 			}
@@ -141,12 +145,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319044
-		public CustOrderDetail_Record Fetch_By_PK(string pcusr_order_detail_uuid,DB db){
+		public CustOrderDetail_Record Fetch_By_PK(string pcust_order_detail_uuid,DB db){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>(db)  ;  
 				return ret.First();
 			}
@@ -156,12 +160,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319045
-		public CustOrderDetail Fill_By_CusrOrderDetailUuid(string pcusr_order_detail_uuid){
+		public CustOrderDetail Fill_By_CustOrderDetailUuid(string pcust_order_detail_uuid){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>()  ;  
 				_All_Record = ret;
 				_currentRecord = ret.First();
@@ -173,12 +177,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319046
-		public CustOrderDetail Fill_By_CusrOrderDetailUuid(string pcusr_order_detail_uuid,DB db){
+		public CustOrderDetail Fill_By_CustOrderDetailUuid(string pcust_order_detail_uuid,DB db){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>(db)  ;  
 				_All_Record = ret;
 				_currentRecord = ret.First();
@@ -190,12 +194,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319047
-		public CustOrderDetail_Record Fetch_By_CusrOrderDetailUuid(string pcusr_order_detail_uuid){
+		public CustOrderDetail_Record Fetch_By_CustOrderDetailUuid(string pcust_order_detail_uuid){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>()  ;  
 				return ret.First();
 			}
@@ -205,12 +209,12 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		//TEMPLATE TABLE 20130319048
-		public CustOrderDetail_Record Fetch_By_CusrOrderDetailUuid(string pcusr_order_detail_uuid,DB db){
+		public CustOrderDetail_Record Fetch_By_CustOrderDetailUuid(string pcust_order_detail_uuid,DB db){
 			try{
 				IList<CustOrderDetail_Record> ret = null;
 				ret = this.Where(
 				new SQLCondition(this)
-									.Equal(this.CUSR_ORDER_DETAIL_UUID,pcusr_order_detail_uuid)
+									.Equal(this.CUST_ORDER_DETAIL_UUID,pcust_order_detail_uuid)
 				).FetchAll<CustOrderDetail_Record>(db)  ;  
 				return ret.First();
 			}
@@ -235,28 +239,6 @@ namespace Limew.Model.Lw.Table
 				ret=(List<CustOrder_Record>)
 						___table.Where(condition)
 						.FetchAll<CustOrder_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<Goods_Record> Link_Goods_By_GoodsUuid()
-		{
-			try{
-				List<Goods_Record> ret= new List<Goods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Goods ___table = new Goods(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.GOODS_UUID,item.GOODS_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<Goods_Record>)
-						___table.Where(condition)
-						.FetchAll<Goods_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -289,31 +271,6 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
-		/*201303180340*/
-		public List<Goods_Record> Link_Goods_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				List<Goods_Record> ret= new List<Goods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Goods ___table = new Goods(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.GOODS_UUID,item.GOODS_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<Goods_Record>)
-						___table.Where(condition)
-						.Order(limit)
-						.Limit(limit)
-						.FetchAll<Goods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180336*/
 		public CustOrder LinkFill_CustOrder_By_CustOrderUuid()
 		{
@@ -327,38 +284,12 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
-		/*201303180336*/
-		public Goods LinkFill_Goods_By_GoodsUuid()
-		{
-			try{
-				var data = Link_Goods_By_GoodsUuid();
-				Goods ret=new Goods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180337*/
 		public CustOrder LinkFill_CustOrder_By_CustOrderUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_CustOrder_By_CustOrderUuid(limit);
 				CustOrder ret=new CustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180337*/
-		public Goods LinkFill_Goods_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_Goods_By_GoodsUuid(limit);
-				Goods ret=new Goods(data);
 				return ret;
 			}
 			catch (Exception ex){

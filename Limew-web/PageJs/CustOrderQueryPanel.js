@@ -12,7 +12,7 @@ var WS_CUSTORDERQUERYPANEL;
 Ext.define('WS.CustOrderQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
-    subWinCust: undefined,
+    subWinCustOrder: undefined,
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
@@ -112,12 +112,12 @@ Ext.define('WS.CustOrderQueryPanel', {
     },
     fnCheckSubWindowns: function() {
 
-        if (Ext.isEmpty(this.subWinCust)) {
+        if (Ext.isEmpty(this.subWinCustOrder)) {
             Ext.MessageBox.show({
                 title: '系統提示',
                 icon: Ext.MessageBox.WARNING,
                 buttons: Ext.Msg.OK,
-                msg: '未實現 subWinCust 物件,無法進行編輯操作!'
+                msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
             });
             return false;
         };
@@ -241,19 +241,22 @@ Ext.define('WS.CustOrderQueryPanel', {
                         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
                             var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCust) {
+                            if (!main.subWinCustOrder) {
                                 Ext.MessageBox.show({
                                     title: '系統訊息',
                                     icon: Ext.MessageBox.INFO,
                                     buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCust 物件,無法進行編輯操作!'
+                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
                                 });
                                 return false;
                             };
-                            var subWin = Ext.create(main.subWinCust, {});
+                            var subWin = Ext.create(main.subWinCustOrder, {});
+                            Ext.getBody().mask();
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdVCustOrder").getStore().load();
+                                Ext.getBody().unmask();
                             }, main);
+                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
                             subWin.show();
                         }
@@ -330,18 +333,22 @@ Ext.define('WS.CustOrderQueryPanel', {
                                 title: '系統訊息',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                msg: '未實現 subWinCust 物件,無法進行編輯操作!'
+                                msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
                             });
                             return false;
                         };
                         /*註冊事件*/
-                        var subWin = Ext.create(main.subWinCust, {
+                        var subWin = Ext.create(main.subWinCustOrder, {
                             param: {
-                                uuid: undefined
+                                custOrderUuid: undefined,
+                                custUuid:undefined,
+                                parentObj:main
                             }
                         });
+                        Ext.getBody().mask();
                         subWin.on('closeEvent', function(obj) {
                             main.down("#grdVCustOrder").getStore().load();
+                            Ext.getBody().unmask();
                         }, main);
                         subWin.show();
                     }

@@ -219,29 +219,6 @@ namespace Limew.Model.Lw.Table
 		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
 		/*201303180320*/
-		public List<CustOrder_Record> Link_CustOrder_By_CustOrgUuid()
-		{
-			try{
-				List<CustOrder_Record> ret= new List<CustOrder_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrder ___table = new CustOrder(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.CUST_ORG_UUID,item.CUST_ORG_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<CustOrder_Record>)
-						___table.Where(condition)
-						.FetchAll<CustOrder_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180320*/
 		public List<VCustOrder_Record> Link_VCustOrder_By_CustOrgUuid()
 		{
 			try{
@@ -257,31 +234,6 @@ namespace Limew.Model.Lw.Table
 				ret=(List<VCustOrder_Record>)
 						___table.Where(condition)
 						.FetchAll<VCustOrder_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180321*/
-		public List<CustOrder_Record> Link_CustOrder_By_CustOrgUuid(OrderLimit limit)
-		{
-			try{
-				List<CustOrder_Record> ret= new List<CustOrder_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				CustOrder ___table = new CustOrder(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.CUST_ORG_UUID,item.CUST_ORG_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<CustOrder_Record>)
-						___table.Where(condition)
-						.Order(limit)
-						.Limit(limit)
-						.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -362,37 +314,11 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*201303180324*/
-		public CustOrder LinkFill_CustOrder_By_CustOrgUuid()
-		{
-			try{
-				var data = Link_CustOrder_By_CustOrgUuid();
-				CustOrder ret=new CustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180324*/
 		public VCustOrder LinkFill_VCustOrder_By_CustOrgUuid()
 		{
 			try{
 				var data = Link_VCustOrder_By_CustOrgUuid();
 				VCustOrder ret=new VCustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180325*/
-		public CustOrder LinkFill_CustOrder_By_CustOrgUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_CustOrder_By_CustOrgUuid(limit);
-				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

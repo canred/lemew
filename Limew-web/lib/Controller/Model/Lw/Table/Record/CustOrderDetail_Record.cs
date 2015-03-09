@@ -15,28 +15,32 @@ namespace Limew.Model.Lw.Table.Record
 	public class CustOrderDetail_Record : RecordBase{
 		public CustOrderDetail_Record(){}
 		/*欄位資訊 Start*/
-		string _CUSR_ORDER_DETAIL_UUID=null;
+		string _CUST_ORDER_DETAIL_UUID=null;
 		string _CUST_ORDER_UUID=null;
 		string _GOODS_UUID=null;
-		string _CUST_ORDER_DETAIL_GOOGDS_NAME=null;
+		string _CUST_ORDER_DETAIL_GOODS_NAME=null;
 		int? _CUST_ORDER_DETAIL_COUNT=null;
 		string _CUST_ORDER_DETAIL_UNIT=null;
 		decimal? _CUST_ORDER_DETAIL_PRICE=null;
 		decimal? _CUST_ORDER_DETAIL_TOTAL_PRICE=null;
 		string _CUST_ORDER_DETAIL_PS=null;
 		DateTime? _CUST_ORDER_DETAIL_CR=null;
+		int? _CUST_ORDER_DETAIL_CUSTOMIZED=null;
+		string _FILEGROUP_UUID=null;
+		string _SUPPLIER_GOODS_UUID=null;
+		short? _CUST_ORDER_DETAIL_IS_ACTIVE=null;
 		/*欄位資訊 End*/
 
-		[ColumnName("CUSR_ORDER_DETAIL_UUID",true,typeof(string))]
-		public string CUSR_ORDER_DETAIL_UUID
+		[ColumnName("CUST_ORDER_DETAIL_UUID",true,typeof(string))]
+		public string CUST_ORDER_DETAIL_UUID
 		{
 			set
 			{
-				_CUSR_ORDER_DETAIL_UUID=value;
+				_CUST_ORDER_DETAIL_UUID=value;
 			}
 			get
 			{
-				return _CUSR_ORDER_DETAIL_UUID;
+				return _CUST_ORDER_DETAIL_UUID;
 			}
 		}
 
@@ -66,16 +70,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("CUST_ORDER_DETAIL_GOOGDS_NAME",false,typeof(string))]
-		public string CUST_ORDER_DETAIL_GOOGDS_NAME
+		[ColumnName("CUST_ORDER_DETAIL_GOODS_NAME",false,typeof(string))]
+		public string CUST_ORDER_DETAIL_GOODS_NAME
 		{
 			set
 			{
-				_CUST_ORDER_DETAIL_GOOGDS_NAME=value;
+				_CUST_ORDER_DETAIL_GOODS_NAME=value;
 			}
 			get
 			{
-				return _CUST_ORDER_DETAIL_GOOGDS_NAME;
+				return _CUST_ORDER_DETAIL_GOODS_NAME;
 			}
 		}
 
@@ -156,6 +160,58 @@ namespace Limew.Model.Lw.Table.Record
 				return _CUST_ORDER_DETAIL_CR;
 			}
 		}
+
+		[ColumnName("CUST_ORDER_DETAIL_CUSTOMIZED",false,typeof(int?))]
+		public int? CUST_ORDER_DETAIL_CUSTOMIZED
+		{
+			set
+			{
+				_CUST_ORDER_DETAIL_CUSTOMIZED=value;
+			}
+			get
+			{
+				return _CUST_ORDER_DETAIL_CUSTOMIZED;
+			}
+		}
+
+		[ColumnName("FILEGROUP_UUID",false,typeof(string))]
+		public string FILEGROUP_UUID
+		{
+			set
+			{
+				_FILEGROUP_UUID=value;
+			}
+			get
+			{
+				return _FILEGROUP_UUID;
+			}
+		}
+
+		[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
+		public string SUPPLIER_GOODS_UUID
+		{
+			set
+			{
+				_SUPPLIER_GOODS_UUID=value;
+			}
+			get
+			{
+				return _SUPPLIER_GOODS_UUID;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_DETAIL_IS_ACTIVE",false,typeof(short?))]
+		public short? CUST_ORDER_DETAIL_IS_ACTIVE
+		{
+			set
+			{
+				_CUST_ORDER_DETAIL_IS_ACTIVE=value;
+			}
+			get
+			{
+				return _CUST_ORDER_DETAIL_IS_ACTIVE;
+			}
+		}
 		public CustOrderDetail_Record Clone(){
 			try{
 				return this.Clone<CustOrderDetail_Record>(this);
@@ -193,23 +249,6 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		public List<Goods_Record> Link_Goods_By_GoodsUuid()
-		{
-			try{
-				List<Goods_Record> ret= new List<Goods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Goods ___table = new Goods(dbc);
-				ret=(List<Goods_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
-					.FetchAll<Goods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180404*/
 		public List<CustOrder_Record> Link_CustOrder_By_CustOrderUuid(OrderLimit limit)
 		{
@@ -230,26 +269,6 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		/*201303180404*/
-		public List<Goods_Record> Link_Goods_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				List<Goods_Record> ret= new List<Goods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Goods ___table = new Goods(dbc);
-				ret=(List<Goods_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.GOODS_UUID,this.GOODS_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<Goods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*2013031800428*/
 		public CustOrder LinkFill_CustOrder_By_CustOrderUuid()
 		{
@@ -263,38 +282,12 @@ namespace Limew.Model.Lw.Table.Record
 				throw ex;
 			}
 		}
-		/*2013031800428*/
-		public Goods LinkFill_Goods_By_GoodsUuid()
-		{
-			try{
-				var data = Link_Goods_By_GoodsUuid();
-				Goods ret=new Goods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180429*/
 		public CustOrder LinkFill_CustOrder_By_CustOrderUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_CustOrder_By_CustOrderUuid(limit);
 				CustOrder ret=new CustOrder(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public Goods LinkFill_Goods_By_GoodsUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_Goods_By_GoodsUuid(limit);
-				Goods ret=new Goods(data);
 				return ret;
 			}
 			catch (Exception ex){
