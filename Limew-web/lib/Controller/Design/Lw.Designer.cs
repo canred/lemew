@@ -5512,6 +5512,12 @@ namespace Limew.lib.Controller.Design {
             
             private global::System.Data.DataColumn columncust_order_ps;
             
+            private global::System.Data.DataColumn columncust_order_report_date;
+            
+            private global::System.Data.DataColumn columncust_order_report_attendant_uuid;
+            
+            private global::System.Data.DataColumn columncust_order_report_attendant_c_name;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public v_cust_orderDataTable() {
@@ -5883,6 +5889,30 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_order_report_dateColumn {
+                get {
+                    return this.columncust_order_report_date;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_order_report_attendant_uuidColumn {
+                get {
+                    return this.columncust_order_report_attendant_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_order_report_attendant_c_nameColumn {
+                get {
+                    return this.columncust_order_report_attendant_c_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5960,7 +5990,10 @@ namespace Limew.lib.Controller.Design {
                         string cust_org_ps, 
                         string cust_org_name, 
                         int cust_org_is_active, 
-                        string cust_order_ps) {
+                        string cust_order_ps, 
+                        System.DateTime cust_order_report_date, 
+                        string cust_order_report_attendant_uuid, 
+                        string cust_order_report_attendant_c_name) {
                 v_cust_orderRow rowv_cust_orderRow = ((v_cust_orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_order_uuid,
@@ -6004,7 +6037,10 @@ namespace Limew.lib.Controller.Design {
                         cust_org_ps,
                         cust_org_name,
                         cust_org_is_active,
-                        cust_order_ps};
+                        cust_order_ps,
+                        cust_order_report_date,
+                        cust_order_report_attendant_uuid,
+                        cust_order_report_attendant_c_name};
                 if ((parentcust_order_statusRowBycust_order_status_v_cust_order != null)) {
                     columnValuesArray[4] = parentcust_order_statusRowBycust_order_status_v_cust_order[0];
                 }
@@ -6088,6 +6124,9 @@ namespace Limew.lib.Controller.Design {
                 this.columncust_org_name = base.Columns["cust_org_name"];
                 this.columncust_org_is_active = base.Columns["cust_org_is_active"];
                 this.columncust_order_ps = base.Columns["cust_order_ps"];
+                this.columncust_order_report_date = base.Columns["cust_order_report_date"];
+                this.columncust_order_report_attendant_uuid = base.Columns["cust_order_report_attendant_uuid"];
+                this.columncust_order_report_attendant_c_name = base.Columns["cust_order_report_attendant_c_name"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6177,6 +6216,12 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columncust_org_is_active);
                 this.columncust_order_ps = new global::System.Data.DataColumn("cust_order_ps", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncust_order_ps);
+                this.columncust_order_report_date = new global::System.Data.DataColumn("cust_order_report_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_order_report_date);
+                this.columncust_order_report_attendant_uuid = new global::System.Data.DataColumn("cust_order_report_attendant_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_order_report_attendant_uuid);
+                this.columncust_order_report_attendant_c_name = new global::System.Data.DataColumn("cust_order_report_attendant_c_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_order_report_attendant_c_name);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_order_uuid}, true));
                 this.columncust_order_uuid.AllowDBNull = false;
@@ -6401,6 +6446,10 @@ namespace Limew.lib.Controller.Design {
             private global::System.Data.DataColumn columncust_order_ps;
             
             private global::System.Data.DataColumn columncompany_uuid;
+            
+            private global::System.Data.DataColumn columncust_order_report_date;
+            
+            private global::System.Data.DataColumn columncust_order_report_attendant_uuid;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -6637,6 +6686,22 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_order_report_dateColumn {
+                get {
+                    return this.columncust_order_report_date;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_order_report_attendant_uuidColumn {
+                get {
+                    return this.columncust_order_report_attendant_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6697,7 +6762,9 @@ namespace Limew.lib.Controller.Design {
                         string cust_org_uuid, 
                         int cust_order_has_tax, 
                         string cust_order_ps, 
-                        string company_uuid) {
+                        string company_uuid, 
+                        System.DateTime cust_order_report_date, 
+                        string cust_order_report_attendant_uuid) {
                 cust_orderRow rowcust_orderRow = ((cust_orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_order_uuid,
@@ -6724,7 +6791,9 @@ namespace Limew.lib.Controller.Design {
                         cust_org_uuid,
                         cust_order_has_tax,
                         cust_order_ps,
-                        company_uuid};
+                        company_uuid,
+                        cust_order_report_date,
+                        cust_order_report_attendant_uuid};
                 rowcust_orderRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowcust_orderRow);
                 return rowcust_orderRow;
@@ -6779,6 +6848,8 @@ namespace Limew.lib.Controller.Design {
                 this.columncust_order_has_tax = base.Columns["cust_order_has_tax"];
                 this.columncust_order_ps = base.Columns["cust_order_ps"];
                 this.columncompany_uuid = base.Columns["company_uuid"];
+                this.columncust_order_report_date = base.Columns["cust_order_report_date"];
+                this.columncust_order_report_attendant_uuid = base.Columns["cust_order_report_attendant_uuid"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6834,6 +6905,10 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columncust_order_ps);
                 this.columncompany_uuid = new global::System.Data.DataColumn("company_uuid", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncompany_uuid);
+                this.columncust_order_report_date = new global::System.Data.DataColumn("cust_order_report_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_order_report_date);
+                this.columncust_order_report_attendant_uuid = new global::System.Data.DataColumn("cust_order_report_attendant_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_order_report_attendant_uuid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_order_uuid}, true));
                 this.columncust_order_uuid.AllowDBNull = false;
@@ -8396,6 +8471,8 @@ namespace Limew.lib.Controller.Design {
             
             private global::System.Data.DataColumn columnfile_count;
             
+            private global::System.Data.DataColumn columnfilegroup_tag;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public v_filegroupDataTable() {
@@ -8503,6 +8580,14 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn filegroup_tagColumn {
+                get {
+                    return this.columnfilegroup_tag;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8538,7 +8623,7 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public v_filegroupRow Addv_filegroupRow(string file_uuid, string file_name, string file_url, string file_ps, string file_path, string filegroup_uuid, System.DateTime file_cr, string filegroup_display_name, int file_count) {
+            public v_filegroupRow Addv_filegroupRow(string file_uuid, string file_name, string file_url, string file_ps, string file_path, string filegroup_uuid, System.DateTime file_cr, string filegroup_display_name, int file_count, string filegroup_tag) {
                 v_filegroupRow rowv_filegroupRow = ((v_filegroupRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         file_uuid,
@@ -8549,7 +8634,8 @@ namespace Limew.lib.Controller.Design {
                         filegroup_uuid,
                         file_cr,
                         filegroup_display_name,
-                        file_count};
+                        file_count,
+                        filegroup_tag};
                 rowv_filegroupRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowv_filegroupRow);
                 return rowv_filegroupRow;
@@ -8588,6 +8674,7 @@ namespace Limew.lib.Controller.Design {
                 this.columnfile_cr = base.Columns["file_cr"];
                 this.columnfilegroup_display_name = base.Columns["filegroup_display_name"];
                 this.columnfile_count = base.Columns["file_count"];
+                this.columnfilegroup_tag = base.Columns["filegroup_tag"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8611,6 +8698,8 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columnfilegroup_display_name);
                 this.columnfile_count = new global::System.Data.DataColumn("file_count", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfile_count);
+                this.columnfilegroup_tag = new global::System.Data.DataColumn("filegroup_tag", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfilegroup_tag);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnfile_uuid}, true));
                 this.columnfile_uuid.AllowDBNull = false;
@@ -8806,6 +8895,14 @@ namespace Limew.lib.Controller.Design {
             private global::System.Data.DataColumn columnsupplier_goods_unit_uuid;
             
             private global::System.Data.DataColumn columnUNIT_NAME;
+            
+            private global::System.Data.DataColumn columnCUST_ORDER_DETAIL_UNIT_NAME;
+            
+            private global::System.Data.DataColumn columnfilegroup_display_name;
+            
+            private global::System.Data.DataColumn columnfilegroup_tag;
+            
+            private global::System.Data.DataColumn columnfile_count;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -9050,6 +9147,38 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CUST_ORDER_DETAIL_UNIT_NAMEColumn {
+                get {
+                    return this.columnCUST_ORDER_DETAIL_UNIT_NAME;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn filegroup_display_nameColumn {
+                get {
+                    return this.columnfilegroup_display_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn filegroup_tagColumn {
+                get {
+                    return this.columnfilegroup_tag;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn file_countColumn {
+                get {
+                    return this.columnfile_count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -9111,7 +9240,11 @@ namespace Limew.lib.Controller.Design {
                         decimal supplier_goods_price, 
                         string supplier_goods_sn, 
                         string supplier_goods_unit_uuid, 
-                        string UNIT_NAME) {
+                        string UNIT_NAME, 
+                        string CUST_ORDER_DETAIL_UNIT_NAME, 
+                        string filegroup_display_name, 
+                        string filegroup_tag, 
+                        string file_count) {
                 v_cust_order_detailRow rowv_cust_order_detailRow = ((v_cust_order_detailRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_order_detail_uuid,
@@ -9139,7 +9272,11 @@ namespace Limew.lib.Controller.Design {
                         supplier_goods_price,
                         supplier_goods_sn,
                         supplier_goods_unit_uuid,
-                        UNIT_NAME};
+                        UNIT_NAME,
+                        CUST_ORDER_DETAIL_UNIT_NAME,
+                        filegroup_display_name,
+                        filegroup_tag,
+                        file_count};
                 rowv_cust_order_detailRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowv_cust_order_detailRow);
                 return rowv_cust_order_detailRow;
@@ -9195,6 +9332,10 @@ namespace Limew.lib.Controller.Design {
                 this.columnsupplier_goods_sn = base.Columns["supplier_goods_sn"];
                 this.columnsupplier_goods_unit_uuid = base.Columns["supplier_goods_unit_uuid"];
                 this.columnUNIT_NAME = base.Columns["UNIT_NAME"];
+                this.columnCUST_ORDER_DETAIL_UNIT_NAME = base.Columns["CUST_ORDER_DETAIL_UNIT_NAME"];
+                this.columnfilegroup_display_name = base.Columns["filegroup_display_name"];
+                this.columnfilegroup_tag = base.Columns["filegroup_tag"];
+                this.columnfile_count = base.Columns["file_count"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9252,6 +9393,14 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columnsupplier_goods_unit_uuid);
                 this.columnUNIT_NAME = new global::System.Data.DataColumn("UNIT_NAME", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUNIT_NAME);
+                this.columnCUST_ORDER_DETAIL_UNIT_NAME = new global::System.Data.DataColumn("CUST_ORDER_DETAIL_UNIT_NAME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUST_ORDER_DETAIL_UNIT_NAME);
+                this.columnfilegroup_display_name = new global::System.Data.DataColumn("filegroup_display_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfilegroup_display_name);
+                this.columnfilegroup_tag = new global::System.Data.DataColumn("filegroup_tag", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfilegroup_tag);
+                this.columnfile_count = new global::System.Data.DataColumn("file_count", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfile_count);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_order_detail_uuid}, true));
                 this.columncust_order_detail_uuid.AllowDBNull = false;
@@ -12988,6 +13137,56 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime cust_order_report_date {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablev_cust_order.cust_order_report_dateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_order_report_date\' in table \'v_cust_order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.cust_order_report_dateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string cust_order_report_attendant_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.cust_order_report_attendant_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_order_report_attendant_uuid\' in table \'v_cust_order\' i" +
+                                "s DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.cust_order_report_attendant_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string cust_order_report_attendant_c_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.cust_order_report_attendant_c_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_order_report_attendant_c_name\' in table \'v_cust_order\'" +
+                                " is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.cust_order_report_attendant_c_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public custRow custRow {
                 get {
                     return ((custRow)(this.GetParentRow(this.Table.ParentRelations["cust_v_cust_order"])));
@@ -13461,6 +13660,42 @@ namespace Limew.lib.Controller.Design {
             public void Setcust_order_psNull() {
                 this[this.tablev_cust_order.cust_order_psColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_order_report_dateNull() {
+                return this.IsNull(this.tablev_cust_order.cust_order_report_dateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_order_report_dateNull() {
+                this[this.tablev_cust_order.cust_order_report_dateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_order_report_attendant_uuidNull() {
+                return this.IsNull(this.tablev_cust_order.cust_order_report_attendant_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_order_report_attendant_uuidNull() {
+                this[this.tablev_cust_order.cust_order_report_attendant_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_order_report_attendant_c_nameNull() {
+                return this.IsNull(this.tablev_cust_order.cust_order_report_attendant_c_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_order_report_attendant_c_nameNull() {
+                this[this.tablev_cust_order.cust_order_report_attendant_c_nameColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -13877,6 +14112,39 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime cust_order_report_date {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablecust_order.cust_order_report_dateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_order_report_date\' in table \'cust_order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablecust_order.cust_order_report_dateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string cust_order_report_attendant_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablecust_order.cust_order_report_attendant_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_order_report_attendant_uuid\' in table \'cust_order\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablecust_order.cust_order_report_attendant_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Iscust_order_crNull() {
                 return this.IsNull(this.tablecust_order.cust_order_crColumn);
             }
@@ -14161,6 +14429,30 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setcompany_uuidNull() {
                 this[this.tablecust_order.company_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_order_report_dateNull() {
+                return this.IsNull(this.tablecust_order.cust_order_report_dateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_order_report_dateNull() {
+                this[this.tablecust_order.cust_order_report_dateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_order_report_attendant_uuidNull() {
+                return this.IsNull(this.tablecust_order.cust_order_report_attendant_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_order_report_attendant_uuidNull() {
+                this[this.tablecust_order.cust_order_report_attendant_uuidColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15127,6 +15419,22 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string filegroup_tag {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_filegroup.filegroup_tagColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'filegroup_tag\' in table \'v_filegroup\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_filegroup.filegroup_tagColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Isfile_nameNull() {
                 return this.IsNull(this.tablev_filegroup.file_nameColumn);
             }
@@ -15219,6 +15527,18 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setfile_countNull() {
                 this[this.tablev_filegroup.file_countColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfilegroup_tagNull() {
+                return this.IsNull(this.tablev_filegroup.filegroup_tagColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfilegroup_tagNull() {
+                this[this.tablev_filegroup.filegroup_tagColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -15664,6 +15984,72 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CUST_ORDER_DETAIL_UNIT_NAME {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order_detail.CUST_ORDER_DETAIL_UNIT_NAMEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUST_ORDER_DETAIL_UNIT_NAME\' in table \'v_cust_order_detail\'" +
+                                " is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order_detail.CUST_ORDER_DETAIL_UNIT_NAMEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string filegroup_display_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order_detail.filegroup_display_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'filegroup_display_name\' in table \'v_cust_order_detail\' is D" +
+                                "BNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order_detail.filegroup_display_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string filegroup_tag {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order_detail.filegroup_tagColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'filegroup_tag\' in table \'v_cust_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order_detail.filegroup_tagColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string file_count {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order_detail.file_countColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'file_count\' in table \'v_cust_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order_detail.file_countColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Iscust_order_uuidNull() {
                 return this.IsNull(this.tablev_cust_order_detail.cust_order_uuidColumn);
             }
@@ -15960,6 +16346,54 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetUNIT_NAMENull() {
                 this[this.tablev_cust_order_detail.UNIT_NAMEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCUST_ORDER_DETAIL_UNIT_NAMENull() {
+                return this.IsNull(this.tablev_cust_order_detail.CUST_ORDER_DETAIL_UNIT_NAMEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCUST_ORDER_DETAIL_UNIT_NAMENull() {
+                this[this.tablev_cust_order_detail.CUST_ORDER_DETAIL_UNIT_NAMEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfilegroup_display_nameNull() {
+                return this.IsNull(this.tablev_cust_order_detail.filegroup_display_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfilegroup_display_nameNull() {
+                this[this.tablev_cust_order_detail.filegroup_display_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfilegroup_tagNull() {
+                return this.IsNull(this.tablev_cust_order_detail.filegroup_tagColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfilegroup_tagNull() {
+                this[this.tablev_cust_order_detail.filegroup_tagColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfile_countNull() {
+                return this.IsNull(this.tablev_cust_order_detail.file_countColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfile_countNull() {
+                this[this.tablev_cust_order_detail.file_countColumn] = global::System.Convert.DBNull;
             }
         }
         

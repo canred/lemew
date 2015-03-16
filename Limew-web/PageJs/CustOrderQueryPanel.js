@@ -264,6 +264,11 @@ Ext.define('WS.CustOrderQueryPanel', {
                     sortable: false,
                     hideable: false
                 }, {
+                    header: "訂單編號",
+                    dataIndex: 'CUST_ORDER_ID',
+                    align: 'left',
+                    flex: 1
+                }, {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
                     align: 'left',

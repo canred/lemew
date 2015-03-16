@@ -22,6 +22,16 @@ using System.Text;
 using LK.Util;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Collections;
+
+using iTextSharp.text;
+using iTextSharp.text.html;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using iTextSharp.text.xml;
+using iTextSharp.tool.xml;
+using System.Net;
 #endregion
 
 [DirectService("CustAction")]
@@ -106,7 +116,7 @@ public class CustAction : BaseAction
     }
 
     [DirectMethod("submitCust", DirectAction.FormSubmission, MethodVisibility.Visible)]
-    public JObject submitCust(  string cust_uuid,
+    public JObject submitCust(string cust_uuid,
                                 string cust_name,
                                 string cust_tel,
                                 string cust_fax,
@@ -159,8 +169,8 @@ public class CustAction : BaseAction
             record.CUST_SALES_PHONE = cust_sales_phone;
             record.CUST_SALES_EMAIL = cust_sales_email;
             record.CUST_PS = cust_ps;
-            record.CUST_LEVEL = Convert.ToInt16( cust_level );
-            record.CUST_IS_ACTIVE = Convert.ToInt16( cust_is_active );
+            record.CUST_LEVEL = Convert.ToInt16(cust_level);
+            record.CUST_IS_ACTIVE = Convert.ToInt16(cust_is_active);
             if (action == SubmitAction.Edit)
             {
                 record.gotoTable().Update_Empty2Null(record);
@@ -205,7 +215,7 @@ public class CustAction : BaseAction
             {
                 var delDr = data.AllRecord().First();
                 delDr.gotoTable().Delete(delDr);
-            }           
+            }
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
         }
         catch (Exception ex)
@@ -317,7 +327,9 @@ public class CustAction : BaseAction
                                     string cust_org_uuid,
                                     string cust_order_has_tax,
                                     string cust_order_ps,
-                                    string company_uuid, HttpRequest request)
+                                    string company_uuid,
+        string cust_order_report_attendant_uuid,
+        string cust_order_report_date , HttpRequest request)
     {
 
 
@@ -373,20 +385,22 @@ public class CustAction : BaseAction
             record.CUST_ORDER_DEPT = cust_order_dept;
             record.CUST_ORDER_USER_NAME = cust_order_user_name;
             record.CUST_ORDER_USER_PHONE = cust_order_user_phone;
-            
+
             record.CUST_ORDER_PRINT_USER_NAME = cust_order_print_user_name;
-            //if (cust_order_shipping_date.Trim().Length > 0)
-            //{
-            //    record.CUST_ORDER_SHIPPING_DATE = Convert.ToDateTime(cust_order_shipping_date);
-            //}
-            //else {
-            //    record.CUST_ORDER_SHIPPING_DATE = null;
-            //}
+            if (cust_order_shipping_date.Trim().Length > 0)
+            {
+                record.CUST_ORDER_SHIPPING_DATE = Convert.ToDateTime(cust_order_shipping_date);
+            }
+            else
+            {
+                record.CUST_ORDER_SHIPPING_DATE = null;
+            }
             record.SHIPPING_STATUS_UUID = shipping_status_uuid;
             record.CUST_ORDER_PO_NUMBER = cust_order_po_number;
             record.PAY_STATUS_UUID = pay_status_uuid;
             record.PAY_METHOD_UUID = pay_method_uuid;
             record.CUST_ORDER_INVOICE_NUMBER = cust_order_invoice_number;
+            record.CUST_ORDER_REPORT_ATTENDANT_UUID = cust_order_report_attendant_uuid;
             if (cust_order_limit_date.Trim().Length > 0)
             {
                 record.CUST_ORDER_LIMIT_DATE = Convert.ToDateTime((cust_order_limit_date));
@@ -395,7 +409,16 @@ public class CustAction : BaseAction
             {
                 record.CUST_ORDER_LIMIT_DATE = null;
             }
-            
+
+            if (cust_order_report_date.Trim().Length > 0)
+            {
+                record.CUST_ORDER_REPORT_DATE = Convert.ToDateTime((cust_order_report_date));
+            }
+            else
+            {
+                record.CUST_ORDER_REPORT_DATE = null;
+            }
+
             record.CUST_ORG_UUID = cust_org_uuid;
             record.CUST_ORDER_HAS_TAX = Convert.ToInt16(cust_order_has_tax);
             record.CUST_ORDER_PS = cust_order_ps;
@@ -444,7 +467,7 @@ public class CustAction : BaseAction
             {
                 var delDr = data.AllRecord().First();
                 delDr.gotoTable().Delete(delDr);
-            }           
+            }
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
         }
         catch (Exception ex)
@@ -474,7 +497,8 @@ public class CustAction : BaseAction
                 throw new Exception("Permission Denied!");
             };
 
-            if (pCustOrderDetailUuid.Trim().Length == 0) {
+            if (pCustOrderDetailUuid.Trim().Length == 0)
+            {
                 pCustOrderDetailUuid = LK.Util.UID.Instance.GetUniqueID();
                 CustOrderDetail_Record newRecord = new CustOrderDetail_Record();
                 newRecord.CUST_ORDER_DETAIL_CR = DateTime.Now;
@@ -546,7 +570,7 @@ string supplier_goods_uuid, HttpRequest request)
                 record.CUST_ORDER_DETAIL_UUID = LK.Util.UID.Instance.GetUniqueID();
                 record.CUST_ORDER_DETAIL_CR = DateTime.Now;
             }
-            
+
             record.CUST_ORDER_UUID = cust_order_uuid;
             record.GOODS_UUID = goods_uuid;
             record.CUST_ORDER_DETAIL_GOODS_NAME = cust_order_detail_goods_name;
@@ -555,14 +579,14 @@ string supplier_goods_uuid, HttpRequest request)
             record.CUST_ORDER_DETAIL_PRICE = Convert.ToInt16(cust_order_detail_price);
             record.CUST_ORDER_DETAIL_TOTAL_PRICE = Convert.ToInt16(cust_order_detail_total_price);
             record.CUST_ORDER_DETAIL_PS = cust_order_detail_ps;
-            
+
             record.CUST_ORDER_DETAIL_CUSTOMIZED = Convert.ToInt16(cust_order_detail_customized);
-            record.FILEGROUP_UUID = filegroup_uuid;
+            //record.FILEGROUP_UUID = filegroup_uuid;
             record.SUPPLIER_GOODS_UUID = supplier_goods_uuid;
             record.CUST_ORDER_DETAIL_IS_ACTIVE = Convert.ToInt16(cust_order_detail_is_active);
 
-           
-           
+
+
             if (action == SubmitAction.Edit)
             {
                 record.gotoTable().Update_Empty2Null(record);
@@ -575,13 +599,15 @@ string supplier_goods_uuid, HttpRequest request)
             System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
             otherParam.Add("CUST_ORDER_DETAIL_UUID", record.CUST_ORDER_DETAIL_UUID);
 
-            if (record.CUST_ORDER_UUID.Trim().Length > 0) {
-                var allrecord = mod.getCustOrderDetail_By_CustOrderUuid(record.CUST_ORDER_UUID,new OrderLimit());
+            if (record.CUST_ORDER_UUID.Trim().Length > 0)
+            {
+                var allrecord = mod.getCustOrderDetail_By_CustOrderUuid(record.CUST_ORDER_UUID, new OrderLimit());
                 decimal sum = 0;
-                foreach(var item in allrecord){
+                foreach (var item in allrecord)
+                {
                     sum += item.CUST_ORDER_DETAIL_TOTAL_PRICE.Value;
                 }
-                var custOrder  = mod.getCustOrder_By_CustOrderUuid(record.CUST_ORDER_UUID).AllRecord().First();
+                var custOrder = mod.getCustOrder_By_CustOrderUuid(record.CUST_ORDER_UUID).AllRecord().First();
                 custOrder.CUST_ORDER_TOTAL_PRICE = sum;
                 custOrder.gotoTable().Update_Empty2Null(custOrder);
             }
@@ -655,7 +681,7 @@ string supplier_goods_uuid, HttpRequest request)
             //record.CUST_ORDER_DETAIL_CUSTOMIZED = Convert.ToInt16(cust_order_detail_customized);
             //record.SUPPLIER_GOODS_UUID = supplier_goods_uuid;
 
-            
+
             //record.CUST_ORDER_DETAIL_IS_ACTIVE = Convert.ToInt16(cust_order_detail_is_active);
 
             #region 附件處理
@@ -714,19 +740,22 @@ string supplier_goods_uuid, HttpRequest request)
                     {
                         record.FILEGROUP_UUID = LK.Util.UID.Instance.GetUniqueID();
                         filegroup.FILEGROUP_UUID = record.FILEGROUP_UUID;
+                        filegroup.FILEGROUP_TAG = "custOrderDetail";
                         filegroup.gotoTable().Insert_Empty2Null(filegroup);
                     }
-                    else {
+                    else
+                    {
                         filegroup = mod.getFilegroup_By_FilegroupUuid(record.FILEGROUP_UUID).AllRecord().First();
                     }
 
-                    
-                    
+
+
 
                     File_Record f = new File_Record();
                     f.FILE_UUID = LK.Util.UID.Instance.GetUniqueID();
                     f.FILE_NAME = request.Files[0].FileName;
-                    f.FILE_PATH = Limew.Parameter.Config.ParemterConfigs.GetConfig().UploadFolder +  "//custOrderDetail//" + fileUuid + "." + extName;
+
+                    f.FILE_PATH = Limew.Parameter.Config.ParemterConfigs.GetConfig().UploadFolder + "//custOrderDetail//" + fileUuid + "." + extName;
                     f.FILE_PS = "";
                     f.FILE_URL = Limew.Parameter.Config.ParemterConfigs.GetConfig().UploadFolder + "//custOrderDetail//" + fileUuid + "." + extName;
                     f.FILEGROUP_UUID = record.FILEGROUP_UUID;
@@ -736,7 +765,8 @@ string supplier_goods_uuid, HttpRequest request)
                     var allFile = mod.getFile_By_FilegroupUuid(record.FILEGROUP_UUID);
                     var displayName = "";
                     short fileCount = 0;
-                    foreach (var item in allFile) {
+                    foreach (var item in allFile)
+                    {
                         displayName += item.FILE_NAME + ",";
                         fileCount++;
                     }
@@ -796,7 +826,16 @@ string supplier_goods_uuid, HttpRequest request)
             if (data.AllRecord().Count > 0)
             {
                 var delDr = data.AllRecord().First();
-                delDr.gotoTable().Delete(delDr);
+                var drCustOrder = mod.getCustOrder_By_CustOrderUuid(delDr.CUST_ORDER_UUID).AllRecord().First();
+                if (drCustOrder.CUST_ORDER_STATUS_UUID == "COS_FINISH")
+                {
+                    throw new Exception("此訂單的狀態為完成，不可以刪除!");
+                }
+                else
+                {
+                    delDr.gotoTable().Delete(delDr);
+                }
+
             }
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
         }
@@ -930,7 +969,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
     [DirectMethod("loadCustOrg", DirectAction.Store, MethodVisibility.Visible)]
-    public JObject loadCustOrg(string pCustUuid,string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
+    public JObject loadCustOrg(string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
         List<JObject> jobject = new List<JObject>();
@@ -952,7 +991,7 @@ string supplier_goods_uuid, HttpRequest request)
             };
             /*取得總資料數*/
             orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
-            var totalCount = mod.getCustOrg_By_Keyword_Count(pCustUuid,pKeyword);
+            var totalCount = mod.getCustOrg_By_Keyword_Count(pCustUuid, pKeyword);
             var data = mod.getCustOrg_By_Keyword(pCustUuid, pKeyword, orderLimit);
             if (data.Count > 0)
             {
@@ -1066,7 +1105,7 @@ string supplier_goods_uuid, HttpRequest request)
             {
                 var delDr = data.AllRecord().First();
                 delDr.gotoTable().Delete(delDr);
-            }            
+            }
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
         }
         catch (Exception ex)
@@ -1078,7 +1117,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
     [DirectMethod("loadVCustOrder", DirectAction.Store, MethodVisibility.Visible)]
-    public JObject loadVCustOrder(string pCustOrderStatus,string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
+    public JObject loadVCustOrder(string pCustOrderStatus, string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
         List<JObject> jobject = new List<JObject>();
@@ -1099,7 +1138,7 @@ string supplier_goods_uuid, HttpRequest request)
             };
             /*取得總資料數*/
             orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
-            var totalCount = mod.getVCustOrder_By_CustOrderStatus_CustUuid_Keyword_Count(pCustOrderStatus,pCustUuid,pKeyword);
+            var totalCount = mod.getVCustOrder_By_CustOrderStatus_CustUuid_Keyword_Count(pCustOrderStatus, pCustUuid, pKeyword);
             var data = mod.getVCustOrder_By_CustOrderStatus_CustUuid_Keyword(pCustOrderStatus, pCustUuid, pKeyword, orderLimit);
             if (data.Count > 0)
             {
@@ -1116,6 +1155,1179 @@ string supplier_goods_uuid, HttpRequest request)
         {
             log.Error(ex); LK.MyException.MyException.Error(this, ex);
             /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    public string getCustOrderPath(string pCustOrderUuid,out string extName) {
+        HttpServerUtility server = System.Web.HttpContext.Current.Server;
+        var uploadFolder = server.MapPath(Limew.Parameter.Config.ParemterConfigs.GetConfig().UploadFolder);
+        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(uploadFolder);
+        if (di.Exists == false)
+        {
+            di.Create();
+        }
+
+        uploadFolder = uploadFolder + "custOrder//";
+
+        di = new System.IO.DirectoryInfo(uploadFolder);
+        if (di.Exists == false)
+        {
+            di.Create();
+        }
+        extName = pCustOrderUuid+"-"+LK.Util.UID.Instance.GetUniqueID()+".pdf";
+
+        return uploadFolder = uploadFolder + extName;
+    }
+
+    [DirectMethod("pdfLimew", DirectAction.Load, MethodVisibility.Visible)]
+    public JObject pdfLimew(string pCustOrderUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+        //pCustOrderUuid = "15031223373300495";
+        try
+        {  /*Cloud身份檢查*/
+            //checkUser(request.HttpRequest);
+            //if (this.getUser() == null)
+            //{
+            //    throw new Exception("Identity authentication failed.");
+            //}
+            /*權限檢查*/
+            //讀取html檔,由於html檔的儲存內容編碼是utf-8,此處StreamReader編碼設定為utf-8
+
+
+            WebRequest req = WebRequest.Create("http://localhost/limew/pdftest.aspx");
+            req.Timeout = 30 * 60 * 1000;
+            //req.UseDefaultCredentials = true;
+            //req.Proxy.Credentials = req.Credentials;
+            WebResponse response = (WebResponse)req.GetResponse();
+            var downloadfilename = "";     
+            using (Stream s = response.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s, System.Text.Encoding.UTF8))
+                {
+                    var text = sr.ReadToEnd();
+                    // StreamReader sr = new StreamReader(text);
+                    //StreamReader sr = new StreamReader("http://pgnotebook.blogspot.tw/2013/01/pdf-itextsharp.html", System.Text.Encoding.Big5);
+                    //建立Document,HTMLWorker及PdfWriter物件,並指定寫出PDF檔的路徑
+                    //文件格式為橫式A4,若建構式不加引數,預設為直式A4
+                    //Document doc = new Document(PageSize.A4.Rotate());
+                    Document doc = new Document(new Rectangle(9.5f * 72f, 5.5f * 72f), 40, 40, 10, 40);
+                    HTMLWorker hw = new HTMLWorker(doc);
+                    //PdfWriter.GetInstance(doc, new FileStream("D:\\Default.pdf",
+                    //System.IO.FileMode.Create));
+                    //取得作業系統中有安裝的字型,通常在C:\WINDOWS\Fonts目錄下
+                    //取"windir"這一個環境變數,設定為C:\WINDOWS
+                    //若要觀看字型檔案的檔名,在C:\WINDOWS\Fonts目錄中以滑鼠右鍵點選檔案並按下內容
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\simhei.ttf");//SimHei字體(中易黑體)
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC");//細明體 & 新細明體
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\KAIU.TTF");//標楷體
+                    String fontPath = System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC";
+                    XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(fontPath);
+                    FontFactory.FontImp = fontImp;
+                    FontFactory.Register(fontPath, "mingliu");
+
+
+                    fontPath = Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\..\Fonts\kaiu.ttf";
+                    BaseFont bfChinese = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                    Font fontChinese16 = new Font(bfChinese, 16f, Font.NORMAL);
+                    Font fontChinese14 = new Font(bfChinese, 14f, Font.NORMAL);
+                    Font fontChinese12 = new Font(bfChinese, 12f, Font.NORMAL); //title
+                    Font fontChinese10 = new Font(bfChinese, 10f, Font.NORMAL); //table title , 第一聯
+                    Font fontChinese8 = new Font(bfChinese, 8f, Font.NORMAL);
+                                 
+                    var fileSavePath = getCustOrderPath(pCustOrderUuid,out downloadfilename);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(fileSavePath, System.IO.FileMode.Create));
+                    doc.Open();                    
+                    doc.Add(new Paragraph("30486新竹縣竹北市中正西路95號", fontChinese8));
+                    writer.DirectContent.BeginText();
+                    
+                    writer.DirectContent.SetTextMatrix(250, 370);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("利 旻 禮 品 文 具 有 限 公 司" );
+
+                    writer.DirectContent.SetTextMatrix(300, 350);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("報價/估價單");
+                    string url = request.HttpRequest.Url.ToString().Substring(0, request.HttpRequest.Url.ToString().LastIndexOf("/")) + "/css/custImages/利旻禮品文具有限公司.jpg";
+                    var img = Image.GetInstance(new Uri(url));
+                    img.SetAbsolutePosition(572,335);
+                    //原大小 240 * 180 ;
+                    img.ScaleAbsolute( 80, 60);                    
+                    doc.Add(img);
+                    doc.Add(new Paragraph("TEL:03-5516725   FAX:03-5517463", fontChinese8));
+                    doc.Add(new Chunk("\n"));
+                    //PdfPTable table = new PdfPTable(11);
+                    //                                             1    2    3    4   5      6  7    8     9   10   11
+                    PdfPTable table = new PdfPTable(new float[] { 10f, 10f, 20f, 20f, 5f, 15f, 0f, 20f, 20f, 20f, 20f });
+                    table.WidthPercentage = 100;
+                    table.SpacingAfter = 10f;
+                    PdfPCell cell = new PdfPCell(new Phrase(""));
+                    cell.Colspan =11;
+                    cell.FixedHeight = 35f;
+                    cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell);
+                    //第1行
+                    writer.DirectContent.SetTextMatrix(45, 328);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    var drCustOrder = model.getVCustOrder_By_CustOrderUuid(pCustOrderUuid).AllRecord().First();
+
+                    writer.DirectContent.ShowText("客戶名稱：" + drCustOrder.CUST_NAME);
+
+                    writer.DirectContent.SetTextMatrix(280, 328);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯絡電話："+drCustOrder.CUST_ORG_SALES_PHONE);
+
+                    writer.DirectContent.SetTextMatrix(550, 328);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("報價日期："+drCustOrder.CUST_ORDER_REPORT_DATE.Value.ToString("yyyy/MM/dd"));
+                    //第2行
+                    writer.DirectContent.SetTextMatrix(45, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("單位部門："+drCustOrder.CUST_ORG_NAME);
+
+                    writer.DirectContent.SetTextMatrix(280, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("客戶地址："+drCustOrder.CUST_ADDRESS);
+
+                    writer.DirectContent.SetTextMatrix(550, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("報價單號：XXXXXXXXXXX");
+                    //第3行
+                    writer.DirectContent.SetTextMatrix(45, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("採購人員："+drCustOrder.CUST_ORG_SALES_NAME);
+
+                    writer.DirectContent.SetTextMatrix(550, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("製單人員："+drCustOrder.CUST_ORDER_REPORT_ATTENDANT_C_NAME);
+                    //第一聯
+                    writer.DirectContent.SetTextMatrix(650, 328);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("一");
+
+                    writer.DirectContent.SetTextMatrix(650, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 298);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 288);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("會");
+
+                    writer.DirectContent.SetTextMatrix(650, 278);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("計");
+
+                    writer.DirectContent.SetTextMatrix(650, 268);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+
+                    //第二聯
+                    writer.DirectContent.SetTextMatrix(650, 248);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 238);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("二");
+
+                    writer.DirectContent.SetTextMatrix(650, 228);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 218);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 208);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("客");
+
+                    writer.DirectContent.SetTextMatrix(650, 198);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("戶");
+
+                    writer.DirectContent.SetTextMatrix(650, 188);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    //第三聯
+                    writer.DirectContent.SetTextMatrix(650, 168);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 158);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("三");
+
+                    writer.DirectContent.SetTextMatrix(650, 148);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 138);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 128);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("存");
+
+                    writer.DirectContent.SetTextMatrix(650, 118);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("根");
+
+                    writer.DirectContent.SetTextMatrix(650, 108);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+                    writer.DirectContent.EndText(); 
+
+                    
+                    //第4行
+                    var cell1_1 = new PdfPCell(new Phrase("序",fontChinese10));
+                    cell1_1.Colspan = 1;
+                    cell1_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell1_1.FixedHeight = 16;
+                    table.AddCell(cell1_1);
+
+                    var cell1_5 = new PdfPCell(new Phrase("品名規格", fontChinese10));
+                    cell1_5.Colspan = 4;
+                    cell1_5.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_5);
+
+                    var cell1_6 = new PdfPCell(new Phrase("數量", fontChinese10));
+                    cell1_6.Colspan = 1;
+                    cell1_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_6);
+
+
+
+                    var cell1_8 = new PdfPCell(new Phrase("單位", fontChinese10));
+                    cell1_8.Colspan = 2;
+                    cell1_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_8);
+
+                    var cell1_9 = new PdfPCell(new Phrase("單價", fontChinese10));
+                    cell1_9.Colspan = 1;
+                    cell1_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_9);
+
+                    var cell1_10 = new PdfPCell(new Phrase("金額", fontChinese10));
+                    cell1_10.Colspan = 1;
+                    cell1_10.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_10);
+
+                    var cell1_11 = new PdfPCell(new Phrase("備註", fontChinese10));
+                    cell1_11.Colspan = 1;
+                    cell1_11.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_11);
+                    var drVCustOrderDetail = model.getVCustOrderDetail_By_CustOrderUuid(pCustOrderUuid,new OrderLimit());
+                    var rowCount = 0;
+                    decimal sumMoney = 0;
+                    foreach (var item in drVCustOrderDetail) {
+                        rowCount++;
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(rowCount.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_GOODS_NAME, fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_COUNT.ToString(), fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_UNIT_NAME, fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PRICE.ToString(), fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_TOTAL_PRICE.ToString(), fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PS, fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);
+                        sumMoney += item.CUST_ORDER_DETAIL_TOTAL_PRICE.Value;                        
+                    }
+                    //資料
+                    for (int i = rowCount+1; i < 13; i++)
+                    {
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(i.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase("" , fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);      
+                    }
+                    var cell2_2 = new PdfPCell(new Phrase("小計", fontChinese10));
+                    cell2_2.Colspan = 2;
+                    cell2_2.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell2_2.FixedHeight = 16;
+                    table.AddCell(cell2_2);
+
+                    var cell2_3 = new PdfPCell(new Phrase("NT$ "+sumMoney.ToString(), fontChinese10));
+                    cell2_3.Colspan = 1;
+                    cell2_3.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_3);
+
+                    var cell2_4 = new PdfPCell(new Phrase("營業稅", fontChinese10));
+                    cell2_4.Colspan = 1;
+                    
+                    cell2_4.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_4);
+
+                    string hasTax = "含稅";
+                    if (drCustOrder.CUST_ORDER_HAS_TAX != 1) {
+                        hasTax = "未稅";
+                    }
+                    var cell2_7 = new PdfPCell(new Phrase(hasTax, fontChinese10));
+                    cell2_7.Colspan = 3;
+                    cell2_7.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_7);
+
+                    var cell2_9 = new PdfPCell(new Phrase("合計", fontChinese10));
+                    cell2_9.Colspan =2;
+                    cell2_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_9);
+
+                    string showMoney = "";
+                    if (drCustOrder.CUST_ORDER_HAS_TAX != 1)
+                    {
+                        showMoney = (sumMoney * Convert.ToDecimal(1.05)).ToString();
+                    }
+                    else {
+                        showMoney = sumMoney.ToString();
+                    }
+                    var cell2_11 = new PdfPCell(new Phrase("NT$ " + showMoney, fontChinese12));
+                    cell2_11.Colspan = 2;
+                    cell2_11.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_11);
+                    var cell3_2 = new PdfPCell(new Phrase("備註", fontChinese10));
+                    cell3_2.Colspan = 2;
+                    cell3_2.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell3_2.FixedHeight = 32;
+                    table.AddCell(cell3_2);
+                    var cell3_11 = new PdfPCell(new Phrase(drCustOrder.CUST_ORDER_PS, fontChinese10));
+                    cell3_11.Colspan = 9;
+                    cell3_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell3_11);   
+                    doc.Add(table);
+                    doc.Close();                    
+                    sr.Close();
+               }
+            }
+            System.Collections.Hashtable ht = new Hashtable();
+            ht.Add("file", downloadfilename);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("pdfW", DirectAction.Load, MethodVisibility.Visible)]
+    public JObject pdfW(string pCustOrderUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+        //pCustOrderUuid = "15031223373300495";
+        try
+        {  /*Cloud身份檢查*/
+            //checkUser(request.HttpRequest);
+            //if (this.getUser() == null)
+            //{
+            //    throw new Exception("Identity authentication failed.");
+            //}
+            /*權限檢查*/
+            //讀取html檔,由於html檔的儲存內容編碼是utf-8,此處StreamReader編碼設定為utf-8
+
+
+            WebRequest req = WebRequest.Create("http://localhost/limew/pdftest.aspx");
+            req.Timeout = 30 * 60 * 1000;
+            var downloadfilename = "";
+            //req.UseDefaultCredentials = true;
+            //req.Proxy.Credentials = req.Credentials;
+            WebResponse response = (WebResponse)req.GetResponse();
+
+            using (Stream s = response.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s, System.Text.Encoding.UTF8))
+                {
+                    var text = sr.ReadToEnd();
+                    // StreamReader sr = new StreamReader(text);
+                    //StreamReader sr = new StreamReader("http://pgnotebook.blogspot.tw/2013/01/pdf-itextsharp.html", System.Text.Encoding.Big5);
+                    //建立Document,HTMLWorker及PdfWriter物件,並指定寫出PDF檔的路徑
+                    //文件格式為橫式A4,若建構式不加引數,預設為直式A4
+                    //Document doc = new Document(PageSize.A4.Rotate());
+                    Document doc = new Document(new Rectangle(9.5f * 72f, 5.5f * 72f), 40, 40, 10, 40);
+
+                    HTMLWorker hw = new HTMLWorker(doc);
+                    //PdfWriter.GetInstance(doc, new FileStream("D:\\Default.pdf",
+                    //System.IO.FileMode.Create));
+
+                    //取得作業系統中有安裝的字型,通常在C:\WINDOWS\Fonts目錄下
+                    //取"windir"這一個環境變數,設定為C:\WINDOWS
+                    //若要觀看字型檔案的檔名,在C:\WINDOWS\Fonts目錄中以滑鼠右鍵點選檔案並按下內容
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\simhei.ttf");//SimHei字體(中易黑體)
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC");//細明體 & 新細明體
+                    
+                    String fontPath = System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC";
+                    XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(fontPath);
+                    FontFactory.FontImp = fontImp;
+                    FontFactory.Register(fontPath);
+
+                     var drCustOrder = model.getVCustOrder_By_CustOrderUuid(pCustOrderUuid).AllRecord().First();
+                    fontPath = Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\..\Fonts\kaiu.ttf";
+                    BaseFont bfChinese = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                    Font fontChinese16 = new Font(bfChinese, 16f, Font.NORMAL);
+                    Font fontChinese14 = new Font(bfChinese, 14f, Font.NORMAL);
+                    Font fontChinese12 = new Font(bfChinese, 12f, Font.NORMAL); //title
+                    Font fontChinese10 = new Font(bfChinese, 10f, Font.NORMAL); //table title , 第一聯
+                    Font fontChinese8 = new Font(bfChinese, 8f, Font.NORMAL);
+                    
+                    var fileSavePath = getCustOrderPath(pCustOrderUuid, out downloadfilename);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(fileSavePath, System.IO.FileMode.Create));
+                    doc.Open();
+                    doc.Add(new Chunk("\n"));
+                    doc.Add(new Paragraph("日期："+drCustOrder.CUST_ORDER_REPORT_DATE.Value.ToString("yyyy/MM/dd")+"          單號:"+drCustOrder.CUST_ORDER_ID, fontChinese8));
+                    doc.Add(new Paragraph("客戶：" + drCustOrder.CUST_NAME + "          單位:" + drCustOrder.CUST_ORG_NAME + "          採購：" + drCustOrder.CUST_ORG_SALES_NAME + "          電話：" + drCustOrder.CUST_ORG_SALES_PHONE, fontChinese8));
+                    writer.DirectContent.BeginText();
+                    
+                    writer.DirectContent.SetTextMatrix(250, 380);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("韋成企業商行    估價單");
+                    //293 204
+                    string url = request.HttpRequest.Url.ToString().Substring(0, request.HttpRequest.Url.ToString().LastIndexOf("/")) + "/css/custImages/韋成企業商行.jpg";
+                    var img = Image.GetInstance(new Uri(url));
+                    img.SetAbsolutePosition(572,335);
+                    //原大小 240 * 180 ;
+                    img.ScaleAbsolute( 80, 60);                    
+                    doc.Add(img);
+                    
+                    doc.Add(new Chunk("\n"));
+                    //PdfPTable table = new PdfPTable(11);
+                    //                                             1    2    3    4   5      6  7    8     9   10   11
+                    PdfPTable table = new PdfPTable(new float[] { 10f, 10f, 20f, 20f, 5f, 15f, 0f, 20f, 20f, 20f, 20f });
+                    table.WidthPercentage = 100;
+                    table.SpacingAfter = 10f;
+                    PdfPCell cell = new PdfPCell(new Phrase(""));
+                    cell.Colspan =11;
+                    
+                    cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell);
+                   
+                    //第2行
+                   
+                    //第3行
+                   
+                    //第一聯
+                   
+
+
+                    //第二聯
+                   
+
+                    //第三聯
+                   
+                    writer.DirectContent.EndText(); 
+
+                    
+                    //第4行
+                    var cell1_1 = new PdfPCell(new Phrase("序",fontChinese10));
+                    cell1_1.Colspan = 1;
+                    cell1_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell1_1.FixedHeight = 16;
+                    table.AddCell(cell1_1);
+
+                    var cell1_5 = new PdfPCell(new Phrase("品名規格", fontChinese10));
+                    cell1_5.Colspan = 4;
+                    cell1_5.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_5);
+
+                    var cell1_6 = new PdfPCell(new Phrase("數量", fontChinese10));
+                    cell1_6.Colspan = 1;
+                    cell1_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_6);
+
+
+
+                    var cell1_8 = new PdfPCell(new Phrase("單位", fontChinese10));
+                    cell1_8.Colspan = 2;
+                    cell1_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_8);
+
+                    var cell1_9 = new PdfPCell(new Phrase("單價", fontChinese10));
+                    cell1_9.Colspan = 1;
+                    cell1_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_9);
+
+                    var cell1_10 = new PdfPCell(new Phrase("金額", fontChinese10));
+                    cell1_10.Colspan = 1;
+                    cell1_10.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_10);
+
+                    var cell1_11 = new PdfPCell(new Phrase("備註", fontChinese10));
+                    cell1_11.Colspan = 1;
+                    cell1_11.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_11);
+                    var drVCustOrderDetail = model.getVCustOrderDetail_By_CustOrderUuid(pCustOrderUuid,new OrderLimit());
+                    var rowCount = 0;
+                    decimal sumMoney = 0;
+                    foreach (var item in drVCustOrderDetail) {
+                        rowCount++;
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(rowCount.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_GOODS_NAME, fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_COUNT.ToString(), fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_UNIT_NAME, fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PRICE.ToString(), fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_TOTAL_PRICE.ToString(), fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PS, fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);
+
+                        sumMoney += item.CUST_ORDER_DETAIL_TOTAL_PRICE.Value;
+
+                        
+                    }
+                    //資料
+                    for (int i = rowCount+1; i < 17; i++)
+                    {
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(i.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase("" , fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);
+                        
+                        
+                    }
+
+                    var cell2_2 = new PdfPCell(new Phrase("總額新臺幣    零 拾    零 萬    伍 仟    伍 佰    零 拾    零 元整", fontChinese12));
+                    cell2_2.Colspan = 9;
+                    cell2_2.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                    cell2_2.FixedHeight = 20;
+                    table.AddCell(cell2_2);
+                    var cell2_3 = new PdfPCell(new Phrase("NT$ 5,500", fontChinese12));
+                    cell2_3.Colspan = 9;
+                    cell2_3.FixedHeight = 20;
+                    cell2_3.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_3);
+
+                    //var cell2_2 = new PdfPCell(new Phrase("小計", fontChinese10));
+                    //cell2_2.Colspan = 2;
+                    //cell2_2.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //cell2_2.FixedHeight = 16;
+                    //table.AddCell(cell2_2);
+
+                    //var cell2_3 = new PdfPCell(new Phrase("NT$ "+sumMoney.ToString(), fontChinese10));
+                    //cell2_3.Colspan = 1;
+                    //cell2_3.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_3);
+
+                    //var cell2_4 = new PdfPCell(new Phrase("營業稅", fontChinese10));
+                    //cell2_4.Colspan = 1;
+                    
+                    //cell2_4.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_4);
+
+                    //string hasTax = "含稅";
+                    //if (drCustOrder.CUST_ORDER_HAS_TAX != 1) {
+                    //    hasTax = "未稅";
+                    //}
+                    //var cell2_7 = new PdfPCell(new Phrase(hasTax, fontChinese10));
+                    //cell2_7.Colspan = 3;
+                    //cell2_7.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_7);
+
+                    //var cell2_9 = new PdfPCell(new Phrase("合計", fontChinese10));
+                    //cell2_9.Colspan =2;
+                    //cell2_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_9);
+
+                    //string showMoney = "";
+                    //if (drCustOrder.CUST_ORDER_HAS_TAX != 1)
+                    //{
+                    //    showMoney = (sumMoney * Convert.ToDecimal(1.05)).ToString();
+                    //}
+                    //else {
+                    //    showMoney = sumMoney.ToString();
+                    //}
+                    //var cell2_11 = new PdfPCell(new Phrase("NT$ " + showMoney, fontChinese12));
+                    //cell2_11.Colspan = 2;
+                    //cell2_11.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_11);
+
+                    doc.Add(table);
+
+                    writer.DirectContent.BeginText();
+                    writer.DirectContent.SetTextMatrix(40, 20);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("製單："+drCustOrder.CUST_ORDER_REPORT_ATTENDANT_C_NAME+"          備註："+drCustOrder.CUST_ORDER_PS);
+                    writer.DirectContent.EndText();
+
+                    
+
+                    
+                   
+
+                    doc.Close();                    
+                    sr.Close();
+                }
+
+            }
+
+
+
+            System.Collections.Hashtable ht = new Hashtable();
+            ht.Add("file", downloadfilename);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+
+    [DirectMethod("pdfU", DirectAction.Load, MethodVisibility.Visible)]
+    public JObject pdfU(string pCustOrderUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+        //pCustOrderUuid = "15031223373300495";
+        try
+        {  /*Cloud身份檢查*/
+            //checkUser(request.HttpRequest);
+            //if (this.getUser() == null)
+            //{
+            //    throw new Exception("Identity authentication failed.");
+            //}
+            /*權限檢查*/
+            //讀取html檔,由於html檔的儲存內容編碼是utf-8,此處StreamReader編碼設定為utf-8
+
+
+            WebRequest req = WebRequest.Create("http://localhost/limew/pdftest.aspx");
+            req.Timeout = 30 * 60 * 1000;
+            //req.UseDefaultCredentials = true;
+            //req.Proxy.Credentials = req.Credentials;
+            WebResponse response = (WebResponse)req.GetResponse();
+            var downloadfilename = "";
+            using (Stream s = response.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s, System.Text.Encoding.UTF8))
+                {
+                    var text = sr.ReadToEnd();
+                    // StreamReader sr = new StreamReader(text);
+                    //StreamReader sr = new StreamReader("http://pgnotebook.blogspot.tw/2013/01/pdf-itextsharp.html", System.Text.Encoding.Big5);
+                    //建立Document,HTMLWorker及PdfWriter物件,並指定寫出PDF檔的路徑
+                    //文件格式為橫式A4,若建構式不加引數,預設為直式A4
+                    //Document doc = new Document(PageSize.A4.Rotate());
+                    Document doc = new Document(new Rectangle(9.5f * 72f, 5.5f * 72f), 40, 40, 10, 40);
+
+                    HTMLWorker hw = new HTMLWorker(doc);
+                    //PdfWriter.GetInstance(doc, new FileStream("D:\\Default.pdf",
+                    //System.IO.FileMode.Create));
+
+                    //取得作業系統中有安裝的字型,通常在C:\WINDOWS\Fonts目錄下
+                    //取"windir"這一個環境變數,設定為C:\WINDOWS
+                    //若要觀看字型檔案的檔名,在C:\WINDOWS\Fonts目錄中以滑鼠右鍵點選檔案並按下內容
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\simhei.ttf");//SimHei字體(中易黑體)
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC");//細明體 & 新細明體
+                    FontFactory.Register(System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\KAIU.TTF");//標楷體
+                    String fontPath = System.Environment.GetEnvironmentVariable("windir") +
+                    @"\Fonts\MINGLIU.TTC";
+                    XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(fontPath);
+                    FontFactory.FontImp = fontImp;
+                    FontFactory.Register(fontPath, "mingliu");
+
+
+                    fontPath = Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\..\Fonts\kaiu.ttf";
+                    BaseFont bfChinese = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                    Font fontChinese16 = new Font(bfChinese, 16f, Font.NORMAL);
+                    Font fontChinese14 = new Font(bfChinese, 14f, Font.NORMAL);
+                    Font fontChinese12 = new Font(bfChinese, 12f, Font.NORMAL); //title
+                    Font fontChinese10 = new Font(bfChinese, 10f, Font.NORMAL); //table title , 第一聯
+                    Font fontChinese8 = new Font(bfChinese, 8f, Font.NORMAL);
+                     var drCustOrder = model.getVCustOrder_By_CustOrderUuid(pCustOrderUuid).AllRecord().First();
+                    
+                     var fileSavePath = getCustOrderPath(pCustOrderUuid, out downloadfilename);
+                     PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(fileSavePath, System.IO.FileMode.Create));
+                    doc.Open();                    
+                    
+                    writer.DirectContent.BeginText();
+                    
+                    writer.DirectContent.SetTextMatrix(300, 370);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("裕寶企業商行 報價單");
+
+                    writer.DirectContent.SetTextMatrix(300, 355);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 10);
+                    writer.DirectContent.ShowText("新竹縣新豐鄉道化街10號1樓");
+
+                    
+
+                    string url = request.HttpRequest.Url.ToString().Substring(0, request.HttpRequest.Url.ToString().LastIndexOf("/")) + "/css/custImages/裕寶企業商行.jpg";
+                    var img = Image.GetInstance(new Uri(url));
+                    img.SetAbsolutePosition(240,335);
+                    //原大小 240 * 180 ;
+                    img.ScaleAbsolute( 60, 60);                    
+                    doc.Add(img);
+                    writer.DirectContent.SetTextMatrix(40, 345);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("報價日期："+drCustOrder.CUST_ORDER_REPORT_DATE.Value.ToString("yyyy/MM/dd") );
+
+                    writer.DirectContent.SetTextMatrix(550, 345);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 12);
+                    writer.DirectContent.ShowText("製單人員：" + drCustOrder.CUST_ORDER_REPORT_ATTENDANT_C_NAME);
+
+                    doc.Add(new Paragraph(""));
+                    doc.Add(new Chunk("\n"));
+                    doc.Add(new Chunk("\n"));
+                    //PdfPTable table = new PdfPTable(11);
+                    //                                             1    2    3    4   5      6  7    8     9   10   11
+                    PdfPTable table = new PdfPTable(new float[] { 10f, 10f, 20f, 20f, 5f, 15f, 0f, 20f, 20f, 20f, 20f });
+                    table.WidthPercentage = 100;
+                    table.SpacingAfter = 10f;
+                    PdfPCell cell = new PdfPCell(new Phrase(""));
+                    cell.Colspan =11;
+                    cell.FixedHeight = 30f;
+                    cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell);
+                    //第1行
+                    writer.DirectContent.SetTextMatrix(45, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("客戶名稱：" + drCustOrder.CUST_NAME);
+
+                    writer.DirectContent.SetTextMatrix(280, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("單位部門：" + drCustOrder.CUST_ORG_NAME);
+
+                    writer.DirectContent.SetTextMatrix(400, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯絡電話：" + drCustOrder.CUST_ORG_SALES_PHONE);
+
+                    //第2行                  
+
+                    writer.DirectContent.SetTextMatrix(45, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("採購人員：" + drCustOrder.CUST_ORG_SALES_NAME);
+
+                    writer.DirectContent.SetTextMatrix(280, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("地址：" + drCustOrder.CUST_ADDRESS);
+                   
+                    //第一聯
+                    writer.DirectContent.SetTextMatrix(650, 328);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 318);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("一");
+
+                    writer.DirectContent.SetTextMatrix(650, 308);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 298);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 288);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("存");
+
+                    writer.DirectContent.SetTextMatrix(650, 278);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("根");
+
+                    
+
+
+                    //第二聯
+                    writer.DirectContent.SetTextMatrix(650, 248);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 238);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("二");
+
+                    writer.DirectContent.SetTextMatrix(650, 228);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 218);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 208);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("會");
+
+                    writer.DirectContent.SetTextMatrix(650, 198);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("計");
+
+
+                    //第三聯
+                    writer.DirectContent.SetTextMatrix(650, 168);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("第");
+
+                    writer.DirectContent.SetTextMatrix(650, 158);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("三");
+
+                    writer.DirectContent.SetTextMatrix(650, 148);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("聯");
+
+                    writer.DirectContent.SetTextMatrix(652, 138);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText(":");
+
+                    writer.DirectContent.SetTextMatrix(650, 128);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("客");
+
+                    writer.DirectContent.SetTextMatrix(650, 118);
+                    writer.DirectContent.SetFontAndSize(bfChinese, 8);
+                    writer.DirectContent.ShowText("戶");
+
+                    writer.DirectContent.EndText(); 
+
+                    
+                    //第4行
+                    var cell1_1 = new PdfPCell(new Phrase("序",fontChinese10));
+                    cell1_1.Colspan = 1;
+                    cell1_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell1_1.FixedHeight = 16;
+                    table.AddCell(cell1_1);
+
+                    var cell1_5 = new PdfPCell(new Phrase("品名規格", fontChinese10));
+                    cell1_5.Colspan = 4;
+                    cell1_5.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_5);
+
+                    var cell1_6 = new PdfPCell(new Phrase("數量", fontChinese10));
+                    cell1_6.Colspan = 1;
+                    cell1_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_6);
+
+
+
+                    var cell1_8 = new PdfPCell(new Phrase("單位", fontChinese10));
+                    cell1_8.Colspan = 2;
+                    cell1_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_8);
+
+                    var cell1_9 = new PdfPCell(new Phrase("單價", fontChinese10));
+                    cell1_9.Colspan = 1;
+                    cell1_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_9);
+
+                    var cell1_10 = new PdfPCell(new Phrase("金額", fontChinese10));
+                    cell1_10.Colspan = 1;
+                    cell1_10.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_10);
+
+                    var cell1_11 = new PdfPCell(new Phrase("備註", fontChinese10));
+                    cell1_11.Colspan = 1;
+                    cell1_11.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell1_11);
+                    var drVCustOrderDetail = model.getVCustOrderDetail_By_CustOrderUuid(pCustOrderUuid,new OrderLimit());
+                    var rowCount = 0;
+                    decimal sumMoney = 0;
+                    foreach (var item in drVCustOrderDetail) {
+                        rowCount++;
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(rowCount.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_GOODS_NAME, fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_COUNT.ToString(), fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_UNIT_NAME, fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PRICE.ToString(), fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_TOTAL_PRICE.ToString(), fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase(item.CUST_ORDER_DETAIL_PS, fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);
+
+                        sumMoney += item.CUST_ORDER_DETAIL_TOTAL_PRICE.Value;
+
+                        
+                    }
+                    //資料
+                    for (int i = rowCount+1; i < 13; i++)
+                    {
+                        //序
+                        var cellD_1 = new PdfPCell(new Phrase(i.ToString(), fontChinese10));
+                        cellD_1.Colspan = 1;
+                        cellD_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        cellD_1.FixedHeight = 16;
+                        table.AddCell(cellD_1);
+                        //品名規格
+                        var cellD_5 = new PdfPCell(new Phrase("" , fontChinese10));
+                        cellD_5.Colspan = 4;
+                        cellD_5.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_5);
+                        //數量
+                        var cellD_6 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_6.Colspan = 1;
+                        cellD_6.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_6);
+                        //單位
+                        var cellD_8 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_8.Colspan = 2;
+                        cellD_8.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_8);
+                        //單價
+                        var cellD_9 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_9.Colspan = 1;
+                        cellD_9.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_9);
+                        //金額
+                        var cellD_10 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_10.Colspan = 1;
+                        cellD_10.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_10);
+                        //備註
+                        var cellD_11 = new PdfPCell(new Phrase("", fontChinese10));
+                        cellD_11.Colspan = 1;
+                        cellD_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                        table.AddCell(cellD_11);
+                        
+                        
+                    }
+                    //var cell2_2 = new PdfPCell(new Phrase("小計", fontChinese10));
+                    //cell2_2.Colspan = 2;
+                    //cell2_2.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //cell2_2.FixedHeight = 16;
+                    //table.AddCell(cell2_2);
+
+                    //var cell2_3 = new PdfPCell(new Phrase("NT$ "+sumMoney.ToString(), fontChinese10));
+                    //cell2_3.Colspan = 1;
+                    //cell2_3.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_3);
+
+                    //var cell2_4 = new PdfPCell(new Phrase("營業稅", fontChinese10));
+                    //cell2_4.Colspan = 1;
+                    
+                    //cell2_4.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_4);
+
+                    //string hasTax = "含稅";
+                    //if (drCustOrder.CUST_ORDER_HAS_TAX != 1) {
+                    //    hasTax = "未稅";
+                    //}
+                    //var cell2_7 = new PdfPCell(new Phrase(hasTax, fontChinese10));
+                    //cell2_7.Colspan = 3;
+                    //cell2_7.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    //table.AddCell(cell2_7);
+                    var cell2_1 = new PdfPCell(new Phrase("", fontChinese10));
+                    cell2_1.Colspan = 7;
+                    cell2_1.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_1);
+
+                    var cell2_9 = new PdfPCell(new Phrase("合計", fontChinese10));
+                    cell2_9.Colspan =2;
+                    cell2_9.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_9);
+
+                    string showMoney = "";
+                    if (drCustOrder.CUST_ORDER_HAS_TAX != 1)
+                    {
+                        showMoney = (sumMoney * Convert.ToDecimal(1.05)).ToString();
+                    }
+                    else {
+                        showMoney = sumMoney.ToString();
+                    }
+                    var cell2_11 = new PdfPCell(new Phrase("NT$ " + showMoney, fontChinese12));
+                    cell2_11.Colspan = 2;
+                    cell2_11.HorizontalAlignment = 2; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell2_11);
+
+
+
+                    var cell3_2 = new PdfPCell(new Phrase("備註", fontChinese10));
+                    cell3_2.Colspan = 2;
+                    cell3_2.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                    cell3_2.FixedHeight = 32;
+                    table.AddCell(cell3_2);
+
+                    var cell3_11 = new PdfPCell(new Phrase(drCustOrder.CUST_ORDER_PS, fontChinese10));
+                    cell3_11.Colspan = 9;
+                    cell3_11.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
+                    table.AddCell(cell3_11);   
+                    doc.Add(table);
+
+                    
+                   
+
+                    doc.Close();                    
+                    sr.Close();
+                }
+
+            }
+            System.Collections.Hashtable ht = new Hashtable();
+            ht.Add("file", downloadfilename);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }

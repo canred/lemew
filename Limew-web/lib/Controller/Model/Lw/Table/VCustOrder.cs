@@ -71,6 +71,9 @@ namespace Limew.Model.Lw.Table
 		public string CUST_ORG_NAME {get{return "CUST_ORG_NAME" ; }}
 		public string CUST_ORG_IS_ACTIVE {get{return "CUST_ORG_IS_ACTIVE" ; }}
 		public string CUST_ORDER_PS {get{return "CUST_ORDER_PS" ; }}
+		public string CUST_ORDER_REPORT_DATE {get{return "CUST_ORDER_REPORT_DATE" ; }}
+		public string CUST_ORDER_REPORT_ATTENDANT_UUID {get{return "CUST_ORDER_REPORT_ATTENDANT_UUID" ; }}
+		public string CUST_ORDER_REPORT_ATTENDANT_C_NAME {get{return "CUST_ORDER_REPORT_ATTENDANT_C_NAME" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VCustOrder_Record CurrentRecord(){

@@ -54,6 +54,8 @@ namespace Limew.Model.Lw.Table
 		public string CUST_ORDER_HAS_TAX {get{return "CUST_ORDER_HAS_TAX" ; }}
 		public string CUST_ORDER_PS {get{return "CUST_ORDER_PS" ; }}
 		public string COMPANY_UUID {get{return "COMPANY_UUID" ; }}
+		public string CUST_ORDER_REPORT_DATE {get{return "CUST_ORDER_REPORT_DATE" ; }}
+		public string CUST_ORDER_REPORT_ATTENDANT_UUID {get{return "CUST_ORDER_REPORT_ATTENDANT_UUID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrder_Record CurrentRecord(){

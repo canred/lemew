@@ -1349,6 +1349,9 @@
               </xs:element>
               <xs:element name="cust_org_is_active" msprop:Generator_ColumnVarNameInTable="columncust_org_is_active" msprop:Generator_ColumnPropNameInRow="cust_org_is_active" msprop:Generator_ColumnPropNameInTable="cust_org_is_activeColumn" msprop:Generator_UserColumnName="cust_org_is_active" type="xs:int" minOccurs="0" />
               <xs:element name="cust_order_ps" msprop:Generator_ColumnVarNameInTable="columncust_order_ps" msprop:Generator_ColumnPropNameInRow="cust_order_ps" msprop:Generator_ColumnPropNameInTable="cust_order_psColumn" msprop:Generator_UserColumnName="cust_order_ps" type="xs:string" minOccurs="0" />
+              <xs:element name="cust_order_report_date" msprop:Generator_ColumnVarNameInTable="columncust_order_report_date" msprop:Generator_ColumnPropNameInRow="cust_order_report_date" msprop:Generator_ColumnPropNameInTable="cust_order_report_dateColumn" msprop:Generator_UserColumnName="cust_order_report_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_order_report_attendant_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_report_attendant_uuidColumn" msprop:Generator_UserColumnName="cust_order_report_attendant_uuid" type="xs:string" minOccurs="0" />
+              <xs:element name="cust_order_report_attendant_c_name" msprop:Generator_ColumnVarNameInTable="columncust_order_report_attendant_c_name" msprop:Generator_ColumnPropNameInRow="cust_order_report_attendant_c_name" msprop:Generator_ColumnPropNameInTable="cust_order_report_attendant_c_nameColumn" msprop:Generator_UserColumnName="cust_order_report_attendant_c_name" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1488,6 +1491,8 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="company_uuid" msprop:Generator_ColumnVarNameInTable="columncompany_uuid" msprop:Generator_ColumnPropNameInRow="company_uuid" msprop:Generator_ColumnPropNameInTable="company_uuidColumn" msprop:Generator_UserColumnName="company_uuid" type="xs:string" minOccurs="0" />
+              <xs:element name="cust_order_report_date" msprop:Generator_ColumnVarNameInTable="columncust_order_report_date" msprop:Generator_ColumnPropNameInRow="cust_order_report_date" msprop:Generator_ColumnPropNameInTable="cust_order_report_dateColumn" msprop:Generator_UserColumnName="cust_order_report_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_order_report_attendant_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_report_attendant_uuidColumn" msprop:Generator_UserColumnName="cust_order_report_attendant_uuid" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1705,6 +1710,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="file_count" msprop:Generator_ColumnVarNameInTable="columnfile_count" msprop:Generator_ColumnPropNameInRow="file_count" msprop:Generator_ColumnPropNameInTable="file_countColumn" msprop:Generator_UserColumnName="file_count" type="xs:int" minOccurs="0" />
+              <xs:element name="filegroup_tag" msprop:Generator_ColumnVarNameInTable="columnfilegroup_tag" msprop:Generator_ColumnPropNameInRow="filegroup_tag" msprop:Generator_ColumnPropNameInTable="filegroup_tagColumn" msprop:Generator_UserColumnName="filegroup_tag" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1845,6 +1851,10 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="CUST_ORDER_DETAIL_UNIT_NAME" msprop:Generator_ColumnVarNameInTable="columnCUST_ORDER_DETAIL_UNIT_NAME" msprop:Generator_ColumnPropNameInRow="CUST_ORDER_DETAIL_UNIT_NAME" msprop:Generator_ColumnPropNameInTable="CUST_ORDER_DETAIL_UNIT_NAMEColumn" msprop:Generator_UserColumnName="CUST_ORDER_DETAIL_UNIT_NAME" type="xs:string" minOccurs="0" />
+              <xs:element name="filegroup_display_name" msprop:Generator_ColumnVarNameInTable="columnfilegroup_display_name" msprop:Generator_ColumnPropNameInRow="filegroup_display_name" msprop:Generator_ColumnPropNameInTable="filegroup_display_nameColumn" msprop:Generator_UserColumnName="filegroup_display_name" type="xs:string" minOccurs="0" />
+              <xs:element name="filegroup_tag" msprop:Generator_ColumnVarNameInTable="columnfilegroup_tag" msprop:Generator_ColumnPropNameInRow="filegroup_tag" msprop:Generator_ColumnPropNameInTable="filegroup_tagColumn" msprop:Generator_UserColumnName="filegroup_tag" type="xs:string" minOccurs="0" />
+              <xs:element name="file_count" msprop:Generator_ColumnVarNameInTable="columnfile_count" msprop:Generator_ColumnPropNameInRow="file_count" msprop:Generator_ColumnPropNameInTable="file_countColumn" msprop:Generator_UserColumnName="file_count" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

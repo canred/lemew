@@ -219,7 +219,6 @@ Ext.define('CUST_ORG', {
 Ext.define('CUST_ORDER', {
     extend: 'Ext.data.Model',
     fields: [
-        'COMPANY_UUID',
         'CUST_ORDER_UUID',
         'CUST_ORDER_CR',
         'CUST_ORDER_ID',
@@ -242,7 +241,11 @@ Ext.define('CUST_ORDER', {
         'CUST_ORDER_INVOICE_NUMBER',
         'CUST_ORDER_LIMIT_DATE',
         'CUST_ORG_UUID',
-        'CUST_ORDER_PS'
+        'CUST_ORDER_HAS_TAX',
+        'CUST_ORDER_PS',
+        'COMPANY_UUID',
+        'CUST_ORDER_REPORT_DATE',
+        'CUST_ORDER_REPORT_ATTENDANT_UUID'
     ]
 });
 
@@ -396,6 +399,7 @@ Ext.define('V_CUST_ORDER', {
         'CUST_ORDER_LIMIT_DATE',
         'CUST_ORG_UUID',
         'CUST_ORDER_HAS_TAX',
+        'CUST_ORDER_PS',
         'CUST_NAME',
         'CUST_ADDRESS',
         'CUST_FAX',
@@ -406,6 +410,9 @@ Ext.define('V_CUST_ORDER', {
         'CUST_SALES_NAME',
         'CUST_SALES_PHONE',
         'CUST_TEL',
+        'CUST_ORDER_REPORT_DATE',
+        'CUST_ORDER_REPORT_ATTENDANT_UUID',
+        'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
         'PAY_STATUS_NAME',
         'PAY_METHOD_NAME',
         'CUST_ORG_SALES_NAME',
@@ -420,20 +427,25 @@ Ext.define('V_CUST_ORDER', {
 Ext.define('V_CUST_ORDER_DETAIL', {
     extend: 'Ext.data.Model',
     fields: [
+        'CUST_ORDER_DETAIL_COUNT',
+        'CUST_ORDER_DETAIL_CR', {
+            name: 'CUST_ORDER_DETAIL_CUSTOMIZED',
+            type: 'boolean'
+        },
+
+        'CUST_ORDER_DETAIL_GOODS_NAME',
+        'CUST_ORDER_DETAIL_IS_ACTIVE',
+        'CUST_ORDER_DETAIL_PRICE',
+        'CUST_ORDER_DETAIL_PS',
+        'CUST_ORDER_DETAIL_TOTAL_PRICE',
+        'CUST_ORDER_DETAIL_UNIT',
+        'CUST_ORDER_DETAIL_UNIT_NAME',
         'CUST_ORDER_DETAIL_UUID',
         'CUST_ORDER_UUID',
-        'GOODS_UUID',
-        'CUST_ORDER_DETAIL_GOODS_NAME',
-        'CUST_ORDER_DETAIL_COUNT',
-        'CUST_ORDER_DETAIL_UNIT',
-        'CUST_ORDER_DETAIL_PRICE',
-        'CUST_ORDER_DETAIL_TOTAL_PRICE',
-        'CUST_ORDER_DETAIL_PS',
-        'CUST_ORDER_DETAIL_CR',
-        'CUST_ORDER_DETAIL_CUSTOMIZED',
+        'FILE_COUNT',
+        'FILEGROUP_DISPLAY_NAME',
+        'FILEGROUP_TAG',
         'FILEGROUP_UUID',
-        'SUPPLIER_GOODS_UUID',
-        'CUST_ORDER_DETAIL_IS_ACTIVE',
         'GCATEGORY_FULL_NAME',
         'GCATEGORY_NAME',
         'GCATEGORY_UUID',
@@ -441,10 +453,12 @@ Ext.define('V_CUST_ORDER_DETAIL', {
         'GOODS_PRICE',
         'GOODS_PS',
         'GOODS_SN',
+        'GOODS_UUID',
         'SUPPLIER_GOODS_NAME',
         'SUPPLIER_GOODS_PRICE',
         'SUPPLIER_GOODS_SN',
         'SUPPLIER_GOODS_UNIT_UUID',
+        'SUPPLIER_GOODS_UUID',
         'UNIT_NAME'
     ]
 });

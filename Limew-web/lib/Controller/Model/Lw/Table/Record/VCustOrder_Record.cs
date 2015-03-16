@@ -57,6 +57,9 @@ namespace Limew.Model.Lw.Table.Record
 		string _CUST_ORG_NAME=null;
 		int? _CUST_ORG_IS_ACTIVE=null;
 		string _CUST_ORDER_PS=null;
+		DateTime? _CUST_ORDER_REPORT_DATE=null;
+		string _CUST_ORDER_REPORT_ATTENDANT_UUID=null;
+		string _CUST_ORDER_REPORT_ATTENDANT_C_NAME=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORDER_UUID",true,typeof(string))]
@@ -602,6 +605,45 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _CUST_ORDER_PS;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_REPORT_DATE",false,typeof(DateTime?))]
+		public DateTime? CUST_ORDER_REPORT_DATE
+		{
+			set
+			{
+				_CUST_ORDER_REPORT_DATE=value;
+			}
+			get
+			{
+				return _CUST_ORDER_REPORT_DATE;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_REPORT_ATTENDANT_UUID",false,typeof(string))]
+		public string CUST_ORDER_REPORT_ATTENDANT_UUID
+		{
+			set
+			{
+				_CUST_ORDER_REPORT_ATTENDANT_UUID=value;
+			}
+			get
+			{
+				return _CUST_ORDER_REPORT_ATTENDANT_UUID;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_REPORT_ATTENDANT_C_NAME",false,typeof(string))]
+		public string CUST_ORDER_REPORT_ATTENDANT_C_NAME
+		{
+			set
+			{
+				_CUST_ORDER_REPORT_ATTENDANT_C_NAME=value;
+			}
+			get
+			{
+				return _CUST_ORDER_REPORT_ATTENDANT_C_NAME;
 			}
 		}
 		public VCustOrder_Record Clone(){

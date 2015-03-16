@@ -45,6 +45,19 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\iTextSharp.5.5.5\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa">
+      <HintPath>refDll\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.5\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra">
+      <HintPath>refDll\itextsharp.xtra.dll</HintPath>
+    </Reference>
     <Reference Include="LK, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>refDll\LK.dll</HintPath>
@@ -9750,6 +9763,7 @@
     <Content Include="PageJs\SupplierWindow.js" />
     <Content Include="PageJs\SystemQueryPanel.js" />
     <Content Include="PageJs\Util.js" />
+    <Content Include="pdftest.aspx" />
     <Content Include="refDll\log4net.xml" />
     <Content Include="Warming\NoPermission.aspx" />
     <Content Include="Web.config" />
@@ -9765,6 +9779,7 @@
     <Content Include="lib\Controller\Design\Lw.xss">
       <DependentUpon>Lw.xsd</DependentUpon>
     </Content>
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\Limew.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -9989,6 +10004,13 @@
     </Compile>
     <Compile Include="mpStand.Master.designer.cs">
       <DependentUpon>mpStand.Master</DependentUpon>
+    </Compile>
+    <Compile Include="pdftest.aspx.cs">
+      <DependentUpon>pdftest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pdftest.aspx.designer.cs">
+      <DependentUpon>pdftest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Warming\NoPermission.aspx.cs">
