@@ -64,7 +64,7 @@ Ext.define('WS.SupplierWindow', {
             paramOrder: ['pSupplierUuid'],
             autoScroll: true,
             border: true,
-            bodyPadding: 5,
+            //bodyPadding: 5,
             buttonAlign: 'center',
             items: [{
                 xtype: 'container',
@@ -78,15 +78,14 @@ Ext.define('WS.SupplierWindow', {
                     fieldLabel: '廠商名稱',
                     itemId: 'SUPPLIER_NAME',
                     name: 'SUPPLIER_NAME',
-                    padding: 5,
+                    padding: '5 0 0 0',
                     anchor: '0 0',
                     maxLength: 12,
                     allowBlank: false,
                     labelAlign: 'right'
                 }, {
                     xtype: 'container',
-                    layout: 'hbox',
-                    padding: '0 0 5 0',
+                    layout: 'hbox',                    
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: '電話',
@@ -109,13 +108,13 @@ Ext.define('WS.SupplierWindow', {
                     fieldLabel: '地址',
                     labelWidth: 100,
                     name: 'SUPPLIER_ADDRESS',
-                    padding: 5,
+                    padding: '5 0 0 0',
                     anchor: '0 0',
                     labelAlign: 'right'
                 }, {
                     xtype: 'fieldcontainer',
                     labelAlign: 'right',
-                    fieldLabel: '啟用',
+                    fieldLabel: '啟用',                    
                     layout: 'hbox',
                     defaults: {
                         margins: '0 10 0 0'
@@ -210,7 +209,7 @@ Ext.define('WS.SupplierWindow', {
                 xtype: 'hidden',
                 fieldLabel: 'SUPPLIER_UUID',
                 name: 'SUPPLIER_UUID',
-                padding: 5,
+                padding: '5 0 0 0',
                 anchor: '100%',
                 maxLength: 84,
                 itemId: 'SUPPLIER_UUID'

@@ -24,7 +24,7 @@ Ext.define('WS.CustOrgWindow', {
                 paramOrder: ['pCustOrgUuid'],
                 autoScroll: true,
                 border: true,
-                bodyPadding: 5,
+                //bodyPadding: 5,
                 buttonAlign: 'center',
                 items: [{
                     xtype: 'container',
@@ -38,7 +38,7 @@ Ext.define('WS.CustOrgWindow', {
                         fieldLabel: '單位',
                         itemId: 'CUST_ORG_NAME',
                         name: 'CUST_ORG_NAME',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -47,28 +47,28 @@ Ext.define('WS.CustOrgWindow', {
                         fieldLabel: '採購人員',
                         labelWidth: 100,
                         name: 'CUST_ORG_SALES_NAME',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
                         fieldLabel: '電話',
                         labelWidth: 100,
                         name: 'CUST_ORG_SALES_PHONE',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
                         fieldLabel: 'Email',
                         labelWidth: 100,
                         name: 'CUST_ORG_SALES_EMAIL',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
                         fieldLabel: '地址',
                         labelWidth: 100,
                         name: 'CUST_ORG_ADDRESS',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
@@ -107,7 +107,7 @@ Ext.define('WS.CustOrgWindow', {
                     xtype: 'hidden',
                     fieldLabel: 'CUST_UUID',
                     name: 'CUST_UUID',
-                    padding: 5,
+                    padding: '5 0 0 0',
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'CUST_UUID'
@@ -115,7 +115,7 @@ Ext.define('WS.CustOrgWindow', {
                     xtype: 'hidden',
                     fieldLabel: 'CUST_ORG_UUID',
                     name: 'CUST_ORG_UUID',
-                    padding: 5,
+                    padding: '5 0 0 0',
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'CUST_ORG_UUID'

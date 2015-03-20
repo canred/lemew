@@ -83,7 +83,7 @@ Ext.define('WS.GoodsWindow', {
                         fieldLabel: '商品名稱',
                         itemId: 'GOODS_NAME',
                         name: 'GOODS_NAME',
-                        padding: 5,
+                        
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -92,7 +92,7 @@ Ext.define('WS.GoodsWindow', {
                         fieldLabel: '序號',
                         labelWidth: 100,
                         name: 'GOODS_SN',
-                        padding: 5,
+                        
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
@@ -103,7 +103,7 @@ Ext.define('WS.GoodsWindow', {
                         displayField: 'SUPPLIER_NAME',
                         valueField: 'SUPPLIER_UUID',
                         name: 'SUPPLIER_UUID',
-                        padding: 5,
+                        
                         editable: false,
                         hidden: false,
                         store: this.myStore.supplier,
@@ -143,6 +143,7 @@ Ext.define('WS.GoodsWindow', {
                         labelAlign: 'right',
                         fieldLabel: '啟用',
                         layout: 'hbox',
+                        margin:'5 0 0 0',
                         defaults: {
                             margins: '0 10 0 0'
                         },
@@ -212,7 +213,7 @@ Ext.define('WS.GoodsWindow', {
                     xtype: 'hiddenfield',
                     fieldLabel: 'GCATEGORY_UUID',
                     name: 'GCATEGORY_UUID',
-                    padding: 5,
+                    
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'GCATEGORY_UUID',
@@ -229,7 +230,7 @@ Ext.define('WS.GoodsWindow', {
                     xtype: 'hidden',
                     fieldLabel: 'GOODS_UUID',
                     name: 'GOODS_UUID',
-                    padding: 5,
+                    
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'GOODS_UUID'

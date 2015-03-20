@@ -98,7 +98,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                 paramOrder: ['pSupplierGoodsUuid'],
                 autoScroll: true,
                 border: true,
-                bodyPadding: 5,
+                //bodyPadding: 5,
                 buttonAlign: 'center',
                 items: [{
                     xtype: 'container',
@@ -115,7 +115,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         displayField: 'SUPPLIER_NAME',
                         valueField: 'SUPPLIER_UUID',
                         name: 'SUPPLIER_UUID',
-                        padding: 5,
+                        padding: '5 0 0 0',
                         editable: false,
                         hidden: false,
                         store: this.myStore.supplier,
@@ -124,8 +124,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         xtype: 'textfield',
                         fieldLabel: '商品名稱',
                         itemId: 'SUPPLIER_GOODS_NAME',
-                        name: 'SUPPLIER_GOODS_NAME',
-                        padding: 5,
+                        name: 'SUPPLIER_GOODS_NAME',                        
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -138,7 +137,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         displayField: 'UNIT_NAME',
                         valueField: 'UNIT_UUID',
                         name: 'UNIT_UUID',
-                        padding: 5,
+                        
                         editable: false,
                         hidden: false,
                         store: this.myStore.unit,
@@ -147,7 +146,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         fieldLabel: '序號',
                         labelWidth: 100,
                         name: 'SUPPLIER_GOODS_SN',
-                        padding: 5,
+                        
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
@@ -209,7 +208,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                     xtype: 'hidden',
                     fieldLabel: 'SUPPLIER_GOODS_UUID',
                     name: 'SUPPLIER_GOODS_UUID',
-                    padding: 5,
+                    padding: '5 0 0 0',
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'SUPPLIER_GOODS_UUID'

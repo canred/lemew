@@ -80,7 +80,7 @@ Ext.define('WS.CustWindow', {
                     fieldLabel: '客戶名稱',
                     itemId: 'CUST_NAME',
                     name: 'CUST_NAME',
-                    padding: 5,
+                    
                     anchor: '0 0',
                     maxLength: 12,
                     allowBlank: false,
@@ -88,7 +88,7 @@ Ext.define('WS.CustWindow', {
                 }, {
                     xtype: 'container',
                     layout: 'hbox',
-                    padding: '0 0 5 0',
+                    
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: '電話',
@@ -110,8 +110,8 @@ Ext.define('WS.CustWindow', {
                 }, {
                     fieldLabel: '地址',
                     labelWidth: 100,
-                    name: 'CUST_ADDRESS',
-                    padding: 5,
+                    margin:'5 0 0 0',
+                    name: 'CUST_ADDRESS',                    
                     anchor: '0 0',
                     labelAlign: 'right'
                 }, {
@@ -184,8 +184,7 @@ Ext.define('WS.CustWindow', {
                     labelAlign: 'right',
                     displayField: 'text',
                     valueField: 'value',
-                    name: 'CUST_LEVEL',
-                    padding: 5,
+                    name: 'CUST_LEVEL',                    
                     margin: '10 0 0 0',
                     value: '90',
                     editable: false,
@@ -202,8 +201,7 @@ Ext.define('WS.CustWindow', {
             }, {
                 xtype: 'hidden',
                 fieldLabel: 'CUST_UUID',
-                name: 'CUST_UUID',
-                padding: 5,
+                name: 'CUST_UUID',                
                 anchor: '100%',
                 maxLength: 84,
                 itemId: 'CUST_UUID'
@@ -214,9 +212,10 @@ Ext.define('WS.CustWindow', {
                 itemId: 'grdCustOrg',
                 border: true,
                 title: '單位採購人員',
-                margin: '0 0 0 90',
-                padding: 5,
+                margin: '0 0 0 105',
+                padding: '5 0 0 0',
                 autoScroll: true,
+                width:845,
                 columns: [{
                     text: "編輯",
                     xtype: 'actioncolumn',

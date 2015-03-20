@@ -49,7 +49,7 @@ Ext.define('WS.FileWindow', {
                         selectOnFocus : true,                        
                         fieldLabel: '檔案備註',
                         labelWidth: 100,
-                        height:180,
+                        height:170,
                         name: 'FILE_PS',
                         padding: 5,
                         anchor: '0 0',
