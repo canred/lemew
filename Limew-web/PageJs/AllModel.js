@@ -212,7 +212,8 @@ Ext.define('CUST_ORG', {
         'CUST_ORG_SALES_EMAIL',
         'CUST_ORG_PS',
         'CUST_ORG_NAME',
-        'CUST_ORG_IS_ACTIVE'
+        'CUST_ORG_IS_ACTIVE',
+        'CUST_ORG_IS_ADDRESS',
     ]
 });
 
@@ -245,7 +246,9 @@ Ext.define('CUST_ORDER', {
         'CUST_ORDER_PS',
         'COMPANY_UUID',
         'CUST_ORDER_REPORT_DATE',
-        'CUST_ORDER_REPORT_ATTENDANT_UUID'
+        'CUST_ORDER_REPORT_ATTENDANT_UUID',
+        'CUST_ORDER_SHIPPING_NUMBER',
+        'SHIPPING_ADDRESS'
     ]
 });
 
@@ -372,6 +375,16 @@ Ext.define('V_GOODS', {
     ]
 });
 
+
+Ext.define('V_CUST_ADDRESS', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_ADDRESS',
+        'CUST_ORG_ADDRESS',
+        'CUST_UUID',
+        'CUST_ORG_UUID'
+    ]
+});
 
 Ext.define('V_CUST_ORDER', {
     extend: 'Ext.data.Model',

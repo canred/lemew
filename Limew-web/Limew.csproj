@@ -98,22 +98,37 @@
     <Content Include="chrome.ico" />
     <Content Include="css\custImages\active02.png" />
     <Content Include="css\custImages\active03.png" />
+    <Content Include="css\custImages\box16x16.png" />
     <Content Include="css\custImages\clear.png" />
     <Content Include="css\custImages\cust.jpg" />
     <Content Include="css\custImages\cust16x16.png" />
+    <Content Include="css\custImages\customer160X160.png" />
+    <Content Include="css\custImages\custOrg16x16.png" />
     <Content Include="css\custImages\delete16x16.png" />
     <Content Include="css\custImages\exit16x16.png" />
     <Content Include="css\custImages\find.png" />
+    <Content Include="css\custImages\gift16x16.png" />
     <Content Include="css\custImages\goods16x16.png" />
     <Content Include="css\custImages\logo.png" />
+    <Content Include="css\custImages\money160X160.png" />
+    <Content Include="css\custImages\order160X160.png" />
+    <Content Include="css\custImages\order16x16.png" />
     <Content Include="css\custImages\order16x16_1.png" />
     <Content Include="css\custImages\order16x16_2.png" />
     <Content Include="css\custImages\order16x16_3.png" />
+    <Content Include="css\custImages\print16x16.png" />
+    <Content Include="css\custImages\product160X160.png" />
     <Content Include="css\custImages\red16x16.png" />
+    <Content Include="css\custImages\report160X160.png" />
     <Content Include="css\custImages\save16X16.png" />
     <Content Include="css\custImages\supplier.jpg" />
+    <Content Include="css\custImages\supplier160X160.png" />
     <Content Include="css\custImages\supplier16x16.png" />
+    <Content Include="css\custImages\truck160X160.png" />
     <Content Include="css\custImages\unactive03.png" />
+    <Content Include="css\custImages\利旻禮品文具有限公司.jpg" />
+    <Content Include="css\custImages\裕寶企業商行.jpg" />
+    <Content Include="css\custImages\韋成企業商行.jpg" />
     <Content Include="css\images\add16x16.png" />
     <Content Include="css\images\application16X16.png" />
     <Content Include="css\images\apppage16x16.png" />
@@ -9743,11 +9758,21 @@
     <Content Include="PageJs\ChangeAttendantWindow.js" />
     <Content Include="PageJs\CompanyQueryPanel.js" />
     <Content Include="PageJs\CompanyWindow.js" />
+    <Content Include="PageJs\CustOrderDetailCustomizedWindow.js" />
+    <Content Include="PageJs\CustOrderDetailSupplierWindow.js" />
+    <Content Include="PageJs\CustOrderDetailWindow.js" />
+    <Content Include="PageJs\CustOrderQueryPanel.js" />
+    <Content Include="PageJs\CustOrderWindow.js" />
+    <Content Include="PageJs\CustOrgWindow.js" />
     <Content Include="PageJs\CustQueryPanel.js" />
     <Content Include="PageJs\CustWindow.js" />
+    <Content Include="PageJs\FileWindow.js" />
+    <Content Include="PageJs\GcategoryPicker.js" />
     <Content Include="PageJs\GcategoryQueryPanel.js" />
     <Content Include="PageJs\GcategoryTreeStore.js" />
     <Content Include="PageJs\GcategoryWindow.js" />
+    <Content Include="PageJs\GoodsQueryPanel.js" />
+    <Content Include="PageJs\GoodsWindow.js" />
     <Content Include="PageJs\GroupQueryPanel.js" />
     <Content Include="PageJs\GroupWindow.js" />
     <Content Include="PageJs\LogonPanel.js" />
@@ -9759,6 +9784,7 @@
     <Content Include="PageJs\ProxyQueryPanel.js" />
     <Content Include="PageJs\SitemapQueryPanel.js" />
     <Content Include="PageJs\SitemapTreeStore.js" />
+    <Content Include="PageJs\SupplierGoodsWindow.js" />
     <Content Include="PageJs\SupplierQueryPanel.js" />
     <Content Include="PageJs\SupplierWindow.js" />
     <Content Include="PageJs\SystemQueryPanel.js" />
@@ -9766,11 +9792,19 @@
     <Content Include="pdftest.aspx" />
     <Content Include="refDll\log4net.xml" />
     <Content Include="Warming\NoPermission.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="css\custImages\logo.psd" />
     <Content Include="lib\Controller\Design\Lw.xsc">
       <DependentUpon>Lw.xsd</DependentUpon>
     </Content>
+    <Content Include="css\custImages\customer160X160.psd" />
+    <Content Include="css\custImages\money160X160.psd" />
+    <Content Include="css\custImages\order160X160.psd" />
+    <Content Include="css\custImages\product160X160.psd" />
+    <Content Include="css\custImages\report160X160.psd" />
+    <Content Include="css\custImages\supplier160X160.psd" />
     <None Include="lib\Controller\Design\Lw.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -9933,6 +9967,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrder.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrderDetail%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrderDetail.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderId%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\CustOrderId.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrderStatus%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrderStatus.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\CustOrg%40.cs" />
@@ -9950,6 +9986,7 @@
     <Compile Include="lib\Controller\Model\Lw\Table\PayStatus%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayStatus.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrderDetail_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrderId_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrderStatus_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\CustOrg_Record.cs" />
@@ -9964,6 +10001,7 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\SupplierGoods_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Supplier_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Unit_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustAddress_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrderDetail_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VFilegroup_Record.cs" />
@@ -9977,6 +10015,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\SupplierGoods.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Unit%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Unit.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VCustAddress%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VCustAddress.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrder%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrder.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrderDetail%40.cs" />

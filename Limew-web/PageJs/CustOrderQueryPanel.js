@@ -267,57 +267,63 @@ Ext.define('WS.CustOrderQueryPanel', {
                     header: "訂單編號",
                     dataIndex: 'CUST_ORDER_ID',
                     align: 'left',
-                    flex: 1
+                    width:150
                 }, {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
                     align: 'left',
-                    flex: 1
+                    width:150
                 }, {
-                    header: "電話",
+                    header: "公司電話",
                     align: 'left',
                     dataIndex: 'CUST_TEL',
-                    flex: 1
+                    width:80
+                }, {
+                    header: '採購員',
+                    dataIndex: 'CUST_SALES_NAME',
+                    align: 'left',
+                    width:80
+                }, {
+                    header: '採購員電話',
+                    dataIndex: 'CUST_SALES_PHONE',
+                    align: 'left',
+                    flex: 1,
+                    hidden:true
                 }, {
                     header: "傳真",
                     dataIndex: 'CUST_FAX',
                     align: 'left',
-                    flex: 1
+                    flex: 1,
+                    hidden:true
                 }, {
                     header: '地址',
                     dataIndex: 'CUST_ADDRESS',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '採購員',
-                    dataIndex: 'CUST_SALES_NAME',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '採購員電話',
-                    dataIndex: 'CUST_SALES_PHONE',
-                    align: 'center',
-                    flex: 1
+                    align: 'left',
+                    width:150,
+                    hidden:true
                 }, {
                     header: '採購員email',
                     dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'center',
-                    flex: 1
+                    align: 'left',
+                    flex: 1,
+                    hidden:true
                 }, {
                     header: '備註',
                     dataIndex: 'CUST_PS',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '等級',
                     dataIndex: 'CUST_LEVEL',
                     align: 'center',
-                    flex: 1
+                    flex: 1,
+                    hidden:true
                 }, {
                     header: '最近採購日',
                     dataIndex: 'CUST_LAST_BUY',
-                    align: 'center',
-                    flex: 1
+                    align: 'left',
+                    flex: 1,
+                    hidden:true
                 }],
                 tbarCfg: {
                     buttonAlign: 'right'
@@ -342,20 +348,27 @@ Ext.define('WS.CustOrderQueryPanel', {
                             });
                             return false;
                         };
-                        /*註冊事件*/
-                        var subWin = Ext.create(main.subWinCustOrder, {
-                            param: {
-                                custOrderUuid: undefined,
-                                custUuid:undefined,
-                                parentObj:main
+
+                        WS.CustAction.createCustOrder(function(obj, jsonObj) {
+                            if (jsonObj.result.success && jsonObj.result.CUST_ORDER_UUID) {
+                                var subWin = Ext.create(main.subWinCustOrder, {
+                                    param: {
+                                        custOrderUuid: jsonObj.result.CUST_ORDER_UUID,
+                                        custUuid: undefined,
+                                        parentObj: this
+                                    }
+                                });
+                                Ext.getBody().mask();
+                                subWin.on('closeEvent', function(obj) {
+                                    main.down("#grdVCustOrder").getStore().load();
+                                    Ext.getBody().unmask();
+                                }, this);
+                                subWin.show();
                             }
-                        });
-                        Ext.getBody().mask();
-                        subWin.on('closeEvent', function(obj) {
-                            main.down("#grdVCustOrder").getStore().load();
-                            Ext.getBody().unmask();
                         }, main);
-                        subWin.show();
+
+                        /*註冊事件*/
+
                     }
                 }]
             }]

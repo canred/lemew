@@ -65,6 +65,13 @@ Ext.define('WS.CustOrgWindow', {
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
+                        fieldLabel: '地址',
+                        labelWidth: 100,
+                        name: 'CUST_ORG_ADDRESS',
+                        padding: 5,
+                        anchor: '0 0',
+                        labelAlign: 'right'
+                    }, {
                         xtype: 'fieldcontainer',
                         labelAlign: 'right',
                         fieldLabel: '有效',

@@ -297,5 +297,33 @@ namespace Limew.Model.Lw
 			}
 		}
 
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustAddress getVCustAddress_By_CustUuid_And_CustOrgUuid(string pCUST_UUID,string pCUST_ORG_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustAddress vcustaddress = new Limew.Model.Lw.Table.VCustAddress(dbc);
+				vcustaddress.Fill_By_PK(pCUST_UUID,pCUST_ORG_UUID);
+				return vcustaddress;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.CustOrderId getCustOrderId_By_CustOrderIdUuid(string pCUST_ORDER_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.CustOrderId custorderid = new Limew.Model.Lw.Table.CustOrderId(dbc);
+				custorderid.Fill_By_PK(pCUST_ORDER_ID_UUID);
+				return custorderid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
 	}
 }

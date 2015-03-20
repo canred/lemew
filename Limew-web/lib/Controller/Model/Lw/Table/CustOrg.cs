@@ -37,6 +37,7 @@ namespace Limew.Model.Lw.Table
 		public string CUST_ORG_PS {get{return "CUST_ORG_PS" ; }}
 		public string CUST_ORG_NAME {get{return "CUST_ORG_NAME" ; }}
 		public string CUST_ORG_IS_ACTIVE {get{return "CUST_ORG_IS_ACTIVE" ; }}
+		public string CUST_ORG_ADDRESS {get{return "CUST_ORG_ADDRESS" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrg_Record CurrentRecord(){

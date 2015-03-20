@@ -42,6 +42,8 @@ namespace Limew.Model.Lw.Table.Record
 		string _COMPANY_UUID=null;
 		DateTime? _CUST_ORDER_REPORT_DATE=null;
 		string _CUST_ORDER_REPORT_ATTENDANT_UUID=null;
+		string _CUST_ORDER_SHIPPING_NUMBER=null;
+		string _SHIPPING_ADDRESS=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORDER_UUID",true,typeof(string))]
@@ -392,6 +394,32 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _CUST_ORDER_REPORT_ATTENDANT_UUID;
+			}
+		}
+
+		[ColumnName("CUST_ORDER_SHIPPING_NUMBER",false,typeof(string))]
+		public string CUST_ORDER_SHIPPING_NUMBER
+		{
+			set
+			{
+				_CUST_ORDER_SHIPPING_NUMBER=value;
+			}
+			get
+			{
+				return _CUST_ORDER_SHIPPING_NUMBER;
+			}
+		}
+
+		[ColumnName("SHIPPING_ADDRESS",false,typeof(string))]
+		public string SHIPPING_ADDRESS
+		{
+			set
+			{
+				_SHIPPING_ADDRESS=value;
+			}
+			get
+			{
+				return _SHIPPING_ADDRESS;
 			}
 		}
 		public CustOrder_Record Clone(){

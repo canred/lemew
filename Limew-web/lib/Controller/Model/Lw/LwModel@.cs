@@ -86,6 +86,25 @@ namespace Limew.Model.Lw
             }
         }
 
+        public IList<CustOrder_Record> getCustOrder_By_CustOrderId(string pCustOrderId, OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrder table = new CustOrder(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.CUST_ORDER_ID, pCustOrderId);
+                return table.Where(sc)
+                    .Limit(orderLimit)
+                    .FetchAll<CustOrder_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
         public int getCust_By_Keyword_Count(string pKeyword)
         {
             try
@@ -877,6 +896,25 @@ namespace Limew.Model.Lw
                 return table.Where(sc)
                     .Limit(orderlimit)
                     .FetchAll<VCustOrderDetail_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<VCustAddress_Record> getVCustAddress_By_CustUuid_Or_CustOrgUuid(string pCUST_UUID, string pCUST_ORG_UUID)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.VCustAddress vcustaddress = new Limew.Model.Lw.Table.VCustAddress(dbc);
+                return vcustaddress.Where(new SQLCondition(vcustaddress)
+                .Equal(vcustaddress.CUST_UUID, pCUST_UUID)
+                .Or()
+                .Equal(vcustaddress.CUST_ORG_UUID,pCUST_UUID)
+                ).FetchAll<VCustAddress_Record>();
             }
             catch (Exception ex)
             {
