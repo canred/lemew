@@ -133,7 +133,7 @@ Ext.define('WS.AppPageQueryPanel', {
                     itemId: 'function_Query_Application',
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            var keyCode = t.parentEvent.keyCode,mainPanel=this.up('panel');
+                            var keyCode = t.keyCode,mainPanel=this.up('panel');
                             if (keyCode == Ext.event.Event.ENTER) {
                                 mainPanel.down("#btnQuery").handler();
                             };
@@ -148,7 +148,7 @@ Ext.define('WS.AppPageQueryPanel', {
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
-                            var keyCode = t.parentEvent.keyCode,mainPanel=this.up('panel');
+                            var keyCode = t.keyCode,mainPanel=this.up('panel');
                             if (keyCode == Ext.event.Event.ENTER) {
                                 mainPanel.down("#btnQuery").handler();
                             };

@@ -70,7 +70,7 @@ Ext.define('WS.ProxyPickerWindow', {
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(obj, t) {
-                            var keyCode = t.parentEvent.keyCode;
+                            var keyCode = t.keyCode;
                             if (keyCode == Ext.event.Event.ENTER) {
                                 this.up('panel').down("#btnQuery").handler();
                             };

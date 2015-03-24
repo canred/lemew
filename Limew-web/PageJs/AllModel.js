@@ -3,6 +3,7 @@ Ext.define('COMPANY', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
 });
+
 Ext.define('APPLICATION', {
     extend: 'Ext.data.Model',
     fields: [
@@ -18,6 +19,7 @@ Ext.define('APPLICATION', {
         'UUID'
     ]
 });
+
 Ext.define('APPLICATIONHEADV', {
     extend: 'Ext.data.Model',
     fields: [
@@ -33,6 +35,7 @@ Ext.define('APPLICATIONHEADV', {
         'WEB_SITE'
     ]
 });
+
 Ext.define('APPPAGE', {
     extend: 'Ext.data.Model',
     fields: [
@@ -51,6 +54,7 @@ Ext.define('APPPAGE', {
         'P_MODE'
     ]
 });
+
 Ext.define('ATTEDNANTVV', {
     extend: 'Ext.data.Model',
     fields: [
@@ -90,14 +94,25 @@ Ext.define('ATTEDNANTVV', {
         'IS_DEFAULT_PASS'
     ]
 });
+
+Ext.define('ERROR_LOG', {
+    extend: 'Ext.data.Model',
+    fields: ['UUID', 'ERROR_CODE', 'ERROR_TIME',
+        'ERROR_MESSAGE', 'APPLICATION_NAME', 'ATTENDANT_UUID',
+        'ERROR_TYPE', 'IS_READ', 'CREATE_DATE', 'C_NAME'
+    ]
+});
+
 Ext.define('MENU', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'IS_ACTIVE', 'CREATE_DATE', 'CREATE_USER', 'UPDATE_DATE', 'UPDATE_USER', 'NAME_ZH_TW', 'NAME_ZH_CN', 'NAME_EN_US', 'ID', 'APPMENU_UUID', 'HASCHILD', 'APPLICATION_HEAD_UUID', 'ORD', 'PARAMETER_CLASS', 'IMAGE', 'SITEMAP_UUID', 'ACTION_MODE', 'IS_DEFAULT_PAGE', 'IS_ADMIN']
 });
+
 Ext.define('SITEMAP', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'IS_ACTIVE', 'CREATE_DATE', 'CREATE_USER', 'UPDATE_DATE', 'UPDATE_USER', 'SITEMAP_UUID', 'APPPAGE_UUID', 'ROOT_UUID', 'HASCHILD', 'APPLICATION_HEAD_UUID', 'NAME', 'DESCRIPTION', 'URL', 'P_MODE', 'PARAMETER_CLASS', 'APPPAGE_IS_ACTIVE']
 });
+
 Ext.define('PROXY', {
     extend: 'Ext.data.Model',
     fields: [
@@ -113,6 +128,7 @@ Ext.define('PROXY', {
         'REDIRECT_SRC'
     ]
 });
+
 Ext.define('GROUP_HEAD_V', {
     extend: 'Ext.data.Model',
     fields: [
@@ -130,6 +146,7 @@ Ext.define('GROUP_HEAD_V', {
         'APPLICATION_HEAD_NAME'
     ]
 });
+
 Ext.define('V_APPMENU_PROXY_MAP', {
     extend: 'Ext.data.Model',
     fields: [
@@ -151,6 +168,39 @@ Ext.define('V_APPMENU_PROXY_MAP', {
         'APPMENU_UUID',
     ]
 });
+
+Ext.define('SCHEDULE', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'UUID',
+        'SCHEDULE_NAME',
+        'SCHEDULE_END_DATE',
+        'LAST_RUN_TIME',
+        'LAST_RUN_STATUS',
+        'IS_CYCLE',
+        'SINGLE_DATE',
+        'HOUR',
+        'MINUTE',
+        'CYCLE_TYPE',
+        'C_MINUTE',
+        'C_HOUR',
+        'C_DAY',
+        'C_WEEK',
+        'C_DAY_OF_WEEK',
+        'C_MONTH',
+        'C_DAY_OF_MONTH',
+        'C_WEEK_OF_MONTH',
+        'C_YEAR',
+        'C_WEEK_OF_YEAR',
+        'RUN_URL',
+        'RUN_URL_PARAMETER',
+        'RUN_ATTENDANT_UUID',
+        'IS_ACTIVE',
+        'START_DATE',
+        'RUN_SECURITY'
+    ]
+});
+
 
 
 /*Limew*/
