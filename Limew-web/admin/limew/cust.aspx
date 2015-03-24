@@ -7,7 +7,7 @@
             subWinCust: 'WS.CustWindow'
         });
         WS_CUSTQUERYPANEL.render('divMain');
-        UTIL.session.fnKeep();
+        UTIL.runAll();
     });
 </script>			
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>

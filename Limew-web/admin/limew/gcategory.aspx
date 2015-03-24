@@ -15,7 +15,7 @@ Ext.onReady(function () {
         subWinGcategoryWindow:'WS.GcategoryWindow'
     });    
     WS_GCATEGORYQUERYPANEL.render('divMain');
-    UTIL.session.fnKeep();
+    UTIL.runAll();
 });
 </script>			
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>

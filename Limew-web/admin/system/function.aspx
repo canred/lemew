@@ -7,7 +7,7 @@ Ext.onReady(function() {
         subWinAppPage:'WS.AppPageWindow'
     });    
     WS_APPPAGEQUERYPANEL.render('divMain');
-    UTIL.session.fnKeep();
+    UTIL.runAll();
 });
 </script>			
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
