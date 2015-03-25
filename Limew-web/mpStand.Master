@@ -92,7 +92,6 @@
 	<script type="text/javascript">
 		var IsProductionServer = '<%=Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer %>';		
 	</script>	
-	<script type="text/javascript" src='<%= Page.ResolveUrl("~/pagejs/ext-error-log.js")%>'></script>
 </head>
 <body id="mainpage">
     <form id="form1" runat="server">   

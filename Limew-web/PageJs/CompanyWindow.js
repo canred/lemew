@@ -3,20 +3,18 @@ Ext.define('WS.CompanyWindow', {
     extend: 'Ext.window.Window',
     title: '公司維護',
     closeAction: 'destroy',
-    closable:false,
+    icon: SYSTEM_URL_ROOT + '/css/images/company16x16.png',
+    closable: false,
     param: {
         uuid: undefined
     },
     width: 500,
     height: 400,
-    layout: 'fit',
     resizable: false,
     draggable: false,
+    layout: 'fit',
     initComponent: function() {
         this.items = [Ext.create('Ext.form.Panel', {
-            layout: {
-                type: 'form',
-            },
             api: {
                 load: WS.AdminCompanyAction.info,
                 submit: WS.AdminCompanyAction.submit
@@ -24,18 +22,18 @@ Ext.define('WS.CompanyWindow', {
             itemId: 'CompanyForm',
             paramOrder: ['pUuid'],
             border: true,
-            
+            autoHeight: true,
             buttonAlign: 'center',
             items: [{
                     xtype: 'container',
                     layout: 'anchor',
+                    margin:'5 0 0 0',
                     defaultType: 'textfield',
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: '公司代碼',
                         itemId: 'ID',
                         name: 'ID',
-                        
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -44,7 +42,6 @@ Ext.define('WS.CompanyWindow', {
                         fieldLabel: '名稱-繁中',
                         labelWidth: 100,
                         name: 'C_NAME',
-                        
                         anchor: '100%',
                         maxLength: 84,
                         allowBlank: false,
@@ -54,14 +51,12 @@ Ext.define('WS.CompanyWindow', {
                         labelWidth: 100,
                         name: 'E_NAME',
                         anchor: '0 0',
-                        
                         maxLength: 340,
                         labelAlign: 'right'
                     }, {
                         fieldLabel: '名稱-簡中',
                         labelWidth: 100,
                         name: 'NAME_ZH_CN',
-                        
                         anchor: '100%',
                         maxLength: 84,
                         allowBlank: false,
@@ -92,15 +87,13 @@ Ext.define('WS.CompanyWindow', {
                     }]
                 },
                 Ext.create('Ext.form.Panel', {
-                    itemId: 'itemId',
                     border: true,
-                    margin: '5 0 5 0',
-                    bodyPadding: 5,
+                    padding: 5,
                     bodyStyle: {
-                        "background-color": "#7BAEBD"
+                        "background-color": "#F2E77A"
                     },
                     defaultType: 'textfield',
-                    buttonAlign: 'center',
+                    title: '*人員帳號同步設定 ',
                     items: [{
                         xtype: 'fieldcontainer',
                         labelAlign: 'right',
@@ -118,11 +111,13 @@ Ext.define('WS.CompanyWindow', {
                         }, {
                             boxLabel: '不啟用',
                             inputValue: 'N',
+                            margin: '0 0 0 10',
                             name: 'IS_SYNC_AD_USER'
                         }]
                     }, {
                         xtype: 'container',
                         layout: 'hbox',
+                        margin: '0 0 5 0',
                         items: [{
                             xtype: 'textfield',
                             fieldLabel: 'LADP',
@@ -180,16 +175,15 @@ Ext.define('WS.CompanyWindow', {
                         flex: 1
                     }]
                 }), {
-                    xtype: 'hidden',
+                    xtype: 'hiddenfield',
                     fieldLabel: 'UUID',
                     name: 'UUID',
-                    
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'UUID'
                 }
             ],
-            fbar: [{
+            buttons: [{
                 type: 'button',
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
@@ -246,8 +240,8 @@ Ext.define('WS.CompanyWindow', {
                     params: {
                         'pUuid': this.param.uuid
                     },
-                    success: function(response, a, b) {},
-                    failure: function(response, jsonObj, b) {
+                    success: function(response, jsonObj) {},
+                    failure: function(response, jsonObj) {
                         if (!jsonObj.result.success) {
                             Ext.MessageBox.show({
                                 title: 'Warning',

@@ -206,7 +206,7 @@ Ext.define('WS.GoodsWindow', {
                     fieldLabel: '備註',
                     name: 'GOODS_PS',
                     autoWidth: true,
-                    anchor: '97% -250',
+                    anchor: '-35 -250',
                     labelAlign: 'right',
                     selectOnFocus: true
                 }, {

@@ -139,7 +139,7 @@ Ext.define('WS.CustOrderQueryPanel', {
             items: [{
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 0 0 5',
+                margin: '0 0 0 5',
                 items: [{
                     xtype: 'combo',
                     fieldLabel: '訂單狀態',
@@ -148,7 +148,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     displayField: 'text',
                     valueField: 'value',
                     labelWidth: 60,
-                    padding: 5,
+                    
                     editable: false,
                     hidden: false,
                     value: '',

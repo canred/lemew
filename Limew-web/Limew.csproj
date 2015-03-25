@@ -90,11 +90,16 @@
     </None>
     <None Include="Configs\Parameter.config" />
     <Content Include="admin\basic\changeattendant.aspx" />
+    <Content Include="admin\limew\CustOrderStatus.aspx" />
     <Content Include="admin\limew\order.aspx" />
     <Content Include="admin\limew\cust.aspx" />
     <Content Include="admin\limew\gcategory.aspx" />
     <Content Include="admin\limew\goods.aspx" />
+    <Content Include="admin\limew\payMethod.aspx" />
+    <Content Include="admin\limew\payStatus.aspx" />
+    <Content Include="admin\limew\shippingStatus.aspx" />
     <Content Include="admin\limew\supplier.aspx" />
+    <Content Include="admin\limew\unit.aspx" />
     <Content Include="chrome.ico" />
     <Content Include="css\custImages\active02.png" />
     <Content Include="css\custImages\active03.png" />
@@ -9830,6 +9835,13 @@
     <Compile Include="admin\basic\changeattendant.aspx.designer.cs">
       <DependentUpon>changeattendant.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\limew\CustOrderStatus.aspx.cs">
+      <DependentUpon>CustOrderStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\CustOrderStatus.aspx.designer.cs">
+      <DependentUpon>CustOrderStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\limew\order.aspx.cs">
       <DependentUpon>order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -9858,12 +9870,40 @@
     <Compile Include="admin\limew\goods.aspx.designer.cs">
       <DependentUpon>goods.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\limew\payMethod.aspx.cs">
+      <DependentUpon>payMethod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\payMethod.aspx.designer.cs">
+      <DependentUpon>payMethod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\payStatus.aspx.cs">
+      <DependentUpon>payStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\payStatus.aspx.designer.cs">
+      <DependentUpon>payStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\shippingStatus.aspx.cs">
+      <DependentUpon>shippingStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\shippingStatus.aspx.designer.cs">
+      <DependentUpon>shippingStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\limew\supplier.aspx.cs">
       <DependentUpon>supplier.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="admin\limew\supplier.aspx.designer.cs">
       <DependentUpon>supplier.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\unit.aspx.cs">
+      <DependentUpon>unit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\unit.aspx.designer.cs">
+      <DependentUpon>unit.aspx</DependentUpon>
     </Compile>
     <Compile Include="directAdmin\ADAction.cs">
       <SubType>Code</SubType>
