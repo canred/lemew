@@ -22,9 +22,6 @@ Ext.define('WS.CustOrderDetailWindow', {
         custOrderDetailUuid: undefined
     },
     myStore: {
-
-
-
         vFilegroup: Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
@@ -88,8 +85,6 @@ Ext.define('WS.CustOrderDetailWindow', {
         return true;
     },
     initComponent: function() {
-        /*:::新增事件:::*/
-
         this.myStore.vgoods = Ext.create('Ext.data.Store', {
                 successProperty: 'success',
                 autoLoad: false,
@@ -168,9 +163,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                     load: function(self, records, successful, eOpts) {
                         if (records.length >= 1) {
                             this.down('#CUST_ORDER_DETAIL_UNIT').setValue(records[0].data.UNIT_UUID);
-
                         }
-
                     },
                     scope: this
                 },
@@ -239,7 +232,6 @@ Ext.define('WS.CustOrderDetailWindow', {
                     checkOnly: true,
                     listeners: {
                         selectionchange: function(selectionModel, selected, options) {
-                            //console.log(selected.getSelection());
                             if (selected[0]) {
                                 var mainWin = this;
                                 mainWin.down('#CUST_ORDER_DETAIL_GOODS_NAME').setValue(selected[0].data.GOODS_NAME);
@@ -248,9 +240,6 @@ Ext.define('WS.CustOrderDetailWindow', {
                                 mainWin.down('#pnlGoods').collapse();
                                 mainWin.down('#frmCustOrderDetail').show();
                             }
-
-                            //selected[0].data
-                            //GCATEGORY_FULL_NAME: "ROOT|test3|"GCATEGORY_NAME: "禮物/小品"GCATEGORY_UUID: "15022316425100034"GOODS_COST: "111"GOODS_FOCUS: "0"GOODS_IS_ACTIVE: "1"GOODS_NAME: "1"GOODS_PRICE: "1"GOODS_PS: ""GOODS_SALE: "11"GOODS_SN: ""GOODS_UUID: "15022700151300964"SUPPLIER_NAME: ""SUPPLIER_PS: ""SUPPLIER_UUID: ""id: "V_GOODS-1"
                         },
                         scope: this
                     }
@@ -350,8 +339,17 @@ Ext.define('WS.CustOrderDetailWindow', {
                     fieldLabel: '商品名稱',
                     name: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     itemId: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                    allowBlank: false
-                }, {
+                    allowBlank: false,
+                    flex: 1
+                }]
+            }, {
+                xtype: 'container',
+                layout: 'hbox',
+                margin: '5 0 0 0',
+                defaults: {
+                    labelAlign: 'right'
+                },
+                items: [{
                     xtype: 'numberfield',
                     fieldLabel: '數量',
                     name: 'CUST_ORDER_DETAIL_COUNT',
@@ -364,7 +362,6 @@ Ext.define('WS.CustOrderDetailWindow', {
                 }, {
                     xtype: 'combo',
                     fieldLabel: '單位',
-                    width: 200,
                     allowBlank: false,
                     itemId: 'CUST_ORDER_DETAIL_UNIT',
                     displayField: 'UNIT_NAME',

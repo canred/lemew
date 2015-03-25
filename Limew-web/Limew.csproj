@@ -9819,6 +9819,7 @@
       <DependentUpon>Lw.xsd</DependentUpon>
     </Content>
     <Content Include="packages.config" />
+    <Content Include="mpEmpty.Master" />
     <None Include="Properties\PublishProfiles\Limew.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -10077,6 +10078,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="mpEmpty.Master.cs">
+      <DependentUpon>mpEmpty.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mpEmpty.Master.designer.cs">
+      <DependentUpon>mpEmpty.Master</DependentUpon>
     </Compile>
     <Compile Include="mpStand.Master.cs">
       <DependentUpon>mpStand.Master</DependentUpon>

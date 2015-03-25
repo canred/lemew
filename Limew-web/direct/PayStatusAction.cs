@@ -73,6 +73,98 @@ public class PayStatusAction : BaseAction
         }
     }
 
-    
+
+    [DirectMethod("infoPayStatus", DirectAction.Load, MethodVisibility.Visible)]
+    public JObject infoPayStatus(string pPayStatusUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+
+        try
+        {  /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            var data = model.getPayStatus_By_PayStatusUuid(pPayStatusUuid);
+
+            if (data.AllRecord().Count == 1)
+            {
+                return ExtDirect.Direct.Helper.Form.OutputJObject(JsonHelper.RecordBaseJObject(data.AllRecord().First()));
+            }
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("Data Not Found!"));
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+
+    [DirectMethod("submitPayStatus", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    public JObject submitPayStatus(string pay_status_uuid,
+                                string pay_status_ord, string pay_status_name, HttpRequest request)
+    {
+
+
+        #region Declare
+        var action = SubmitAction.None;
+        LwModel mod = new LwModel();
+        PayStatus_Record record = new PayStatus_Record();
+        #endregion
+        try
+        {  /*Cloud身份檢查*/
+            checkUser(request);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*
+             * 所有Form的動作最終是使用Submit的方式將資料傳出；
+             * 必須有一個特徵來判斷使用者，執行的動作；
+             */
+            if (pay_status_uuid.Trim().Length > 0)
+            {
+                action = SubmitAction.Edit;
+                record = mod.getPayStatus_By_PayStatusUuid(pay_status_uuid).AllRecord().First();
+            }
+            else
+            {
+                action = SubmitAction.Create;
+                record.PAY_STATUS_UUID = LK.Util.UID.Instance.GetUniqueID();
+            }
+            record.PAY_STATUS_NAME = pay_status_name;
+            record.PAY_STATUS_ORD = Convert.ToInt16(pay_status_ord);
+            if (action == SubmitAction.Edit)
+            {
+                record.gotoTable().Update_Empty2Null(record);
+            }
+            else if (action == SubmitAction.Create)
+            {
+                record.gotoTable().Insert(record);
+                pay_status_uuid = record.PAY_STATUS_UUID;
+            }
+            System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
+            otherParam.Add("PAY_STATUS_UUID", record.PAY_STATUS_UUID);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(otherParam);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
 }
 

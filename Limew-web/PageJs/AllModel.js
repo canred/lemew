@@ -393,7 +393,7 @@ Ext.define('PAY_STATUS', {
         'PAY_STATUS_ORD',
         'PAY_STATUS_NAME'
     ]
-});
+}); 
 
 Ext.define('PAY_METHOD', {
     extend: 'Ext.data.Model',

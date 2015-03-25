@@ -84,12 +84,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
         };
         return true;
     },
-    initComponent: function() {
-        /*:::新增事件:::*/
-
-
-
-
+    initComponent: function() {        
         this.myStore.unit = Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
@@ -159,8 +154,17 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     fieldLabel: '商品名稱',
                     name: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     itemId: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                    allowBlank: false
-                }, {
+                    allowBlank: false,
+                    flex:1
+                }]
+            },{
+                xtype: 'container',
+                layout: 'hbox',
+                margin:'5 0 0 0',
+                defaults: {
+                    labelAlign: 'right'
+                },
+                items: [ {
                     xtype: 'numberfield',
                     fieldLabel: '數量',
                     name: 'CUST_ORDER_DETAIL_COUNT',
@@ -172,8 +176,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     }
                 }, {
                     xtype: 'combo',
-                    fieldLabel: '單位',
-                    width: 200,
+                    fieldLabel: '單位',                    
                     allowBlank: false,
                     itemId: 'CUST_ORDER_DETAIL_UNIT',
                     displayField: 'UNIT_NAME',
