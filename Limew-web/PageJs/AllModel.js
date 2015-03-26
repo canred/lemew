@@ -1,4 +1,4 @@
-/*BASIC*/
+/*BASIC*/ 
 Ext.define('COMPANY', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
@@ -439,6 +439,7 @@ Ext.define('V_CUST_ADDRESS', {
 Ext.define('V_CUST_ORDER', {
     extend: 'Ext.data.Model',
     fields: [
+        'COMPANY_UUID',
         'CUST_ORDER_UUID',
         'CUST_ORDER_CR',
         'CUST_ORDER_ID',

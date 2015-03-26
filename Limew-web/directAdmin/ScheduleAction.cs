@@ -622,9 +622,6 @@ string is_active,
 
                     #endregion
                 }
-
-
-
             }
             else
             {
@@ -736,9 +733,6 @@ string is_active,
         System.Collections.Hashtable returnData = new System.Collections.Hashtable();
         string nowMonth = "";
         int seq = 1;
-
-
-
         try
         {
             foreach (var key in ht)
@@ -757,8 +751,10 @@ string is_active,
                 {
                     seq++;
                 }
-
-                returnData.Add(nowMonth + "." + seq.ToString(), ht[key.Key]);
+                if (returnData.ContainsKey(nowMonth + "." + seq.ToString()) == false)
+                {
+                    returnData.Add(nowMonth + "." + seq.ToString(), ht[key.Key]);
+                }
             }
         }
         catch (Exception ex)
@@ -771,4 +767,3 @@ string is_active,
         return returnData;
     }
 }
-

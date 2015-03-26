@@ -1276,7 +1276,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
     [DirectMethod("loadVCustOrder", DirectAction.Store, MethodVisibility.Visible)]
-    public JObject loadVCustOrder(string pCustOrderStatus, string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
+    public JObject loadVCustOrder(string pKeyword,string pCustOrderType,string pCompanyUuid,string pCustUuid,string pCustOrderStatusUuid,string pShippingStatusUuid, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
         List<JObject> jobject = new List<JObject>();
@@ -1297,8 +1297,8 @@ string supplier_goods_uuid, HttpRequest request)
             };
             /*取得總資料數*/
             orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
-            var totalCount = mod.getVCustOrder_By_CustOrderStatus_CustUuid_Keyword_Count(pCustOrderStatus, pCustUuid, pKeyword);
-            var data = mod.getVCustOrder_By_CustOrderStatus_CustUuid_Keyword(pCustOrderStatus, pCustUuid, pKeyword, orderLimit);
+            var totalCount = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_Count(pKeyword,pCustOrderType,pCompanyUuid,pCustUuid,pCustOrderStatusUuid,pShippingStatusUuid);
+            var data = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid(pKeyword, pCustOrderType, pCompanyUuid, pCustUuid, pCustOrderStatusUuid, pShippingStatusUuid, orderLimit);
             if (data.Count > 0)
             {
                 jobject = JsonHelper.RecordBaseListJObject(data.ToList());

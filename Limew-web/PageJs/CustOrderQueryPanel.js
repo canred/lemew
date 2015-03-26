@@ -58,7 +58,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                 load: function(store, records, sucessful, eOpts) {
                     store.insert(0, {
                         'CUST_UUID': '',
-                        'CUST_NAME': '---'
+                        'CUST_NAME': '全部'
                     });
                 }
             },
@@ -82,11 +82,20 @@ Ext.define('WS.CustOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pCustOrderStatus', 'pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
+                // paramOrder: ['pCustOrderStatus', 'pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
+                // extraParams: {
+                //     'pCustOrderStatus': '',
+                //     'pCustUuid': '',
+                //     'pKeyword': ''
+                // },
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    'pCustOrderStatus': '',
-                    'pCustUuid': '',
-                    'pKeyword': ''
+                    pKeyword: '',
+                    pCustOrderType: '',
+                    pCompanyUuid: '',
+                    pCustUuid: '',
+                    pCustOrderStatusUuid: '',
+                    pShippingStatusUuid: ''
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -103,6 +112,143 @@ Ext.define('WS.CustOrderQueryPanel', {
             sorters: [{
                 property: 'CUST_ORDER_CR',
                 direction: 'DESC'
+            }]
+        }),
+        company: Ext.create('Ext.data.Store', {
+            successProperty: 'success',
+            autoLoad: false,
+            model: 'CUST',
+            pageSize: 9999,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.AdminCompanyAction.loadCompany
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pIsActive', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pIsActive: 'Y'
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'Warning',
+                            msg: response.result.message,
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            listeners: {
+                load: function(store, records, sucessful, eOpts) {
+                    store.insert(0, {
+                        'UUID': '',
+                        'C_NAME': '全部'
+                    });
+                }
+            },
+            remoteSort: true,
+            sorters: [{
+                property: 'C_NAME',
+                direction: 'ASC'
+            }]
+        }),
+        custOrderStatus: Ext.create('Ext.data.Store', {
+            successProperty: 'success',
+            autoLoad: false,
+            model: 'CUST_ORDER_STATUS',
+            pageSize: 10,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.CustOrderStatusAction.loadCustOrderStatus
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['keyword', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    keyword: ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        if (!response.result.success) {
+                            Ext.MessageBox.show({
+                                title: 'Warning',
+                                icon: Ext.MessageBox.WARNING,
+                                buttons: Ext.Msg.OK,
+                                msg: response.result.message
+                            });
+                        }
+                    }
+                }
+            },
+            remoteSort: true,
+            listeners: {
+                load: function(store, records, sucessful, eOpts) {
+                    store.insert(0, {
+                        'CUST_ORDER_STATUS_UUID': '',
+                        'CUST_ORDER_STATUS_NAME': '全部'
+                    });
+                }
+            },
+            sorters: [{
+                property: 'CUST_ORDER_STATUS_ORD',
+                direction: 'ASC'
+            }]
+        }),
+        shippingStatus: Ext.create('Ext.data.Store', {
+            successProperty: 'success',
+            autoLoad: false,
+            model: 'SHIPPING_STATUS',
+            pageSize: 10,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.ShippingStatusAction.loadShippingStatus
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['keyword', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    keyword: ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        if (!response.result.success) {
+                            Ext.MessageBox.show({
+                                title: 'Warning',
+                                icon: Ext.MessageBox.WARNING,
+                                buttons: Ext.Msg.OK,
+                                msg: response.result.message
+                            });
+                        }
+                    }
+                }
+            },
+            listeners: {
+                load: function(store, records, sucessful, eOpts) {
+                    store.insert(0, {
+                        'SHIPPING_STATUS_UUID': '',
+                        'SHIPPING_STATUS_NAME': '全部'
+                    });
+                }
+            },
+            remoteSort: true,
+            sorters: [{
+                property: 'SHIPPING_STATUS_ORD',
+                direction: 'ASC'
             }]
         })
     },
@@ -140,15 +286,18 @@ Ext.define('WS.CustOrderQueryPanel', {
                 xtype: 'container',
                 layout: 'hbox',
                 margin: '0 0 0 5',
+                defaults: {
+                    labelAlign: 'right'
+                },
                 items: [{
                     xtype: 'combo',
-                    fieldLabel: '訂單狀態',
+                    fieldLabel: '類型',
                     queryMode: 'local',
-                    itemId: 'cmbCustOrder',
+                    itemId: 'cmbCustOrderType',
                     displayField: 'text',
                     valueField: 'value',
                     labelWidth: 60,
-                    
+                    width: 150,
                     editable: false,
                     hidden: false,
                     value: '',
@@ -156,14 +305,22 @@ Ext.define('WS.CustOrderQueryPanel', {
                         fields: ['text', 'value'],
                         data: [
                             ['全部', ''],
-                            ['報價單', 'A'],
-                            ['訂單', 'B'],
-                            ['訂單(出貨)', 'C'],
-                            ['訂單(應收)', 'D'],
-                            ['訂單(完成)', 'E']
+                            ['報價單', '0'],
+                            ['訂單', '1']
                         ]
                     }),
                     editable: false
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: '開單公司',
+                    labelWidth: 80,
+                    itemId: 'cmbCompany',
+                    displayField: 'C_NAME',
+                    labelAlign: 'right',
+                    valueField: 'UUID',
+                    editable: false,
+                    store: this.myStore.company,
+                    value: '',
                 }, {
                     xtype: 'combo',
                     fieldLabel: '客戶',
@@ -178,6 +335,17 @@ Ext.define('WS.CustOrderQueryPanel', {
                     value: '',
                     store: this.myStore.cust,
                     editable: false
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: '訂單狀態',
+                    labelWidth: 80,
+                    itemId: 'cmbOrderStatus',
+                    displayField: 'CUST_ORDER_STATUS_NAME',
+                    valueField: 'CUST_ORDER_STATUS_UUID',
+                    editable: false,
+                    store: this.myStore.custOrderStatus,
+                    value: '',
+                    width: 160
                 }, {
                     xtype: 'textfield',
                     fieldLabel: '關鍵字',
@@ -203,9 +371,12 @@ Ext.define('WS.CustOrderQueryPanel', {
                     handler: function() {
                         var store = this.up('panel').down("#grdVCustOrder").getStore(),
                             doSomeghing = function(obj, pl) {
-                                obj.getProxy().setExtraParam('pCustOrderStatus', pl.down("#cmbCustOrder").getValue());
+                                obj.getProxy().setExtraParam('pCustOrderType', pl.down("#cmbCustOrderType").getValue());
                                 obj.getProxy().setExtraParam('pCustUuid', pl.down("#cmbCust").getValue());
                                 obj.getProxy().setExtraParam('pKeyword', pl.down("#txt_search").getValue());
+                                obj.getProxy().setExtraParam('pCompanyUuid', pl.down("#cmbCompany").getValue());
+                                obj.getProxy().setExtraParam('pCustOrderStatusUuid', pl.down("#cmbOrderStatus").getValue());
+                                obj.getProxy().setExtraParam('pShippingStatusUuid', pl.down("#cmbShippingStatus").getValue());
                                 obj.loadPage(1);
                             }(store, this.up('panel'));
                     }
@@ -219,9 +390,34 @@ Ext.define('WS.CustOrderQueryPanel', {
                     handler: function() {
                         var mainPanel = this.up('panel');
                         mainPanel.down("#txt_search").setValue('');
-                        mainPanel.down("#cmbCustOrder").setValue('');
+                        mainPanel.down("#cmbCustOrderType").setValue('');
                         mainPanel.down("#cmbCust").setValue('');
+                        mainPanel.down("#cmbCompany").setValue('');
+                        mainPanel.down("#cmbOrderStatus").setValue('');
+                        mainPanel.down("#cmbShippingStatus").setValue('');
                     }
+                }]
+            }, {
+                xtype: 'container',
+                layout: 'hbox',
+                margin: '5 0 0 5',
+                defaults: {
+                    labelAlign: 'right'
+                },
+                items: [{
+                    xtype: 'combo',
+                    fieldLabel: '出貨狀態',
+                    queryMode: 'local',
+                    itemId: 'cmbShippingStatus',
+                    displayField: 'SHIPPING_STATUS_NAME',
+                    valueField: 'SHIPPING_STATUS_UUID',
+                    labelWidth: 60,
+                    width: 150,
+                    editable: false,
+                    hidden: false,
+                    value: '',
+                    store: this.myStore.shippingStatus,
+                    editable: false
                 }]
             }, {
                 xtype: 'gridpanel',
@@ -267,46 +463,46 @@ Ext.define('WS.CustOrderQueryPanel', {
                     header: "訂單編號",
                     dataIndex: 'CUST_ORDER_ID',
                     align: 'left',
-                    width:150
+                    width: 150
                 }, {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
                     align: 'left',
-                    width:150
+                    width: 150
                 }, {
                     header: "公司電話",
                     align: 'left',
                     dataIndex: 'CUST_TEL',
-                    width:80
+                    width: 80
                 }, {
                     header: '採購員',
                     dataIndex: 'CUST_SALES_NAME',
                     align: 'left',
-                    width:80
+                    width: 80
                 }, {
                     header: '採購員電話',
                     dataIndex: 'CUST_SALES_PHONE',
                     align: 'left',
                     flex: 1,
-                    hidden:true
+                    hidden: true
                 }, {
                     header: "傳真",
                     dataIndex: 'CUST_FAX',
                     align: 'left',
                     flex: 1,
-                    hidden:true
+                    hidden: true
                 }, {
                     header: '地址',
                     dataIndex: 'CUST_ADDRESS',
                     align: 'left',
-                    width:150,
-                    hidden:true
+                    width: 150,
+                    hidden: true
                 }, {
                     header: '採購員email',
                     dataIndex: 'CUST_SALES_EMAIL',
                     align: 'left',
                     flex: 1,
-                    hidden:true
+                    hidden: true
                 }, {
                     header: '備註',
                     dataIndex: 'CUST_PS',
@@ -317,13 +513,13 @@ Ext.define('WS.CustOrderQueryPanel', {
                     dataIndex: 'CUST_LEVEL',
                     align: 'center',
                     flex: 1,
-                    hidden:true
+                    hidden: true
                 }, {
                     header: '最近採購日',
                     dataIndex: 'CUST_LAST_BUY',
                     align: 'left',
                     flex: 1,
-                    hidden:true
+                    hidden: true
                 }],
                 tbarCfg: {
                     buttonAlign: 'right'
@@ -382,6 +578,18 @@ Ext.define('WS.CustOrderQueryPanel', {
             });
 
             this.myStore.vcustorder.load({
+                scope: this
+            });
+
+            this.myStore.company.load({
+                scope: this
+            });
+
+            this.myStore.custOrderStatus.load({
+                scope: this
+            });
+
+            this.myStore.shippingStatus.load({
                 scope: this
             });
 

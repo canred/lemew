@@ -5604,6 +5604,8 @@ namespace Limew.lib.Controller.Design {
             
             private global::System.Data.DataColumn columnshipping_address;
             
+            private global::System.Data.DataColumn columncompany_uuid;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public v_cust_orderDataTable() {
@@ -6007,6 +6009,14 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn company_uuidColumn {
+                get {
+                    return this.columncompany_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6088,7 +6098,8 @@ namespace Limew.lib.Controller.Design {
                         System.DateTime cust_order_report_date, 
                         string cust_order_report_attendant_uuid, 
                         string cust_order_report_attendant_c_name, 
-                        string shipping_address) {
+                        string shipping_address, 
+                        string company_uuid) {
                 v_cust_orderRow rowv_cust_orderRow = ((v_cust_orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_order_uuid,
@@ -6136,7 +6147,8 @@ namespace Limew.lib.Controller.Design {
                         cust_order_report_date,
                         cust_order_report_attendant_uuid,
                         cust_order_report_attendant_c_name,
-                        shipping_address};
+                        shipping_address,
+                        company_uuid};
                 if ((parentcust_order_statusRowBycust_order_status_v_cust_order != null)) {
                     columnValuesArray[4] = parentcust_order_statusRowBycust_order_status_v_cust_order[0];
                 }
@@ -6224,6 +6236,7 @@ namespace Limew.lib.Controller.Design {
                 this.columncust_order_report_attendant_uuid = base.Columns["cust_order_report_attendant_uuid"];
                 this.columncust_order_report_attendant_c_name = base.Columns["cust_order_report_attendant_c_name"];
                 this.columnshipping_address = base.Columns["shipping_address"];
+                this.columncompany_uuid = base.Columns["company_uuid"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6321,6 +6334,8 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columncust_order_report_attendant_c_name);
                 this.columnshipping_address = new global::System.Data.DataColumn("shipping_address", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnshipping_address);
+                this.columncompany_uuid = new global::System.Data.DataColumn("company_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncompany_uuid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_order_uuid}, true));
                 this.columncust_order_uuid.AllowDBNull = false;
@@ -13940,6 +13955,22 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string company_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.company_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'company_uuid\' in table \'v_cust_order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.company_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public custRow custRow {
                 get {
                     return ((custRow)(this.GetParentRow(this.Table.ParentRelations["cust_v_cust_order"])));
@@ -14460,6 +14491,18 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setshipping_addressNull() {
                 this[this.tablev_cust_order.shipping_addressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscompany_uuidNull() {
+                return this.IsNull(this.tablev_cust_order.company_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcompany_uuidNull() {
+                this[this.tablev_cust_order.company_uuidColumn] = global::System.Convert.DBNull;
             }
         }
         

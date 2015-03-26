@@ -64,8 +64,8 @@ Ext.define('WS.CustQueryPanel', {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
-    fnCheckSubWindowns:function(){
-        
+    fnCheckSubWindowns: function() {
+
         if (Ext.isEmpty(this.subWinCust)) {
             Ext.MessageBox.show({
                 title: '系統提示',
@@ -76,10 +76,9 @@ Ext.define('WS.CustQueryPanel', {
             return false;
         };
         return true;
-    }
-    ,
+    },
     initComponent: function() {
-        if( !this.fnCheckSubWindowns() ){
+        if (!this.fnCheckSubWindowns()) {
             return false;
         };
         this.items = [{
@@ -87,7 +86,7 @@ Ext.define('WS.CustQueryPanel', {
             title: '客戶查詢',
             icon: SYSTEM_URL_ROOT + '/css/custimages/cust16x16.png',
             frame: true,
-            
+
             border: false,
             height: $(document).height() - 150,
             autoWidth: true,
@@ -110,7 +109,7 @@ Ext.define('WS.CustQueryPanel', {
                             };
                         }
                     }
-                },  {
+                }, {
                     xtype: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',
                     text: '查詢',
@@ -120,7 +119,7 @@ Ext.define('WS.CustQueryPanel', {
                     handler: function() {
                         var store = this.up('panel').down("#grdSupplierQuery").getStore(),
                             doSomeghing = function(obj, pl) {
-                                obj.getProxy().setExtraParam('pKeyword', pl.down("#txt_search").getValue());                                
+                                obj.getProxy().setExtraParam('pKeyword', pl.down("#txt_search").getValue());
                                 obj.loadPage(1);
                             }(store, this.up('panel'));
                     }
@@ -133,7 +132,7 @@ Ext.define('WS.CustQueryPanel', {
                     tooltip: '*清除目前所有的條件查詢',
                     handler: function() {
                         var mainPanel = this.up('panel');
-                        mainPanel.down("#txt_search").setValue('');                        
+                        mainPanel.down("#txt_search").setValue('');
                     }
                 }]
             }, {
@@ -163,7 +162,9 @@ Ext.define('WS.CustQueryPanel', {
                                 });
                                 return false;
                             };
-                            var subWin = Ext.create(main.subWinCust, {});
+                            var subWin = Ext.create(main.subWinCust, {
+                                subWinCustOrder: 'WS.CustOrderWindow'
+                            });
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdSupplierQuery").getStore().load();
                             }, main);
@@ -191,27 +192,27 @@ Ext.define('WS.CustQueryPanel', {
                 }, {
                     header: '地址',
                     dataIndex: 'CUST_ADDRESS',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '採購員',
                     dataIndex: 'CUST_SALES_NAME',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '採購員電話',
                     dataIndex: 'CUST_SALES_PHONE',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '採購員email',
                     dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '備註',
                     dataIndex: 'CUST_PS',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     header: '等級',

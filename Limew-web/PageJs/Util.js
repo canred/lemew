@@ -46,14 +46,18 @@ Ext.define('WS.Util', {
         },
         _task: {            
             run: function() {
+                //alert(IsProductionServer);
                 if (IsProductionServer.toLowerCase() == "false") {
                     if (!this.param.stop) {
                         if (!this.winErrorTrace) {
                             this.winErrorTrace = Ext.create('WS.ErrorTraceWindow', {});
                         };
                         var winErrorTrace = this.winErrorTrace;
+                        //console.log('log');
+                        //alert('bb');
                         this.winErrorTrace.myStore.errorlog.reload({
                             callback: function(records, operation, success) {
+                                //alert(records.length);
                                 if (records.length > 0) {
                                     winErrorTrace.show();
                                 };

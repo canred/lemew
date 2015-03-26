@@ -49,6 +49,170 @@ Ext.define('WS.CustWindow', {
                 property: 'CUST_ORG_NAME',
                 direction: 'ASC'
             }]
+        }),
+        vcustorderA: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'V_CUST_ORDER',
+            pageSize: 10,
+            remoteSort: true,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.CustAction.loadVCustOrder
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pCustOrderType: '0',
+                    pCompanyUuid: '',
+                    pCustUuid: '',
+                    pCustOrderStatusUuid: '',
+                    pShippingStatusUuid: ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'CUST_ORDER_CR',
+                direction: 'DESC'
+            }]
+        }),
+        vcustorderB: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'V_CUST_ORDER',
+            pageSize: 10,
+            remoteSort: true,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.CustAction.loadVCustOrder
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pCustOrderType: '1',
+                    pCompanyUuid: '',
+                    pCustUuid: '',
+                    pCustOrderStatusUuid: '',
+                    pShippingStatusUuid: ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'CUST_ORDER_CR',
+                direction: 'DESC'
+            }]
+        }),
+        vcustorderC: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'V_CUST_ORDER',
+            pageSize: 10,
+            remoteSort: true,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.CustAction.loadVCustOrder
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pCustOrderType: '1',
+                    pCompanyUuid: '',
+                    pCustUuid: '',
+                    pCustOrderStatusUuid: '',
+                    pShippingStatusUuid: 'SS_FINISH'
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'CUST_ORDER_CR',
+                direction: 'DESC'
+            }]
+        }),
+        vcustorderD: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'V_CUST_ORDER',
+            pageSize: 10,
+            remoteSort: true,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.CustAction.loadVCustOrder
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    pKeyword: '',
+                    pCustOrderType: '1',
+                    pCompanyUuid: '',
+                    pCustUuid: '',
+                    pCustOrderStatusUuid: 'COS_FINISH',
+                    pShippingStatusUuid: ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'CUST_ORDER_CR',
+                direction: 'DESC'
+            }]
         })
     },
     width: 1000,
@@ -64,7 +228,8 @@ Ext.define('WS.CustWindow', {
             },
             itemId: 'CustForm',
             paramOrder: ['pCustUuid'],
-            autoScroll: true,
+            //autoScroll: true,
+            overflowY : 'scroll',
             border: true,
             bodyPadding: 5,
             buttonAlign: 'center',
@@ -80,7 +245,7 @@ Ext.define('WS.CustWindow', {
                     fieldLabel: '客戶名稱',
                     itemId: 'CUST_NAME',
                     name: 'CUST_NAME',
-                    
+
                     anchor: '0 0',
                     maxLength: 12,
                     allowBlank: false,
@@ -88,7 +253,7 @@ Ext.define('WS.CustWindow', {
                 }, {
                     xtype: 'container',
                     layout: 'hbox',
-                    
+
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: '電話',
@@ -110,8 +275,8 @@ Ext.define('WS.CustWindow', {
                 }, {
                     fieldLabel: '地址',
                     labelWidth: 100,
-                    margin:'5 0 0 0',
-                    name: 'CUST_ADDRESS',                    
+                    margin: '5 0 0 0',
+                    name: 'CUST_ADDRESS',
                     anchor: '0 0',
                     labelAlign: 'right'
                 }, {
@@ -184,7 +349,7 @@ Ext.define('WS.CustWindow', {
                     labelAlign: 'right',
                     displayField: 'text',
                     valueField: 'value',
-                    name: 'CUST_LEVEL',                    
+                    name: 'CUST_LEVEL',
                     margin: '10 0 0 0',
                     value: '90',
                     editable: false,
@@ -201,7 +366,7 @@ Ext.define('WS.CustWindow', {
             }, {
                 xtype: 'hidden',
                 fieldLabel: 'CUST_UUID',
-                name: 'CUST_UUID',                
+                name: 'CUST_UUID',
                 anchor: '100%',
                 maxLength: 84,
                 itemId: 'CUST_UUID'
@@ -215,7 +380,7 @@ Ext.define('WS.CustWindow', {
                 margin: '0 0 0 105',
                 padding: '5 0 0 0',
                 autoScroll: true,
-                width:845,
+                width: 845,
                 columns: [{
                     text: "編輯",
                     xtype: 'actioncolumn',
@@ -245,33 +410,33 @@ Ext.define('WS.CustWindow', {
                 }, {
                     text: "單位",
                     dataIndex: 'CUST_ORG_NAME',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     text: "人員名稱",
                     dataIndex: 'CUST_ORG_SALES_NAME',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     text: "電話",
                     dataIndex: 'CUST_ORG_SALES_PHONE',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     text: "email",
                     dataIndex: 'CUST_ORG_SALES_EMAIL',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     text: "備註",
                     dataIndex: 'CUST_ORG_PS',
-                    align: 'center',
+                    align: 'left',
                     flex: 1
                 }, {
                     text: "有效",
                     dataIndex: 'CUST_ORG_IS_ACTIVE',
                     align: 'center',
-                    flex: 1,
+                    width: 60,
                     renderer: this.fnActiveRender
                 }],
                 height: 270,
@@ -302,15 +467,15 @@ Ext.define('WS.CustWindow', {
                 }]
             }, {
                 xtype: 'tabpanel',
-                plain: true,
                 padding: 10,
                 maxWidth: 950,
+                plain: false,
                 items: [{
-                    title: '訂單(報價)',
+                    title: '報價單',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16_1.png',
                     items: [{
                         xtype: 'gridpanel',
-                        paramsAsHash: false,
+                        itemId: 'grdA',
                         autoScroll: true,
                         columns: [{
                             text: "編輯",
@@ -322,53 +487,59 @@ Ext.define('WS.CustWindow', {
                                 tooltip: '*編輯',
                                 icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                                 handler: function(grid, rowIndex, colIndex) {
-                                    alert('未完成');
+                                    var main = grid.up('window');
+                                    if (!main.subWinCustOrder) {
+                                        Ext.MessageBox.show({
+                                            title: '系統訊息',
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.Msg.OK,
+                                            msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                        });
+                                        return false;
+                                    };
+                                    var subWin = Ext.create(main.subWinCustOrder, {});
+                                    main.mask();
+                                    subWin.on('closeEvent', function(obj) {
+                                        main.down("#grdA").getStore().reload();
+                                        main.unmask();
+                                    }, main);
+                                    subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                                    subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                                    subWin.show();
                                 }
                             }],
                             sortable: false,
                             hideable: false
                         }, {
-                            text: "客戶名稱",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: "訂單編號",
+                            dataIndex: 'CUST_ORDER_ID',
+                            align: 'left',
+                            width: 150
                         }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員',
+                            dataIndex: 'CUST_SALES_NAME',
+                            align: 'left',
+                            width: 80
                         }, {
-                            text: "傳真",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員電話',
+                            dataIndex: 'CUST_SALES_PHONE',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "地址",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員email',
+                            dataIndex: 'CUST_SALES_EMAIL',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "採購人",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "email",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "備註",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
+                            header: '備註',
+                            dataIndex: 'CUST_PS',
+                            align: 'left',
                             flex: 1
                         }],
                         height: 400,
+                        store: this.myStore.vcustorderA,
                         tbar: [{
                             xtype: 'tbfill'
                         }, {
@@ -381,18 +552,23 @@ Ext.define('WS.CustWindow', {
                             }
                         }],
                         bbar: Ext.create('Ext.toolbar.Paging', {
-                            //store: storeActivityFiles,
+                            store: this.myStore.vcustorderA,
                             displayInfo: true,
                             displayMsg: '第{0}~{1}資料/共{2}筆',
                             emptyMsg: "無資料顯示"
                         })
-                    }]
+                    }],
+                    listeners:{
+                       activate:function(item,eOpts){      
+                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                        }
+                    }
                 }, {
                     title: '訂單',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16_2.png',
                     items: [{
                         xtype: 'gridpanel',
-                        paramsAsHash: false,
+                        itemId: 'grdB',
                         autoScroll: true,
                         columns: [{
                             text: "編輯",
@@ -404,202 +580,268 @@ Ext.define('WS.CustWindow', {
                                 tooltip: '*編輯',
                                 icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                                 handler: function(grid, rowIndex, colIndex) {
-                                    alert('未完成');
+                                    var main = grid.up('window');
+                                    if (!main.subWinCustOrder) {
+                                        Ext.MessageBox.show({
+                                            title: '系統訊息',
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.Msg.OK,
+                                            msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                        });
+                                        return false;
+                                    };
+                                    var subWin = Ext.create(main.subWinCustOrder, {});
+                                    main.mask();
+                                    subWin.on('closeEvent', function(obj) {
+                                        main.down("#grdB").getStore().reload();
+                                        main.unmask();
+                                    }, main);
+                                    subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                                    subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                                    subWin.show();
                                 }
                             }],
                             sortable: false,
                             hideable: false
                         }, {
-                            text: "客戶名稱",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: "訂單編號",
+                            dataIndex: 'CUST_ORDER_ID',
+                            align: 'left',
+                            width: 150
                         }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員',
+                            dataIndex: 'CUST_SALES_NAME',
+                            align: 'left',
+                            width: 80
                         }, {
-                            text: "傳真",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員電話',
+                            dataIndex: 'CUST_SALES_PHONE',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "地址",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員email',
+                            dataIndex: 'CUST_SALES_EMAIL',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "採購人",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "email",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "備註",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
+                            header: '備註',
+                            dataIndex: 'CUST_PS',
+                            align: 'left',
                             flex: 1
                         }],
                         height: 400,
+                        store: this.myStore.vcustorderB,
+                        tbar: [{
+                            xtype: 'tbfill'
+                        }, {
+                            icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+                            text: '新增',
+                            handler: function() {
+                                var main = this.up('panel').up('panel').up('panel');
+                                alert('未完成');
+
+                            }
+                        }],
                         bbar: Ext.create('Ext.toolbar.Paging', {
-                            //store: storeActivityFiles,
+                            store: this.myStore.vcustorderB,
                             displayInfo: true,
                             displayMsg: '第{0}~{1}資料/共{2}筆',
                             emptyMsg: "無資料顯示"
                         })
-                    }]
+                    }],
+                    listeners:{
+                       activate:function(item,eOpts){      
+                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                        }
+                    }
                 }, {
                     title: '訂單(出貨)',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16_3.png',
                     items: [{
                         xtype: 'gridpanel',
-                        paramsAsHash: false,
+                        itemId: 'grdC',
                         autoScroll: true,
                         columns: [{
-                            text: "詳細",
+                            text: "編輯",
                             xtype: 'actioncolumn',
                             dataIndex: 'UUID',
                             align: 'center',
                             width: 60,
                             items: [{
-                                tooltip: '*詳細',
+                                tooltip: '*編輯',
                                 icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                                 handler: function(grid, rowIndex, colIndex) {
-                                    alert('未完成');
+                                    var main = grid.up('window');
+                                    if (!main.subWinCustOrder) {
+                                        Ext.MessageBox.show({
+                                            title: '系統訊息',
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.Msg.OK,
+                                            msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                        });
+                                        return false;
+                                    };
+                                    var subWin = Ext.create(main.subWinCustOrder, {});
+                                    main.mask();
+                                    subWin.on('closeEvent', function(obj) {
+                                        main.down("#grdC").getStore().reload();
+                                        main.unmask();
+                                    }, main);
+                                    subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                                    subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                                    subWin.show();
                                 }
                             }],
                             sortable: false,
                             hideable: false
                         }, {
-                            text: "客戶名稱",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: "訂單編號",
+                            dataIndex: 'CUST_ORDER_ID',
+                            align: 'left',
+                            width: 150
                         }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員',
+                            dataIndex: 'CUST_SALES_NAME',
+                            align: 'left',
+                            width: 80
                         }, {
-                            text: "傳真",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員電話',
+                            dataIndex: 'CUST_SALES_PHONE',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "地址",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員email',
+                            dataIndex: 'CUST_SALES_EMAIL',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "採購人",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "email",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "備註",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
+                            header: '備註',
+                            dataIndex: 'CUST_PS',
+                            align: 'left',
                             flex: 1
                         }],
                         height: 400,
+                        store: this.myStore.vcustorderC,
+                        tbar: [{
+                            xtype: 'tbfill'
+                        }, {
+                            icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+                            text: '新增',
+                            handler: function() {
+                                var main = this.up('panel').up('panel').up('panel');
+                                alert('未完成');
+
+                            }
+                        }],
                         bbar: Ext.create('Ext.toolbar.Paging', {
-                            //store: storeActivityFiles,
+                            store: this.myStore.vcustorderC,
                             displayInfo: true,
                             displayMsg: '第{0}~{1}資料/共{2}筆',
                             emptyMsg: "無資料顯示"
                         })
-                    }]
+                    }],
+                    listeners:{
+                       activate:function(item,eOpts){      
+                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                        }
+                    }
                 }, {
                     title: '訂單(完成)',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16_3.png',
                     items: [{
                         xtype: 'gridpanel',
-                        paramsAsHash: false,
+                        itemId: 'grdD',
                         autoScroll: true,
                         columns: [{
-                            text: "詳細",
+                            text: "編輯",
                             xtype: 'actioncolumn',
                             dataIndex: 'UUID',
                             align: 'center',
                             width: 60,
                             items: [{
-                                tooltip: '*詳細',
+                                tooltip: '*編輯',
                                 icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                                 handler: function(grid, rowIndex, colIndex) {
-                                    alert('未完成');
+                                    var main = grid.up('window');
+                                    if (!main.subWinCustOrder) {
+                                        Ext.MessageBox.show({
+                                            title: '系統訊息',
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.Msg.OK,
+                                            msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                        });
+                                        return false;
+                                    };
+                                    var subWin = Ext.create(main.subWinCustOrder, {});
+                                    main.mask();
+                                    subWin.on('closeEvent', function(obj) {
+                                        main.down("#grdD").getStore().reload();
+                                        main.unmask();
+                                    }, main);
+                                    subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                                    subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                                    subWin.show();
                                 }
                             }],
                             sortable: false,
                             hideable: false
                         }, {
-                            text: "客戶名稱",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: "訂單編號",
+                            dataIndex: 'CUST_ORDER_ID',
+                            align: 'left',
+                            width: 150
                         }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員',
+                            dataIndex: 'CUST_SALES_NAME',
+                            align: 'left',
+                            width: 80
                         }, {
-                            text: "傳真",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員電話',
+                            dataIndex: 'CUST_SALES_PHONE',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "地址",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
+                            header: '採購員email',
+                            dataIndex: 'CUST_SALES_EMAIL',
+                            align: 'left',
+                            flex: 1,
+                            hidden: true
                         }, {
-                            text: "採購人",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "電話",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "email",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
-                            flex: 1
-                        }, {
-                            text: "備註",
-                            dataIndex: 'COLUMN_NAME_2',
-                            align: 'center',
+                            header: '備註',
+                            dataIndex: 'CUST_PS',
+                            align: 'left',
                             flex: 1
                         }],
                         height: 400,
+                        store: this.myStore.vcustorderD,
+                        tbar: [{
+                            xtype: 'tbfill'
+                        }, {
+                            icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+                            text: '新增',
+                            handler: function() {
+                                var main = this.up('panel').up('panel').up('panel');
+                                alert('未完成');
+
+                            }
+                        }],
                         bbar: Ext.create('Ext.toolbar.Paging', {
-                            //store: storeActivityFiles,
+                            store: this.myStore.vcustorderD,
                             displayInfo: true,
                             displayMsg: '第{0}~{1}資料/共{2}筆',
                             emptyMsg: "無資料顯示"
                         })
-                    }]
+                    }],
+                    listeners:{
+                        activate:function(item,eOpts){      
+                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                        }
+                    }
                 }]
             }],
             fbar: [{
@@ -695,6 +937,19 @@ Ext.define('WS.CustWindow', {
 
                 this.myStore.custOrg.getProxy().setExtraParam('pCustUuid', this.param.custUuid);
                 this.myStore.custOrg.loadPage(1);
+
+                this.myStore.vcustorderA.getProxy().setExtraParam('pCustUuid', this.param.custUuid);
+                this.myStore.vcustorderA.loadPage(1);
+
+                this.myStore.vcustorderB.getProxy().setExtraParam('pCustUuid', this.param.custUuid);
+                this.myStore.vcustorderB.loadPage(1);
+
+                this.myStore.vcustorderC.getProxy().setExtraParam('pCustUuid', this.param.custUuid);
+                this.myStore.vcustorderC.loadPage(1);
+
+                this.myStore.vcustorderD.getProxy().setExtraParam('pCustUuid', this.param.custUuid);
+                this.myStore.vcustorderD.loadPage(1);
+
             } else {
                 this.down("#CustForm").getForm().reset();
             };
