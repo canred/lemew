@@ -23,7 +23,7 @@ namespace ExtDirect.Direct
                 responseForm.action = responseForm.action.Split('.')[1];
             }
             var action = Assembly.GetExecutingAssembly().CreateInstance(responseForm.action);
-
+           
             Type thisType = action.GetType();
             MethodInfo theMethod = thisType.GetMethod(responseForm.method);
             ParameterInfo[] parmInfo = theMethod.GetParameters();
@@ -39,9 +39,9 @@ namespace ExtDirect.Direct
                 {
                     parmList[i] = httpRequest[parm.Name];
                     i++;
-                }
+                }               
             }
-            parmList[parmList.Count() - 1] = httpRequest;
+            parmList[parmList.Count()-1] = httpRequest;
 
             var requestData = (string)theMethod.Invoke(action, parmList);
 
@@ -56,14 +56,14 @@ namespace ExtDirect.Direct
             return resNew;
         }
 
-        public JObject ExecuteFormJObject(HttpRequest httpRequest)
+        public JObject ExecuteFormJObject(ExtDirect.Direct.Request httpRequest)
         {
             int i = 0;
             var responseForm = new Request
             {
-                action = httpRequest["extAction"],
-                method = httpRequest["extMethod"],
-                tid = Convert.ToInt32(httpRequest["extTID"])
+                action = httpRequest.HttpRequest["extAction"],
+                method = httpRequest.HttpRequest["extMethod"],
+                tid = Convert.ToInt32(httpRequest.HttpRequest["extTID"])
             };
             if (responseForm.action.IndexOf(".") > 0)
             {
@@ -83,7 +83,7 @@ namespace ExtDirect.Direct
                 }
                 else
                 {
-                    parmList[i] = httpRequest[parm.Name];
+                    parmList[i] = httpRequest.HttpRequest[parm.Name];
                     i++;
                 }
             }
@@ -91,24 +91,23 @@ namespace ExtDirect.Direct
 
             var requestData = (JObject)theMethod.Invoke(action, parmList);
 
-            var ret = JObject.Parse("{type:\"rpc\",method:\"\",tid:" + responseForm.tid + ",result:\"\",actioin:\"" + responseForm.action + "\"}");
+            var ret = JObject.Parse("{type:\"rpc\",method:\"\",tid:"+responseForm.tid+",result:\"\",actioin:\""+responseForm.action+"\"}");
 
             ret["result"] = requestData;
-
+            
             return ret;
         }
         public Response ExecuteLoad(Request request)
         {
-
+            
             var action = Assembly.GetExecutingAssembly().CreateInstance(request.action);
             Type thisType = action.GetType();
             MethodInfo theMethod = thisType.GetMethod(request.method);
             var parmList = new List<object>();
             request.data = parmList;
             var param = new object[request.data.Count];
-
-            for (int i = 0; i < request.data.Count; i++)
-            {
+           
+            for (int i = 0; i < request.data.Count; i++) {
                 param[i] = request.data[i];
             }
 
@@ -156,8 +155,8 @@ namespace ExtDirect.Direct
                     }
                     i++;
                 }
-                res += (string)theMethod.Invoke(action, funcParList);
-                res += ",";
+               res+= (string)theMethod.Invoke(action, funcParList);
+               res += ",";
             }
             if (dataList.Count > 0)
             {
@@ -171,7 +170,7 @@ namespace ExtDirect.Direct
             {
                 res = "{}";
             }
-
+            
             var resNew = new Response
             {
                 type = "rpc",
@@ -194,20 +193,19 @@ namespace ExtDirect.Direct
         }
 
         public string ExecuteNormalAction2(Request request)
-        {
+        {            
             var obj = Assembly.GetExecutingAssembly().CreateInstance(request.action);
             Type thisType = obj.GetType();
             /*取得要執行的方法*/
-            MethodInfo theMethod = thisType.GetMethod(request.method);
+            MethodInfo theMethod = thisType.GetMethod(request.method);            
             DirectAction action = DirectAction.Null;
             /*取得此方法的attribute屬性*/
-            var attrs = theMethod.GetCustomAttributes(typeof(DirectMethodAttribute), false);
-            if (attrs.Length == 1) { action = ((DirectMethodAttribute)(attrs[0])).Action; }
+            var attrs = theMethod.GetCustomAttributes(typeof(DirectMethodAttribute), false);                
+            if (attrs.Length == 1){action = ((DirectMethodAttribute)(attrs[0])).Action;}
             request.data.Add(request);
             /*取得 前端傳入的資料*/
             var param = new object[request.data.Count];
-            for (int i = 0; i < request.data.Count; i++)
-            {
+            for (int i = 0; i < request.data.Count; i++) {
                 param[i] = request.data[i];
             }
             /*ActionLog*/
@@ -241,8 +239,7 @@ namespace ExtDirect.Direct
                 ret += "}";
                 return ret;
             }
-            catch
-            {
+            catch {
                 //JObject 的處理方式
                 var jobject = (JObject)theMethod.Invoke(obj, param);
                 var ret = JObject.Parse("{type:\"rpc\",method:\"" + request.method + "\",tid:" + request.tid + ",action:\"" + request.action + "\",result:[]}");
@@ -251,7 +248,7 @@ namespace ExtDirect.Direct
                 return ret.ToString();
 
             }
-
+            
         }
 
         public JObject ExecuteNormalAction2JObject(Request request)
@@ -281,29 +278,27 @@ namespace ExtDirect.Direct
                 var ret = JObject.Parse("{type:\"rpc\",method:\"" + request.method + "\",tid:" + request.tid + ",action:\"" + request.action + "\",result:{}}");
                 try
                 {
-                    requestData = (JObject)theMethod.Invoke(obj, param);
-                }
-                catch
+                    requestData = (JObject) theMethod.Invoke(obj, param);
+                }catch
                 {
                     LK.MyException.MyException.ErrorNoThrowExceptionForStaticClass(new Exception(request.action + "." + request.method + "發現呼叫action但無法執行，可能是參數錯誤!"));
                 }
                 if (action == DirectAction.TreeStore)
                 {
-                    ret["result"] = requestData["TREE"];
+                    ret["result"] = requestData["TREE"];                    
                 }
                 else
                 {
-                    if (requestData["STRING_ONLY"] != null)
-                    {
+                    if (requestData["STRING_ONLY"] != null) {
                         ret["result"] = requestData["STRING_ONLY"];
                     }
                     else
                     {
                         ret["result"] = requestData;
                     }
-                }
+                }                
                 return ret;
-
+            
             }
             catch
             {
@@ -319,7 +314,7 @@ namespace ExtDirect.Direct
         }
 
         public string ExecuteUpdateAction2(Request request)
-        {
+        {           
             var obj = Assembly.GetExecutingAssembly().CreateInstance(request.action);
             Type thisType = obj.GetType();
             MethodInfo theMethod = thisType.GetMethod(request.method);
@@ -330,8 +325,8 @@ namespace ExtDirect.Direct
                 param[i] = request.data[i];
             }
             theMethod.Invoke(obj, param);
-            param[0] = JObject.Parse("{updates:" + param[0] + "}");
-            string ret = request.action + "_" + request.method + "_callback({\"success\":true,\"function_name\":\"" + request.action + "\"})";
+            param[0]=JObject.Parse("{updates:"+param[0]+"}");
+            string ret = request.action+"_"+request.method+ "_callback({\"success\":true,\"function_name\":\"" + request.action + "\"})";
             return ret;
         }
 
@@ -346,26 +341,26 @@ namespace ExtDirect.Direct
             {
                 param[i] = request.data[i];
             }
-            var updates = JObject.Parse("{updates:" + param[0] + "}");
+            var updates = JObject.Parse("{updates:"+param[0]+"}");
             param[0] = updates;
             //param[0] = JObject.Parse(param[0].ToString());
 
 
             theMethod.Invoke(obj, param);
 
-
+            
 
             return Helper.JObjectHelper.CallBack(request.action, request.method);
         }
 
-        public Response ExecuteCRUD(Request request, List<Dictionary<string, string>> recordList)
+        public Response ExecuteCRUD(Request request, List<Dictionary<string,string>> recordList)
         {
             string json = "";
             var action = Assembly.GetExecutingAssembly().CreateInstance(request.action);
             Type thisType = action.GetType();
             MethodInfo theMethod = thisType.GetMethod(request.method);
             ParameterInfo[] parmInfo = theMethod.GetParameters();
-
+            
             foreach (var t in recordList)
             {
                 var funcParList = new object[parmInfo.Length];
@@ -394,7 +389,7 @@ namespace ExtDirect.Direct
                 result = json,
                 action = request.action
             };
-            return resNew;
+            return resNew;            
         }
 
         public JObject ExecuteCRUDJObject(Request request, List<Dictionary<string, string>> recordList)
@@ -417,15 +412,14 @@ namespace ExtDirect.Direct
                 json.Add((JObject)theMethod.Invoke(action, funcParList));
 
             }
-
-
-            JObject ret = JObject.Parse("{type:\"rpc\",method:\"" + request.method + "\",tid:" + request.tid + ",action:\"" + request.action + "\",result:{}}");
+            
+            
+            JObject ret = JObject.Parse("{type:\"rpc\",method:\""+request.method+"\",tid:"+request.tid+",action:\""+request.action+"\",result:{}}");
 
             if (recordList.Count > 1)
             {
                 var jarray = new JArray();
-                foreach (var item in json)
-                {
+                foreach (var item in json) {
                     jarray.Add(item);
                 }
                 ret["result"] = jarray;
@@ -434,7 +428,7 @@ namespace ExtDirect.Direct
             {
                 ret["result"] = json.First();
             }
-
+            
             return ret;
         }
     }

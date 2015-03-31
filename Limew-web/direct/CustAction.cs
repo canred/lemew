@@ -38,7 +38,7 @@ using System.Net;
 public class CustAction : BaseAction
 {
 
-    [DirectMethod("infoCust", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoCust", DirectAction.Load)]
     public JObject infoCust(string pCustUuid, Request request)
     {
         #region Declare
@@ -72,7 +72,7 @@ public class CustAction : BaseAction
     }
 
 
-    [DirectMethod("loadVCustAddress", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVCustAddress", DirectAction.Store)]
     public JObject loadVCustAddress(string pCustUuid,string pCustOrgUuid, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -139,7 +139,7 @@ public class CustAction : BaseAction
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }
-    [DirectMethod("loadCust", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadCust", DirectAction.Store)]
     public JObject loadCust(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -183,7 +183,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("submitCust", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCust", DirectAction.FormSubmission)]
     public JObject submitCust(string cust_uuid,
                                 string cust_name,
                                 string cust_tel,
@@ -195,7 +195,7 @@ public class CustAction : BaseAction
                                 string cust_ps,
                                 string cust_level,
                                 string cust_is_active,
-                                string cust_last_buy, HttpRequest request)
+                                string cust_last_buy, Request request)
     {
 
 
@@ -206,7 +206,7 @@ public class CustAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -259,7 +259,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("destoryCust", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryCust", DirectAction.Store)]
     public JObject destoryCust(string pCustUuid, Request request)
     {
         #region Declare
@@ -294,7 +294,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("loadCustOrder", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadCustOrder", DirectAction.Store)]
     public JObject loadCustOrder(string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -337,7 +337,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("infoCustOrder", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoCustOrder", DirectAction.Load)]
     public JObject infoCustOrder(string pCustOrderUuid, Request request)
     {
         #region Declare
@@ -372,7 +372,7 @@ public class CustAction : BaseAction
     }
 
 
-    [DirectMethod("createCustOrder", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("createCustOrder", DirectAction.Load)]
     public JObject createCustOrder(Request request)
     {
         #region Declare
@@ -437,7 +437,7 @@ public class CustAction : BaseAction
 
     }
 
-    [DirectMethod("submitCustOrder", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCustOrder", DirectAction.FormSubmission)]
     public JObject submitCustOrder(string cust_order_uuid,
                                     string cust_order_cr,
                                     string cust_order_id,
@@ -466,7 +466,7 @@ public class CustAction : BaseAction
         string cust_order_report_attendant_uuid,
         string cust_order_report_date ,
         string cust_order_shipping_number ,
-        string shipping_address,HttpRequest request)
+        string shipping_address,Request request)
     {
 
 
@@ -477,7 +477,7 @@ public class CustAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -553,7 +553,7 @@ public class CustAction : BaseAction
             record.PAY_METHOD_UUID = pay_method_uuid;
             record.CUST_ORDER_INVOICE_NUMBER = cust_order_invoice_number;
             record.CUST_ORDER_REPORT_ATTENDANT_UUID = cust_order_report_attendant_uuid;
-            if (cust_order_limit_date.Trim().Length > 0)
+            if (cust_order_limit_date!=null && cust_order_limit_date.Trim().Length > 0)
             {
                 record.CUST_ORDER_LIMIT_DATE = Convert.ToDateTime((cust_order_limit_date));
             }
@@ -600,7 +600,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("destoryCustOrder", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryCustOrder", DirectAction.Store)]
     public JObject destoryCustOrder(string pCustOrderUuid, Request request)
     {
         #region Declare
@@ -635,7 +635,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("infoCustOrderDetail", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoCustOrderDetail", DirectAction.Load)]
     public JObject infoCustOrderDetail(string pCustOrderDetailUuid, Request request)
     {
         #region Declare
@@ -678,7 +678,7 @@ public class CustAction : BaseAction
         }
     }
 
-    [DirectMethod("submitCustOrderDetail", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCustOrderDetail", DirectAction.FormSubmission)]
     public JObject submitCustOrderDetail(string cust_order_detail_uuid,
 string cust_order_uuid,
 string goods_uuid,
@@ -692,7 +692,7 @@ string cust_order_detail_cr,
 string cust_order_detail_customized,
 string filegroup_uuid,
         string cust_order_detail_is_active,
-string supplier_goods_uuid, HttpRequest request)
+string supplier_goods_uuid, Request request)
     {
 
 
@@ -703,7 +703,7 @@ string supplier_goods_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -777,7 +777,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("submitCustOrderDetailForFile", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCustOrderDetailForFile", DirectAction.FormSubmission)]
     public JObject submitCustOrderDetailForFile(string cust_order_detail_uuid,
 string cust_order_uuid,
 string goods_uuid,
@@ -791,7 +791,7 @@ string cust_order_detail_cr,
 string cust_order_detail_customized,
 string filegroup_uuid,
         string cust_order_detail_is_active,
-string supplier_goods_uuid, HttpRequest request)
+string supplier_goods_uuid, Request request)
     {
 
 
@@ -802,7 +802,7 @@ string supplier_goods_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -842,9 +842,9 @@ string supplier_goods_uuid, HttpRequest request)
             //record.CUST_ORDER_DETAIL_IS_ACTIVE = Convert.ToInt16(cust_order_detail_is_active);
 
             #region 附件處理
-            if (request.Files.Count > 0)
+            if (request.HttpRequest.Files.Count > 0)
             {
-                if (request.Files[0].FileName != "")
+                if (request.HttpRequest.Files[0].FileName != "")
                 {
                     //System.Web.HttpServerUtility a = new HttpServerUtility();
                     HttpServerUtility server = System.Web.HttpContext.Current.Server;
@@ -875,9 +875,9 @@ string supplier_goods_uuid, HttpRequest request)
                     }
 
                     string extName = "";
-                    if (request.Files[0].FileName.Split('.').Length > 1)
+                    if (request.HttpRequest.Files[0].FileName.Split('.').Length > 1)
                     {
-                        extName = request.Files[0].FileName.Split('.').Last();
+                        extName = request.HttpRequest.Files[0].FileName.Split('.').Last();
                     }
 
                     var fileUuid = LK.Util.UID.Instance.GetUniqueID();
@@ -891,7 +891,7 @@ string supplier_goods_uuid, HttpRequest request)
                         saveFilePath = uploadFolder + fileUuid;
                     }
 
-                    request.Files[0].SaveAs(saveFilePath);
+                    request.HttpRequest.Files[0].SaveAs(saveFilePath);
                     Filegroup_Record filegroup = new Filegroup_Record();
                     if (record.FILEGROUP_UUID.Trim().Length == 0)
                     {
@@ -910,7 +910,7 @@ string supplier_goods_uuid, HttpRequest request)
 
                     File_Record f = new File_Record();
                     f.FILE_UUID = LK.Util.UID.Instance.GetUniqueID();
-                    f.FILE_NAME = request.Files[0].FileName;
+                    f.FILE_NAME = request.HttpRequest.Files[0].FileName;
 
                     f.FILE_PATH = Limew.Parameter.Config.ParemterConfigs.GetConfig().UploadFolder + "//custOrderDetail//" + fileUuid + "." + extName;
                     f.FILE_PS = "";
@@ -960,7 +960,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
 
-    [DirectMethod("destoryCustOrderDetail", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryCustOrderDetail", DirectAction.Store)]
     public JObject destoryCustOrderDetail(string pCustOrderDetailUuid, Request request)
     {
         #region Declare
@@ -1004,7 +1004,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("loadCustOrderDetail", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadCustOrderDetail", DirectAction.Store)]
     public JObject loadCustOrderDetail(string pCustOrderUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -1048,7 +1048,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
 
-    [DirectMethod("loadVCustOrderDetail", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVCustOrderDetail", DirectAction.Store)]
     public JObject loadVCustOrderDetail(string pCustOrderUuid, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -1092,7 +1092,7 @@ string supplier_goods_uuid, HttpRequest request)
     }
 
 
-    [DirectMethod("infoCustOrg", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoCustOrg", DirectAction.Load)]
     public JObject infoCustOrg(string pCustOrgUuid, Request request)
     {
         #region Declare
@@ -1125,7 +1125,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("loadCustOrg", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadCustOrg", DirectAction.Store)]
     public JObject loadCustOrg(string pCustUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -1169,7 +1169,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("submitCustOrg", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCustOrg", DirectAction.FormSubmission)]
     public JObject submitCustOrg(string cust_org_uuid,
                                     string cust_uuid,
                                     string cust_org_sales_name,
@@ -1178,7 +1178,7 @@ string supplier_goods_uuid, HttpRequest request)
                                     string cust_org_ps,
                                     string cust_org_name,
                                     string cust_org_is_active,
-        string cust_org_address,HttpRequest request)
+        string cust_org_address,Request request)
     {
 
 
@@ -1189,7 +1189,7 @@ string supplier_goods_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -1240,7 +1240,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("destoryCustOrg", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryCustOrg", DirectAction.Store)]
     public JObject destoryCustOrg(string pCustOrgUuid, Request request)
     {
         #region Declare
@@ -1275,7 +1275,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("loadVCustOrder", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVCustOrder", DirectAction.Store)]
     public JObject loadVCustOrder(string pKeyword,string pCustOrderType,string pCompanyUuid,string pCustUuid,string pCustOrderStatusUuid,string pShippingStatusUuid, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -1363,7 +1363,7 @@ string supplier_goods_uuid, HttpRequest request)
 
 
 
-    [DirectMethod("pdfLimew", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("pdfLimew", DirectAction.Load)]
     public JObject pdfLimew(string pCustOrderUuid, Request request)
     {
         #region Declare
@@ -1779,7 +1779,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("pdfShipping", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("pdfShipping", DirectAction.Load)]
     public JObject pdfShipping(string pCustOrderUuid, Request request)
     {
         #region Declare
@@ -2181,7 +2181,7 @@ string supplier_goods_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("pdfW", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("pdfW", DirectAction.Load)]
     public JObject pdfW(string pCustOrderUuid, Request request)
     {
         #region Declare
@@ -2694,7 +2694,7 @@ string supplier_goods_uuid, HttpRequest request)
         return (cstr);
     }
 
-    [DirectMethod("pdfU", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("pdfU", DirectAction.Load)]
     public JObject pdfU(string pCustOrderUuid, Request request)
     {
         #region Declare

@@ -9,7 +9,7 @@ using LK.DB.SQLCreater;
 using Limew.Model.Basic.Table.Record  ;  
 namespace Limew.Model.Basic.Table
 {
-    [LkDataBase("BASIC")]
+	[LkDataBase("BASIC")]
 	[TableView("APPPAGE", true)]
 	public partial class Apppage : TableBase{
 	/*固定物件*/

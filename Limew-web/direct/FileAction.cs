@@ -28,7 +28,7 @@ using System.Diagnostics;
 public class FileAction : BaseAction
 {
 
-    [DirectMethod("infoFile", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoFile", DirectAction.Load)]
     public JObject infoFile(string pFileUuid, Request request)
     {
         #region Declare
@@ -61,7 +61,7 @@ public class FileAction : BaseAction
         }
     }
 
-    [DirectMethod("loadVFilegroup", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVFilegroup", DirectAction.Store)]
     public JObject loadVFilegroup(string pFilegroupUuid,string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -105,11 +105,11 @@ public class FileAction : BaseAction
         }
     }
 
-    [DirectMethod("submitFile", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitFile", DirectAction.FormSubmission)]
     public JObject submitFile(string file_uuid,
 string file_name,
 string file_ps,
-string filegroup_uuid, HttpRequest request)
+string filegroup_uuid, Request request)
     {
 
 
@@ -120,7 +120,7 @@ string filegroup_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -170,7 +170,7 @@ string filegroup_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("destoryFile", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryFile", DirectAction.Store)]
     public JObject destoryFile(string pFileUuid, Request request)
     {
         #region Declare

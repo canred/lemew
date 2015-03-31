@@ -28,7 +28,7 @@ using System.Diagnostics;
 public class UnitAction : BaseAction
 {
 
-    [DirectMethod("infoUnit", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoUnit", DirectAction.Load)]
     public JObject infoUnit(string pUnitUuid, Request request)
     {
         #region Declare
@@ -61,7 +61,7 @@ public class UnitAction : BaseAction
         }
     }
 
-    [DirectMethod("loadUnit", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadUnit", DirectAction.Store)]
     public JObject loadUnit(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -105,9 +105,9 @@ public class UnitAction : BaseAction
         }
     }
 
-    [DirectMethod("submitUnit", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitUnit", DirectAction.FormSubmission)]
     public JObject submitUnit(string unit_uuid,
-                                string unit_name,string unit_is_active, HttpRequest request)
+                                string unit_name, string unit_is_active, Request request)
     {
 
 
@@ -118,7 +118,7 @@ public class UnitAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -163,7 +163,7 @@ public class UnitAction : BaseAction
         }
     }
 
-    [DirectMethod("destoryUnit", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryUnit", DirectAction.Store)]
     public JObject destoryUnit(string pUnitUuid, Request request)
     {
         #region Declare

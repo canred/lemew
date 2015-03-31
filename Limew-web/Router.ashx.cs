@@ -27,7 +27,8 @@ namespace Limew
 
             string requestData = enc.GetString(requestDataInByte);
 
-            if (context.Request.Files.Count > 0) {
+            if (context.Request.Files.Count > 0)
+            {
                 action = context.Request["extAction"];
                 method = context.Request["extMethod"];
                 return "";
@@ -119,6 +120,10 @@ namespace Limew
 
         public void ProcessRequest(HttpContext context)
         {
+            ExtDirect.Direct.Request directRequest = new Request();
+            directRequest.HttpContext = context;
+            directRequest.HttpRequest = context.Request;
+            
             var rpc = new ExtDirect.Direct.ExtRPC();
             string action, method;
             Limew.Model.Basic.BasicModel mod = new Limew.Model.Basic.BasicModel();
@@ -193,20 +198,25 @@ namespace Limew
             #endregion
 
             #region
-           
+
             if (context.Request.Params["ServiceClass"] != null)
             {
                 var service = getServiceClassList();
                 var outputString = "{";
                 outputString += "method:\"ServiceClass\",";
-                //outputString += "tid:\"" + drProxy.PROXY_METHOD + "\",";
                 outputString += "action:\"ClassList\",";
                 outputString += "result:" + service.ToString();
                 outputString += "}";
                 context.Response.Write(outputString);
                 return;
             }
+
+
             var bodyContent = getContentText(context, out action, out method);
+            directRequest.action = action;
+            directRequest.method = method;
+            
+
             IList<Limew.Model.Basic.Table.Record.Proxy_Record> drsProxy = new List<Limew.Model.Basic.Table.Record.Proxy_Record>();
             if (context.Request.QueryString["init"] != null)
             {
@@ -238,11 +248,9 @@ namespace Limew
                 }
 
                 /**參數**/
-                var retCloud = cloud.CallDirect(drProxy.REDIRECT_SRC, drProxy.REDIRECT_PROXY_ACTION + "." + drProxy.REDIRECT_PROXY_METHOD.Split(',')[0], sParam.ToArray(), cloudId);
-                //context.Response.Write(retCloud.ToString());
+                var retCloud = cloud.CallDirect(drProxy.REDIRECT_SRC, drProxy.REDIRECT_PROXY_ACTION + "." + drProxy.REDIRECT_PROXY_METHOD.Split(',')[0], sParam.ToArray(), cloudId);                
                 var outputString = "{";
-                outputString += "method:\"" + drProxy.PROXY_METHOD + "\",";
-                //outputString += "tid:\"" + drProxy.PROXY_METHOD + "\",";
+                outputString += "method:\"" + drProxy.PROXY_METHOD + "\",";                
                 outputString += "action:\"" + drProxy.PROXY_ACTION + "\",";
                 outputString += "result:" + retCloud.ToString();
                 outputString += "}";
@@ -261,13 +269,9 @@ namespace Limew
                 }
                 */
 
-            }
-            /*
-            
-            return;
-            */
+            }            
             #endregion
-            var ret = rpc.ExecuteRPCJObject(context.Request, bodyContent,context);
+            var ret = rpc.ExecuteRPCJObject(directRequest, bodyContent, context);
             if (ret["MUTIL_ACTION"] != null)
             {
                 context.Response.Write(ret["MUTIL_ACTION"].ToString());

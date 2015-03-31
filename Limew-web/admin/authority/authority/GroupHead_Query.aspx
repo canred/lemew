@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script language="javascript" type="text/javascript">
-Ext.onReady(function () {
-    WS_GROUPQUERYPANEL = Ext.create('WS.GroupQueryPanel',{
-        param:{
-            companyUuid:"<%= this.getUser().COMPANY_UUID %>"
+    Ext.onReady(function () {
+        WS_GROUPQUERYPANEL = Ext.create('WS.GroupQueryPanel', {
+            param: {
+                companyUuid: "<%= this.getUser().COMPANY_UUID %>"
         }
     });
     WS_GROUPQUERYPANEL.render('divMain');

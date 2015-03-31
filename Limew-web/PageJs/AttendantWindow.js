@@ -30,13 +30,14 @@ Ext.define('WS.AttendantWindow', {
                 items: [{
                     xtype: 'container',
                     layout: 'vbox',
+                    flex: 2,
                     items: [{
                         xtype: 'container',
                         layout: 'anchor',
                         margin: '5 0 0 0',
                         defaultType: 'textfield',
                         defaults: {
-                            anchor: '-20 0',
+                            width: 320,
                             labelAlign: 'right',
                             labelWidth: 100
                         },
@@ -170,39 +171,29 @@ Ext.define('WS.AttendantWindow', {
                         maxLength: 84
                     }]
                 }, {
-                            xtype: 'container',
-                            layout: {
-                                type: 'vbox'
-                            },
-                            width: 200,
-                            items: [{
-                                xtype: 'image',
-                                src: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS-OXSMwx1armeFFM9jDMTymj3vy418oT96OtmMmnUSmx1swDWzeA',
-                                itemId: 'imgUser',
-                                tag: "img",
-                                height: 140,
-                                width: 180,
-                                //maxHeight:140,
-                                border: true
-                            }, {
-                                xtype: 'filefield',
-                                text: '上傳',
-                                emptyText: 'Select an image',
-                                width: 180,
-                                margin: '3 0 0 0',
-                                handler: function(handler, scope) {
-                                    //your code
-                                }
-                            }, {
-                                xtype: 'button',
-                                width: 180,
-                                text: '攝影',
-                                margin: '3 0 0 0',
-                                handler: function(handler, scope) {
-                                    //your code
-                                }
-                            }]
-                        }]
+                    xtype: 'container',
+                    flex: 1,
+                    margin: '10',
+                    layout: {
+                        type: 'vbox'
+                    },
+                    items: [{
+                        xtype: 'image',
+                        src: SYSTEM_URL_ROOT + '/css/images/unknowMan.png',
+                        itemId: 'imgUser',                        
+                        tag: "img",
+                        height: 150,
+                        width: 150,
+                        border: true
+                    }, {
+                        xtype: 'filefield',
+                        text: '上傳',
+                        emptyText: 'Select an image',
+                        name:'filePictureUrl',
+                        width: 150,
+                        margin: '3 0 0 0'
+                    }]
+                }]
             }, ],
             buttons: [{
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
@@ -257,7 +248,15 @@ Ext.define('WS.AttendantWindow', {
                     params: {
                         'pUuid': this.param.uuid
                     },
-                    success: function(response, jsonObj) {},
+                    success: function(response, jsonObj) {
+                        var imgSrc = "";
+                        if (jsonObj.result.data.PICTURE_URL.length > 0) {
+                            imgSrc = jsonObj.result.data.PICTURE_URL.replace('~', SYSTEM_URL_ROOT);
+                        }
+                        if(!Ext.isEmpty(imgSrc)){
+                            response.owner.down("#imgUser").setSrc(imgSrc);    
+                        };                        
+                    },
                     failure: function(response, jsonObj) {
                         if (!jsonObj.result.success) {
                             Ext.MessageBox.show({

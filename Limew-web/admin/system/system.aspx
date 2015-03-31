@@ -2,15 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script language="javascript" type="text/javascript">
-var ApplicationQuery = undefined;
-var myForm = undefined;
-Ext.onReady(function() {        
-    WS_SYSTEMQUERYPANEL = Ext.create('WS.SystemQueryPanel',{
-        subWinApplication:'WS.ApplicationWindow'
+    var ApplicationQuery = undefined;
+    var myForm = undefined;
+    Ext.onReady(function () {
+        WS_SYSTEMQUERYPANEL = Ext.create('WS.SystemQueryPanel', {
+            subWinApplication: 'WS.ApplicationWindow'
+        });
+        WS_SYSTEMQUERYPANEL.render('divMain');
+        UTIL.runAll();
     });
-    WS_SYSTEMQUERYPANEL.render('divMain');
-    UTIL.runAll();
-});
 </script>
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
 </asp:Content>

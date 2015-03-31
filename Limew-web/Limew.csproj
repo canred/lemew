@@ -9824,6 +9824,7 @@
     <Content Include="packages.config" />
     <Content Include="mpEmpty.Master" />
     <None Include="Properties\PublishProfiles\Limew.pubxml" />
+    <Content Include="ProxyTouch.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -10129,6 +10130,9 @@
       <DependentUpon>pdftest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyTouch.ashx.cs">
+      <DependentUpon>ProxyTouch.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Warming\NoPermission.aspx.cs">
       <DependentUpon>NoPermission.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

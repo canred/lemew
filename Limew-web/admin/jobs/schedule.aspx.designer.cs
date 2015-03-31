@@ -8,11 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Web.admin.basic
-{
-
-
-    public partial class attendant
-    {
+namespace Web.admin.basic {
+    
+    
+    public partial class attendant {
     }
 }

@@ -29,7 +29,7 @@ public class PayMethodAction : BaseAction
 {
 
 
-    [DirectMethod("loadPayMethod", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadPayMethod", DirectAction.Store)]
     public JObject loadPayMethod(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -73,7 +73,7 @@ public class PayMethodAction : BaseAction
         }
     }
 
-    [DirectMethod("infoPayMethod", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoPayMethod", DirectAction.Load)]
     public JObject infoPayMethod(string pPayMethodUuid, Request request)
     {
         #region Declare
@@ -107,9 +107,9 @@ public class PayMethodAction : BaseAction
     }
 
 
-    [DirectMethod("submitPayMethod", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitPayMethod", DirectAction.FormSubmission)]
     public JObject submitPayMethod(string pay_method_uuid,
-                                string pay_method_ord, string pay_method_name, HttpRequest request)
+                                string pay_method_ord, string pay_method_name, Request request)
     {
         #region Declare
         var action = SubmitAction.None;
@@ -118,7 +118,7 @@ public class PayMethodAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");

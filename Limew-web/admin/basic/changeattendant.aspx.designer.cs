@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Web.admin.basic
-{
-
-
-    public partial class changeattendant
-    {
+namespace Web.admin.basic {
+    
+    
+    public partial class changeattendant {
     }
 }

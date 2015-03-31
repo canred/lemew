@@ -63,8 +63,7 @@ namespace Limew.Util.Session
         #endregion //end of getStoreAction
 
         #region getValue
-        public string getCloudId()
-        {
+        public string getCloudId() {
             return getValue("CLOUD_ID").ToString();
         }
         public string getValue(string key)
@@ -216,7 +215,7 @@ namespace Limew.Util.Session
             if (context.Session[StoreName] as List<DictionaryEntry> == null)
             {
                 var store = new List<DictionaryEntry>();
-                var tmp = new DictionaryEntry { Key = "Default", Value = "" };
+                var tmp = new DictionaryEntry {Key = "Default", Value = ""};
                 store.Add(tmp);
                 context.Session[StoreName] = store;
             }

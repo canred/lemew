@@ -3,12 +3,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script language="javascript" type="text/javascript">
-Ext.onReady(function() {    
-    WS_ATTENDANTQUERYPANEL = Ext.create('WS.AttendantQueryPanel',{
-        param:{
-            companyUuid:'<%= getUser().COMPANY_UUID %>'
+    Ext.onReady(function () {
+        WS_ATTENDANTQUERYPANEL = Ext.create('WS.AttendantQueryPanel', {
+            param: {
+                companyUuid: '<%= getUser().COMPANY_UUID %>'
         },
-        'subWinAttendant':'WS.AttendantWindow'
+        'subWinAttendant': 'WS.AttendantWindow'
     });
     WS_ATTENDANTQUERYPANEL.render('divMain');
     UTIL.runAll();

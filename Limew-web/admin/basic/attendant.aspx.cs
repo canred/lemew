@@ -11,10 +11,10 @@ namespace Web.admin.basic
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
-
+        
 
         public string showAD()
         {
@@ -29,14 +29,12 @@ namespace Web.admin.basic
                 {
                     ret = "false";
                 }
-                else
-                {
+                else {
                     ret = "true";
                     return ret;
                 }
 
-                if (drCompany.AD_LDAP.Trim().Length > 0)
-                {
+                if (drCompany.AD_LDAP.Trim().Length > 0) {
                     ret = "false";
                 }
                 else
@@ -65,8 +63,7 @@ namespace Web.admin.basic
                     return ret;
                 }
             }
-            else
-            {
+            else {
                 ret = "true";
             }
             return ret;

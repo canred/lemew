@@ -33,7 +33,8 @@ namespace Limew
             {
                 INIT = context.Request.QueryString["init"].ToUpper();
             }
-            if (ss.ExistKey("PROXY") && Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == true)
+            //if (ss.ExistKey("PROXY") && Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == true)
+            if (ss.ExistKey("PROXY") )
             {
                 context.Response.Write(ss.getObject("PROXY").ToString());
                 return;
@@ -41,6 +42,10 @@ namespace Limew
             var isFrist = true;
             foreach (var allAssembly in AssembliesLoaded)
             {
+                if (!allAssembly.GetName().Name.StartsWith(this.GetType().Namespace))
+                {
+                    continue;
+                };
                 foreach (var theType in allAssembly.GetTypes())
                 {
                     object[] allCustomAttribute = theType.GetCustomAttributes(false);
@@ -66,14 +71,13 @@ namespace Limew
                             rem += "url: \"" + newUrl + "\",";
                             rem += "type:\"remoting\",";
                             rem += "timeout:" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectTimeOut.ToString() + ",";
-                            string json = DirectProxyGenerator.generateDirectApi(className);
+                            string json = DirectProxyGenerator.generateDirectApi(allAssembly.GetName().Name, className, false);
                             rem += json;
                             rem += "};";
                             rem = Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + className + " =" + rem;
                             if (isFrist == true)
                             {
-                                rem = " Ext.ns('" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "');" + rem;
-                                //rem ="(function(){" + rem + "})();";
+                                rem = " Ext.ns('" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "');" + rem;                                
                                 isFrist = false;
                             }
                             else
@@ -84,9 +88,7 @@ namespace Limew
                         }
                     }
                 }
-            }
-
-
+            };
             Limew.Model.Basic.BasicModel mod = new Limew.Model.Basic.BasicModel();
             IList<Limew.Model.Basic.Table.Record.Proxy_Record> drsProxy = new List<Limew.Model.Basic.Table.Record.Proxy_Record>();
             if (INIT.Length == 0)
@@ -114,7 +116,6 @@ namespace Limew
                     rem += "url: \"" + newUrl + "\",";
                     rem += "type:\"remoting\",";
                     rem += "timeout:" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectTimeOut.ToString() + ",";
-
                     rem += "\"actions\":{";
                     rem += "\"" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + proxy.PROXY_ACTION + "\":[";
                     rem += "{";
@@ -124,7 +125,7 @@ namespace Limew
                     rem += "]";
                     rem += "}";
                     rem += "};";
-                    rem = Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + proxy.PROXY_ACTION + " =" + rem;                   
+                    rem = Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + proxy.PROXY_ACTION + " =" + rem;
                     rem = "(function(){" + rem + "})();";
                     sb.Append(rem);
                 }

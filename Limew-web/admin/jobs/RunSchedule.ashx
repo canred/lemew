@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="RunSchedule.ashx.cs" Class="Limew.admin.jobs.RunSchedule" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="RunSchedule.ashx.cs" Class="LKWebTemplate.admin.jobs.RunSchedule" %>

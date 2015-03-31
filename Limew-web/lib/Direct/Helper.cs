@@ -8,10 +8,8 @@ namespace ExtDirect.Direct
 {
     public class Helper
     {
-        public class Store
-        {
-            public static string Output(string jsonStr, double totalCount)
-            {
+        public class Store {
+            public static string Output(string jsonStr, double totalCount) {
                 var str = new System.Text.StringBuilder();
                 str.Append("\"data\":[");
                 str.Append(jsonStr);
@@ -24,13 +22,13 @@ namespace ExtDirect.Direct
             {
                 try
                 {
-                    var ret = JObject.Parse("{data:[],success:true,total:" + totalCount.ToString(CultureInfo.InvariantCulture) + "}");
+                    var ret = JObject.Parse("{data:[],success:true,total:" + totalCount.ToString(CultureInfo.InvariantCulture) + "}");                    
                     var jarray = new JArray();
                     foreach (var item in jobject)
                     {
                         jarray.Add(item);
                     }
-                    ret["data"] = jarray;
+                    ret["data"] = jarray;                  
                     return ret;
                 }
                 catch (Exception ex)
@@ -41,7 +39,39 @@ namespace ExtDirect.Direct
                 }
             }
 
-            public static JObject OutputJObject(System.Data.DataTable source, int start, int limit)
+            public static JObject OutputJObject(List<JObject> jobject, double totalCount, System.Collections.Hashtable pOtherParam)
+            {
+                try
+                {
+                    var ret = JObject.Parse("{data:[],success:true,total:" + totalCount.ToString(CultureInfo.InvariantCulture) + "}");
+                    var jarray = new JArray();
+                    foreach (var item in jobject)
+                    {
+                        jarray.Add(item);
+                    }
+                    ret["data"] = jarray;
+
+
+
+                    if (pOtherParam.Count > 0)
+                    {
+                        foreach (var item in pOtherParam.Keys)
+                        {
+                            ret[item] = new JValue(pOtherParam[item]);
+                        }
+                    }
+
+                    return ret;
+                }
+                catch (Exception ex)
+                {
+                    LK.MyException.MyException.ErrorStaticClass(ex);
+                    //MyException.ErrorNoThrowExceptionForStaticClass(ex);
+                    return null;
+                }
+            }
+
+            public static JObject OutputJObject(System.Data.DataTable source,int start, int limit)
             {
                 try
                 {
@@ -112,8 +142,7 @@ namespace ExtDirect.Direct
             }
         }
 
-        public class Form
-        {
+        public class Form {
             /// <summary>
             /// Form load 使用的正式輸出
             /// </summary>
@@ -136,40 +165,37 @@ namespace ExtDirect.Direct
                 var str = new System.Text.StringBuilder();
                 str.Append("{");
                 str.Append("\"success\":true,");
-                str.Append("\"data\":{}");
+                str.Append("\"data\":{}");                
                 str.Append("}");
                 var ret = JObject.Parse(str.ToString());
-                ret["data"] = json;
+                ret["data"]=json;
                 return ret;
             }
         }
-        public class Tree
-        {
+        public class Tree {
             public static string Output(string jsonStr, double totalCount)
             {
-                var str = new System.Text.StringBuilder();
+                var str = new System.Text.StringBuilder();                
                 str.Append(jsonStr);
                 return str.ToString();
             }
 
             public static JObject Output(JArray jsonArray, double totalCount)
-            {
-                JObject ret = JObject.Parse("{TREE:{}}");
+            {                
+                JObject ret =JObject.Parse("{TREE:{}}");
                 ret["TREE"] = jsonArray;
                 return ret;
             }
         }
 
-        public class JObjectHelper
-        {
-            public static JObject StringOnly(string returnValue)
-            {
+        public class JObjectHelper {
+            public static JObject StringOnly(string returnValue) {
                 return JObject.Parse("{STRING_ONLY:\"" + returnValue + "\"}");
             }
-            public static JObject CallBack(string action, string method)
+            public static JObject CallBack(string action,string method)
             {
                 //string ret = action + "_" + method + "_callback({\"success\":true,\"function_name\":\"" + action + "\"})";
-
+                
                 string actionMethod = action + "_" + method + "_callback";
                 string actionMethodValue = "{\"success\":true,\"function_name\":\"" + action + "\"}";
                 var jobjectActionMethodValue = JObject.Parse(actionMethodValue);
@@ -181,10 +207,8 @@ namespace ExtDirect.Direct
             }
         }
 
-        public class Message
-        {
-            public class Fail
-            {
+        public class Message {
+            public class Fail {
                 public static string Output(Exception ex)
                 {
                     var err = new System.Text.StringBuilder();
@@ -207,10 +231,8 @@ namespace ExtDirect.Direct
                 }
             }
 
-            public class Success
-            {
-                public static string Output()
-                {
+            public class Success {
+                public static string Output() {
                     var err = new System.Text.StringBuilder();
                     err.Append("{");
                     err.Append("\"success\":true");
@@ -274,14 +296,13 @@ namespace ExtDirect.Direct
         }
 
 
-        public class Order
-        {
+        public class Order {
             public static OrderLimit getOrderLimit(Request request, string orderColumnName, OrderLimit.OrderMethod ASCD_ESC)
             {
                 try
                 {
                     int start = ((request.limit * request.page) + 1) - (request.limit);
-                    var orderLimit = new OrderLimit(orderColumnName, ASCD_ESC) { Start = start, Limit = 999 };
+                    var orderLimit = new OrderLimit(orderColumnName, ASCD_ESC) {Start = start, Limit = 999};
                     return orderLimit;
                 }
                 catch
@@ -305,19 +326,18 @@ namespace ExtDirect.Direct
                     {
                         ASC_DESC = OrderLimit.OrderMethod.DESC;
                     }
-                    var orderLimit = new OrderLimit(sort, ASC_DESC) { Start = startNo, Limit = limiNo };
+                    var orderLimit = new OrderLimit(sort, ASC_DESC) {Start = startNo, Limit = limiNo};
 
                     return orderLimit;
                 }
-                catch
+                catch 
                 {
                     return null;
                 }
             }
         }
 
-        public class Json
-        {
+        public class Json {
             public static List<T> json2Record<T>(JObject jobject) where T : LK.DB.RecordBase, new()
             {
                 var t = new List<T>();
@@ -346,7 +366,7 @@ namespace ExtDirect.Direct
                     }
                     catch
                     {
-                        if (jobject["updates"] != null)
+                        if (jobject["updates"]!=null)
                         {
                             if (jobject["updates"].GetType().ToString() == "Newtonsoft.Json.Linq.JObject")
                             {
@@ -357,7 +377,7 @@ namespace ExtDirect.Direct
                         else
                         {
                             jData = jobject;
-                            dataArray = 1;
+                            dataArray = 1; 
                         }
                     }
                 }
@@ -824,7 +844,7 @@ namespace ExtDirect.Direct
                                     }
                                     #endregion
                                 }
-
+                                
                                 else if (dcType == typeof(bool?))
                                 {
                                     #region DateTime
@@ -876,10 +896,10 @@ namespace ExtDirect.Direct
             }
 
         }
+       
 
-
-
-
+        
+       
     }
 
 }

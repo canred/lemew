@@ -14,10 +14,9 @@ namespace Limew
     {
         public Util.Session.Store ss = new Limew.Util.Session.Store();
         public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        public enum SubmitAction
-        {
-            None, Edit, Create, Update, Delete
+       
+        public enum SubmitAction { 
+            None,Edit,Create,Update,Delete
         }
 
         /// <summary>
@@ -28,23 +27,20 @@ namespace Limew
         {
             if (ss.ExistKey("USER"))
             {
-
+                
                 return (Model.Basic.Table.Record.AttendantV_Record)ss.getObject("USER");
             }
             return null;
         }
 
-        public enum CheckUserStatus
-        {
-            NULL, PASS, EXPIRES, Illegal
+        public enum CheckUserStatus { 
+            NULL,PASS,EXPIRES,Illegal
         }
 
         public CheckUserStatus checkUser(System.Web.HttpRequest httpRequest)
         {
-            if (this.getUser() == null)
-            {
-                if (httpRequest.Headers["CLOUD_ID"] != null)
-                {
+            if (this.getUser() == null) {
+                if (httpRequest.Headers["CLOUD_ID"] != null) {
                     LK.Cloud cloud = new LK.Cloud();
                     var cloudid = httpRequest.Headers["CLOUD_ID"].ToString();
                     Limew.Controller.Model.Cloud.CloudModel mod = new Limew.Controller.Model.Cloud.CloudModel();
@@ -54,14 +50,12 @@ namespace Limew
                     {
                         drsAc = mod.getActiveConnection_By_Uuid(cloudid).AllRecord();
                     }
-                    else
-                    {
-                        var authMaster = "http://" + LK.Config.Cloud.CloudConfigs.GetConfig().AuthMaster + "//router.ashx";
+                    else {
+                        var authMaster = "http://"+ LK.Config.Cloud.CloudConfigs.GetConfig().AuthMaster+"//router.ashx";
 
-                        var jsonObj = cloud.CallDirect(authMaster, "CloudAction.loadActiveConnection", new string[1] { cloudid }, "");
+                        var jsonObj  = cloud.CallDirect(authMaster, "CloudAction.loadActiveConnection", new string[1] { cloudid }, "");
                         var jitem = jsonObj["result"]["data"];
-                        foreach (var item in jitem)
-                        {
+                        foreach (var item in jitem) {
                             Limew.Model.Basic.Table.Record.ActiveConnection_Record newData = new Limew.Model.Basic.Table.Record.ActiveConnection_Record();
                             newData.ACCOUNT = item["ACCOUNT"].Value<string>();
                             newData.UUID = item["UUID"].Value<string>();
@@ -76,26 +70,25 @@ namespace Limew
                         }
                     }
 
+                    
 
-
-
-                    if (drsAc.Count > 0)
-                    {
-                        if (System.DateTime.Now > drsAc.First().EXPIRESTIME)
-                        {
-                            throw new System.Exception("Connection has expired!");
+                    
+                    if (drsAc.Count > 0) {
+                        if (System.DateTime.Now > drsAc.First().EXPIRESTIME) {
+                            throw new System.Exception("Connection has expired!");                            
                         }
                         var drAc = drsAc.First();
-                        if (drAc.STATUS == "OFFLINE")
+                        if (drAc.STATUS=="OFFLINE")
                         {
                             throw new System.Exception("Connection has closed!");
                         }
                         var drAttendant = bmod.getAttendant_By_CompanyUuid_Account(drAc.COMPANY_UUID, drAc.ACCOUNT);
                         var drCompany = bmod.getCompany_By_Uuid(drAc.COMPANY_UUID).AllRecord().First();
                         UserAction u = new UserAction();
-                        u.logon(drCompany.ID, drAttendant.ACCOUNT, drAttendant.PASSWORD, httpRequest);
-                        if (drAc.IP != httpRequest.UserHostAddress)
-                        {
+                        ExtDirect.Direct.Request extDirectRequest = new ExtDirect.Direct.Request();
+                        extDirectRequest.HttpRequest = httpRequest;
+                        u.logon(drCompany.ID, drAttendant.ACCOUNT, drAttendant.PASSWORD, extDirectRequest);
+                        if (drAc.IP != httpRequest.UserHostAddress) {
                             throw new System.Exception("Illegal connections");
                         }
                         return CheckUserStatus.PASS;
@@ -105,19 +98,17 @@ namespace Limew
             return CheckUserStatus.PASS;
         }
 
-        public bool checkProxy(StackFrame sf)
-        {
-
-            if (LK.Config.DirectAuth.DirectAuthConfigs.GetConfig().ProxyPermission == false)
-            {
+        public bool checkProxy(StackFrame sf) {
+           
+            if (LK.Config.DirectAuth.DirectAuthConfigs.GetConfig().ProxyPermission == false) {
                 return true;
             }
-            BasicModel model = new BasicModel();
+            BasicModel model = new BasicModel();            
             var methodName = sf.GetMethod().Name;
             var className = this.GetType().Name;
 
             System.Collections.Hashtable htNoPermission = new System.Collections.Hashtable();
-
+            
             var json = "{" + LK.Config.DirectAuth.DirectAuthConfigs.GetConfig().NoPermissionAction + "}";
             var jo = JObject.Parse(json);
 
@@ -146,11 +137,10 @@ namespace Limew
             {
                 return true;
             }
-            else
-            {
+            else {
                 return false;
             }
-            // model = null;
+           // model = null;
         }
 
 

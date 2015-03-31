@@ -11,10 +11,10 @@ namespace Web.admin.basic
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
-
+        
 
         public string showAD()
         {
@@ -22,7 +22,7 @@ namespace Web.admin.basic
             //this.getUser().COMPANY_UUID
             Limew.Model.Basic.BasicModel mod = new Limew.Model.Basic.BasicModel();
             var dtCompany = mod.getCompany_By_Uuid(this.getUser().COMPANY_UUID);
-
+            
             if (dtCompany.AllRecord().Count > 0)
             {
                 var drCompany = dtCompany.AllRecord().First();
@@ -30,14 +30,12 @@ namespace Web.admin.basic
                 {
                     ret = "false";
                 }
-                else
-                {
+                else {
                     ret = "true";
                     return ret;
                 }
 
-                if (drCompany.AD_LDAP.Trim().Length > 0)
-                {
+                if (drCompany.AD_LDAP.Trim().Length > 0) {
                     ret = "false";
                 }
                 else
@@ -66,8 +64,7 @@ namespace Web.admin.basic
                     return ret;
                 }
             }
-            else
-            {
+            else {
                 ret = "true";
             }
             return ret;

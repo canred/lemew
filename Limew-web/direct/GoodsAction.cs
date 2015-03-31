@@ -28,7 +28,7 @@ using System.Diagnostics;
 public class GoodsAction : BaseAction
 {
 
-    [DirectMethod("infoGoods", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoGoods", DirectAction.Load)]
     public JObject infoGoods(string pGoodsUuid, Request request)
     {
         #region Declare
@@ -61,7 +61,7 @@ public class GoodsAction : BaseAction
         }
     }
 
-    [DirectMethod("loadVGoods", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVGoods", DirectAction.Store)]
     public JObject loadVGoods(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -105,7 +105,7 @@ public class GoodsAction : BaseAction
         }
     }
 
-    [DirectMethod("submitGoods", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitGoods", DirectAction.FormSubmission)]
     public JObject submitGoods( string goods_uuid,
                                 string goods_sn,
                                 string goods_cost,
@@ -116,7 +116,7 @@ public class GoodsAction : BaseAction
                                 string supplier_uuid,
                                 string gcategory_uuid,
         string goods_ps,
-                                string goods_name, HttpRequest request)
+                                string goods_name, Request request)
     {
 
 
@@ -127,7 +127,7 @@ public class GoodsAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -180,7 +180,7 @@ public class GoodsAction : BaseAction
         }
     }
 
-    [DirectMethod("destoryGoods", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryGoods", DirectAction.Store)]
     public JObject destoryGoods(string pGoodsUuid, Request request)
     {
         #region Declare

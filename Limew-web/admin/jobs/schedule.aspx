@@ -8,6 +8,6 @@ Ext.onReady(function () {
     SCHEDULEPANEL.render('divMain');
     UTIL.runAll();
 });
-</script>           
+</script>			
 <div id="divMain" style="margin-bottom:5px;margin-top:35px;"></div>
 </asp:Content>

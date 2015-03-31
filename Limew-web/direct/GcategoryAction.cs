@@ -27,7 +27,7 @@ using System.Diagnostics;
 [DirectService("GcategoryAction")]
 public class GcategoryAction : BaseAction
 {
-    [DirectMethod("infoGcategory", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoGcategory", DirectAction.Load)]
     public JObject infoGcategory(string pGcategoryUuid, Request request)
     {
         #region Declare
@@ -59,11 +59,11 @@ public class GcategoryAction : BaseAction
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }
-    [DirectMethod("submitGcategory", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitGcategory", DirectAction.FormSubmission)]
     public JObject submitGcategory(string gcategory_uuid,
 string gcategory_name,
 string gcategory_is_active,
-string gcategory_parent_uuid, HttpRequest request)
+string gcategory_parent_uuid, Request request)
     {
 
 
@@ -74,7 +74,7 @@ string gcategory_parent_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -134,7 +134,7 @@ string gcategory_parent_uuid, HttpRequest request)
     }
 
 
-    [DirectMethod("deleteGcategory", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("deleteGcategory", DirectAction.Store)]
     public JObject deleteGcategory(string pGcategoryUuid, Request request)
     {
         #region Declare
@@ -211,7 +211,7 @@ string gcategory_parent_uuid, HttpRequest request)
             return fullUuid;
         }
     }
-    [DirectMethod("loadTreeRoot", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadTreeRoot", DirectAction.Store)]
     public JObject loadTreeRoot( Request request)
     {
         #region Declare
@@ -247,7 +247,7 @@ string gcategory_parent_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("loadGcagegoryTree", DirectAction.TreeStore, MethodVisibility.Visible)]
+    [DirectMethod("loadGcagegoryTree", DirectAction.TreeStore)]
     public JObject loadGcagegoryTree(Request request)
     {
         #region Declare
@@ -313,7 +313,7 @@ string gcategory_parent_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("loadGcategoryTree", DirectAction.TreeStore, MethodVisibility.Visible)]
+    [DirectMethod("loadGcategoryTree", DirectAction.TreeStore)]
     public JObject loadGcategoryTree(string pGcategoryParentUuid, Request request)
     {
         #region Declare
@@ -383,7 +383,7 @@ string gcategory_parent_uuid, HttpRequest request)
         }
     }
 
-    [DirectMethod("_loadGcategoryTree", DirectAction.TreeStore, MethodVisibility.Visible)]
+    [DirectMethod("_loadGcategoryTree", DirectAction.TreeStore)]
     public JArray _loadGcategoryTree(string parentUuid, ref IList<Gcategory_Record> drsGcategory)
     {
         #region Declare

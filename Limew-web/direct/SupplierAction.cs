@@ -28,7 +28,7 @@ using System.Diagnostics;
 public class SupplierAction : BaseAction
 {
 
-    [DirectMethod("infoSupplier", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoSupplier", DirectAction.Load)]
     public JObject infoSupplier(string pSupplierUuid, Request request)
     {
         #region Declare
@@ -61,7 +61,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("loadSupplier", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadSupplier", DirectAction.Store)]
     public JObject loadSupplier(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -105,7 +105,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("submitSupplier", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitSupplier", DirectAction.FormSubmission)]
     public JObject submitSupplier(  string supplier_uuid,
                                     string supplier_name,
                                     string supplier_tel,
@@ -118,7 +118,7 @@ public class SupplierAction : BaseAction
                                     string supplier_contact_email,
                                     string supplier_sales_email,
                                     string supplier_ps,
-                                    string supplier_is_active, HttpRequest request)
+                                    string supplier_is_active, Request request)
     {
 
 
@@ -129,7 +129,7 @@ public class SupplierAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -184,7 +184,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("destorySupplier", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destorySupplier", DirectAction.Store)]
     public JObject destorySupplier(string pUuid, Request request)
     {
         #region Declare
@@ -220,7 +220,7 @@ public class SupplierAction : BaseAction
     }
 
 
-    [DirectMethod("infoSupplierGoods", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoSupplierGoods", DirectAction.Load)]
     public JObject infoSupplierGoods(string pSupplierGoodsUuid, Request request)
     {
         #region Declare
@@ -253,7 +253,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("loadSupplierGoods", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadSupplierGoods", DirectAction.Store)]
     public JObject loadSupplierGoods(string pSupplierUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -296,7 +296,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("destorySupplierGoods", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destorySupplierGoods", DirectAction.Store)]
     public JObject destorySupplierGoods(string pSupplierGoodsUuid, Request request)
     {
         #region Declare
@@ -331,7 +331,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("submitSupplierGoods", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitSupplierGoods", DirectAction.FormSubmission)]
     public JObject submitSupplierGoods(string supplier_goods_uuid,
                                         string supplier_goods_name,
                                         string unit_uuid,
@@ -340,7 +340,7 @@ public class SupplierAction : BaseAction
                                         string supplier_goods_price,
                                         string supplier_goods_cost,
                                         string supplier_goods_is_active,
-                                        string supplier_uuid, HttpRequest request)
+                                        string supplier_uuid, Request request)
     {
 
 
@@ -351,7 +351,7 @@ public class SupplierAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -403,7 +403,7 @@ public class SupplierAction : BaseAction
         }
     }
 
-    [DirectMethod("loadVSupplierGoods", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadVSupplierGoods", DirectAction.Store)]
     public JObject loadVSupplierGoods(string pSupplierUuid, string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare

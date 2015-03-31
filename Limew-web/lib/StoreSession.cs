@@ -80,8 +80,8 @@ namespace Limew
                 if (ExistKey(key))
                 {
                     var tmp = (from item in store
-                               where item.Key.ToString().ToUpper() == key.ToUpper()
-                               select item).First();
+                                           where item.Key.ToString().ToUpper() == key.ToUpper()
+                                           select item).First();
                     ret = tmp.Value.ToString();
                     return ret;
                 }
@@ -240,8 +240,8 @@ namespace Limew
         {
             List<DictionaryEntry> store = getCookieInSession();
             var ret = (from tmp in store
-                       where tmp.Key.ToString().ToUpper() == key.ToUpper()
-                       select tmp).Count() > 0
+                        where tmp.Key.ToString().ToUpper() == key.ToUpper()
+                        select tmp).Count() > 0
                            ? true
                            : false;
             return ret;

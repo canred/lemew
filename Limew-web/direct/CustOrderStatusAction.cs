@@ -29,7 +29,7 @@ public class CustOrderStatusAction : BaseAction
 {
 
 
-    [DirectMethod("loadCustOrderStatus", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadCustOrderStatus", DirectAction.Store)]
     public JObject loadCustOrderStatus(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -73,7 +73,7 @@ public class CustOrderStatusAction : BaseAction
         }
     }
 
-    [DirectMethod("infoCustOrderStatus", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoCustOrderStatus", DirectAction.Load)]
     public JObject infoCustOrderStatus(string pCustOrderStatusUuid, Request request)
     {
         #region Declare
@@ -106,11 +106,11 @@ public class CustOrderStatusAction : BaseAction
         }
     }
 
-    [DirectMethod("submitCustOrderStatus", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitCustOrderStatus", DirectAction.FormSubmission)]
     public JObject submitCustOrderStatus(string cust_order_status_uuid,
 string cust_order_status_name,
 string cust_order_status_is_active,
-string cust_order_status_ord, HttpRequest request)
+string cust_order_status_ord, Request request)
     {
 
 
@@ -121,7 +121,7 @@ string cust_order_status_ord, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");

@@ -27,7 +27,7 @@ using System.Diagnostics;
 [DirectService("ShippingStatusAction")]
 public class ShippingStatusAction : BaseAction
 {
-    [DirectMethod("loadShippingStatus", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadShippingStatus", DirectAction.Store)]
     public JObject loadShippingStatus(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -71,7 +71,7 @@ public class ShippingStatusAction : BaseAction
         }
     }
 
-    [DirectMethod("infoShippingStatus", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoShippingStatus", DirectAction.Load)]
     public JObject infoShippingStatus(string pShippingStatusUuid, Request request)
     {
         #region Declare
@@ -105,9 +105,9 @@ public class ShippingStatusAction : BaseAction
     }
 
 
-    [DirectMethod("submitShippingStatus", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitShippingStatus", DirectAction.FormSubmission)]
     public JObject submitShippingStatus(string shipping_status_uuid,
-                                string shipping_status_ord, string shipping_status_name, HttpRequest request)
+                                string shipping_status_ord, string shipping_status_name, Request request)
     {
         #region Declare
         var action = SubmitAction.None;
@@ -116,7 +116,7 @@ public class ShippingStatusAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");

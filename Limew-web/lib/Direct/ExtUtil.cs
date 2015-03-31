@@ -4,7 +4,7 @@
     {
         internal static bool IsSpecialField(this Request req)
         {
-
+          
             try
             {
                 string data = req.data[0].ToString();
@@ -21,7 +21,7 @@
                     }
                     return false;
                 }
-
+                
             }
             catch
             {
@@ -33,7 +33,7 @@
             try
             {
                 var len = req.data.Count;
-                if (len > 0)
+                if(len>0)
                 {
                     return true;
                 }
@@ -43,7 +43,7 @@
             {
                 return false;
             }
-
+           
         }
         internal static bool IsNullData(this Request req)
         {
@@ -78,6 +78,6 @@
                 return false;
             }
         }
-
+            
     }
 }

@@ -7,20 +7,18 @@ namespace ExtDirect.Direct
 {
     public static class DirectProxyGenerator
     {
-        public static string generateDirectApi(string pClassName)
+        public static string generateDirectApi(string dllName,string pClassName,bool isTouch)
         {
             var resStr = new StringBuilder();
             var myDomain = AppDomain.CurrentDomain;
             var assembliesLoaded = myDomain.GetAssemblies();
             resStr.Append("\"actions\":");
-
-
-
-            bool flag = false;
-            foreach (var allAssembly in assembliesLoaded)
+         
+            bool flag = false;            
+            foreach (var allAssembly in assembliesLoaded)           
             {
                 /*只解析Limew.DLL*/
-                if (allAssembly.ManifestModule.Name.ToUpper() != "Limew.DLL".ToUpper())
+                if (allAssembly.ManifestModule.Name.ToUpper() != (dllName + ".DLL").ToUpper())
                 {
                     continue;
                 }
@@ -33,16 +31,20 @@ namespace ExtDirect.Direct
                         if (typeof(DirectServiceAttribute) == directType)
                         {
                             string className = theType.Name;
-                            if (pClassName.ToUpper() != className.ToUpper())
-                            {
+                            if (pClassName.ToUpper() != className.ToUpper()) {
                                 continue;
                             }
 
-                            if (className.ToLower().IndexOf("sitemap") > 0)
-                            {
+                            if (className.ToLower().IndexOf("sitemap")>0) {
                                 //var debug = "";
                             }
-                            resStr.Append("{\"" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + className + "\":[");
+                            if (isTouch) {
+                                resStr.Append("{\"" + className + "\":[");                            
+                            }
+                            else {
+                                resStr.Append("{\"" + Limew.Parameter.Config.ParemterConfigs.GetConfig().DirectApplicationName + "." + className + "\":[");                            
+                            }
+                            
                             MethodInfo[] methodInfo = theType.GetMethods();
 
                             var methodList = new List<string>();
@@ -67,7 +69,7 @@ namespace ExtDirect.Direct
                                             int paramCount = p.Count(item => item.ToString().Split(' ')[0] != "ExtDirect.Direct.Request");
                                             tempMey += "\"len\":" + paramCount + "}";
                                         }
-
+                                       
                                         else if (DirectAction.FormSubmission == gMethod)
                                         {
                                             var p = m.GetParameters();
@@ -78,14 +80,12 @@ namespace ExtDirect.Direct
                                         {
                                             ParameterInfo[] p = m.GetParameters();
                                             int paramCount = p.Count(item => item.ToString().Split(' ')[0] != "ExtDirect.Direct.Request");
-
-                                            tempMey += "\"len\":" + paramCount + "}";
-                                            //tempMey += "\"len\": 0}";
+                                            tempMey += "\"len\":" + paramCount + "}";                                            
                                         }
-                                        else if (DirectAction.Update == gMethod)
-                                        {
-                                            tempMey += "\"len\": 1}";
-                                        }
+                                        //else if (DirectAction.Update == gMethod)
+                                        //{
+                                        //    tempMey += "\"len\": 1}";
+                                        //}
                                         else
                                         {
                                             ParameterInfo[] p = m.GetParameters();
@@ -93,7 +93,6 @@ namespace ExtDirect.Direct
                                             tempMey += "\"len\":" + paramCount + "}";
                                         }
                                         resStr.Append(tempMey + ",");
-
                                         methodList.Add(tempMey);
                                     }
 
@@ -112,13 +111,13 @@ namespace ExtDirect.Direct
                     flag = false;
                 }
             }
-
+            
             return resStr.ToString();
-
-
+            
+            
         }
 
-        public static List<string> generateDirectApiNameList(string pClassName, string prexString)
+        public static List<string> generateDirectApiNameList(string pClassName,string prexString)
         {
             List<string> ret = new List<string>();
             var myDomain = AppDomain.CurrentDomain;
@@ -174,10 +173,10 @@ namespace ExtDirect.Direct
         {
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("ServiceClass");
-
+            
             var myDomain = AppDomain.CurrentDomain;
             var assembliesLoaded = myDomain.GetAssemblies();
-
+            
 
             foreach (var allAssembly in assembliesLoaded)
             {
@@ -202,10 +201,10 @@ namespace ExtDirect.Direct
                             var newRow = dt.NewRow();
                             newRow["ServiceClass"] = className;
                             dt.Rows.Add(newRow);
-
+                        
                         }
                     }
-                }
+                }                
             }
 
             return dt;

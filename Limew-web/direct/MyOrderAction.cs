@@ -38,7 +38,7 @@ using System.Net;
 public class MyOrderAction : BaseAction
 {
 
-    [DirectMethod("infoMyOrder", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoMyOrder", DirectAction.Load)]
     public JObject infoMyOrder(string pMyOrderUuid, Request request)
     {
         #region Declare
@@ -71,7 +71,7 @@ public class MyOrderAction : BaseAction
         }
     }
 
-    [DirectMethod("loadMyOrder", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadMyOrder", DirectAction.Store)]
     public JObject loadMyOrder(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -115,7 +115,7 @@ public class MyOrderAction : BaseAction
         }
     }
 
-    [DirectMethod("submitMyOrder", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitMyOrder", DirectAction.FormSubmission)]
     public JObject submitMyOrder(string my_order_uuid,
 string my_order_date,
 string my_order_supplier_name,
@@ -129,7 +129,7 @@ string my_order_ps,
 string my_order_is_finish,
 string my_order_pay_method,
 string my_order_is_active,
-string my_order_attendant_uuid, HttpRequest request)
+string my_order_attendant_uuid, Request request)
     {
 
 
@@ -140,7 +140,7 @@ string my_order_attendant_uuid, HttpRequest request)
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
@@ -218,7 +218,7 @@ string my_order_attendant_uuid, HttpRequest request)
     }
 
 
-    [DirectMethod("quickEdit", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("quickEdit", DirectAction.Load)]
     public JObject quickEdit(string my_order_uuid,
 string my_order_date,
 string my_order_supplier_name,
@@ -312,7 +312,7 @@ string my_order_attendant_uuid, Request request)
 
 
 
-    [DirectMethod("cloneMyOrder", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("cloneMyOrder", DirectAction.Load)]
     public JObject cloneMyOrder(string my_order_uuid, Request request)
     {
         #region Declare
@@ -355,7 +355,7 @@ string my_order_attendant_uuid, Request request)
         }
     }
 
-    [DirectMethod("destoryMyOrder", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("destoryMyOrder", DirectAction.Store)]
     public JObject destoryMyOrder(string pMyOrderUuid, Request request)
     {
         #region Declare

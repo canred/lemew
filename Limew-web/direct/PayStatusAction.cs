@@ -29,7 +29,7 @@ public class PayStatusAction : BaseAction
 {
 
 
-    [DirectMethod("loadPayStatus", DirectAction.Store, MethodVisibility.Visible)]
+    [DirectMethod("loadPayStatus", DirectAction.Store)]
     public JObject loadPayStatus(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
@@ -74,7 +74,7 @@ public class PayStatusAction : BaseAction
     }
 
 
-    [DirectMethod("infoPayStatus", DirectAction.Load, MethodVisibility.Visible)]
+    [DirectMethod("infoPayStatus", DirectAction.Load)]
     public JObject infoPayStatus(string pPayStatusUuid, Request request)
     {
         #region Declare
@@ -108,9 +108,9 @@ public class PayStatusAction : BaseAction
     }
 
 
-    [DirectMethod("submitPayStatus", DirectAction.FormSubmission, MethodVisibility.Visible)]
+    [DirectMethod("submitPayStatus", DirectAction.FormSubmission)]
     public JObject submitPayStatus(string pay_status_uuid,
-                                string pay_status_ord, string pay_status_name, HttpRequest request)
+                                string pay_status_ord, string pay_status_name, Request request)
     {
 
 
@@ -121,7 +121,7 @@ public class PayStatusAction : BaseAction
         #endregion
         try
         {  /*Cloud身份檢查*/
-            checkUser(request);
+            checkUser(request.HttpRequest);
             if (this.getUser() == null)
             {
                 throw new Exception("Identity authentication failed.");
