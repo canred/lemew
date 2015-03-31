@@ -102,6 +102,7 @@ CREATE TABLE `attendant` (
   `id` varchar(100) DEFAULT NULL,
   `src_uuid` varchar(36) DEFAULT NULL,
   `is_default_pass` varchar(1) DEFAULT 'Y',
+  `picture_url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `ATTENDANT_UK1` (`company_uuid`,`account`)
   

@@ -31,7 +31,11 @@ Ext.define('WS.GcategoryPicker', {
                 this.myStore.tree.load({
                     params: {
                         'pGcategoryParentUuid': data[0].GCATEGORY_UUID
-                    }
+                    },
+                    callback : function() {
+                        this.down('#trp').expandAll();
+                    },
+                    scope:this
                 });
             };
         }, obj);
@@ -53,6 +57,7 @@ Ext.define('WS.GcategoryPicker', {
             items: [{
                 
                 xtype: 'treepanel',
+                itemId:'trp',
                 padding: 5,
                 border: true,
                 autoWidth: true,
@@ -102,7 +107,8 @@ Ext.define('WS.GcategoryPicker', {
             if(this.param.parentObj){
                 this.param.parentObj.mask();
             };
-            this.fnQuery(obj);
+            this.fnQuery
+(obj);
         },
         'close':function(obj, eOpts) {
             if(this.param.parentObj){

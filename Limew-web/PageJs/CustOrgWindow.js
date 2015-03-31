@@ -138,7 +138,11 @@ Ext.define('WS.CustOrgWindow', {
                                     title: '操作完成',
                                     msg: '操作完成',
                                     icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK
+                                    buttons: Ext.Msg.OK,
+                                    fn: function() {
+                                        this.close();
+                                    },
+                                    scope: this
                                 });
                             },
                             failure: function(form, action) {

@@ -17,7 +17,7 @@ Ext.define('Model.Gcategory', {
 Ext.define('WS.GcategoryTreeStore', {
     extend: 'Ext.data.TreeStore',
     root: {
-        expanded: true
+        expanded: false
     },
     autoLoad: false,
     successProperty: 'success',

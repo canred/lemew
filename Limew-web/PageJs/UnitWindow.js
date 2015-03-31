@@ -84,7 +84,11 @@ Ext.define('WS.UnitWindow', {
                                 title: '維護單位',
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
-                                buttons: Ext.Msg.OK
+                                buttons: Ext.Msg.OK,
+                                fn:function(){
+                                    this.close();
+                                },
+                                scope:this
                             });
                         },
                         failure: function(form, action) {

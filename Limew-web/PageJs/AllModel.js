@@ -1,4 +1,4 @@
-/*BASIC*/ 
+/*BASIC*/
 Ext.define('COMPANY', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
@@ -202,7 +202,6 @@ Ext.define('SCHEDULE', {
 });
 
 
-
 /*Limew*/
 Ext.define('CUST', {
     extend: 'Ext.data.Model',
@@ -393,7 +392,7 @@ Ext.define('PAY_STATUS', {
         'PAY_STATUS_ORD',
         'PAY_STATUS_NAME'
     ]
-}); 
+});
 
 Ext.define('PAY_METHOD', {
     extend: 'Ext.data.Model',
@@ -568,4 +567,47 @@ Ext.define('UNIT', {
         'UNIT_IS_ACTIVE'
     ]
 });
- 
+
+Ext.define('MY_ORDER', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'MY_ORDER_UUID', {
+            name: 'MY_ORDER_DATE',
+            convert: function(v) {
+                if (typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+                    if (v.split(' ').length > 1) {
+                        return v.split(' ')[0];
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+        'MY_ORDER_SUPPLIER_NAME',
+        'MY_ORDER_SUPPLIER_TEL',
+        'MY_ORDER_SUPPLIER_MAN',
+        'MY_ORDER_GOODS_NAME',
+        'MY_ORDER_GOODS_COUNT',
+        {
+            name:'MY_ORDER_PRICE',
+            type:'number'
+        },
+        'MY_ORDER_PRICE',
+        'MY_ORDER_TOTAL_PRICE',
+        'MY_ORDER_PS',
+        'MY_ORDER_IS_FINISH',
+        'MY_ORDER_PAY_METHOD',
+        'MY_ORDER_IS_ACTIVE',
+        'MY_ORDER_ATTENDANT_UUID'
+    ]
+});

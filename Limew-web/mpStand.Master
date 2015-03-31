@@ -77,9 +77,11 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GcategoryAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SupplierAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ShippingStatusAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ScheduleAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayMethodAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayStatusAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UnitAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MyOrderAction"));
 
             
         });
@@ -96,6 +98,10 @@
         }
         .pure-button-error  {
             background: rgb(202, 60, 60); /* this is an orange */
+        }
+
+        legend {  
+          margin-bottom: 0px;
         }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">

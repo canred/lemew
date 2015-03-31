@@ -124,7 +124,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         xtype: 'textfield',
                         fieldLabel: '商品名稱',
                         itemId: 'SUPPLIER_GOODS_NAME',
-                        name: 'SUPPLIER_GOODS_NAME',                        
+                        name: 'SUPPLIER_GOODS_NAME',
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -137,7 +137,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         displayField: 'UNIT_NAME',
                         valueField: 'UNIT_UUID',
                         name: 'UNIT_UUID',
-                        
+
                         editable: false,
                         hidden: false,
                         store: this.myStore.unit,
@@ -146,7 +146,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                         fieldLabel: '序號',
                         labelWidth: 100,
                         name: 'SUPPLIER_GOODS_SN',
-                        
+
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
@@ -231,7 +231,11 @@ Ext.define('WS.SupplierGoodsWindow', {
                                     title: '操作完成',
                                     msg: '操作完成',
                                     icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK
+                                    buttons: Ext.Msg.OK,
+                                    fn: function() {
+                                        this.close();
+                                    },
+                                    scope: this
                                 });
                             },
                             failure: function(form, action) {

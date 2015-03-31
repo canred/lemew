@@ -1060,5 +1060,68 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
+
+        public int getMyOrder_By_Keyword_Count(string pKeyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                MyOrder table = new MyOrder(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.MY_ORDER_GOODS_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PAY_METHOD, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PRICE, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PS, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_MAN, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_TEL, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_TOTAL_PRICE, pKeyword)
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<MyOrder_Record> getMyOrder_By_Keyword(string pKeyword,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                MyOrder table = new MyOrder(dbc);
+                return table.Where(new SQLCondition(table).iBLike(table.MY_ORDER_GOODS_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PAY_METHOD, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PRICE, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_PS, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_MAN, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_SUPPLIER_TEL, pKeyword)
+                    .Or()
+                    .iBLike(table.MY_ORDER_TOTAL_PRICE, pKeyword)
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<MyOrder_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
 	}
 }

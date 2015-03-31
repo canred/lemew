@@ -325,5 +325,19 @@ namespace Limew.Model.Lw
 			}
 		}
 
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.MyOrder getMyOrder_By_MyOrderUuid(string pMY_ORDER_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.MyOrder myorder = new Limew.Model.Lw.Table.MyOrder(dbc);
+				myorder.Fill_By_PK(pMY_ORDER_UUID);
+				return myorder;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
 	}
 }

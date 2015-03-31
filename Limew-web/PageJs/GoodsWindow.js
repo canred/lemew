@@ -83,7 +83,7 @@ Ext.define('WS.GoodsWindow', {
                         fieldLabel: '商品名稱',
                         itemId: 'GOODS_NAME',
                         name: 'GOODS_NAME',
-                        
+
                         anchor: '0 0',
                         maxLength: 12,
                         allowBlank: false,
@@ -92,7 +92,7 @@ Ext.define('WS.GoodsWindow', {
                         fieldLabel: '序號',
                         labelWidth: 100,
                         name: 'GOODS_SN',
-                        
+
                         anchor: '0 0',
                         labelAlign: 'right'
                     }, {
@@ -103,7 +103,7 @@ Ext.define('WS.GoodsWindow', {
                         displayField: 'SUPPLIER_NAME',
                         valueField: 'SUPPLIER_UUID',
                         name: 'SUPPLIER_UUID',
-                        
+
                         editable: false,
                         hidden: false,
                         store: this.myStore.supplier,
@@ -143,7 +143,7 @@ Ext.define('WS.GoodsWindow', {
                         labelAlign: 'right',
                         fieldLabel: '啟用',
                         layout: 'hbox',
-                        margin:'5 0 0 0',
+                        margin: '5 0 0 0',
                         defaults: {
                             margins: '0 10 0 0'
                         },
@@ -213,7 +213,7 @@ Ext.define('WS.GoodsWindow', {
                     xtype: 'hiddenfield',
                     fieldLabel: 'GCATEGORY_UUID',
                     name: 'GCATEGORY_UUID',
-                    
+
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'GCATEGORY_UUID',
@@ -230,7 +230,7 @@ Ext.define('WS.GoodsWindow', {
                     xtype: 'hidden',
                     fieldLabel: 'GOODS_UUID',
                     name: 'GOODS_UUID',
-                    
+
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'GOODS_UUID'
@@ -253,7 +253,11 @@ Ext.define('WS.GoodsWindow', {
                                     title: '操作完成',
                                     msg: '操作完成',
                                     icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK
+                                    buttons: Ext.Msg.OK,
+                                    fn: function() {
+                                        this.close();
+                                    },
+                                    scope: this
                                 });
                             },
                             failure: function(form, action) {

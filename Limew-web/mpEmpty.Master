@@ -54,6 +54,8 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ScheduleAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SiteMapAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MyOrderAction"));
+
         });
     </script>
     <link rel="stylesheet" href="<%= Page.ResolveUrl("~/css/bootstrap/css/bootstrap.css")%>" type="text/css" />
@@ -70,6 +72,10 @@
         .pure-button-error  {
             background: rgb(202, 60, 60); /* this is an orange */
         }       
+
+        legend {  
+          margin-bottom: 0px;
+        }
     </style>    
     <asp:ContentPlaceHolder ID="head" runat="server">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

@@ -130,6 +130,7 @@ CREATE TABLE [dbo].[ATTENDANT](
 	[id] [varchar](100) NULL,
 	[src_uuid] [varchar](36) NULL,
 	[is_default_pass] [varchar](1) NULL,
+	[picture_url] [varchar](36) NULL,
  CONSTRAINT [ATTENDANT_PK] PRIMARY KEY CLUSTERED 
 (
 	[uuid] ASC

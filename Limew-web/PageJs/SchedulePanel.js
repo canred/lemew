@@ -192,7 +192,7 @@ Ext.define('WS.SchedulePanel', {
             }]
         }];
         this.listeners = {
-            'afterrender': function() {
+            'afterrender': function() {                
                 this.myStore.schedule.load();
             },
             scope: this

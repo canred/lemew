@@ -229,7 +229,7 @@ Ext.define('WS.CustWindow', {
             itemId: 'CustForm',
             paramOrder: ['pCustUuid'],
             //autoScroll: true,
-            overflowY : 'scroll',
+            overflowY: 'scroll',
             border: true,
             bodyPadding: 5,
             buttonAlign: 'center',
@@ -558,9 +558,9 @@ Ext.define('WS.CustWindow', {
                             emptyMsg: "無資料顯示"
                         })
                     }],
-                    listeners:{
-                       activate:function(item,eOpts){      
-                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                    listeners: {
+                        activate: function(item, eOpts) {
+                            item.up('window').down('#CustForm').scrollTo(0, 450, true)
                         }
                     }
                 }, {
@@ -651,9 +651,9 @@ Ext.define('WS.CustWindow', {
                             emptyMsg: "無資料顯示"
                         })
                     }],
-                    listeners:{
-                       activate:function(item,eOpts){      
-                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                    listeners: {
+                        activate: function(item, eOpts) {
+                            item.up('window').down('#CustForm').scrollTo(0, 450, true)
                         }
                     }
                 }, {
@@ -744,9 +744,9 @@ Ext.define('WS.CustWindow', {
                             emptyMsg: "無資料顯示"
                         })
                     }],
-                    listeners:{
-                       activate:function(item,eOpts){      
-                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                    listeners: {
+                        activate: function(item, eOpts) {
+                            item.up('window').down('#CustForm').scrollTo(0, 450, true)
                         }
                     }
                 }, {
@@ -837,9 +837,9 @@ Ext.define('WS.CustWindow', {
                             emptyMsg: "無資料顯示"
                         })
                     }],
-                    listeners:{
-                        activate:function(item,eOpts){      
-                            item.up('window').down('#CustForm').scrollTo( 0, 450, true )
+                    listeners: {
+                        activate: function(item, eOpts) {
+                            item.up('window').down('#CustForm').scrollTo(0, 450, true)
                         }
                     }
                 }]
@@ -862,7 +862,11 @@ Ext.define('WS.CustWindow', {
                                 title: '操作完成',
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
-                                buttons: Ext.Msg.OK
+                                buttons: Ext.Msg.OK,
+                                fn: function() {
+                                    this.close();
+                                },
+                                scope: this
                             });
                         },
                         failure: function(form, action) {

@@ -568,6 +568,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     }
                 }]
             }]
+
         }];
         this.callParent(arguments);
     },

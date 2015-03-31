@@ -11,15 +11,14 @@ namespace Limew
     {
         public Limew.Util.Session.Store ss = new Limew.Util.Session.Store();
         public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public BasePage()
-        {
+        public BasePage() {
             Load += BasePage_Load;
         }
-
+        
 
         protected void BasePage_Load(object sender, EventArgs e)
         {
-            if (Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD", StringComparison.Ordinal) >= 0)
+            if (Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD", StringComparison.Ordinal)>=0)
             {
                 //是否已經登入系統了
                 if (ss.getObject("USER") == null)
@@ -55,7 +54,7 @@ namespace Limew
             {
                 if (ss.getObject("USER") == null)
                 {
-                    string defaultPage = Parameter.Config.ParemterConfigs.GetConfig().DefaultPage;
+                    string defaultPage = Parameter.Config.ParemterConfigs.GetConfig().LogonPage;
                     Response.Redirect(Page.ResolveUrl(defaultPage));
                 }
             }
@@ -109,5 +108,5 @@ namespace Limew
             return ret;
         }
     }
-
+  
 }

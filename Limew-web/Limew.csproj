@@ -91,12 +91,15 @@
     <None Include="Configs\Parameter.config" />
     <Content Include="admin\basic\changeattendant.aspx" />
     <Content Include="admin\limew\CustOrderStatus.aspx" />
+    <Content Include="admin\limew\goodsRecord.aspx" />
+    <Content Include="admin\limew\money.aspx" />
     <Content Include="admin\limew\order.aspx" />
     <Content Include="admin\limew\cust.aspx" />
     <Content Include="admin\limew\gcategory.aspx" />
     <Content Include="admin\limew\goods.aspx" />
     <Content Include="admin\limew\payMethod.aspx" />
     <Content Include="admin\limew\payStatus.aspx" />
+    <Content Include="admin\limew\shippingManager.aspx" />
     <Content Include="admin\limew\shippingStatus.aspx" />
     <Content Include="admin\limew\supplier.aspx" />
     <Content Include="admin\limew\unit.aspx" />
@@ -9843,6 +9846,20 @@
     <Compile Include="admin\limew\CustOrderStatus.aspx.designer.cs">
       <DependentUpon>CustOrderStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\limew\goodsRecord.aspx.cs">
+      <DependentUpon>goodsRecord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\goodsRecord.aspx.designer.cs">
+      <DependentUpon>goodsRecord.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\money.aspx.cs">
+      <DependentUpon>money.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\money.aspx.designer.cs">
+      <DependentUpon>money.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\limew\order.aspx.cs">
       <DependentUpon>order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -9884,6 +9901,13 @@
     </Compile>
     <Compile Include="admin\limew\payStatus.aspx.designer.cs">
       <DependentUpon>payStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\shippingManager.aspx.cs">
+      <DependentUpon>shippingManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\shippingManager.aspx.designer.cs">
+      <DependentUpon>shippingManager.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\limew\shippingStatus.aspx.cs">
       <DependentUpon>shippingStatus.aspx</DependentUpon>
@@ -9975,6 +9999,7 @@
     <Compile Include="directAdmin\UtilAction.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="direct\MyOrderAction.cs" />
     <Compile Include="direct\ShippingStatusAction.cs" />
     <Compile Include="direct\PayMethodAction.cs" />
     <Compile Include="direct\PayStatusAction.cs" />
@@ -10022,6 +10047,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Gcategory.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Goods%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Goods.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrder%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrder.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayStatus%40.cs" />
@@ -10036,6 +10063,7 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\File_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Gcategory_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Goods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayMethod_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayStatus_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\ShippingStatus_Record.cs" />

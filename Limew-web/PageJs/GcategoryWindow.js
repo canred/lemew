@@ -94,7 +94,11 @@ Ext.define('WS.GcategoryWindow', {
                                 title: '商品類別',
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
-                                buttons: Ext.Msg.OK
+                                buttons: Ext.Msg.OK,
+                                fn:function(){
+                                    this.close();
+                                },
+                                scope:this
                             });
                         },
                         failure: function(form, action) {
@@ -113,7 +117,7 @@ Ext.define('WS.GcategoryWindow', {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                 text: '關閉',
                 handler: function() {
-                    this.up('window').hide();
+                    this.up('window').close();
                 }
             }]
         })]
@@ -147,7 +151,7 @@ Ext.define('WS.GcategoryWindow', {
                 this.down("#GCATEGORY_PARENT_UUID").setValue(this.param.gcategoryParentUuid);
             }
         },
-        'hide': function() {
+        'close': function() {
             Ext.getBody().unmask();
             this.closeEvent();
         }

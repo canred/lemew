@@ -113,7 +113,7 @@
        	        		cls:'btn6',
        	        		margin:'10 10 0 10',
        	        		handler:function(handler,scope){
-       	        			//your code
+                      window.location.href = './admin/limew/goodsRecord.aspx';
        	        		}
        	        	},{
        	        		xtype:'button',

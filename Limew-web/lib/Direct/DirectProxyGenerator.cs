@@ -19,7 +19,7 @@ namespace ExtDirect.Direct
             bool flag = false;
             foreach (var allAssembly in assembliesLoaded)
             {
-                /*只解析LKWebTemplate.DLL*/
+                /*只解析Limew.DLL*/
                 if (allAssembly.ManifestModule.Name.ToUpper() != "Limew.DLL".ToUpper())
                 {
                     continue;
@@ -125,7 +125,7 @@ namespace ExtDirect.Direct
             var assembliesLoaded = myDomain.GetAssemblies();
             foreach (var allAssembly in assembliesLoaded)
             {
-                /*只解析LKWebTemplate.DLL*/
+                /*只解析Limew.DLL*/
                 if (allAssembly.ManifestModule.Name.ToUpper() != "Limew.DLL".ToUpper())
                 {
                     continue;
@@ -181,7 +181,7 @@ namespace ExtDirect.Direct
 
             foreach (var allAssembly in assembliesLoaded)
             {
-                /*只解析LKWebTemplate.DLL*/
+                /*只解析Limew.DLL*/
                 if (allAssembly.ManifestModule.Name.ToUpper() != "Limew.DLL".ToUpper())
                 {
                     continue;

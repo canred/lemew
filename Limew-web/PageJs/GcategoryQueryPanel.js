@@ -45,7 +45,11 @@ Ext.define('WS.GcategoryQueryPanel', {
                 this.myStore.tree.load({
                     params: {
                         'pGcategoryParentUuid': data[0].GCATEGORY_UUID
-                    }
+                    },
+                    callback: function() {
+                        this.down('#trp').expandAll();
+                    },
+                    scope: this
                 });
             };
         }, obj);
@@ -89,7 +93,7 @@ Ext.define('WS.GcategoryQueryPanel', {
             return false;
         };
         this.param.gcategoryUuid = parentMenuUuid;
-        var subWin = Ext.create(this.subWinGcategoryWindow, {            
+        var subWin = Ext.create(this.subWinGcategoryWindow, {
             param: {
                 gcategoryUuid: undefined,
                 gcategoryParentUuid: parentMenuUuid
@@ -155,6 +159,7 @@ Ext.define('WS.GcategoryQueryPanel', {
                 }
             }, {
                 xtype: 'treepanel',
+                itemId: 'trp',
                 padding: 5,
                 border: true,
                 autoWidth: true,
