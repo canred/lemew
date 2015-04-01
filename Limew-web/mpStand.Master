@@ -70,6 +70,9 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
 
             //引入Limew Direct Provider
+
+            
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".LimewAttendantAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustOrderStatusAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".FileAction"));

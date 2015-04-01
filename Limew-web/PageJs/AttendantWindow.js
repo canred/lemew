@@ -180,24 +180,32 @@ Ext.define('WS.AttendantWindow', {
                     items: [{
                         xtype: 'image',
                         src: SYSTEM_URL_ROOT + '/css/images/unknowMan.png',
-                        itemId: 'imgUser',                        
+                        itemId: 'imgUser',
                         tag: "img",
                         height: 150,
-                        width: 150,
+                        autoWidth: true,
                         border: true
                     }, {
                         xtype: 'filefield',
                         text: '上傳',
-                        emptyText: 'Select an image',
-                        name:'filePictureUrl',
-                        width: 150,
-                        margin: '3 0 0 0'
+                        buttonOnly: true,
+                        name: 'filePictureUrl',
+                        width: 170,
+                        margin: '3 0 0 0',
+                        listeners: {
+                            change: function(e, t, eOpts) {
+                                var mainWin = this.up('window'),
+                                    btnSave = mainWin.down('#btnSave');
+                                btnSave.handler();
+                            }
+                        }
                     }]
                 }]
-            }, ],
+            }],
             buttons: [{
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
+                itemId: 'btnSave',
                 handler: function() {
                     var _main = this.up('window').down("#AttendantForm"),
                         form = _main.getForm();
@@ -209,6 +217,32 @@ Ext.define('WS.AttendantWindow', {
                         success: function(form, action) {
                             this.param.uuid = action.result.UUID;
                             this.down("#UUID").setValue(action.result.UUID);
+
+                            this.down("#AttendantForm").getForm().load({
+                                params: {
+                                    'pUuid': this.param.uuid
+                                },
+                                success: function(response, jsonObj) {
+                                    var imgSrc = "";
+                                    if (jsonObj.result.data.PICTURE_URL.length > 0) {
+                                        imgSrc = jsonObj.result.data.PICTURE_URL.replace('~', SYSTEM_URL_ROOT);
+                                    }
+                                    if (!Ext.isEmpty(imgSrc)) {
+                                        response.owner.down("#imgUser").setSrc(imgSrc);
+                                    };
+                                },
+                                failure: function(response, jsonObj) {
+                                    if (!jsonObj.result.success) {
+                                        Ext.MessageBox.show({
+                                            title: 'Warning',
+                                            icon: Ext.MessageBox.WARNING,
+                                            buttons: Ext.Msg.OK,
+                                            msg: jsonObj.result.message
+                                        });
+                                    };
+                                }
+                            });
+
                             Ext.MessageBox.show({
                                 title: '維護人員',
                                 msg: '操作完成',
@@ -253,9 +287,9 @@ Ext.define('WS.AttendantWindow', {
                         if (jsonObj.result.data.PICTURE_URL.length > 0) {
                             imgSrc = jsonObj.result.data.PICTURE_URL.replace('~', SYSTEM_URL_ROOT);
                         }
-                        if(!Ext.isEmpty(imgSrc)){
-                            response.owner.down("#imgUser").setSrc(imgSrc);    
-                        };                        
+                        if (!Ext.isEmpty(imgSrc)) {
+                            response.owner.down("#imgUser").setSrc(imgSrc);
+                        };
                     },
                     failure: function(response, jsonObj) {
                         if (!jsonObj.result.success) {

@@ -5184,6 +5184,8 @@ namespace Limew.lib.Controller.Design {
             
             private global::System.Data.DataColumn columncust_org_address;
             
+            private global::System.Data.DataColumn columncust_org_is_default;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public cust_orgDataTable() {
@@ -5291,6 +5293,14 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cust_org_is_defaultColumn {
+                get {
+                    return this.columncust_org_is_default;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5326,7 +5336,7 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public cust_orgRow Addcust_orgRow(string cust_org_uuid, custRow parentcustRowBycust_cust_org, string cust_org_sales_name, string cust_org_sales_phone, string cust_org_sales_email, string cust_org_ps, string cust_org_name, int cust_org_is_active, string cust_org_address) {
+            public cust_orgRow Addcust_orgRow(string cust_org_uuid, custRow parentcustRowBycust_cust_org, string cust_org_sales_name, string cust_org_sales_phone, string cust_org_sales_email, string cust_org_ps, string cust_org_name, int cust_org_is_active, string cust_org_address, int cust_org_is_default) {
                 cust_orgRow rowcust_orgRow = ((cust_orgRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_org_uuid,
@@ -5337,7 +5347,8 @@ namespace Limew.lib.Controller.Design {
                         cust_org_ps,
                         cust_org_name,
                         cust_org_is_active,
-                        cust_org_address};
+                        cust_org_address,
+                        cust_org_is_default};
                 if ((parentcustRowBycust_cust_org != null)) {
                     columnValuesArray[1] = parentcustRowBycust_cust_org[0];
                 }
@@ -5379,6 +5390,7 @@ namespace Limew.lib.Controller.Design {
                 this.columncust_org_name = base.Columns["cust_org_name"];
                 this.columncust_org_is_active = base.Columns["cust_org_is_active"];
                 this.columncust_org_address = base.Columns["cust_org_address"];
+                this.columncust_org_is_default = base.Columns["cust_org_is_default"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5402,6 +5414,8 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columncust_org_is_active);
                 this.columncust_org_address = new global::System.Data.DataColumn("cust_org_address", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncust_org_address);
+                this.columncust_org_is_default = new global::System.Data.DataColumn("cust_org_is_default", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncust_org_is_default);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_org_uuid}, true));
                 this.columncust_org_uuid.AllowDBNull = false;
@@ -13593,6 +13607,22 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int cust_org_is_default {
+                get {
+                    try {
+                        return ((int)(this[this.tablecust_org.cust_org_is_defaultColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cust_org_is_default\' in table \'cust_org\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablecust_org.cust_org_is_defaultColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public custRow custRow {
                 get {
                     return ((custRow)(this.GetParentRow(this.Table.ParentRelations["cust_cust_org"])));
@@ -13696,6 +13726,18 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setcust_org_addressNull() {
                 this[this.tablecust_org.cust_org_addressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscust_org_is_defaultNull() {
+                return this.IsNull(this.tablecust_org.cust_org_is_defaultColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcust_org_is_defaultNull() {
+                this[this.tablecust_org.cust_org_is_defaultColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

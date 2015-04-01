@@ -44,16 +44,31 @@
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AppPageAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AuthorityAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".AdminCompanyAction"));
-            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CompanyAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ErrorLogAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CompanyAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GroupHeadAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GroupAttendantAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MenuAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UserAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SyncClientAction"));
-            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ScheduleAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SiteMapAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ProxyAction"));
+
+            //引入Limew Direct Provider
+
+            
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".LimewAttendantAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustOrderStatusAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".FileAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GoodsAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GcategoryAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SupplierAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ShippingStatusAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ScheduleAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayMethodAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayStatusAction"));
+            Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UnitAction"));
             Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MyOrderAction"));
 
         });

@@ -402,6 +402,7 @@ public class CustAction : BaseAction
             record.PAY_STATUS_UUID = "pay_status_1";
             record.PAY_METHOD_UUID = "PM_INIT";
             record.SHIPPING_STATUS_UUID = "SS_INIT";
+            record.CUST_ORDER_HAS_TAX = 1;
             record.gotoTable().Insert_Empty2Null(record);
             System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
             otherParam.Add("CUST_ORDER_UUID", record.CUST_ORDER_UUID);

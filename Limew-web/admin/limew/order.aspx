@@ -4,7 +4,7 @@
 <script language="javascript" type="text/javascript">
     Ext.onReady(function () {
         WS_CUSTORDERQUERYPANEL = Ext.create('WS.CustOrderQueryPanel', {
-            subWinCustOrder: 'WS.CustOrderWindow'
+            subWinCustOrder: 'WS.CustOrderStep1Window'
         });
         WS_CUSTORDERQUERYPANEL.render('divMain');
         UTIL.runAll();

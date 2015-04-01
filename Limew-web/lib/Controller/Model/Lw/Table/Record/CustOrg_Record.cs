@@ -24,6 +24,7 @@ namespace Limew.Model.Lw.Table.Record
 		string _CUST_ORG_NAME=null;
 		int? _CUST_ORG_IS_ACTIVE=null;
 		string _CUST_ORG_ADDRESS=null;
+		int? _CUST_ORG_IS_DEFAULT=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORG_UUID",true,typeof(string))]
@@ -140,6 +141,19 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _CUST_ORG_ADDRESS;
+			}
+		}
+
+		[ColumnName("CUST_ORG_IS_DEFAULT",false,typeof(int?))]
+		public int? CUST_ORG_IS_DEFAULT
+		{
+			set
+			{
+				_CUST_ORG_IS_DEFAULT=value;
+			}
+			get
+			{
+				return _CUST_ORG_IS_DEFAULT;
 			}
 		}
 		public CustOrg_Record Clone(){
