@@ -4,7 +4,7 @@ Ext.define('WS.CustWindow', {
     title: '客戶維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/cust16x16.png',
     closeAction: 'destroy',
-    closable: false,
+    closable: false, modal: true,
     param: {
         custUuid: undefined
     },
@@ -28,8 +28,9 @@ Ext.define('WS.CustWindow', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pCustUuid', 'pKeyword','pShowIsDefault', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
+                    'pShowIsDefault':'0',
                     'pCustUuid': '',
                     'pKeyword': ''
                 },
@@ -497,11 +498,9 @@ Ext.define('WS.CustWindow', {
                                         });
                                         return false;
                                     };
-                                    var subWin = Ext.create(main.subWinCustOrder, {});
-                                    main.mask();
+                                    var subWin = Ext.create(main.subWinCustOrder, {});                                   
                                     subWin.on('closeEvent', function(obj) {
                                         main.down("#grdA").getStore().reload();
-                                        main.unmask();
                                     }, main);
                                     subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                                     subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
@@ -591,10 +590,8 @@ Ext.define('WS.CustWindow', {
                                         return false;
                                     };
                                     var subWin = Ext.create(main.subWinCustOrder, {});
-                                    main.mask();
                                     subWin.on('closeEvent', function(obj) {
                                         main.down("#grdB").getStore().reload();
-                                        main.unmask();
                                     }, main);
                                     subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                                     subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
@@ -684,10 +681,8 @@ Ext.define('WS.CustWindow', {
                                         return false;
                                     };
                                     var subWin = Ext.create(main.subWinCustOrder, {});
-                                    main.mask();
                                     subWin.on('closeEvent', function(obj) {
                                         main.down("#grdC").getStore().reload();
-                                        main.unmask();
                                     }, main);
                                     subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                                     subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
@@ -777,10 +772,8 @@ Ext.define('WS.CustWindow', {
                                         return false;
                                     };
                                     var subWin = Ext.create(main.subWinCustOrder, {});
-                                    main.mask();
                                     subWin.on('closeEvent', function(obj) {
                                         main.down("#grdD").getStore().reload();
-                                        main.unmask();
                                     }, main);
                                     subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                                     subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
@@ -920,7 +913,6 @@ Ext.define('WS.CustWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.custUuid != undefined) {
                 this.down("#CustForm").getForm().load({
                     params: {
@@ -959,7 +951,6 @@ Ext.define('WS.CustWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

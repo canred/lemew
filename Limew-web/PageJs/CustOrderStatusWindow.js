@@ -9,6 +9,7 @@ Ext.define('WS.CustOrderStatusWindow', {
         custOrderStatusUuid: undefined
     },
     height: 380,
+    modal: true,
     width: 550,
     layout: 'fit',
     resizable: false,
@@ -123,7 +124,6 @@ Ext.define('WS.CustOrderStatusWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.custOrderStatusUuid != undefined) {
                 this.down("#frmCustOrderStatus").getForm().load({
                     params: {
@@ -146,7 +146,6 @@ Ext.define('WS.CustOrderStatusWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

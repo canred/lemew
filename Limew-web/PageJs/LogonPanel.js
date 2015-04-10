@@ -49,7 +49,8 @@ Ext.define('WS.LogonPanel', {
                 name: 'company',
                 allowBlank: false,
                 tooltip: '*公司名稱',
-                value: this.val.company,
+                //value: this.val.company,
+                value:'limew',
                 itemId: 'txt_company',
                 blankText: '*請輸入您的公司代碼',
                 enableKeyEvents: true,
@@ -220,6 +221,19 @@ Ext.define('WS.LogonPanel', {
                                 buttons: Ext.Msg.OK
                             });
                             Ext.getBody().unmask();
+                        }
+                    });
+                }
+            }, {
+                xtype: 'button',
+                text: 'print',
+                handler: function(handler, scope) {
+                    WS.CustAction.pdfLimew("15031223373300495", function(obj, jsonObj) {
+                        if (jsonObj.result.success) {
+
+
+                            var downloadUrl = SYSTEM_URL_ROOT + '/upload/custOrder/' + jsonObj.result.file;
+                            window.open(downloadUrl);
                         }
                     });
                 }

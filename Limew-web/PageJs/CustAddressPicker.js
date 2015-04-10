@@ -4,6 +4,7 @@ Ext.define('WS.CustAddressPicker', {
     closeAction: 'destroy',
     width: 600,
     height: 400,
+    modal:true,
     resizable: false,
     draggable: false,
     param: {
@@ -104,10 +105,7 @@ Ext.define('WS.CustAddressPicker', {
         //this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {
-            if (this.param.parentObj != undefined) {
-                this.param.parentObj.mask();
-            };
+        'show': function() {            
             var proxy = this.myStore.vCustAddress.getProxy();
             proxy.setExtraParam("pCustUuid", this.param.custUuid);
             proxy.setExtraParam("pCustOrgUuid", this.param.custOrgUuid);
@@ -115,12 +113,6 @@ Ext.define('WS.CustAddressPicker', {
         },
         'afterrender': function() {
             /*畫面開啟後載入資料*/
-
-        },
-        'close': function() {
-            if (this.param.parentObj != undefined) {
-                this.param.parentObj.unmask();
-            };
 
         }
     }

@@ -4,7 +4,7 @@ Ext.define('WS.MyOrderWindow', {
     title: '訂貨維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/Record16x16.png',
     closeAction: 'destroy',
-    closable: false,
+    closable: false, modal: true,
     param: {
         myOrderUuid: undefined
     },
@@ -311,7 +311,6 @@ Ext.define('WS.MyOrderWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.myOrderUuid != undefined) {
                 //alert(this.param.myOrderUuid);
                 this.down("#MyOrderForm").getForm().load({
@@ -342,7 +341,6 @@ Ext.define('WS.MyOrderWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

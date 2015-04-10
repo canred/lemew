@@ -4,7 +4,7 @@ Ext.define('WS.GcategoryWindow', {
     icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',
     title: '商品類別維護',
     closable:false,
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     param: {
         gcategoryUuid: undefined,
         gcategoryParentUuid:undefined
@@ -128,7 +128,6 @@ Ext.define('WS.GcategoryWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.gcategoryUuid != undefined) {
                 this.down("#GcategoryForm").getForm().load({
                     params: {
@@ -152,7 +151,6 @@ Ext.define('WS.GcategoryWindow', {
             }
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

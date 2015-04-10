@@ -3,7 +3,7 @@ Ext.define('WS.CustOrderDetailWindow', {
     title: '訂單-商品',
     icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
     closeAction: 'destroy',
-    autoScroll: true,
+    autoScroll: true, modal: true,
     width: 800,
     height: 600,
     fnLoadFile: function() {
@@ -116,10 +116,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                     }
                 },
                 remoteSort: true,
-                listeners: {
-                    beforeload: function() {
-                        this.mask('資料準備中…');
-                    },
+                listeners: {                   
                     scope: this
                 },
                 sorters: [{
@@ -225,7 +222,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                 store: this.myStore.vgoods,
                 itemId: 'grdVGoodsQuery',
                 border: true,
-                height: 320,
+                height: 500,
                 padding: '5 15 5 5',
                 selModel: new Ext.selection.CheckboxModel({
                     mode: 'SINGLE',
@@ -465,6 +462,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                 layout: 'hbox',
                 padding: '5 0 0 0',
                 flex: 1,
+                height: 330,
                 defaults: {
                     labelAlign: 'right'
                 },
@@ -475,6 +473,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                     paramsAsHash: false,
                     margin: '5 0 0 105',
                     flex: 1,
+                    height: 330,
                     border: true,
                     autoScroll: true,
                     columns: [{
@@ -552,7 +551,7 @@ Ext.define('WS.CustOrderDetailWindow', {
                         align: 'left',
                         width: 140
                     }],
-                    height: 210,
+                   
                     bbar: Ext.create('Ext.toolbar.Paging', {
                         store: this.myStore.vFilegroup,
                         displayInfo: true,
@@ -662,12 +661,7 @@ Ext.define('WS.CustOrderDetailWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {
-        'beforeshow': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
-        },
+    listeners: {        
         'show': function() {
             this.down('#btnQuery').handler();
             if (this.param.custOrderUuid) {
@@ -702,9 +696,6 @@ Ext.define('WS.CustOrderDetailWindow', {
                             } else {
                                 this.down('#btnDelete').setDisabled(false);
                             };
-
-                            this.unmask();
-
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -735,12 +726,8 @@ Ext.define('WS.CustOrderDetailWindow', {
         'afterrender': function() {
             /*畫面開啟後載入資料*/
         },
-        'close': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
+        'close': function() {            
             this.myStore.vFilegroup.removeAll();
-
             this.closeEvent();
         }
     }

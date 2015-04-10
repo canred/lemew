@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limew.cloud
-{
-
-
-    public partial class joinUs
-    {
+namespace Limew.cloud {
+    
+    
+    public partial class joinUs {
     }
 }

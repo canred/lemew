@@ -57,8 +57,8 @@ Ext.onReady(function(){
 										labelAlign:'right',
 										flex:1,	
 										id:'txtServerWebUrl',
-										value:'http://127.0.0.1/LKWebTemplate3',									
-										emptyText:'http://127.0.0.1/LKWebTemplate3'
+										value:'http://127.0.0.1/Limew3',									
+										emptyText:'http://127.0.0.1/Limew3'
 									},{
 										xtype:'button',
 										text:'<img src="' + SYSTEM_URL_ROOT + '/css/images/connection.png" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"/>測試',

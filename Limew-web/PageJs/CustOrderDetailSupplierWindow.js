@@ -4,6 +4,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
     closeAction: 'destroy',
     autoScroll: true,
+    modal: true,
     width: 800,
     height: 600,
     fnLoadFile: function() {
@@ -163,10 +164,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
                 }
             },
             remoteSort: true,
-            listeners: {
-                beforeload: function() {
-                    //this.mask('資料準備中…');
-                },
+            listeners: {                
                 scope: this
             },
             sorters: [{
@@ -694,12 +692,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {
-        'beforeshow': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
-        },
+    listeners: {        
         'show': function() {
             this.down('#btnQuery').handler();
             if (this.param.custOrderUuid) {
@@ -734,8 +727,6 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
                                     } else {
                                         this.down('#btnDelete').setDisabled(false);
                                     };
-
-                                    this.unmask();
                                 },
                                 failure: function(response, jsonObj, b) {
                                     if (!jsonObj.result.success) {
@@ -768,11 +759,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
             /*畫面開啟後載入資料*/
         },
         'close': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
             this.myStore.vFilegroup.removeAll();
-
             this.closeEvent();
         }
     }

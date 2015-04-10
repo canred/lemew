@@ -4,7 +4,7 @@ Ext.define('WS.GcategoryPicker', {
     title:'挑選類別',
     icon: SYSTEM_URL_ROOT + '/css/images/menu16x16.png',
     width:600,
-    height:400,
+    height: 400, modal: true,
     autoScroll:true,
     /*語言擴展*/
     lan: {},
@@ -103,17 +103,9 @@ Ext.define('WS.GcategoryPicker', {
         this.callParent(arguments);
     },
     listeners: {
-        'show': function(obj, eOpts) {
-            if(this.param.parentObj){
-                this.param.parentObj.mask();
-            };
+        'show': function(obj, eOpts) {           
             this.fnQuery
 (obj);
-        },
-        'close':function(obj, eOpts) {
-            if(this.param.parentObj){
-                this.param.parentObj.unmask();
-            };
         }
     }
 });

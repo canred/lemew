@@ -312,7 +312,6 @@ Ext.define('WS.GoodsWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             this.myStore.supplier.load({
                 callback: function(obj, jsonObj) {
                     if (this.param.goodsUuid != undefined) {
@@ -341,7 +340,6 @@ Ext.define('WS.GoodsWindow', {
             })
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

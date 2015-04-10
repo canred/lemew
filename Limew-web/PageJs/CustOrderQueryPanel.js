@@ -309,7 +309,8 @@ Ext.define('WS.CustOrderQueryPanel', {
                             ['訂單', '1']
                         ]
                     }),
-                    editable: false
+                    editable: false,
+                    hidden:true
                 }, {
                     xtype: 'combo',
                     fieldLabel: '開單公司',
@@ -319,6 +320,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     labelAlign: 'right',
                     valueField: 'UUID',
                     editable: false,
+                    hidden:true,
                     store: this.myStore.company,
                     value: '',
                 }, {
@@ -343,6 +345,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     displayField: 'CUST_ORDER_STATUS_NAME',
                     valueField: 'CUST_ORDER_STATUS_UUID',
                     editable: false,
+                    hidden:true,
                     store: this.myStore.custOrderStatus,
                     value: '',
                     width: 160
@@ -352,7 +355,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     margin: '0 0 0 20',
                     itemId: 'txt_search',
                     labelWidth: 50,
-                    enableKeyEvents: true,
+                    enableKeyEvents: true, 
                     listeners: {
                         keyup: function(e, t, eOpts) {
                             var keyCode = t.keyCode;
@@ -401,6 +404,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                 xtype: 'container',
                 layout: 'hbox',
                 margin: '5 0 0 5',
+                hidden:true,
                 defaults: {
                     labelAlign: 'right'
                 },
@@ -459,6 +463,11 @@ Ext.define('WS.CustOrderQueryPanel', {
                     }],
                     sortable: false,
                     hideable: false
+                },{
+                    header:'建立日期',
+                    dataIndex:'CUST_ORDER_CR',
+                    align:'left',
+                    width:100
                 }, {
                     header: "訂單編號",
                     dataIndex: 'CUST_ORDER_ID',
@@ -473,7 +482,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     header: "公司電話",
                     align: 'left',
                     dataIndex: 'CUST_TEL',
-                    width: 80
+                    width: 120
                 }, {
                     header: '採購員',
                     dataIndex: 'CUST_SALES_NAME',
@@ -505,7 +514,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     hidden: true
                 }, {
                     header: '備註',
-                    dataIndex: 'CUST_PS',
+                    dataIndex: 'CUST_ORDER_PS',
                     align: 'left',
                     flex: 1
                 }, {

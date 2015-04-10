@@ -5,6 +5,7 @@ Ext.define('WS.CustOrderWindow', {
     closeAction: 'destroy',
     closable: false,
     storeCount: 1,
+    modal: true,
     param: {
 
         custOrderUuid: undefined,
@@ -579,478 +580,478 @@ Ext.define('WS.CustOrderWindow', {
                         width: 950
                     },
                     items: [{
-                        xtype: 'container',
-                        layout: 'hbox',
-                        margin: '5 0 5 0',
-                        items: [{
-                            xtype: 'radiogroup',
-                            width: 250,
-                            labelAlign: 'right',
-                            fieldLabel: '訂單類型',
-                            itemId: 'CUST_ORDER_TYPE',
+                            xtype: 'container',
                             layout: 'hbox',
-                            defaults: {
-                                margin: '0 10 0 0'
-                            },
-                            defaultType: 'radiofield',
+                            margin: '5 0 5 0',
                             items: [{
-                                xtype: 'radiofield',
-                                boxLabel: '報價',
-                                inputValue: '0',
-                                name: 'CUST_ORDER_TYPE',
-                                checked: true
+                                xtype: 'radiogroup',
+                                width: 250,
+                                labelAlign: 'right',
+                                fieldLabel: '訂單類型',
+                                itemId: 'CUST_ORDER_TYPE',
+                                layout: 'hbox',
+                                defaults: {
+                                    margin: '0 10 0 0'
+                                },
+                                defaultType: 'radiofield',
+                                items: [{
+                                    xtype: 'radiofield',
+                                    boxLabel: '報價',
+                                    inputValue: '0',
+                                    name: 'CUST_ORDER_TYPE',
+                                    checked: true
+                                }, {
+                                    xtype: 'radiofield',
+                                    boxLabel: '訂單',
+                                    inputValue: '1',
+                                    name: 'CUST_ORDER_TYPE'
+                                }]
                             }, {
-                                xtype: 'radiofield',
-                                boxLabel: '訂單',
-                                inputValue: '1',
-                                name: 'CUST_ORDER_TYPE'
+                                xtype: 'combo',
+                                fieldLabel: '製單人員',
+                                labelAlign: 'right',
+                                name: 'CUST_ORDER_REPORT_ATTENDANT_UUID',
+                                itemId: 'CUST_ORDER_REPORT_ATTENDANT_UUID',
+                                displayField: 'C_NAME',
+                                valueField: 'UUID',
+                                width: 300,
+                                labelWidth: 125,
+                                editable: false,
+                                hidden: false,
+                                store: this.myStore.attendant
+                            }, {
+                                xtype: 'datefield',
+                                fieldLabel: '製單日期',
+                                value: new Date(),
+                                format: 'Y/m/d',
+                                submitFormat: 'Y/m/d',
+                                width: 210,
+                                labelWidth: 90,
+                                name: 'CUST_ORDER_REPORT_DATE',
+                                itemId: 'CUST_ORDER_REPORT_DATE',
+                                labelAlign: 'right',
+                                renderer: function(value, r) {
+                                    return '1999/01/01';
+                                },
+                                render: function() {
+                                    return '1998/01/01'
+                                }
+                            }, {
+                                xtype: 'textfield',
+                                hidden: true,
+                                //fieldLabel:'fieldLabel',
+                                name: 'CUST_ORDER_IS_ACTIVE',
+                                itemId: 'CUST_ORDER_IS_ACTIVE',
+                                value: '0',
+                                flex: 1
+
+                            }, {
+                                xtype: 'container',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'end'
+                                },
+                                items: [{
+                                    xtype: 'button',
+                                    text: '報價',
+                                    icon: SYSTEM_URL_ROOT + '/css/custimages/print16x16.png',
+                                    width: 80,
+                                    arrowAlign: 'right',
+                                    itemId: 'btnMenuOrderPerview',
+                                    menu: []
+
+                                }, {
+                                    xtype: 'button',
+                                    text: '出貨',
+                                    icon: SYSTEM_URL_ROOT + '/css/custimages/print16x16.png',
+                                    width: 80,
+                                    margin: '0 0 0 10',
+                                    itemId: 'btnMenuOrder',
+                                    arrowAlign: 'right',
+                                    handler: function() {
+                                        var mainWin = this.up('window');
+                                        WS.CustAction.pdfShipping(mainWin.param.custOrderUuid, function(obj, jsonObj) {
+                                            if (jsonObj.result.success) {
+                                                var downloadUrl = SYSTEM_URL_ROOT + '/upload/shipping/' + jsonObj.result.file;
+                                                window.open(downloadUrl);
+                                            }
+                                        }, mainWin);
+                                    }
+                                }],
+                                flex: 2
                             }]
                         }, {
-                            xtype: 'combo',
-                            fieldLabel: '製單人員',
-                            labelAlign: 'right',
-                            name: 'CUST_ORDER_REPORT_ATTENDANT_UUID',
-                            itemId: 'CUST_ORDER_REPORT_ATTENDANT_UUID',
-                            displayField: 'C_NAME',
-                            valueField: 'UUID',
-                            width: 300,
-                            labelWidth: 125,
-                            editable: false,
-                            hidden: false,
-                            store: this.myStore.attendant
-                        }, {
-                            xtype: 'datefield',
-                            fieldLabel: '製單日期',
-                            value: new Date(),
-                            format: 'Y/m/d',
-                            submitFormat: 'Y/m/d',
-                            width: 210,
-                            labelWidth: 90,
-                            name: 'CUST_ORDER_REPORT_DATE',
-                            itemId: 'CUST_ORDER_REPORT_DATE',
-                            labelAlign: 'right',
-                            renderer: function(value, r) {
-                                return '1999/01/01';
-                            },
-                            render: function() {
-                                return '1998/01/01'
-                            }
-                        }, {
-                            xtype: 'textfield',
-                            hidden: true,
-                            //fieldLabel:'fieldLabel',
-                            name: 'CUST_ORDER_IS_ACTIVE',
-                            itemId: 'CUST_ORDER_IS_ACTIVE',
-                            value: '0',
-                            flex: 1
-
-                        }, {
                             xtype: 'container',
-                            layout: {
-                                type: 'hbox',
-                                pack: 'end'
-                            },
+                            layout: 'hbox',
                             items: [{
-                                xtype: 'button',
-                                text: '報價',
-                                icon: SYSTEM_URL_ROOT + '/css/custimages/print16x16.png',
-                                width: 80,
-                                arrowAlign: 'right',
-                                itemId: 'btnMenuOrderPerview',
-                                menu: []
-
+                                xtype: 'textfield',
+                                fieldLabel: '訂單編號',
+                                itemId: 'CUST_ORDER_ID',
+                                name: 'CUST_ORDER_ID',
+                                //                             anchor: '0 0',
+                                maxLength: 20,
+                                allowBlank: true,
+                                labelAlign: 'right',
+                                fieldStyle: 'background-color:#F2D49B'
                             }, {
-                                xtype: 'button',
-                                text: '出貨',
-                                icon: SYSTEM_URL_ROOT + '/css/custimages/print16x16.png',
-                                width: 80,
-                                margin: '0 0 0 10',
-                                itemId: 'btnMenuOrder',
-                                arrowAlign: 'right',
-                                handler: function() {
-                                    var mainWin = this.up('window');
-                                    WS.CustAction.pdfShipping(mainWin.param.custOrderUuid, function(obj, jsonObj) {
-                                        if (jsonObj.result.success) {
-                                            var downloadUrl = SYSTEM_URL_ROOT + '/upload/shipping/' + jsonObj.result.file;
-                                            window.open(downloadUrl);
-                                        }
-                                    }, mainWin);
-                                }
-                            }],
-                            flex: 2
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        items: [{
-                            xtype: 'textfield',
-                            fieldLabel: '訂單編號',
-                            itemId: 'CUST_ORDER_ID',
-                            name: 'CUST_ORDER_ID',
-                            //                             anchor: '0 0',
-                            maxLength: 20,
-                            allowBlank: true,
-                            labelAlign: 'right',
-                            fieldStyle: 'background-color:#F2D49B'
-                        }, {
-                            xtype: 'combo',
-                            fieldLabel: '開單公司',
-                            labelAlign: 'right',
-                            allowBlank: false,
-                            itemId: 'COMPANY_UUID',
-                            displayField: 'C_NAME',
-                            valueField: 'UUID',
-                            name: 'COMPANY_UUID',
-                            editable: false,
-                            hidden: false,
-                            store: this.myStore.company,
-                            listeners: {
-                                'select': function(combo, records, eOpts) {
+                                xtype: 'combo',
+                                fieldLabel: '開單公司',
+                                labelAlign: 'right',
+                                allowBlank: false,
+                                itemId: 'COMPANY_UUID',
+                                displayField: 'C_NAME',
+                                valueField: 'UUID',
+                                name: 'COMPANY_UUID',
+                                editable: false,
+                                hidden: false,
+                                store: this.myStore.company,
+                                listeners: {
+                                    'select': function(combo, records, eOpts) {
 
-                                }
-                            }
-                        }, {
-                            xtype: 'combo',
-                            fieldLabel: '訂單狀態',
-                            labelAlign: 'right',
-                            labelWidth: 90,
-                            width: 210,
-                            itemId: 'CUST_ORDER_STATUS_UUID',
-                            displayField: 'CUST_ORDER_STATUS_NAME',
-                            valueField: 'CUST_ORDER_STATUS_UUID',
-                            name: 'CUST_ORDER_STATUS_UUID',
-                            editable: false,
-                            hidden: false,
-                            store: this.myStore.custOrderStatus,
-                            allowBlank: false,
-                            listeners: {
-                                'change': function(combo, records, eOpts) {
-                                    var mainWin = combo.up('window'),
-                                        payStatus = mainWin.down('#PAY_STATUS_UUID'),
-                                        payMethod = mainWin.down('#PAY_METHOD_UUID'),
-                                        shippingStatus = mainWin.down('#SHIPPING_STATUS_UUID'),
-                                        custOrderType = mainWin.down('#CUST_ORDER_TYPE');
-
-                                    if (combo.getValue() == 'COS_INIT') {
-                                        payStatus.setValue('pay_status_1');
-                                        payMethod.setValue('PM_INIT');
-                                        shippingStatus.setValue('SS_INIT');
-                                        payStatus.setReadOnly(true);
-                                        payMethod.setReadOnly(true);
-                                        shippingStatus.setReadOnly(true);
-
-                                    } else {
-                                        payStatus.setReadOnly(false);
-                                        payMethod.setReadOnly(false);
-                                        shippingStatus.setReadOnly(false);
-
-                                        custOrderType.setValue({
-                                            CUST_ORDER_TYPE: '1'
-                                        });
                                     }
                                 }
-                            }
-                        }, {
-                            xtype: 'combo',
-                            fieldLabel: '付款狀態',
-                            width: 190,
-                            labelAlign: 'right',
-                            itemId: 'PAY_STATUS_UUID',
-                            displayField: 'PAY_STATUS_NAME',
-                            valueField: 'PAY_STATUS_UUID',
-                            name: 'PAY_STATUS_UUID',
-                            editable: false,
-                            hidden: false,
-                            store: this.myStore.payStatus,
-                            readOnly: true,
-                            allowBlank: false,
-                            listeners: {
-                                'select': function(combo, records, eOpts) {
+                            }, {
+                                xtype: 'combo',
+                                fieldLabel: '訂單狀態',
+                                labelAlign: 'right',
+                                labelWidth: 90,
+                                width: 210,
+                                itemId: 'CUST_ORDER_STATUS_UUID',
+                                displayField: 'CUST_ORDER_STATUS_NAME',
+                                valueField: 'CUST_ORDER_STATUS_UUID',
+                                name: 'CUST_ORDER_STATUS_UUID',
+                                editable: false,
+                                hidden: false,
+                                store: this.myStore.custOrderStatus,
+                                allowBlank: false,
+                                listeners: {
+                                    'change': function(combo, records, eOpts) {
+                                        var mainWin = combo.up('window'),
+                                            payStatus = mainWin.down('#PAY_STATUS_UUID'),
+                                            payMethod = mainWin.down('#PAY_METHOD_UUID'),
+                                            shippingStatus = mainWin.down('#SHIPPING_STATUS_UUID'),
+                                            custOrderType = mainWin.down('#CUST_ORDER_TYPE');
 
+                                        if (combo.getValue() == 'COS_INIT') {
+                                            payStatus.setValue('pay_status_1');
+                                            payMethod.setValue('PM_INIT');
+                                            shippingStatus.setValue('SS_INIT');
+                                            payStatus.setReadOnly(true);
+                                            payMethod.setReadOnly(true);
+                                            shippingStatus.setReadOnly(true);
+
+                                        } else {
+                                            payStatus.setReadOnly(false);
+                                            payMethod.setReadOnly(false);
+                                            shippingStatus.setReadOnly(false);
+
+                                            custOrderType.setValue({
+                                                CUST_ORDER_TYPE: '1'
+                                            });
+                                        }
+                                    }
                                 }
-                            }
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        margin: '5 0 5 0',
-                        items: [{
+                            }, {
+                                xtype: 'combo',
+                                fieldLabel: '付款狀態',
+                                width: 190,
+                                labelAlign: 'right',
+                                itemId: 'PAY_STATUS_UUID',
+                                displayField: 'PAY_STATUS_NAME',
+                                valueField: 'PAY_STATUS_UUID',
+                                name: 'PAY_STATUS_UUID',
+                                editable: false,
+                                hidden: false,
+                                store: this.myStore.payStatus,
+                                readOnly: true,
+                                allowBlank: false,
+                                listeners: {
+                                    'select': function(combo, records, eOpts) {
+
+                                    }
+                                }
+                            }]
+                        }, {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            margin: '5 0 5 0',
+                            items: [{
+                                xtype: 'container',
+                                layout: 'hbox',
+                                items: [{
+                                    xtype: 'combo',
+                                    fieldLabel: '客戶',
+                                    labelAlign: 'right',
+                                    displayField: 'CUST_NAME',
+                                    valueField: 'CUST_UUID',
+                                    name: 'CUST_UUID',
+                                    itemId: 'CUST_UUID',
+                                    width: 255,
+                                    editable: false,
+                                    hidden: false,
+                                    store: this.myStore.cust,
+                                    allowBlank: false,
+                                    listeners: {
+                                        'change': function(self) {
+                                            var mainWin = this.up('window'),
+                                                store = mainWin.myStore.custOrg,
+                                                proxy = store.getProxy();
+                                            proxy.setExtraParam('pCustUuid', this.getValue());
+                                            store.loadPage(1);
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    text: '',
+                                    width: 20,
+                                    handler: function(handler, scope) {
+                                        //your code
+                                    }
+                                }]
+                            }, {
+                                xtype: 'container',
+                                layout: 'hbox',
+                                items: [{
+                                    xtype: 'combo',
+                                    width: 255,
+                                    fieldLabel: '採購人員',
+                                    displayField: 'CUST_ORG_SALES_NAME',
+                                    valueField: 'CUST_ORG_UUID',
+                                    name: 'CUST_ORG_UUID',
+                                    itemId: 'CUST_ORG_UUID',
+                                    editable: false,
+                                    hidden: false,
+                                    store: this.myStore.custOrg,
+                                    allowBlank: false,
+                                    labelAlign: 'right',
+                                    tpl: Ext.create('Ext.XTemplate',
+                                        '<tpl for=".">',
+                                        '<div class="x-boundlist-item" style="dispaly:inline-block;line-height:40px">',
+                                        '<div style="dispaly:table">',
+                                        '<div style="display:table-row">',
+                                        '<div style="display: table-cell">{CUST_ORG_NAME}</div>',
+                                        '<div style="display: table-cell;padding-left:5px;">/ {CUST_ORG_SALES_NAME} </div>',
+                                        '<div style="display: table-cell;padding-left:5px;">/ {CUST_ORG_SALES_PHONE} </div>',
+                                        '</div>',
+                                        '</div>',
+                                        '</div>',
+                                        '</tpl>'),
+                                    listeners: {
+                                        change: function(obj, newValue, oldValue, eOpts) {
+                                            var mainWin = obj.up('window'),
+                                                record = mainWin.myStore.custOrg.findRecord('CUST_ORG_UUID', newValue),
+                                                custOrderDept = mainWin.down('#CUST_ORDER_DEPT'),
+                                                custOrderUserName = mainWin.down('#CUST_ORDER_USER_NAME'),
+                                                custOrderUserPhone = mainWin.down('#CUST_ORDER_USER_PHONE');
+                                            if (custOrderDept.getValue() == "" && record) {
+                                                custOrderDept.setValue(record.data.CUST_ORG_NAME)
+                                            };
+                                            if (custOrderUserName.getValue() == "" && record) {
+                                                custOrderUserName.setValue(record.data.CUST_ORG_SALES_NAME)
+                                            };
+                                            if (custOrderUserPhone.getValue() == "" && record) {
+                                                custOrderUserPhone.setValue(record.data.CUST_ORG_SALES_PHONE)
+                                            };
+                                        }
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    text: '',
+                                    width: 20,
+                                    handler: function(handler, scope) {
+                                        //your code
+                                    }
+                                }]
+                            }, {
+                                xtype: 'tbfill'
+                            }, {
+                                xtype: 'combo',
+                                fieldLabel: '付款方式',
+                                labelAlign: 'right',
+                                width: 190,
+                                itemId: 'PAY_METHOD_UUID',
+                                displayField: 'PAY_METHOD_NAME',
+                                valueField: 'PAY_METHOD_UUID',
+                                name: 'PAY_METHOD_UUID',
+                                editable: false,
+                                hidden: false,
+                                readOnly: true,
+                                store: this.myStore.payMethod,
+                                allowBlank: false,
+                                listeners: {
+                                    'select': function(combo, records, eOpts) {
+
+                                    }
+                                }
+                            }]
+                        }, {
                             xtype: 'container',
                             layout: 'hbox',
                             items: [{
                                 xtype: 'combo',
-                                fieldLabel: '客戶',
+                                fieldLabel: '出貨狀態',
                                 labelAlign: 'right',
-                                displayField: 'CUST_NAME',
-                                valueField: 'CUST_UUID',
-                                name: 'CUST_UUID',
-                                itemId: 'CUST_UUID',
-                                width:255,
+                                width: 275,
+                                labelWidth: 100,
+                                itemId: 'SHIPPING_STATUS_UUID',
+                                displayField: 'SHIPPING_STATUS_NAME',
+                                valueField: 'SHIPPING_STATUS_UUID',
+                                name: 'SHIPPING_STATUS_UUID',
+                                //                             //labelWidth: 90,
                                 editable: false,
                                 hidden: false,
-                                store: this.myStore.cust,
                                 allowBlank: false,
+                                store: this.myStore.shippingStatus,
+                                readOnly: true,
                                 listeners: {
-                                    'change': function(self) {
-                                        var mainWin = this.up('window'),
-                                            store = mainWin.myStore.custOrg,
-                                            proxy = store.getProxy();
-                                        proxy.setExtraParam('pCustUuid', this.getValue());
-                                        store.loadPage(1);
+                                    'select': function(combo, records, eOpts) {
+
                                     }
                                 }
                             }, {
+                                xtype: 'datefield',
+                                fieldLabel: '出貨日期',
+                                //value: new Date(),
+                                format: 'Y/m/d',
+                                submitFormat: 'Y/m/d',
+                                labelAlign: 'right',
+                                width: 275,
+                                name: 'CUST_ORDER_SHIPPING_DATE',
+                                itemId: 'CUST_ORDER_SHIPPING_DATE'
+
+                            }, {
+                                xtype: 'textfield',
+                                fieldLabel: '出貨單號',
+                                name: 'CUST_ORDER_SHIPPING_NUMBER',
+                                itemId: 'CUST_ORDER_SHIPPING_NUMBER',
+                                labelAlign: 'right',
+                                labelWidth: 90,
+
+                                emptyText: '自動產生',
+                                readOnly: true,
+                                flex: 1
+                            }]
+                        }, {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            padding: '5 0 0 0',
+                            items: [{
+                                xtype: 'textfield',
+                                fieldLabel: '出貨地址',
+                                labelAlign: 'right',
+                                flex: 1,
+                                labelWidth: 100,
+                                itemId: 'SHIPPING_ADDRESS',
+                                name: 'SHIPPING_ADDRESS',
+                                //                             hidden: false
+                            }, {
                                 xtype: 'button',
-                                text: '',
-                                width: 20,
+                                text: '選擇',
+                                margin: '0 0 0 5',
                                 handler: function(handler, scope) {
-                                    //your code
+                                    var mainWin = this.up('window');
+                                    var subWin = Ext.create('WS.CustAddressPicker', {
+                                        param: {
+                                            custUuid: mainWin.down("#CUST_UUID").getValue(),
+                                            custOrgUuid: mainWin.down("#CUST_ORG_UUID").getValue(),
+                                            parentObj: mainWin
+                                        }
+                                    });
+                                    subWin.on('closeEvent', function(obj, jsonObj) {
+                                        obj.param.parentObj.down('#SHIPPING_ADDRESS').setValue(jsonObj);
+                                        //obj.close();
+                                    });
+                                    subWin.show();
                                 }
                             }]
                         }, {
-                            xtype : 'container',
-                            layout : 'hbox',
-                            items : [{
-                            xtype: 'combo',
-                            width:255,
-                            fieldLabel: '採購人員',
-                            displayField: 'CUST_ORG_SALES_NAME',
-                            valueField: 'CUST_ORG_UUID',
-                            name: 'CUST_ORG_UUID',
-                            itemId: 'CUST_ORG_UUID',
-                            editable: false,
-                            hidden: false,
-                            store: this.myStore.custOrg,
-                            allowBlank: false,
-                            labelAlign: 'right',
-                            tpl: Ext.create('Ext.XTemplate',
-                                '<tpl for=".">',
-                                '<div class="x-boundlist-item" style="dispaly:inline-block;line-height:40px">',
-                                '<div style="dispaly:table">',
-                                '<div style="display:table-row">',
-                                '<div style="display: table-cell">{CUST_ORG_NAME}</div>',
-                                '<div style="display: table-cell;padding-left:5px;">/ {CUST_ORG_SALES_NAME} </div>',
-                                '<div style="display: table-cell;padding-left:5px;">/ {CUST_ORG_SALES_PHONE} </div>',
-                                '</div>',
-                                '</div>',
-                                '</div>',
-                                '</tpl>'),
-                            listeners: {
-                                change: function(obj, newValue, oldValue, eOpts) {
-                                    var mainWin = obj.up('window'),
-                                        record = mainWin.myStore.custOrg.findRecord('CUST_ORG_UUID', newValue),
-                                        custOrderDept = mainWin.down('#CUST_ORDER_DEPT'),
-                                        custOrderUserName = mainWin.down('#CUST_ORDER_USER_NAME'),
-                                        custOrderUserPhone = mainWin.down('#CUST_ORDER_USER_PHONE');
-                                    if (custOrderDept.getValue() == "" && record) {
-                                        custOrderDept.setValue(record.data.CUST_ORG_NAME)
-                                    };
-                                    if (custOrderUserName.getValue() == "" && record) {
-                                        custOrderUserName.setValue(record.data.CUST_ORG_SALES_NAME)
-                                    };
-                                    if (custOrderUserPhone.getValue() == "" && record) {
-                                        custOrderUserPhone.setValue(record.data.CUST_ORG_SALES_PHONE)
-                                    };
-                                }
-                            }
-                        },{
-                            xtype:'button',
-                            text:'',
-                            width:20,
-                            handler:function(handler,scope){
-                                //your code
-                            }
-                        }]
-                        }, {
-                            xtype: 'tbfill'
-                        }, {
-                            xtype: 'combo',
-                            fieldLabel: '付款方式',
-                            labelAlign: 'right',
-                            width: 190,
-                            itemId: 'PAY_METHOD_UUID',
-                            displayField: 'PAY_METHOD_NAME',
-                            valueField: 'PAY_METHOD_UUID',
-                            name: 'PAY_METHOD_UUID',
-                            editable: false,
-                            hidden: false,
-                            readOnly: true,
-                            store: this.myStore.payMethod,
-                            allowBlank: false,
-                            listeners: {
-                                'select': function(combo, records, eOpts) {
-
-                                }
-                            }
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        items: [{
-                            xtype: 'combo',
-                            fieldLabel: '出貨狀態',
-                            labelAlign: 'right',
-                            width: 275,
-                            labelWidth: 100,
-                            itemId: 'SHIPPING_STATUS_UUID',
-                            displayField: 'SHIPPING_STATUS_NAME',
-                            valueField: 'SHIPPING_STATUS_UUID',
-                            name: 'SHIPPING_STATUS_UUID',
-                            //                             //labelWidth: 90,
-                            editable: false,
-                            hidden: false,
-                            allowBlank: false,
-                            store: this.myStore.shippingStatus,
-                            readOnly: true,
-                            listeners: {
-                                'select': function(combo, records, eOpts) {
-
-                                }
-                            }
-                        }, {
-                            xtype: 'datefield',
-                            fieldLabel: '出貨日期',
-                            //value: new Date(),
-                            format: 'Y/m/d',
-                            submitFormat: 'Y/m/d',
-                            labelAlign: 'right',
-                            width: 275,
-                            name: 'CUST_ORDER_SHIPPING_DATE',
-                            itemId: 'CUST_ORDER_SHIPPING_DATE'
-
-                        }, {
-                            xtype: 'textfield',
-                            fieldLabel: '出貨單號',
-                            name: 'CUST_ORDER_SHIPPING_NUMBER',
-                            itemId: 'CUST_ORDER_SHIPPING_NUMBER',
-                            labelAlign: 'right',
-                            labelWidth: 90,
-
-                            emptyText: '自動產生',
-                            readOnly: true,
-                            flex: 1
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        padding: '5 0 0 0',
-                        items: [{
-                            xtype: 'textfield',
-                            fieldLabel: '出貨地址',
-                            labelAlign: 'right',
-                            flex: 1,
-                            labelWidth: 100,
-                            itemId: 'SHIPPING_ADDRESS',
-                            name: 'SHIPPING_ADDRESS',
-                            //                             hidden: false
-                        }, {
-                            xtype: 'button',
-                            text: '選擇',
-                            margin: '0 0 0 5',
-                            handler: function(handler, scope) {
-                                var mainWin = this.up('window');
-                                var subWin = Ext.create('WS.CustAddressPicker', {
-                                    param: {
-                                        custUuid: mainWin.down("#CUST_UUID").getValue(),
-                                        custOrgUuid: mainWin.down("#CUST_ORG_UUID").getValue(),
-                                        parentObj: mainWin
-                                    }
-                                });
-                                subWin.on('closeEvent', function(obj, jsonObj) {
-                                    obj.param.parentObj.down('#SHIPPING_ADDRESS').setValue(jsonObj);
-                                    //obj.close();
-                                });
-                                subWin.show();
-                            }
-                        }]
-                    }, {
-                        xtype: 'fieldset',
-                        title: '採購人員資訊',
-                        border: true,
-                        collapsible: true,
-                        collapsed: true,
-                        margin: '0 0 5 45',
-                        width: 905,
-                        items: [{
-                            xtype: 'container',
-                            layout: 'vbox',
+                            xtype: 'fieldset',
+                            title: '採購人員資訊',
+                            border: true,
+                            collapsible: true,
+                            collapsed: true,
+                            margin: '0 0 5 45',
+                            width: 905,
                             items: [{
                                 xtype: 'container',
-                                layout: 'hbox',
-                                defaults: {
-                                    labelWidth: 60
-                                },
+                                layout: 'vbox',
                                 items: [{
-                                    xtype: 'textfield',
-                                    fieldLabel: '單位',
-                                    name: 'CUST_ORDER_DEPT',
-                                    itemId: 'CUST_ORDER_DEPT',
-                                    fieldStyle: 'background-color: #B2D0EA; ',
-                                    flex: 1,
-                                    readOnly: true,
-                                    labelAlign: 'right'
-                                }, {
                                     xtype: 'container',
-                                    layout: 'vbox',
-                                    flex: 1,
+                                    layout: 'hbox',
                                     defaults: {
                                         labelWidth: 60
                                     },
                                     items: [{
                                         xtype: 'textfield',
-                                        fieldLabel: '名稱',
-                                        name: 'CUST_ORDER_USER_NAME',
-                                        itemId: 'CUST_ORDER_USER_NAME',
+                                        fieldLabel: '單位',
+                                        name: 'CUST_ORDER_DEPT',
+                                        itemId: 'CUST_ORDER_DEPT',
                                         fieldStyle: 'background-color: #B2D0EA; ',
                                         flex: 1,
                                         readOnly: true,
                                         labelAlign: 'right'
                                     }, {
-                                        xtype: 'textfield',
-                                        fieldLabel: '列印名稱',
-                                        name: 'CUST_ORDER_PRINT_USER_NAME',
+                                        xtype: 'container',
+                                        layout: 'vbox',
                                         flex: 1,
+                                        defaults: {
+                                            labelWidth: 60
+                                        },
+                                        items: [{
+                                            xtype: 'textfield',
+                                            fieldLabel: '名稱',
+                                            name: 'CUST_ORDER_USER_NAME',
+                                            itemId: 'CUST_ORDER_USER_NAME',
+                                            fieldStyle: 'background-color: #B2D0EA; ',
+                                            flex: 1,
+                                            readOnly: true,
+                                            labelAlign: 'right'
+                                        }, {
+                                            xtype: 'textfield',
+                                            fieldLabel: '列印名稱',
+                                            name: 'CUST_ORDER_PRINT_USER_NAME',
+                                            flex: 1,
+                                            labelAlign: 'right'
+                                        }]
+
+                                    }, {
+                                        xtype: 'textfield',
+                                        fieldLabel: '電話',
+                                        fieldStyle: 'background-color: #B2D0EA; ',
+                                        name: 'CUST_ORDER_USER_PHONE',
+                                        itemId: 'CUST_ORDER_USER_PHONE',
+                                        flex: 1,
+                                        readOnly: true,
                                         labelAlign: 'right'
                                     }]
-
-                                }, {
-                                    xtype: 'textfield',
-                                    fieldLabel: '電話',
-                                    fieldStyle: 'background-color: #B2D0EA; ',
-                                    name: 'CUST_ORDER_USER_PHONE',
-                                    itemId: 'CUST_ORDER_USER_PHONE',
-                                    flex: 1,
-                                    readOnly: true,
-                                    labelAlign: 'right'
                                 }]
                             }]
-                        }]
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        items: [{
-                            xtype: 'checkbox',
-                            fieldLabel: '訂單含稅',
-                            name: 'CUST_ORDER_HAS_TAX',
-                            checked: true,
-                            inputValue: '1',
-                            flex: 1,
-                            labelAlign: 'right'
-                        }]
-                    }
-                    // , {
-                    //     xtype: 'container',
-                    //     layout: 'hbox',
-                    //     margin: '5 0 5 0',
-                    //     items: [{
-                    //         xtype: 'textfield',
-                    //         name: 'CUST_ORDER_INVOICE_NUMBER',
-                    //         fieldLabel: '發票號碼',
-                    //         flex: 1,
-                    //         labelAlign: 'right',
-                    //         fieldStyle: 'background-color:#F2D49B'
-                    //     }]
-                    // }
+                        }, {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            items: [{
+                                xtype: 'checkbox',
+                                fieldLabel: '訂單含稅',
+                                name: 'CUST_ORDER_HAS_TAX',
+                                checked: true,
+                                inputValue: '1',
+                                flex: 1,
+                                labelAlign: 'right'
+                            }]
+                        }
+                        // , {
+                        //     xtype: 'container',
+                        //     layout: 'hbox',
+                        //     margin: '5 0 5 0',
+                        //     items: [{
+                        //         xtype: 'textfield',
+                        //         name: 'CUST_ORDER_INVOICE_NUMBER',
+                        //         fieldLabel: '發票號碼',
+                        //         flex: 1,
+                        //         labelAlign: 'right',
+                        //         fieldStyle: 'background-color:#F2D49B'
+                        //     }]
+                        // }
 
                     ]
                 }, {
@@ -1085,7 +1086,56 @@ Ext.define('WS.CustOrderWindow', {
                     title: '訂單項目明細',
                     store: this.myStore.vCustOrderDetail,
                     itemId: 'grdVCustOrderDetail',
-                    //                     autoScroll: true,
+                    //plugins: [this.rowEditing],
+                    plugins: [
+                        Ext.create('Ext.grid.plugin.RowEditing', {
+                            clicksToMoveEditor: 1,
+                            autoCancel: true,
+                            listeners: {
+                                edit: function(editor, e) {
+                                    // var mainPanel = editor.grid.up('panel');
+                                    // var store = mainPanel.down('#grdMyOrderQuery').getStore();
+                                    // Ext.each(store.getModifiedRecords(), function(item) {
+                                    //     var my_order_uuid = item.data.MY_ORDER_UUID;
+                                    //     var my_order_date = item.data.MY_ORDER_DATE;
+                                    //     var my_order_supplier_name = item.data.MY_ORDER_SUPPLIER_NAME;
+                                    //     var my_order_supplier_tel = item.data.MY_ORDER_SUPPLIER_TEL;
+                                    //     var my_order_supplier_man = item.data.MY_ORDER_SUPPLIER_MAN;
+                                    //     var my_order_goods_name = item.data.MY_ORDER_GOODS_NAME;
+                                    //     var my_order_goods_count = item.data.MY_ORDER_GOODS_COUNT;
+                                    //     var my_order_price = item.data.MY_ORDER_PRICE;
+                                    //     var my_order_total_price = item.data.MY_ORDER_TOTAL_PRICE;
+                                    //     var my_order_ps = item.data.MY_ORDER_PS;
+                                    //     var my_order_is_finish = item.data.MY_ORDER_IS_FINISH;
+                                    //     var my_order_pay_method = item.data.MY_ORDER_PAY_METHOD;
+                                    //     var my_order_is_active = item.data.MY_ORDER_IS_ACTIVE;
+                                    //     var my_order_attendant_uuid = item.data.MY_ORDER_ATTENDANT_UUID;
+
+                                    //     WS.MyOrderAction.quickEdit(
+                                    //         my_order_uuid,
+                                    //         my_order_date,
+                                    //         my_order_supplier_name,
+                                    //         my_order_supplier_tel,
+                                    //         my_order_supplier_man,
+                                    //         my_order_goods_name,
+                                    //         my_order_goods_count,
+                                    //         my_order_price,
+                                    //         my_order_total_price,
+                                    //         my_order_ps,
+                                    //         my_order_is_finish,
+                                    //         my_order_pay_method,
+                                    //         my_order_is_active,
+                                    //         my_order_attendant_uuid,
+                                    //         function(obj, jsonObj) {
+
+                                    //         }
+                                    //     );
+                                    // });
+                                    // mainPanel.up('panel').myStore.myOrder.reload();
+                                }
+                            }
+                        })
+                    ],
                     columns: [{
                         xtype: 'actioncolumn',
                         dataIndex: 'UUID',
@@ -1177,10 +1227,20 @@ Ext.define('WS.CustOrderWindow', {
                         align: 'center',
                         width: 50
                     }, {
+                        xtype: 'textbox',
                         text: "商品",
                         dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
                         align: 'left',
-                        flex: 2
+                        flex: 2,
+                        ,
+                        editor: {
+                            xtype: 'textfield',                           
+                            listeners: {
+                                render: function(obj, eOpts) {
+                                    //return new Date();
+                                }
+                            }
+                        }
                     }, {
                         text: "單價",
                         dataIndex: 'CUST_ORDER_DETAIL_PRICE',
@@ -1499,8 +1559,6 @@ Ext.define('WS.CustOrderWindow', {
                     if (a.result.data.CUST_ORDER_LIMIT_DATE != '' && a.result.data.CUST_ORDER_LIMIT_DATE != undefined) {
                         //this.down("#CUST_ORDER_LIMIT_DATE").setValue(new Date(a.result.data.CUST_ORDER_LIMIT_DATE));
                     };
-                    this.unmask();
-
                 },
                 failure: function(response, jsonObj, b) {
                     if (!jsonObj.result.success) {
@@ -1521,18 +1579,11 @@ Ext.define('WS.CustOrderWindow', {
             WS.UserAction.getUserInfo(function(obj, jsonObj) {
                 this.down("#CUST_ORDER_REPORT_ATTENDANT_UUID").setValue(jsonObj.result.UUID);
             }, mainObj);
-
             mainObj.down("#CUST_ORDER_REPORT_DATE").setValue(new Date());
-
-            //mainObj.down("#CustOrderForm").getForm().reset();            
         };
-        //mainObj.unmask();
     },
     listeners: {
         'show': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
             this.mask('資訊載入中…請稍後…');
             //1 2 
             this.fnCompany(this);
@@ -1545,9 +1596,6 @@ Ext.define('WS.CustOrderWindow', {
             this.fnAttendant(this);
         },
         'close': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
             this.closeEvent();
         }
     }

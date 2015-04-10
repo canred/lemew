@@ -1655,6 +1655,21 @@ namespace Limew.Model.Basic
                                 .FetchAll<ErrorLog_Record>();
             return result;
         }
+
+        public void setAllErrorLog_IsRead()
+        {
+            try
+            {
+            dbc = LK.Config.DataBase.Factory.getInfo();
+            Limew.Model.Basic.Table.ErrorLog table = new Limew.Model.Basic.Table.ErrorLog(dbc);
+            table.SetUpdate(new SQLUpdate(table).Set(table.IS_READ, "Y").Where(new SQLCondition(table).Equal(table.IS_READ, "N"))).ExecuteUpdate();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         #endregion
 
         #endregion

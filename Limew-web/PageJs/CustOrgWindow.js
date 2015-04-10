@@ -3,7 +3,7 @@ Ext.define('WS.CustOrgWindow', {
     title: '單位採購人員維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/custOrg16x16.png',
     closeAction: 'destroy',
-    closable: false,
+    closable: false, modal: true,
     param: {
         custOrgUuid: undefined,
         custUuid: undefined
@@ -196,14 +196,7 @@ Ext.define('WS.CustOrgWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {
-
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
-
-
-
+        'show': function () {
             if (this.param.custOrgUuid != undefined) {
 
                 this.down("#CustOrgForm").getForm().load({
@@ -233,10 +226,7 @@ Ext.define('WS.CustOrgWindow', {
 
             this.down('#CUST_UUID').setValue(this.param.custUuid);
         },
-        'close': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
+        'close': function() {            
             this.closeEvent();
         }
     }

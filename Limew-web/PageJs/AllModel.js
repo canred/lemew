@@ -1,4 +1,4 @@
-/*BASIC*/
+/*BASIC*/ 
 Ext.define('COMPANY', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
@@ -454,7 +454,29 @@ Ext.define('V_CUST_ORDER', {
     fields: [
         'COMPANY_UUID',
         'CUST_ORDER_UUID',
-        'CUST_ORDER_CR',
+        //'CUST_ORDER_CR',
+        {
+            name: 'CUST_ORDER_CR',
+            convert: function(v) {
+                if (typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+                    if (v.split(' ').length > 1) {
+                        return v.split(' ')[0];
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
         'CUST_ORDER_ID',
         'CUST_ORDER_TOTAL_PRICE',
         'CUST_ORDER_STATUS_UUID',

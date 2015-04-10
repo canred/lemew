@@ -3,7 +3,7 @@ Ext.define('WS.FileWindow', {
     title: '檔案備註',
     icon: SYSTEM_URL_ROOT + '/css/custimages/box16x16.png',
     closeAction: 'destroy',
-    closable: false,
+    closable: false, modal: true,
     param: {
         fileUuid: undefined,
         parentObj: undefined
@@ -40,7 +40,7 @@ Ext.define('WS.FileWindow', {
                         name: 'FILE_NAME',
                         padding: 5,
                         anchor: '0 0',
-                        maxLength: 12,
+                        maxLength: 50,
                         allowBlank: false,
                         labelAlign: 'right',
                         readOnly:true
@@ -166,19 +166,9 @@ Ext.define('WS.FileWindow', {
                 this.down("#FileForm").getForm().reset();
 
             };
-
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
         },
         'close': function() {
-
-
             this.closeEvent();
-
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
         }
     }
 });

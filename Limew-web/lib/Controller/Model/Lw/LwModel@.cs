@@ -11,6 +11,25 @@ namespace Limew.Model.Lw
 {
 	public partial class LwModel
 	{
+        public IList<CustOrg_Record> getCustOrg_By_CustUuid_CustOrgIsDefault(string pCustUuid,string pCustOrgIsDefatul)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.CustOrg custorg = new Limew.Model.Lw.Table.CustOrg(dbc);
+                return custorg.Where(new SQLCondition(custorg).Equal(custorg.CUST_UUID, pCustUuid)
+                    .And()
+                    .Equal(custorg.CUST_ORG_IS_DEFAULT, pCustOrgIsDefatul)
+                    ).FetchAll<CustOrg_Record>();
+                
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
         public int getCustOrderDetail_By_CustOrderUuid_Count(string pCustOrderUuid)
         {
             try
@@ -497,7 +516,7 @@ namespace Limew.Model.Lw
         }
 
 
-        public int getCustOrg_By_Keyword_Count(string pCustUuid,string pKeyword)
+        public int getCustOrg_By_Keyword_Count(string pCustUuid, string pKeyword, string pShowIsDefault)
         {
             try
             {
@@ -505,6 +524,8 @@ namespace Limew.Model.Lw
                 CustOrg table = new CustOrg(dbc);
                 return table.Where(new SQLCondition(table)
                     .Equal(table.CUST_UUID,pCustUuid)
+                    .And()
+                    .Equal(table.CUST_ORG_IS_DEFAULT, pShowIsDefault)
                     .And()
                     .L()
                     .iBLike(table.CUST_ORG_NAME, pKeyword)
@@ -527,8 +548,7 @@ namespace Limew.Model.Lw
             }
         }
 
-
-        public IList<CustOrg_Record> getCustOrg_By_Keyword(string pCustUuid, string pKeyword, OrderLimit orderlimit)
+        public int getCustOrg_By_Keyword_Count(string pCustUuid, string pKeyword)
         {
             try
             {
@@ -536,6 +556,38 @@ namespace Limew.Model.Lw
                 CustOrg table = new CustOrg(dbc);
                 return table.Where(new SQLCondition(table)
                     .Equal(table.CUST_UUID, pCustUuid)
+                    .And()
+                    
+                    .L()
+                    .iBLike(table.CUST_ORG_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_PS, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword)
+                    .R()
+                    )
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+        public IList<CustOrg_Record> getCustOrg_By_Keyword(string pCustUuid, string pKeyword, string pShowIsDefault, OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrg table = new CustOrg(dbc);
+                return table.Where(new SQLCondition(table)
+                    .Equal(table.CUST_UUID, pCustUuid)
+                    .And()
+                    .Equal(table.CUST_ORG_IS_DEFAULT, pShowIsDefault)
                     .And()
                     .L()
                     .iBLike(table.CUST_ORG_NAME, pKeyword)
@@ -558,7 +610,37 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
-
+        public IList<CustOrg_Record> getCustOrg_By_Keyword(string pCustUuid, string pKeyword, OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrg table = new CustOrg(dbc);
+                return table.Where(new SQLCondition(table)
+                    .Equal(table.CUST_UUID, pCustUuid)
+                    .And()
+                   
+                    .L()
+                    .iBLike(table.CUST_ORG_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_PS, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_NAME, pKeyword)
+                    .Or()
+                    .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword)
+                    .R()
+                    )
+                    .Limit(orderlimit)
+                    .FetchAll<CustOrg_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public int getVCustOrder_By_CustOrderStatus_CustUuid_Keyword_Count(string pCustOrderStatus,string pCustUuid,string pKeyword)
         {
             try

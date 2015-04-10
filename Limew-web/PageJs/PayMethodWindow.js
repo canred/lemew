@@ -4,7 +4,7 @@ Ext.define('WS.PayMethodWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/payMethod16x16.png',
     title: '付款方式維護',
     closable: false,
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     param: {
         payMethodUuid: undefined
     },
@@ -104,7 +104,6 @@ Ext.define('WS.PayMethodWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.payMethodUuid != undefined) {
                 this.down("#frmPayMethod").getForm().load({
                     params: {
@@ -127,7 +126,6 @@ Ext.define('WS.PayMethodWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

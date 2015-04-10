@@ -3,6 +3,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
     title: '訂單-客製化商品',
     icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
     closeAction: 'destroy',
+    modal: true,
     autoScroll: true,
     width: 800,
     height: 600,
@@ -26,7 +27,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
             extend: 'Ext.data.Store',
             autoLoad: false,
             model: 'V_FILEGROUP',
-            pageSize: 5,
+            pageSize: 99999,
             remoteSort: true,
             proxy: {
                 type: 'direct',
@@ -66,7 +67,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
         })
     },
     resizable: false,
-    draggable: false,
+    draggable: true,
     fnActiveRender: function(value, id, r) {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
@@ -154,7 +155,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     fieldLabel: '商品名稱',
                     name: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     itemId: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                    allowBlank: false,
+                    allowBlank: true,
                     flex:1
                 }]
             },{
@@ -198,7 +199,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     fieldLabel: '單價',
                     name: 'CUST_ORDER_DETAIL_PRICE',
                     itemId: 'CUST_ORDER_DETAIL_PRICE',
-                    minValue: 1,
+                    minValue: 0,
                     allowBlank: false,
                     listeners: {
                         change: this.fnCal
@@ -373,13 +374,14 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                         align: 'left',
                         width: 140
                     }],
-                    height: 210,
-                    bbar: Ext.create('Ext.toolbar.Paging', {
-                        store: this.myStore.vFilegroup,
-                        displayInfo: true,
-                        displayMsg: '第{0}~{1}資料/共{2}筆',
-                        emptyMsg: "無資料顯示"
-                    })
+                    height: 310
+                    // ,
+                    // bbar: Ext.create('Ext.toolbar.Paging', {
+                    //     store: this.myStore.vFilegroup,
+                    //     displayInfo: true,
+                    //     displayMsg: '第{0}~{1}資料/共{2}筆',
+                    //     emptyMsg: "無資料顯示"
+                    // })
                 }]
             }, {
                 xtype: 'container',
@@ -495,12 +497,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {
-        'beforeshow': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
-        },
+    listeners: {        
         'show': function() {
 
             if (this.param.custOrderUuid) {
@@ -533,7 +530,6 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                             } else {
                                 this.down('#btnDelete').setDisabled(false);
                             };
-                            this.unmask();
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -563,12 +559,8 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
         'afterrender': function() {
             /*畫面開啟後載入資料*/
         },
-        'close': function() {
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
+        'close': function() {           
             this.myStore.vFilegroup.removeAll();
-
             this.closeEvent();
         }
     }

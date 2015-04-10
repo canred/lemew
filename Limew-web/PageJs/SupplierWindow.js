@@ -3,7 +3,7 @@ Ext.define('WS.SupplierWindow', {
     extend: 'Ext.window.Window',
     title: '廠商維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/supplier16x16.png',
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     closable: false,
     param: {
         supplierUuid: undefined
@@ -384,7 +384,6 @@ Ext.define('WS.SupplierWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.supplierUuid != undefined) {
                 this.down("#SupplierForm").getForm().load({
                     params: {
@@ -414,7 +413,6 @@ Ext.define('WS.SupplierWindow', {
 
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

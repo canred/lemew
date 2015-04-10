@@ -4,7 +4,7 @@ Ext.define('WS.PayStatusWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/money16x16.png',
     title: '付款狀態維護',
     closable: false,
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     param: {
         payStatusUuid: undefined
     },
@@ -104,7 +104,6 @@ Ext.define('WS.PayStatusWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.payStatusUuid != undefined) {
                 this.down("#frmPayStatus").getForm().load({
                     params: {
@@ -127,7 +126,6 @@ Ext.define('WS.PayStatusWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

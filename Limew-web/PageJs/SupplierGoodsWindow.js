@@ -2,7 +2,7 @@ Ext.define('WS.SupplierGoodsWindow', {
     extend: 'Ext.window.Window',
     title: '供應商-商品維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/box16x16.png',
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     closable: false,
     param: {
         supplierGoodsUuid: undefined,
@@ -290,8 +290,6 @@ Ext.define('WS.SupplierGoodsWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
-
             this.myStore.unit.load({
                 callback: function(obj, jsonObj) {
                     this.myStore.supplier.load({
@@ -323,19 +321,9 @@ Ext.define('WS.SupplierGoodsWindow', {
                 },
                 scope: this
             });
-
-            if (this.param.parentObj) {
-                this.param.parentObj.mask();
-            };
         },
         'close': function() {
-
-
             this.closeEvent();
-
-            if (this.param.parentObj) {
-                this.param.parentObj.unmask();
-            };
         }
     }
 });

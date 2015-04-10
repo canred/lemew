@@ -4,7 +4,7 @@ Ext.define('WS.UnitWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/unit16x16.png',
     title: '單位維護',
     closable: false,
-    closeAction: 'destroy',
+    closeAction: 'destroy', modal: true,
     param: {
         unitUuid: undefined
     },
@@ -117,7 +117,6 @@ Ext.define('WS.UnitWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.unitUuid != undefined) {
                 this.down("#UnitForm").getForm().load({
                     params: {
@@ -140,7 +139,6 @@ Ext.define('WS.UnitWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

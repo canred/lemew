@@ -3,7 +3,7 @@ Ext.define('WS.ShippingStatusWindow', {
     extend: 'Ext.window.Window',
     icon: SYSTEM_URL_ROOT + '/css/custimages/shippingStatus16x16.png',
     title: '出貨狀態維護',
-    closable: false,
+    closable: false, modal: true,
     closeAction: 'destroy',
     param: {
         shippingStatusUuid: undefined
@@ -104,7 +104,6 @@ Ext.define('WS.ShippingStatusWindow', {
     },
     listeners: {
         'show': function() {
-            Ext.getBody().mask();
             if (this.param.shippingStatusUuid != undefined) {
                 this.down("#frmShippingStatus").getForm().load({
                     params: {
@@ -127,7 +126,6 @@ Ext.define('WS.ShippingStatusWindow', {
             };
         },
         'close': function() {
-            Ext.getBody().unmask();
             this.closeEvent();
         }
     }

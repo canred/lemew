@@ -5,7 +5,7 @@
     Ext.onReady(function () {
         WS_CHANGEATTENDANTWINDOW = Ext.create('WS.ChangeAttendantWindow', {
             param: {
-                successDirectToUrl: '<%= Page.ResolveUrl(LKWebTemplate.Parameter.Config.ParemterConfigs.GetConfig().DefaultPage)%>'
+                successDirectToUrl: '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().DefaultPage)%>'
         	}
         });
         WS_CHANGEATTENDANTWINDOW.show();
