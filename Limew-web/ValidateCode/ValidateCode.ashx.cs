@@ -5,11 +5,11 @@ using System.Web;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Imaging;
-using System.Web.SessionState;
+using System.Web.SessionState;  
 
 namespace DJSI.handler
 {
-    public class ValidateCode : IHttpHandler, IRequiresSessionState
+    public class ValidateCode : IHttpHandler,IRequiresSessionState
     {
         public void ProcessRequest(HttpContext context)
         {
@@ -18,26 +18,26 @@ namespace DJSI.handler
 
         private string GenerateCheckCode(HttpContext context)
         {
-            int number;
-            char code;
-            string checkCode = String.Empty;
-            System.Random random = new Random();
-            for (int i = 0; i < 5; i++)
-            {
-                number = random.Next();
-                if (number % 2 == 0)
-                    code = (char)('0' + (char)(number % 10));
-                else
-                    code = (char)('A' + (char)(number % 26));
-                checkCode += code.ToString();
-            }
-            //儲存在cookie
-            //context.Response.Cookies.Add(new HttpCookie("CheckCode", checkCode));
-            //儲存在session
-            Limew.StoreSession ss = new Limew.StoreSession();
+	        int number;
+	        char code;
+	        string checkCode = String.Empty;
+	        System.Random random = new Random();
+	        for (int i = 0; i < 5; i++)
+	        {
+		        number = random.Next();
+		        if (number % 2 == 0)
+		            code = (char)('0' + (char)(number % 10));
+		        else
+		            code = (char)('A' + (char)(number % 26));
+		        checkCode += code.ToString();
+	        }
+	        //儲存在cookie
+	         //context.Response.Cookies.Add(new HttpCookie("CheckCode", checkCode));
+	        //儲存在session
+            Limew.StoreSession ss = new Limew.StoreSession();            
             ss.setObject("CheckCode", checkCode);
             //context.Session["CheckCode"] = checkCode;
-            return checkCode;
+	        return checkCode;
         }
         private void CreateCheckCodeImage(string checkCode, HttpContext context)
         {
@@ -62,7 +62,7 @@ namespace DJSI.handler
                     int y2 = random.Next(image.Height);
                     g.DrawLine(new Pen(Color.Silver), x1, y1, x2, y2);
                 }
-
+                
                 Font font = new System.Drawing.Font("Arial", 12, (System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic));
                 System.Drawing.Drawing2D.LinearGradientBrush
                 brush = new System.Drawing.Drawing2D.
@@ -81,8 +81,8 @@ namespace DJSI.handler
                 g.DrawRectangle(new Pen(Color.Black),
                 0, 0, image.Width - 1, image.Height - 1);
 
-
-
+                
+                
 
 
                 System.IO.MemoryStream ms = new System.IO.MemoryStream();

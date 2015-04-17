@@ -1,24 +1,56 @@
 /*全局變量*/
 var WS_MYORDERQUERYPANEL;
-/*WS.SupplierQueryPanel物件類別*/
-/*TODO*/
-/*
-1.Model 要集中                                 [YES]
-2.panel 的title要換成icon , title的方式        [YES]
-3.add 的icon要換成icon , title的方式           [YES]
-4.自動Query 資料                               [YES]
-*/
-/*columns 使用default*/
 Ext.define('WS.MyOrderQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
     subWinMyOrder: undefined,
-    /*語言擴展*/
     lan: {},
-    /*值擴展*/
     val: {},
-    /*物件會用到的Store物件*/
     myStore: {
+        supplier: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'SUPPLIER',
+            remoteSort: true,
+            pageSize: 99999,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.SupplierAction.loadSupplier
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    'pKeyword': ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            listeners: {
+                load: function(store, records, sucessful, eOpts) {
+                    store.insert(0, {
+                        'SUPPLIER_UUID': '',
+                        'SUPPLIER_NAME': '全部'
+                    });
+                }
+            },
+            sorters: [{
+                property: 'SUPPLIER_NAME',
+                direction: 'ASC'
+            }]
+        }),
         myOrder: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
@@ -33,9 +65,11 @@ Ext.define('WS.MyOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pSupplierUuid', 'pIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    'pKeyword': '',
+                    'pSupplierUuid': '',
+                    'pIsActive': '1'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -51,7 +85,7 @@ Ext.define('WS.MyOrderQueryPanel', {
             },
             remoteSort: true,
             sorters: [{
-                property: 'MY_ORDER_DATE',
+                property: 'MY_ORDER_CR',
                 direction: 'DESC'
             }]
         })
@@ -61,7 +95,6 @@ Ext.define('WS.MyOrderQueryPanel', {
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     fnCheckSubWindowns: function() {
-
         if (Ext.isEmpty(this.subWinMyOrder)) {
             Ext.MessageBox.show({
                 title: '系統提示',
@@ -73,53 +106,6 @@ Ext.define('WS.MyOrderQueryPanel', {
         };
         return true;
     },
-    rowEditing: Ext.create('Ext.grid.plugin.RowEditing', {
-        clicksToMoveEditor: 1,
-        autoCancel: true,
-        listeners: {
-            edit: function(editor, e) {
-                var mainPanel = editor.grid.up('panel');
-                var store = mainPanel.down('#grdMyOrderQuery').getStore();
-                Ext.each(store.getModifiedRecords(), function(item) {
-                    var my_order_uuid = item.data.MY_ORDER_UUID;
-                    var my_order_date = item.data.MY_ORDER_DATE;
-                    var my_order_supplier_name = item.data.MY_ORDER_SUPPLIER_NAME;
-                    var my_order_supplier_tel = item.data.MY_ORDER_SUPPLIER_TEL;
-                    var my_order_supplier_man = item.data.MY_ORDER_SUPPLIER_MAN;
-                    var my_order_goods_name = item.data.MY_ORDER_GOODS_NAME;
-                    var my_order_goods_count = item.data.MY_ORDER_GOODS_COUNT;
-                    var my_order_price = item.data.MY_ORDER_PRICE;
-                    var my_order_total_price = item.data.MY_ORDER_TOTAL_PRICE;
-                    var my_order_ps = item.data.MY_ORDER_PS;
-                    var my_order_is_finish = item.data.MY_ORDER_IS_FINISH;
-                    var my_order_pay_method = item.data.MY_ORDER_PAY_METHOD;
-                    var my_order_is_active = item.data.MY_ORDER_IS_ACTIVE;
-                    var my_order_attendant_uuid = item.data.MY_ORDER_ATTENDANT_UUID;
-
-                    WS.MyOrderAction.quickEdit(
-                        my_order_uuid,
-                        my_order_date,
-                        my_order_supplier_name,
-                        my_order_supplier_tel,
-                        my_order_supplier_man,
-                        my_order_goods_name,
-                        my_order_goods_count,
-                        my_order_price,
-                        my_order_total_price,
-                        my_order_ps,
-                        my_order_is_finish,
-                        my_order_pay_method,
-                        my_order_is_active,
-                        my_order_attendant_uuid,
-                        function(obj, jsonObj) {
-
-                        }
-                    );
-                });
-                mainPanel.up('panel').myStore.myOrder.reload();
-            }
-        }
-    }),
     initComponent: function() {
         if (!this.fnCheckSubWindowns()) {
             return false;
@@ -138,10 +124,22 @@ Ext.define('WS.MyOrderQueryPanel', {
                 layout: 'hbox',
                 margin: '5 0 0 5',
                 items: [{
+                    xtype: 'combo',
+                    fieldLabel: '供應商名稱',
+                    labelWidth: 70,
+                    itemId: 'cmbSupplier',
+                    displayField: 'SUPPLIER_NAME',
+                    valueField: 'SUPPLIER_UUID',
+                    editable: false,
+                    hidden: false,
+                    value: '',
+                    store: this.myStore.supplier
+                }, {
                     xtype: 'textfield',
                     fieldLabel: '關鍵字',
                     itemId: 'txt_search',
                     labelWidth: 50,
+                    margin: '0 0 0 10',
                     enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
@@ -162,8 +160,9 @@ Ext.define('WS.MyOrderQueryPanel', {
                         var store = this.up('panel').down("#grdMyOrderQuery").getStore(),
                             doSomeghing = function(obj, pl) {
                                 obj.getProxy().setExtraParam('pKeyword', pl.down("#txt_search").getValue());
+                                obj.getProxy().setExtraParam('pSupplierUuid', pl.down("#cmbSupplier").getValue());
                                 obj.loadPage(1);
-                            }(store, this.up('panel'));
+                            }(store, this.up('panel').up('panel'));
                     }
                 }, {
                     xtype: 'button',
@@ -180,7 +179,6 @@ Ext.define('WS.MyOrderQueryPanel', {
             }, {
                 xtype: 'gridpanel',
                 store: this.myStore.myOrder,
-                plugins: [this.rowEditing],
                 itemId: 'grdMyOrderQuery',
                 border: true,
                 height: $(document).height() - 240,
@@ -192,18 +190,6 @@ Ext.define('WS.MyOrderQueryPanel', {
                     align: 'center',
                     width: 60,
                     items: [{
-                        tooltip: '*覆製',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/clone16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-
-                            WS.MyOrderAction.cloneMyOrder(grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID, function(obj, jsonObj) {
-                                if (jsonObj.result.success) {
-                                    main.myStore.myOrder.reload();
-                                }
-                            }, main);
-                        }
-                    }, {
                         tooltip: '*編輯',
                         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                         handler: function(grid, rowIndex, colIndex) {
@@ -218,12 +204,14 @@ Ext.define('WS.MyOrderQueryPanel', {
                                 return false;
                             };
                             var subWin = Ext.create(main.subWinMyOrder, {
-                                subWinMyOrderOrder: 'WS.MyOrderWindow'
+                                subWinMyOrderOrder: 'WS.MyOrderWindow',
+                                param: {
+                                    myOrderUuid: grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID
+                                }
                             });
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdMyOrderQuery").getStore().load();
                             }, main);
-                            subWin.param.myOrderUuid = grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID;
                             subWin.show();
                         }
                     }, {
@@ -240,29 +228,17 @@ Ext.define('WS.MyOrderQueryPanel', {
                                     }, this);
                                 }
                             }, main);
-
-
                         }
-                    }, ],
+                    }],
                     sortable: false,
                     hideable: false
                 }, {
                     header: "訂貨日期",
-                    dataIndex: 'MY_ORDER_DATE',
+                    dataIndex: 'MY_ORDER_CR',
                     align: 'left',
                     width: 120,
                     renderer: function(value, r) {
                         return value.split(' ')[0];
-                    },
-                    editor: {
-                        xtype: 'datefield',
-                        format: 'Y/m/d',
-                        allowBlank: false,
-                        listeners: {
-                            render: function(obj, eOpts) {
-                                //return new Date();
-                            }
-                        }
                     }
                 }, {
                     header: "供應商名稱",
@@ -284,60 +260,18 @@ Ext.define('WS.MyOrderQueryPanel', {
                     }
                 }, {
                     header: "人員",
-                    dataIndex: 'MY_ORDER_SUPPLIER_MAN',
+                    dataIndex: 'MY_ORDER_CONTACT_NAME',
                     align: 'left',
                     flex: 1,
                     editor: {
                         xtype: 'textfield',
                         allowBlank: false
                     }
-                }, {
-                    header: '貨品名稱',
-                    dataIndex: 'MY_ORDER_GOODS_NAME',
-                    align: 'left',
-                    width: 150,
-                    editor: {
-                        xtype: 'textfield',
-                        allowBlank: false
-                    }
-                }, {
-                    header: '數量',
-                    dataIndex: 'MY_ORDER_GOODS_COUNT',
-                    align: 'right',
-                    width: 80,
-                    editor: {
-                        xtype: 'numberfield',
-                        allowBlank: false
-                    }
-                }, {
-                    header: '單價',
-                    dataIndex: 'MY_ORDER_PRICE',
-                    align: 'right',
-                    width: 80,
-                    editor: {
-                        xtype: 'numberfield',
-                        allowBlank: false
-                    }
-                }, {
-                    header: '總價',
-                    dataIndex: 'MY_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    width: 100
-                }, {
-                    header: '完成',
-                    dataIndex: 'MY_ORDER_IS_FINISH',
-                    align: 'center',
-                    widht: 40,
-                    renderer: this.fnActiveRender
                 }, {
                     header: '備住',
                     dataIndex: 'MY_ORDER_PS',
-                    align: 'center',
-                    flex: 1,
-                    editor: {
-                        xtype: 'textfield',
-                        allowBlank: true
-                    }
+                    align: 'right',
+                    width: 100
                 }],
                 tbarCfg: {
                     buttonAlign: 'right'
@@ -353,7 +287,6 @@ Ext.define('WS.MyOrderQueryPanel', {
                     text: '新增',
                     handler: function() {
                         var main = this.up('panel').up('panel').up('panel');
-
                         if (!main.fnCheckSubWindowns()) {
                             Ext.MessageBox.show({
                                 title: '系統訊息',
@@ -381,6 +314,7 @@ Ext.define('WS.MyOrderQueryPanel', {
     },
     listeners: {
         afterrender: function(obj, eOpts) {
+            this.myStore.supplier.load();
             this.myStore.myOrder.load({
                 scope: this
             });

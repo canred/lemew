@@ -6,20 +6,22 @@
     <div id="systemInfo" style="margin-bottom:5px;margin-top:5px;"></div>
 </div>
 <script type="text/javascript">
-Ext.onReady(function() {
-    WS_LOGONPANEL = Ext.create('WS.LogonPanel',{
-        val:{
-            company:'<%= getCompany() %>',
-            account:'<%= getAccount() %>',
-            password:'<%= getPassword() %>'
+    Ext.onReady(function () {
+        WS_LOGONPANEL = Ext.create('WS.LogonPanel', {
+            val: {
+                company: '<%= getCompany() %>',
+            account: '<%= getAccount() %>',
+            password: '<%= getPassword() %>'
         }
-    });      
+    });
     WS_LOGONPANEL.urlSuccess = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().DefaultPage)%>';
     WS_LOGONPANEL.urlFail = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().NoPermissionPage)%>';
     WS_LOGONPANEL.down('#ExtLogonForm').title = '<img src="' + SYSTEM_ROOT_PATH + '/css/custimages/login.gif" style="height:16px;margin-bottom:4px;margin-right:10px;" align="middle"><%= Limew.Parameter.Config.ParemterConfigs.GetConfig().SystemName%>';
-    WS_LOGONPANEL.render('logon');    
-});
+    WS_LOGONPANEL.render('logon');
+    });
 </script>
+<!--Echart Demo-->
+
 <table width="100%">
     <tr>
         <td width="30%"></td>
@@ -28,5 +30,6 @@ Ext.onReady(function() {
         </td>
         <td width="30%"></td>
     </tr>
-</table>                       
+</table>   
+
 </asp:Content>

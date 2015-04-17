@@ -3,10 +3,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script language="javascript" type="text/javascript">
     Ext.onReady(function () {
-        WS_CUSTORDERQUERYPANEL = Ext.create('WS.CustOrderQueryPanel', {
-            subWinCustOrder: 'WS.CustOrderWindow'
+        WS_CUSTORDERSHIPPINGQUERYPANEL = Ext.create('WS.CustOrderShippingQueryPanel', {
+            subWinCustOrder: 'WS.CustOrderStep1ViewWindow'
         });
-        WS_CUSTORDERQUERYPANEL.render('divMain');
+        WS_CUSTORDERSHIPPINGQUERYPANEL.render('divMain');
         UTIL.runAll();
     });
 </script>			

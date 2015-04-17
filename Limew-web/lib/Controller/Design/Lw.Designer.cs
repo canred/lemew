@@ -68,7 +68,13 @@ namespace Limew.lib.Controller.Design {
         
         private cust_order_idDataTable tablecust_order_id;
         
+        private shipping_idDataTable tableshipping_id;
+        
         private my_orderDataTable tablemy_order;
+        
+        private my_order_detailDataTable tablemy_order_detail;
+        
+        private v_my_order_detailDataTable tablev_my_order_detail;
         
         private global::System.Data.DataRelation relationgcategory_goods;
         
@@ -192,8 +198,17 @@ namespace Limew.lib.Controller.Design {
                 if ((ds.Tables["cust_order_id"] != null)) {
                     base.Tables.Add(new cust_order_idDataTable(ds.Tables["cust_order_id"]));
                 }
+                if ((ds.Tables["shipping_id"] != null)) {
+                    base.Tables.Add(new shipping_idDataTable(ds.Tables["shipping_id"]));
+                }
                 if ((ds.Tables["my_order"] != null)) {
                     base.Tables.Add(new my_orderDataTable(ds.Tables["my_order"]));
+                }
+                if ((ds.Tables["my_order_detail"] != null)) {
+                    base.Tables.Add(new my_order_detailDataTable(ds.Tables["my_order_detail"]));
+                }
+                if ((ds.Tables["v_my_order_detail"] != null)) {
+                    base.Tables.Add(new v_my_order_detailDataTable(ds.Tables["v_my_order_detail"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -437,9 +452,39 @@ namespace Limew.lib.Controller.Design {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public shipping_idDataTable shipping_id {
+            get {
+                return this.tableshipping_id;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public my_orderDataTable my_order {
             get {
                 return this.tablemy_order;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public my_order_detailDataTable my_order_detail {
+            get {
+                return this.tablemy_order_detail;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public v_my_order_detailDataTable v_my_order_detail {
+            get {
+                return this.tablev_my_order_detail;
             }
         }
         
@@ -576,8 +621,17 @@ namespace Limew.lib.Controller.Design {
                 if ((ds.Tables["cust_order_id"] != null)) {
                     base.Tables.Add(new cust_order_idDataTable(ds.Tables["cust_order_id"]));
                 }
+                if ((ds.Tables["shipping_id"] != null)) {
+                    base.Tables.Add(new shipping_idDataTable(ds.Tables["shipping_id"]));
+                }
                 if ((ds.Tables["my_order"] != null)) {
                     base.Tables.Add(new my_orderDataTable(ds.Tables["my_order"]));
+                }
+                if ((ds.Tables["my_order_detail"] != null)) {
+                    base.Tables.Add(new my_order_detailDataTable(ds.Tables["my_order_detail"]));
+                }
+                if ((ds.Tables["v_my_order_detail"] != null)) {
+                    base.Tables.Add(new v_my_order_detailDataTable(ds.Tables["v_my_order_detail"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -744,10 +798,28 @@ namespace Limew.lib.Controller.Design {
                     this.tablecust_order_id.InitVars();
                 }
             }
+            this.tableshipping_id = ((shipping_idDataTable)(base.Tables["shipping_id"]));
+            if ((initTable == true)) {
+                if ((this.tableshipping_id != null)) {
+                    this.tableshipping_id.InitVars();
+                }
+            }
             this.tablemy_order = ((my_orderDataTable)(base.Tables["my_order"]));
             if ((initTable == true)) {
                 if ((this.tablemy_order != null)) {
                     this.tablemy_order.InitVars();
+                }
+            }
+            this.tablemy_order_detail = ((my_order_detailDataTable)(base.Tables["my_order_detail"]));
+            if ((initTable == true)) {
+                if ((this.tablemy_order_detail != null)) {
+                    this.tablemy_order_detail.InitVars();
+                }
+            }
+            this.tablev_my_order_detail = ((v_my_order_detailDataTable)(base.Tables["v_my_order_detail"]));
+            if ((initTable == true)) {
+                if ((this.tablev_my_order_detail != null)) {
+                    this.tablev_my_order_detail.InitVars();
                 }
             }
             this.relationgcategory_goods = this.Relations["gcategory_goods"];
@@ -818,8 +890,14 @@ namespace Limew.lib.Controller.Design {
             base.Tables.Add(this.tablev_cust_address);
             this.tablecust_order_id = new cust_order_idDataTable();
             base.Tables.Add(this.tablecust_order_id);
+            this.tableshipping_id = new shipping_idDataTable();
+            base.Tables.Add(this.tableshipping_id);
             this.tablemy_order = new my_orderDataTable();
             base.Tables.Add(this.tablemy_order);
+            this.tablemy_order_detail = new my_order_detailDataTable();
+            base.Tables.Add(this.tablemy_order_detail);
+            this.tablev_my_order_detail = new v_my_order_detailDataTable();
+            base.Tables.Add(this.tablev_my_order_detail);
             this.relationgcategory_goods = new global::System.Data.DataRelation("gcategory_goods", new global::System.Data.DataColumn[] {
                         this.tablegcategory.gcategory_uuidColumn}, new global::System.Data.DataColumn[] {
                         this.tablegoods.gcategory_uuidColumn}, false);
@@ -1012,7 +1090,25 @@ namespace Limew.lib.Controller.Design {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeshipping_id() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializemy_order() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializemy_order_detail() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializev_my_order_detail() {
             return false;
         }
         
@@ -1138,7 +1234,16 @@ namespace Limew.lib.Controller.Design {
         public delegate void cust_order_idRowChangeEventHandler(object sender, cust_order_idRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void shipping_idRowChangeEventHandler(object sender, shipping_idRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void my_orderRowChangeEventHandler(object sender, my_orderRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void my_order_detailRowChangeEventHandler(object sender, my_order_detailRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void v_my_order_detailRowChangeEventHandler(object sender, v_my_order_detailRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -5655,6 +5760,12 @@ namespace Limew.lib.Controller.Design {
             
             private global::System.Data.DataColumn columncompany_uuid;
             
+            private global::System.Data.DataColumn columnCUST_ORDER_SHIPPING_NUMBER;
+            
+            private global::System.Data.DataColumn columnSHIPPING_STATUS_NAME;
+            
+            private global::System.Data.DataColumn columncompany_c_name;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public v_cust_orderDataTable() {
@@ -6066,6 +6177,30 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CUST_ORDER_SHIPPING_NUMBERColumn {
+                get {
+                    return this.columnCUST_ORDER_SHIPPING_NUMBER;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SHIPPING_STATUS_NAMEColumn {
+                get {
+                    return this.columnSHIPPING_STATUS_NAME;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn company_c_nameColumn {
+                get {
+                    return this.columncompany_c_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6148,7 +6283,10 @@ namespace Limew.lib.Controller.Design {
                         string cust_order_report_attendant_uuid, 
                         string cust_order_report_attendant_c_name, 
                         string shipping_address, 
-                        string company_uuid) {
+                        string company_uuid, 
+                        string CUST_ORDER_SHIPPING_NUMBER, 
+                        string SHIPPING_STATUS_NAME, 
+                        string company_c_name) {
                 v_cust_orderRow rowv_cust_orderRow = ((v_cust_orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cust_order_uuid,
@@ -6197,7 +6335,10 @@ namespace Limew.lib.Controller.Design {
                         cust_order_report_attendant_uuid,
                         cust_order_report_attendant_c_name,
                         shipping_address,
-                        company_uuid};
+                        company_uuid,
+                        CUST_ORDER_SHIPPING_NUMBER,
+                        SHIPPING_STATUS_NAME,
+                        company_c_name};
                 if ((parentcust_order_statusRowBycust_order_status_v_cust_order != null)) {
                     columnValuesArray[4] = parentcust_order_statusRowBycust_order_status_v_cust_order[0];
                 }
@@ -6286,6 +6427,9 @@ namespace Limew.lib.Controller.Design {
                 this.columncust_order_report_attendant_c_name = base.Columns["cust_order_report_attendant_c_name"];
                 this.columnshipping_address = base.Columns["shipping_address"];
                 this.columncompany_uuid = base.Columns["company_uuid"];
+                this.columnCUST_ORDER_SHIPPING_NUMBER = base.Columns["CUST_ORDER_SHIPPING_NUMBER"];
+                this.columnSHIPPING_STATUS_NAME = base.Columns["SHIPPING_STATUS_NAME"];
+                this.columncompany_c_name = base.Columns["company_c_name"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6385,6 +6529,12 @@ namespace Limew.lib.Controller.Design {
                 base.Columns.Add(this.columnshipping_address);
                 this.columncompany_uuid = new global::System.Data.DataColumn("company_uuid", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncompany_uuid);
+                this.columnCUST_ORDER_SHIPPING_NUMBER = new global::System.Data.DataColumn("CUST_ORDER_SHIPPING_NUMBER", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUST_ORDER_SHIPPING_NUMBER);
+                this.columnSHIPPING_STATUS_NAME = new global::System.Data.DataColumn("SHIPPING_STATUS_NAME", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSHIPPING_STATUS_NAME);
+                this.columncompany_c_name = new global::System.Data.DataColumn("company_c_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncompany_c_name);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncust_order_uuid}, true));
                 this.columncust_order_uuid.AllowDBNull = false;
@@ -10327,35 +10477,304 @@ namespace Limew.lib.Controller.Design {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class shipping_idDataTable : global::System.Data.TypedTableBase<shipping_idRow> {
+            
+            private global::System.Data.DataColumn columnshipping_id_uuid;
+            
+            private global::System.Data.DataColumn columnmax;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idDataTable() {
+                this.TableName = "shipping_id";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal shipping_idDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected shipping_idDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn shipping_id_uuidColumn {
+                get {
+                    return this.columnshipping_id_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn maxColumn {
+                get {
+                    return this.columnmax;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRow this[int index] {
+                get {
+                    return ((shipping_idRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event shipping_idRowChangeEventHandler shipping_idRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event shipping_idRowChangeEventHandler shipping_idRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event shipping_idRowChangeEventHandler shipping_idRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event shipping_idRowChangeEventHandler shipping_idRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Addshipping_idRow(shipping_idRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRow Addshipping_idRow(string shipping_id_uuid, int max) {
+                shipping_idRow rowshipping_idRow = ((shipping_idRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        shipping_id_uuid,
+                        max};
+                rowshipping_idRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowshipping_idRow);
+                return rowshipping_idRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRow FindByshipping_id_uuid(string shipping_id_uuid) {
+                return ((shipping_idRow)(this.Rows.Find(new object[] {
+                            shipping_id_uuid})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                shipping_idDataTable cln = ((shipping_idDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new shipping_idDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnshipping_id_uuid = base.Columns["shipping_id_uuid"];
+                this.columnmax = base.Columns["max"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnshipping_id_uuid = new global::System.Data.DataColumn("shipping_id_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnshipping_id_uuid);
+                this.columnmax = new global::System.Data.DataColumn("max", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmax);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnshipping_id_uuid}, true));
+                this.columnshipping_id_uuid.AllowDBNull = false;
+                this.columnshipping_id_uuid.Unique = true;
+                this.columnshipping_id_uuid.MaxLength = 216;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRow Newshipping_idRow() {
+                return ((shipping_idRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new shipping_idRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(shipping_idRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.shipping_idRowChanged != null)) {
+                    this.shipping_idRowChanged(this, new shipping_idRowChangeEvent(((shipping_idRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.shipping_idRowChanging != null)) {
+                    this.shipping_idRowChanging(this, new shipping_idRowChangeEvent(((shipping_idRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.shipping_idRowDeleted != null)) {
+                    this.shipping_idRowDeleted(this, new shipping_idRowChangeEvent(((shipping_idRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.shipping_idRowDeleting != null)) {
+                    this.shipping_idRowDeleting(this, new shipping_idRowChangeEvent(((shipping_idRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Removeshipping_idRow(shipping_idRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                Limew ds = new Limew();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "shipping_idDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class my_orderDataTable : global::System.Data.TypedTableBase<my_orderRow> {
             
             private global::System.Data.DataColumn columnmy_order_uuid;
             
-            private global::System.Data.DataColumn columnmy_order_date;
+            private global::System.Data.DataColumn columnsupplier_uuid;
             
             private global::System.Data.DataColumn columnmy_order_supplier_name;
             
             private global::System.Data.DataColumn columnmy_order_supplier_tel;
             
-            private global::System.Data.DataColumn columnmy_order_supplier_man;
+            private global::System.Data.DataColumn columnmy_order_supplier_fax;
             
-            private global::System.Data.DataColumn columnmy_order_goods_name;
+            private global::System.Data.DataColumn columnmy_order_supplier_address;
             
-            private global::System.Data.DataColumn columnmy_order_goods_count;
+            private global::System.Data.DataColumn columnmy_order_contact_name;
             
-            private global::System.Data.DataColumn columnmy_order_price;
+            private global::System.Data.DataColumn columnmy_order_contact_phone;
             
-            private global::System.Data.DataColumn columnmy_order_total_price;
+            private global::System.Data.DataColumn columnmy_order_contact_email;
             
             private global::System.Data.DataColumn columnmy_order_ps;
             
-            private global::System.Data.DataColumn columnmy_order_is_finish;
+            private global::System.Data.DataColumn columnmy_order_cr;
             
-            private global::System.Data.DataColumn columnmy_order_pay_method;
-            
-            private global::System.Data.DataColumn columnmy_order_is_active;
-            
-            private global::System.Data.DataColumn columnmy_order_attendant_uuid;
+            private global::System.Data.DataColumn columnmy_order_total_price;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -10400,9 +10819,9 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_dateColumn {
+            public global::System.Data.DataColumn supplier_uuidColumn {
                 get {
-                    return this.columnmy_order_date;
+                    return this.columnsupplier_uuid;
                 }
             }
             
@@ -10424,41 +10843,41 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_supplier_manColumn {
+            public global::System.Data.DataColumn my_order_supplier_faxColumn {
                 get {
-                    return this.columnmy_order_supplier_man;
+                    return this.columnmy_order_supplier_fax;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_goods_nameColumn {
+            public global::System.Data.DataColumn my_order_supplier_addressColumn {
                 get {
-                    return this.columnmy_order_goods_name;
+                    return this.columnmy_order_supplier_address;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_goods_countColumn {
+            public global::System.Data.DataColumn my_order_contact_nameColumn {
                 get {
-                    return this.columnmy_order_goods_count;
+                    return this.columnmy_order_contact_name;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_priceColumn {
+            public global::System.Data.DataColumn my_order_contact_phoneColumn {
                 get {
-                    return this.columnmy_order_price;
+                    return this.columnmy_order_contact_phone;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_total_priceColumn {
+            public global::System.Data.DataColumn my_order_contact_emailColumn {
                 get {
-                    return this.columnmy_order_total_price;
+                    return this.columnmy_order_contact_email;
                 }
             }
             
@@ -10472,33 +10891,17 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_is_finishColumn {
+            public global::System.Data.DataColumn my_order_crColumn {
                 get {
-                    return this.columnmy_order_is_finish;
+                    return this.columnmy_order_cr;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_pay_methodColumn {
+            public global::System.Data.DataColumn my_order_total_priceColumn {
                 get {
-                    return this.columnmy_order_pay_method;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_is_activeColumn {
-                get {
-                    return this.columnmy_order_is_active;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn my_order_attendant_uuidColumn {
-                get {
-                    return this.columnmy_order_attendant_uuid;
+                    return this.columnmy_order_total_price;
                 }
             }
             
@@ -10539,23 +10942,21 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public my_orderRow Addmy_orderRow(string my_order_uuid, System.DateTime my_order_date, string my_order_supplier_name, string my_order_supplier_tel, string my_order_supplier_man, string my_order_goods_name, int my_order_goods_count, decimal my_order_price, decimal my_order_total_price, string my_order_ps, int my_order_is_finish, string my_order_pay_method, int my_order_is_active, string my_order_attendant_uuid) {
+            public my_orderRow Addmy_orderRow(string my_order_uuid, string supplier_uuid, string my_order_supplier_name, string my_order_supplier_tel, string my_order_supplier_fax, string my_order_supplier_address, string my_order_contact_name, string my_order_contact_phone, string my_order_contact_email, string my_order_ps, System.DateTime my_order_cr, decimal my_order_total_price) {
                 my_orderRow rowmy_orderRow = ((my_orderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         my_order_uuid,
-                        my_order_date,
+                        supplier_uuid,
                         my_order_supplier_name,
                         my_order_supplier_tel,
-                        my_order_supplier_man,
-                        my_order_goods_name,
-                        my_order_goods_count,
-                        my_order_price,
-                        my_order_total_price,
+                        my_order_supplier_fax,
+                        my_order_supplier_address,
+                        my_order_contact_name,
+                        my_order_contact_phone,
+                        my_order_contact_email,
                         my_order_ps,
-                        my_order_is_finish,
-                        my_order_pay_method,
-                        my_order_is_active,
-                        my_order_attendant_uuid};
+                        my_order_cr,
+                        my_order_total_price};
                 rowmy_orderRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowmy_orderRow);
                 return rowmy_orderRow;
@@ -10586,19 +10987,17 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnmy_order_uuid = base.Columns["my_order_uuid"];
-                this.columnmy_order_date = base.Columns["my_order_date"];
+                this.columnsupplier_uuid = base.Columns["supplier_uuid"];
                 this.columnmy_order_supplier_name = base.Columns["my_order_supplier_name"];
                 this.columnmy_order_supplier_tel = base.Columns["my_order_supplier_tel"];
-                this.columnmy_order_supplier_man = base.Columns["my_order_supplier_man"];
-                this.columnmy_order_goods_name = base.Columns["my_order_goods_name"];
-                this.columnmy_order_goods_count = base.Columns["my_order_goods_count"];
-                this.columnmy_order_price = base.Columns["my_order_price"];
-                this.columnmy_order_total_price = base.Columns["my_order_total_price"];
+                this.columnmy_order_supplier_fax = base.Columns["my_order_supplier_fax"];
+                this.columnmy_order_supplier_address = base.Columns["my_order_supplier_address"];
+                this.columnmy_order_contact_name = base.Columns["my_order_contact_name"];
+                this.columnmy_order_contact_phone = base.Columns["my_order_contact_phone"];
+                this.columnmy_order_contact_email = base.Columns["my_order_contact_email"];
                 this.columnmy_order_ps = base.Columns["my_order_ps"];
-                this.columnmy_order_is_finish = base.Columns["my_order_is_finish"];
-                this.columnmy_order_pay_method = base.Columns["my_order_pay_method"];
-                this.columnmy_order_is_active = base.Columns["my_order_is_active"];
-                this.columnmy_order_attendant_uuid = base.Columns["my_order_attendant_uuid"];
+                this.columnmy_order_cr = base.Columns["my_order_cr"];
+                this.columnmy_order_total_price = base.Columns["my_order_total_price"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10606,44 +11005,42 @@ namespace Limew.lib.Controller.Design {
             private void InitClass() {
                 this.columnmy_order_uuid = new global::System.Data.DataColumn("my_order_uuid", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmy_order_uuid);
-                this.columnmy_order_date = new global::System.Data.DataColumn("my_order_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_date);
+                this.columnsupplier_uuid = new global::System.Data.DataColumn("supplier_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsupplier_uuid);
                 this.columnmy_order_supplier_name = new global::System.Data.DataColumn("my_order_supplier_name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmy_order_supplier_name);
                 this.columnmy_order_supplier_tel = new global::System.Data.DataColumn("my_order_supplier_tel", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmy_order_supplier_tel);
-                this.columnmy_order_supplier_man = new global::System.Data.DataColumn("my_order_supplier_man", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_supplier_man);
-                this.columnmy_order_goods_name = new global::System.Data.DataColumn("my_order_goods_name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_goods_name);
-                this.columnmy_order_goods_count = new global::System.Data.DataColumn("my_order_goods_count", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_goods_count);
-                this.columnmy_order_price = new global::System.Data.DataColumn("my_order_price", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_price);
-                this.columnmy_order_total_price = new global::System.Data.DataColumn("my_order_total_price", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_total_price);
+                this.columnmy_order_supplier_fax = new global::System.Data.DataColumn("my_order_supplier_fax", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_fax);
+                this.columnmy_order_supplier_address = new global::System.Data.DataColumn("my_order_supplier_address", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_address);
+                this.columnmy_order_contact_name = new global::System.Data.DataColumn("my_order_contact_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_name);
+                this.columnmy_order_contact_phone = new global::System.Data.DataColumn("my_order_contact_phone", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_phone);
+                this.columnmy_order_contact_email = new global::System.Data.DataColumn("my_order_contact_email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_email);
                 this.columnmy_order_ps = new global::System.Data.DataColumn("my_order_ps", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmy_order_ps);
-                this.columnmy_order_is_finish = new global::System.Data.DataColumn("my_order_is_finish", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_is_finish);
-                this.columnmy_order_pay_method = new global::System.Data.DataColumn("my_order_pay_method", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_pay_method);
-                this.columnmy_order_is_active = new global::System.Data.DataColumn("my_order_is_active", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_is_active);
-                this.columnmy_order_attendant_uuid = new global::System.Data.DataColumn("my_order_attendant_uuid", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmy_order_attendant_uuid);
+                this.columnmy_order_cr = new global::System.Data.DataColumn("my_order_cr", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_cr);
+                this.columnmy_order_total_price = new global::System.Data.DataColumn("my_order_total_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_total_price);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnmy_order_uuid}, true));
                 this.columnmy_order_uuid.AllowDBNull = false;
                 this.columnmy_order_uuid.Unique = true;
                 this.columnmy_order_uuid.MaxLength = 216;
-                this.columnmy_order_supplier_name.MaxLength = 600;
-                this.columnmy_order_supplier_tel.MaxLength = 600;
-                this.columnmy_order_supplier_man.MaxLength = 270;
-                this.columnmy_order_goods_name.MaxLength = 600;
-                this.columnmy_order_ps.MaxLength = 2400;
-                this.columnmy_order_pay_method.MaxLength = 270;
-                this.columnmy_order_attendant_uuid.MaxLength = 270;
+                this.columnsupplier_uuid.MaxLength = 270;
+                this.columnmy_order_supplier_name.MaxLength = 1200;
+                this.columnmy_order_supplier_tel.MaxLength = 1200;
+                this.columnmy_order_supplier_fax.MaxLength = 600;
+                this.columnmy_order_supplier_address.MaxLength = 1200;
+                this.columnmy_order_contact_name.MaxLength = 600;
+                this.columnmy_order_contact_phone.MaxLength = 600;
+                this.columnmy_order_contact_email.MaxLength = 600;
+                this.columnmy_order_ps.MaxLength = 3000;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10730,6 +11127,956 @@ namespace Limew.lib.Controller.Design {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "my_orderDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class my_order_detailDataTable : global::System.Data.TypedTableBase<my_order_detailRow> {
+            
+            private global::System.Data.DataColumn columnmy_order_detail_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_goods_name;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_goods_count;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_price;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_total_price;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_is_finish;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_is_active;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_attendant_uuid;
+            
+            private global::System.Data.DataColumn columnsupplier_goods_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_uuid;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailDataTable() {
+                this.TableName = "my_order_detail";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal my_order_detailDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected my_order_detailDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_uuidColumn {
+                get {
+                    return this.columnmy_order_detail_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_goods_nameColumn {
+                get {
+                    return this.columnmy_order_detail_goods_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_goods_countColumn {
+                get {
+                    return this.columnmy_order_detail_goods_count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_priceColumn {
+                get {
+                    return this.columnmy_order_detail_price;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_total_priceColumn {
+                get {
+                    return this.columnmy_order_detail_total_price;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_is_finishColumn {
+                get {
+                    return this.columnmy_order_detail_is_finish;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_is_activeColumn {
+                get {
+                    return this.columnmy_order_detail_is_active;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_attendant_uuidColumn {
+                get {
+                    return this.columnmy_order_detail_attendant_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn supplier_goods_uuidColumn {
+                get {
+                    return this.columnsupplier_goods_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_uuidColumn {
+                get {
+                    return this.columnmy_order_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRow this[int index] {
+                get {
+                    return ((my_order_detailRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event my_order_detailRowChangeEventHandler my_order_detailRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event my_order_detailRowChangeEventHandler my_order_detailRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event my_order_detailRowChangeEventHandler my_order_detailRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event my_order_detailRowChangeEventHandler my_order_detailRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Addmy_order_detailRow(my_order_detailRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRow Addmy_order_detailRow(string my_order_detail_uuid, string my_order_detail_goods_name, int my_order_detail_goods_count, decimal my_order_detail_price, decimal my_order_detail_total_price, int my_order_detail_is_finish, int my_order_detail_is_active, string my_order_detail_attendant_uuid, string supplier_goods_uuid, string my_order_uuid) {
+                my_order_detailRow rowmy_order_detailRow = ((my_order_detailRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        my_order_detail_uuid,
+                        my_order_detail_goods_name,
+                        my_order_detail_goods_count,
+                        my_order_detail_price,
+                        my_order_detail_total_price,
+                        my_order_detail_is_finish,
+                        my_order_detail_is_active,
+                        my_order_detail_attendant_uuid,
+                        supplier_goods_uuid,
+                        my_order_uuid};
+                rowmy_order_detailRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowmy_order_detailRow);
+                return rowmy_order_detailRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRow FindBymy_order_detail_uuid(string my_order_detail_uuid) {
+                return ((my_order_detailRow)(this.Rows.Find(new object[] {
+                            my_order_detail_uuid})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                my_order_detailDataTable cln = ((my_order_detailDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new my_order_detailDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnmy_order_detail_uuid = base.Columns["my_order_detail_uuid"];
+                this.columnmy_order_detail_goods_name = base.Columns["my_order_detail_goods_name"];
+                this.columnmy_order_detail_goods_count = base.Columns["my_order_detail_goods_count"];
+                this.columnmy_order_detail_price = base.Columns["my_order_detail_price"];
+                this.columnmy_order_detail_total_price = base.Columns["my_order_detail_total_price"];
+                this.columnmy_order_detail_is_finish = base.Columns["my_order_detail_is_finish"];
+                this.columnmy_order_detail_is_active = base.Columns["my_order_detail_is_active"];
+                this.columnmy_order_detail_attendant_uuid = base.Columns["my_order_detail_attendant_uuid"];
+                this.columnsupplier_goods_uuid = base.Columns["supplier_goods_uuid"];
+                this.columnmy_order_uuid = base.Columns["my_order_uuid"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnmy_order_detail_uuid = new global::System.Data.DataColumn("my_order_detail_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_uuid);
+                this.columnmy_order_detail_goods_name = new global::System.Data.DataColumn("my_order_detail_goods_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_goods_name);
+                this.columnmy_order_detail_goods_count = new global::System.Data.DataColumn("my_order_detail_goods_count", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_goods_count);
+                this.columnmy_order_detail_price = new global::System.Data.DataColumn("my_order_detail_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_price);
+                this.columnmy_order_detail_total_price = new global::System.Data.DataColumn("my_order_detail_total_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_total_price);
+                this.columnmy_order_detail_is_finish = new global::System.Data.DataColumn("my_order_detail_is_finish", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_is_finish);
+                this.columnmy_order_detail_is_active = new global::System.Data.DataColumn("my_order_detail_is_active", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_is_active);
+                this.columnmy_order_detail_attendant_uuid = new global::System.Data.DataColumn("my_order_detail_attendant_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_attendant_uuid);
+                this.columnsupplier_goods_uuid = new global::System.Data.DataColumn("supplier_goods_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsupplier_goods_uuid);
+                this.columnmy_order_uuid = new global::System.Data.DataColumn("my_order_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_uuid);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnmy_order_detail_uuid}, true));
+                this.columnmy_order_detail_uuid.AllowDBNull = false;
+                this.columnmy_order_detail_uuid.Unique = true;
+                this.columnmy_order_detail_uuid.MaxLength = 216;
+                this.columnmy_order_detail_goods_name.MaxLength = 600;
+                this.columnmy_order_detail_attendant_uuid.MaxLength = 270;
+                this.columnsupplier_goods_uuid.MaxLength = 270;
+                this.columnmy_order_uuid.MaxLength = 270;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRow Newmy_order_detailRow() {
+                return ((my_order_detailRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new my_order_detailRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(my_order_detailRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.my_order_detailRowChanged != null)) {
+                    this.my_order_detailRowChanged(this, new my_order_detailRowChangeEvent(((my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.my_order_detailRowChanging != null)) {
+                    this.my_order_detailRowChanging(this, new my_order_detailRowChangeEvent(((my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.my_order_detailRowDeleted != null)) {
+                    this.my_order_detailRowDeleted(this, new my_order_detailRowChangeEvent(((my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.my_order_detailRowDeleting != null)) {
+                    this.my_order_detailRowDeleting(this, new my_order_detailRowChangeEvent(((my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Removemy_order_detailRow(my_order_detailRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                Limew ds = new Limew();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "my_order_detailDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class v_my_order_detailDataTable : global::System.Data.TypedTableBase<v_my_order_detailRow> {
+            
+            private global::System.Data.DataColumn columnmy_order_uuid;
+            
+            private global::System.Data.DataColumn columnsupplier_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_supplier_name;
+            
+            private global::System.Data.DataColumn columnmy_order_supplier_tel;
+            
+            private global::System.Data.DataColumn columnmy_order_supplier_fax;
+            
+            private global::System.Data.DataColumn columnmy_order_supplier_address;
+            
+            private global::System.Data.DataColumn columnmy_order_contact_name;
+            
+            private global::System.Data.DataColumn columnmy_order_contact_phone;
+            
+            private global::System.Data.DataColumn columnmy_order_contact_email;
+            
+            private global::System.Data.DataColumn columnmy_order_ps;
+            
+            private global::System.Data.DataColumn columnmy_order_cr;
+            
+            private global::System.Data.DataColumn columnmy_order_total_price;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_attendant_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_goods_count;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_goods_name;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_price;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_total_price;
+            
+            private global::System.Data.DataColumn columnsupplier_goods_uuid;
+            
+            private global::System.Data.DataColumn columnmy_order_detail_attendant_c_name;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailDataTable() {
+                this.TableName = "v_my_order_detail";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal v_my_order_detailDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected v_my_order_detailDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_uuidColumn {
+                get {
+                    return this.columnmy_order_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn supplier_uuidColumn {
+                get {
+                    return this.columnsupplier_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_supplier_nameColumn {
+                get {
+                    return this.columnmy_order_supplier_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_supplier_telColumn {
+                get {
+                    return this.columnmy_order_supplier_tel;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_supplier_faxColumn {
+                get {
+                    return this.columnmy_order_supplier_fax;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_supplier_addressColumn {
+                get {
+                    return this.columnmy_order_supplier_address;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_contact_nameColumn {
+                get {
+                    return this.columnmy_order_contact_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_contact_phoneColumn {
+                get {
+                    return this.columnmy_order_contact_phone;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_contact_emailColumn {
+                get {
+                    return this.columnmy_order_contact_email;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_psColumn {
+                get {
+                    return this.columnmy_order_ps;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_crColumn {
+                get {
+                    return this.columnmy_order_cr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_total_priceColumn {
+                get {
+                    return this.columnmy_order_total_price;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_uuidColumn {
+                get {
+                    return this.columnmy_order_detail_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_attendant_uuidColumn {
+                get {
+                    return this.columnmy_order_detail_attendant_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_goods_countColumn {
+                get {
+                    return this.columnmy_order_detail_goods_count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_goods_nameColumn {
+                get {
+                    return this.columnmy_order_detail_goods_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_priceColumn {
+                get {
+                    return this.columnmy_order_detail_price;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_total_priceColumn {
+                get {
+                    return this.columnmy_order_detail_total_price;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn supplier_goods_uuidColumn {
+                get {
+                    return this.columnsupplier_goods_uuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn my_order_detail_attendant_c_nameColumn {
+                get {
+                    return this.columnmy_order_detail_attendant_c_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRow this[int index] {
+                get {
+                    return ((v_my_order_detailRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event v_my_order_detailRowChangeEventHandler v_my_order_detailRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event v_my_order_detailRowChangeEventHandler v_my_order_detailRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event v_my_order_detailRowChangeEventHandler v_my_order_detailRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event v_my_order_detailRowChangeEventHandler v_my_order_detailRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Addv_my_order_detailRow(v_my_order_detailRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRow Addv_my_order_detailRow(
+                        string my_order_uuid, 
+                        string supplier_uuid, 
+                        string my_order_supplier_name, 
+                        string my_order_supplier_tel, 
+                        string my_order_supplier_fax, 
+                        string my_order_supplier_address, 
+                        string my_order_contact_name, 
+                        string my_order_contact_phone, 
+                        string my_order_contact_email, 
+                        string my_order_ps, 
+                        System.DateTime my_order_cr, 
+                        decimal my_order_total_price, 
+                        string my_order_detail_uuid, 
+                        string my_order_detail_attendant_uuid, 
+                        int my_order_detail_goods_count, 
+                        string my_order_detail_goods_name, 
+                        decimal my_order_detail_price, 
+                        decimal my_order_detail_total_price, 
+                        string supplier_goods_uuid, 
+                        string my_order_detail_attendant_c_name) {
+                v_my_order_detailRow rowv_my_order_detailRow = ((v_my_order_detailRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        my_order_uuid,
+                        supplier_uuid,
+                        my_order_supplier_name,
+                        my_order_supplier_tel,
+                        my_order_supplier_fax,
+                        my_order_supplier_address,
+                        my_order_contact_name,
+                        my_order_contact_phone,
+                        my_order_contact_email,
+                        my_order_ps,
+                        my_order_cr,
+                        my_order_total_price,
+                        my_order_detail_uuid,
+                        my_order_detail_attendant_uuid,
+                        my_order_detail_goods_count,
+                        my_order_detail_goods_name,
+                        my_order_detail_price,
+                        my_order_detail_total_price,
+                        supplier_goods_uuid,
+                        my_order_detail_attendant_c_name};
+                rowv_my_order_detailRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowv_my_order_detailRow);
+                return rowv_my_order_detailRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRow FindBymy_order_uuidmy_order_detail_uuid(string my_order_uuid, string my_order_detail_uuid) {
+                return ((v_my_order_detailRow)(this.Rows.Find(new object[] {
+                            my_order_uuid,
+                            my_order_detail_uuid})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                v_my_order_detailDataTable cln = ((v_my_order_detailDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new v_my_order_detailDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnmy_order_uuid = base.Columns["my_order_uuid"];
+                this.columnsupplier_uuid = base.Columns["supplier_uuid"];
+                this.columnmy_order_supplier_name = base.Columns["my_order_supplier_name"];
+                this.columnmy_order_supplier_tel = base.Columns["my_order_supplier_tel"];
+                this.columnmy_order_supplier_fax = base.Columns["my_order_supplier_fax"];
+                this.columnmy_order_supplier_address = base.Columns["my_order_supplier_address"];
+                this.columnmy_order_contact_name = base.Columns["my_order_contact_name"];
+                this.columnmy_order_contact_phone = base.Columns["my_order_contact_phone"];
+                this.columnmy_order_contact_email = base.Columns["my_order_contact_email"];
+                this.columnmy_order_ps = base.Columns["my_order_ps"];
+                this.columnmy_order_cr = base.Columns["my_order_cr"];
+                this.columnmy_order_total_price = base.Columns["my_order_total_price"];
+                this.columnmy_order_detail_uuid = base.Columns["my_order_detail_uuid"];
+                this.columnmy_order_detail_attendant_uuid = base.Columns["my_order_detail_attendant_uuid"];
+                this.columnmy_order_detail_goods_count = base.Columns["my_order_detail_goods_count"];
+                this.columnmy_order_detail_goods_name = base.Columns["my_order_detail_goods_name"];
+                this.columnmy_order_detail_price = base.Columns["my_order_detail_price"];
+                this.columnmy_order_detail_total_price = base.Columns["my_order_detail_total_price"];
+                this.columnsupplier_goods_uuid = base.Columns["supplier_goods_uuid"];
+                this.columnmy_order_detail_attendant_c_name = base.Columns["my_order_detail_attendant_c_name"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnmy_order_uuid = new global::System.Data.DataColumn("my_order_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_uuid);
+                this.columnsupplier_uuid = new global::System.Data.DataColumn("supplier_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsupplier_uuid);
+                this.columnmy_order_supplier_name = new global::System.Data.DataColumn("my_order_supplier_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_name);
+                this.columnmy_order_supplier_tel = new global::System.Data.DataColumn("my_order_supplier_tel", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_tel);
+                this.columnmy_order_supplier_fax = new global::System.Data.DataColumn("my_order_supplier_fax", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_fax);
+                this.columnmy_order_supplier_address = new global::System.Data.DataColumn("my_order_supplier_address", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_supplier_address);
+                this.columnmy_order_contact_name = new global::System.Data.DataColumn("my_order_contact_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_name);
+                this.columnmy_order_contact_phone = new global::System.Data.DataColumn("my_order_contact_phone", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_phone);
+                this.columnmy_order_contact_email = new global::System.Data.DataColumn("my_order_contact_email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_contact_email);
+                this.columnmy_order_ps = new global::System.Data.DataColumn("my_order_ps", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_ps);
+                this.columnmy_order_cr = new global::System.Data.DataColumn("my_order_cr", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_cr);
+                this.columnmy_order_total_price = new global::System.Data.DataColumn("my_order_total_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_total_price);
+                this.columnmy_order_detail_uuid = new global::System.Data.DataColumn("my_order_detail_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_uuid);
+                this.columnmy_order_detail_attendant_uuid = new global::System.Data.DataColumn("my_order_detail_attendant_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_attendant_uuid);
+                this.columnmy_order_detail_goods_count = new global::System.Data.DataColumn("my_order_detail_goods_count", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_goods_count);
+                this.columnmy_order_detail_goods_name = new global::System.Data.DataColumn("my_order_detail_goods_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_goods_name);
+                this.columnmy_order_detail_price = new global::System.Data.DataColumn("my_order_detail_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_price);
+                this.columnmy_order_detail_total_price = new global::System.Data.DataColumn("my_order_detail_total_price", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_total_price);
+                this.columnsupplier_goods_uuid = new global::System.Data.DataColumn("supplier_goods_uuid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsupplier_goods_uuid);
+                this.columnmy_order_detail_attendant_c_name = new global::System.Data.DataColumn("my_order_detail_attendant_c_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmy_order_detail_attendant_c_name);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnmy_order_uuid,
+                                this.columnmy_order_detail_uuid}, true));
+                this.columnmy_order_uuid.AllowDBNull = false;
+                this.columnmy_order_uuid.MaxLength = 216;
+                this.columnsupplier_uuid.MaxLength = 270;
+                this.columnmy_order_supplier_name.MaxLength = 1200;
+                this.columnmy_order_supplier_tel.MaxLength = 1200;
+                this.columnmy_order_supplier_fax.MaxLength = 600;
+                this.columnmy_order_supplier_address.MaxLength = 1200;
+                this.columnmy_order_contact_name.MaxLength = 600;
+                this.columnmy_order_contact_phone.MaxLength = 600;
+                this.columnmy_order_contact_email.MaxLength = 600;
+                this.columnmy_order_ps.MaxLength = 3000;
+                this.columnmy_order_detail_uuid.AllowDBNull = false;
+                this.columnmy_order_detail_uuid.MaxLength = 216;
+                this.columnmy_order_detail_attendant_uuid.MaxLength = 270;
+                this.columnmy_order_detail_goods_name.MaxLength = 600;
+                this.columnsupplier_goods_uuid.MaxLength = 270;
+                this.columnmy_order_detail_attendant_c_name.MaxLength = 600;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRow Newv_my_order_detailRow() {
+                return ((v_my_order_detailRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new v_my_order_detailRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(v_my_order_detailRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.v_my_order_detailRowChanged != null)) {
+                    this.v_my_order_detailRowChanged(this, new v_my_order_detailRowChangeEvent(((v_my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.v_my_order_detailRowChanging != null)) {
+                    this.v_my_order_detailRowChanging(this, new v_my_order_detailRowChangeEvent(((v_my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.v_my_order_detailRowDeleted != null)) {
+                    this.v_my_order_detailRowDeleted(this, new v_my_order_detailRowChangeEvent(((v_my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.v_my_order_detailRowDeleting != null)) {
+                    this.v_my_order_detailRowDeleting(this, new v_my_order_detailRowChangeEvent(((v_my_order_detailRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Removev_my_order_detailRow(v_my_order_detailRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                Limew ds = new Limew();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "v_my_order_detailDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -14496,6 +15843,55 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CUST_ORDER_SHIPPING_NUMBER {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.CUST_ORDER_SHIPPING_NUMBERColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUST_ORDER_SHIPPING_NUMBER\' in table \'v_cust_order\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.CUST_ORDER_SHIPPING_NUMBERColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string SHIPPING_STATUS_NAME {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.SHIPPING_STATUS_NAMEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SHIPPING_STATUS_NAME\' in table \'v_cust_order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.SHIPPING_STATUS_NAMEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string company_c_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_cust_order.company_c_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'company_c_name\' in table \'v_cust_order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_cust_order.company_c_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public custRow custRow {
                 get {
                     return ((custRow)(this.GetParentRow(this.Table.ParentRelations["cust_v_cust_order"])));
@@ -15028,6 +16424,42 @@ namespace Limew.lib.Controller.Design {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setcompany_uuidNull() {
                 this[this.tablev_cust_order.company_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCUST_ORDER_SHIPPING_NUMBERNull() {
+                return this.IsNull(this.tablev_cust_order.CUST_ORDER_SHIPPING_NUMBERColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCUST_ORDER_SHIPPING_NUMBERNull() {
+                this[this.tablev_cust_order.CUST_ORDER_SHIPPING_NUMBERColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSHIPPING_STATUS_NAMENull() {
+                return this.IsNull(this.tablev_cust_order.SHIPPING_STATUS_NAMEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSHIPPING_STATUS_NAMENull() {
+                this[this.tablev_cust_order.SHIPPING_STATUS_NAMEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Iscompany_c_nameNull() {
+                return this.IsNull(this.tablev_cust_order.company_c_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setcompany_c_nameNull() {
+                this[this.tablev_cust_order.company_c_nameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -17920,6 +19352,60 @@ namespace Limew.lib.Controller.Design {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
+        public partial class shipping_idRow : global::System.Data.DataRow {
+            
+            private shipping_idDataTable tableshipping_id;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal shipping_idRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableshipping_id = ((shipping_idDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string shipping_id_uuid {
+                get {
+                    return ((string)(this[this.tableshipping_id.shipping_id_uuidColumn]));
+                }
+                set {
+                    this[this.tableshipping_id.shipping_id_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int max {
+                get {
+                    try {
+                        return ((int)(this[this.tableshipping_id.maxColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'max\' in table \'shipping_id\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableshipping_id.maxColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsmaxNull() {
+                return this.IsNull(this.tableshipping_id.maxColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetmaxNull() {
+                this[this.tableshipping_id.maxColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
         public partial class my_orderRow : global::System.Data.DataRow {
             
             private my_orderDataTable tablemy_order;
@@ -17944,17 +19430,17 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime my_order_date {
+            public string supplier_uuid {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tablemy_order.my_order_dateColumn]));
+                        return ((string)(this[this.tablemy_order.supplier_uuidColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_date\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'supplier_uuid\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_dateColumn] = value;
+                    this[this.tablemy_order.supplier_uuidColumn] = value;
                 }
             }
             
@@ -17992,81 +19478,81 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string my_order_supplier_man {
+            public string my_order_supplier_fax {
                 get {
                     try {
-                        return ((string)(this[this.tablemy_order.my_order_supplier_manColumn]));
+                        return ((string)(this[this.tablemy_order.my_order_supplier_faxColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_man\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_fax\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_supplier_manColumn] = value;
+                    this[this.tablemy_order.my_order_supplier_faxColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string my_order_goods_name {
+            public string my_order_supplier_address {
                 get {
                     try {
-                        return ((string)(this[this.tablemy_order.my_order_goods_nameColumn]));
+                        return ((string)(this[this.tablemy_order.my_order_supplier_addressColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_goods_name\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_address\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_goods_nameColumn] = value;
+                    this[this.tablemy_order.my_order_supplier_addressColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int my_order_goods_count {
+            public string my_order_contact_name {
                 get {
                     try {
-                        return ((int)(this[this.tablemy_order.my_order_goods_countColumn]));
+                        return ((string)(this[this.tablemy_order.my_order_contact_nameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_goods_count\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_name\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_goods_countColumn] = value;
+                    this[this.tablemy_order.my_order_contact_nameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal my_order_price {
+            public string my_order_contact_phone {
                 get {
                     try {
-                        return ((decimal)(this[this.tablemy_order.my_order_priceColumn]));
+                        return ((string)(this[this.tablemy_order.my_order_contact_phoneColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_price\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_phone\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_priceColumn] = value;
+                    this[this.tablemy_order.my_order_contact_phoneColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal my_order_total_price {
+            public string my_order_contact_email {
                 get {
                     try {
-                        return ((decimal)(this[this.tablemy_order.my_order_total_priceColumn]));
+                        return ((string)(this[this.tablemy_order.my_order_contact_emailColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_total_price\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_email\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_total_priceColumn] = value;
+                    this[this.tablemy_order.my_order_contact_emailColumn] = value;
                 }
             }
             
@@ -18088,78 +19574,46 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int my_order_is_finish {
+            public System.DateTime my_order_cr {
                 get {
                     try {
-                        return ((int)(this[this.tablemy_order.my_order_is_finishColumn]));
+                        return ((global::System.DateTime)(this[this.tablemy_order.my_order_crColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_is_finish\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_cr\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_is_finishColumn] = value;
+                    this[this.tablemy_order.my_order_crColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string my_order_pay_method {
+            public decimal my_order_total_price {
                 get {
                     try {
-                        return ((string)(this[this.tablemy_order.my_order_pay_methodColumn]));
+                        return ((decimal)(this[this.tablemy_order.my_order_total_priceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_pay_method\' in table \'my_order\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_total_price\' in table \'my_order\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemy_order.my_order_pay_methodColumn] = value;
+                    this[this.tablemy_order.my_order_total_priceColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int my_order_is_active {
-                get {
-                    try {
-                        return ((int)(this[this.tablemy_order.my_order_is_activeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_is_active\' in table \'my_order\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablemy_order.my_order_is_activeColumn] = value;
-                }
+            public bool Issupplier_uuidNull() {
+                return this.IsNull(this.tablemy_order.supplier_uuidColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string my_order_attendant_uuid {
-                get {
-                    try {
-                        return ((string)(this[this.tablemy_order.my_order_attendant_uuidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_attendant_uuid\' in table \'my_order\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablemy_order.my_order_attendant_uuidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_dateNull() {
-                return this.IsNull(this.tablemy_order.my_order_dateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_dateNull() {
-                this[this.tablemy_order.my_order_dateColumn] = global::System.Convert.DBNull;
+            public void Setsupplier_uuidNull() {
+                this[this.tablemy_order.supplier_uuidColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18188,62 +19642,62 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_supplier_manNull() {
-                return this.IsNull(this.tablemy_order.my_order_supplier_manColumn);
+            public bool Ismy_order_supplier_faxNull() {
+                return this.IsNull(this.tablemy_order.my_order_supplier_faxColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_supplier_manNull() {
-                this[this.tablemy_order.my_order_supplier_manColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_supplier_faxNull() {
+                this[this.tablemy_order.my_order_supplier_faxColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_goods_nameNull() {
-                return this.IsNull(this.tablemy_order.my_order_goods_nameColumn);
+            public bool Ismy_order_supplier_addressNull() {
+                return this.IsNull(this.tablemy_order.my_order_supplier_addressColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_goods_nameNull() {
-                this[this.tablemy_order.my_order_goods_nameColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_supplier_addressNull() {
+                this[this.tablemy_order.my_order_supplier_addressColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_goods_countNull() {
-                return this.IsNull(this.tablemy_order.my_order_goods_countColumn);
+            public bool Ismy_order_contact_nameNull() {
+                return this.IsNull(this.tablemy_order.my_order_contact_nameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_goods_countNull() {
-                this[this.tablemy_order.my_order_goods_countColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_contact_nameNull() {
+                this[this.tablemy_order.my_order_contact_nameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_priceNull() {
-                return this.IsNull(this.tablemy_order.my_order_priceColumn);
+            public bool Ismy_order_contact_phoneNull() {
+                return this.IsNull(this.tablemy_order.my_order_contact_phoneColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_priceNull() {
-                this[this.tablemy_order.my_order_priceColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_contact_phoneNull() {
+                this[this.tablemy_order.my_order_contact_phoneColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_total_priceNull() {
-                return this.IsNull(this.tablemy_order.my_order_total_priceColumn);
+            public bool Ismy_order_contact_emailNull() {
+                return this.IsNull(this.tablemy_order.my_order_contact_emailColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_total_priceNull() {
-                this[this.tablemy_order.my_order_total_priceColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_contact_emailNull() {
+                this[this.tablemy_order.my_order_contact_emailColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18260,50 +19714,867 @@ namespace Limew.lib.Controller.Design {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_is_finishNull() {
-                return this.IsNull(this.tablemy_order.my_order_is_finishColumn);
+            public bool Ismy_order_crNull() {
+                return this.IsNull(this.tablemy_order.my_order_crColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_is_finishNull() {
-                this[this.tablemy_order.my_order_is_finishColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_crNull() {
+                this[this.tablemy_order.my_order_crColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_pay_methodNull() {
-                return this.IsNull(this.tablemy_order.my_order_pay_methodColumn);
+            public bool Ismy_order_total_priceNull() {
+                return this.IsNull(this.tablemy_order.my_order_total_priceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_pay_methodNull() {
-                this[this.tablemy_order.my_order_pay_methodColumn] = global::System.Convert.DBNull;
+            public void Setmy_order_total_priceNull() {
+                this[this.tablemy_order.my_order_total_priceColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class my_order_detailRow : global::System.Data.DataRow {
+            
+            private my_order_detailDataTable tablemy_order_detail;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal my_order_detailRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablemy_order_detail = ((my_order_detailDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_is_activeNull() {
-                return this.IsNull(this.tablemy_order.my_order_is_activeColumn);
+            public string my_order_detail_uuid {
+                get {
+                    return ((string)(this[this.tablemy_order_detail.my_order_detail_uuidColumn]));
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_uuidColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_is_activeNull() {
-                this[this.tablemy_order.my_order_is_activeColumn] = global::System.Convert.DBNull;
+            public string my_order_detail_goods_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablemy_order_detail.my_order_detail_goods_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_goods_name\' in table \'my_order_detail\' is D" +
+                                "BNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_goods_nameColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Ismy_order_attendant_uuidNull() {
-                return this.IsNull(this.tablemy_order.my_order_attendant_uuidColumn);
+            public int my_order_detail_goods_count {
+                get {
+                    try {
+                        return ((int)(this[this.tablemy_order_detail.my_order_detail_goods_countColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_goods_count\' in table \'my_order_detail\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_goods_countColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setmy_order_attendant_uuidNull() {
-                this[this.tablemy_order.my_order_attendant_uuidColumn] = global::System.Convert.DBNull;
+            public decimal my_order_detail_price {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemy_order_detail.my_order_detail_priceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_price\' in table \'my_order_detail\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal my_order_detail_total_price {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemy_order_detail.my_order_detail_total_priceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_total_price\' in table \'my_order_detail\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_total_priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int my_order_detail_is_finish {
+                get {
+                    try {
+                        return ((int)(this[this.tablemy_order_detail.my_order_detail_is_finishColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_is_finish\' in table \'my_order_detail\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_is_finishColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int my_order_detail_is_active {
+                get {
+                    try {
+                        return ((int)(this[this.tablemy_order_detail.my_order_detail_is_activeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_is_active\' in table \'my_order_detail\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_is_activeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_detail_attendant_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablemy_order_detail.my_order_detail_attendant_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_attendant_uuid\' in table \'my_order_detail\' " +
+                                "is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_detail_attendant_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string supplier_goods_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablemy_order_detail.supplier_goods_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'supplier_goods_uuid\' in table \'my_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.supplier_goods_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablemy_order_detail.my_order_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_uuid\' in table \'my_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemy_order_detail.my_order_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_goods_nameNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_goods_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_goods_nameNull() {
+                this[this.tablemy_order_detail.my_order_detail_goods_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_goods_countNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_goods_countColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_goods_countNull() {
+                this[this.tablemy_order_detail.my_order_detail_goods_countColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_priceNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_priceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_priceNull() {
+                this[this.tablemy_order_detail.my_order_detail_priceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_total_priceNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_total_priceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_total_priceNull() {
+                this[this.tablemy_order_detail.my_order_detail_total_priceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_is_finishNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_is_finishColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_is_finishNull() {
+                this[this.tablemy_order_detail.my_order_detail_is_finishColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_is_activeNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_is_activeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_is_activeNull() {
+                this[this.tablemy_order_detail.my_order_detail_is_activeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_attendant_uuidNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_detail_attendant_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_attendant_uuidNull() {
+                this[this.tablemy_order_detail.my_order_detail_attendant_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Issupplier_goods_uuidNull() {
+                return this.IsNull(this.tablemy_order_detail.supplier_goods_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setsupplier_goods_uuidNull() {
+                this[this.tablemy_order_detail.supplier_goods_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_uuidNull() {
+                return this.IsNull(this.tablemy_order_detail.my_order_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_uuidNull() {
+                this[this.tablemy_order_detail.my_order_uuidColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class v_my_order_detailRow : global::System.Data.DataRow {
+            
+            private v_my_order_detailDataTable tablev_my_order_detail;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal v_my_order_detailRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablev_my_order_detail = ((v_my_order_detailDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_uuid {
+                get {
+                    return ((string)(this[this.tablev_my_order_detail.my_order_uuidColumn]));
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string supplier_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.supplier_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'supplier_uuid\' in table \'v_my_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.supplier_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_supplier_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_supplier_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_name\' in table \'v_my_order_detail\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_supplier_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_supplier_tel {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_supplier_telColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_tel\' in table \'v_my_order_detail\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_supplier_telColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_supplier_fax {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_supplier_faxColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_fax\' in table \'v_my_order_detail\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_supplier_faxColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_supplier_address {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_supplier_addressColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_supplier_address\' in table \'v_my_order_detail\' is " +
+                                "DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_supplier_addressColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_contact_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_contact_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_name\' in table \'v_my_order_detail\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_contact_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_contact_phone {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_contact_phoneColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_phone\' in table \'v_my_order_detail\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_contact_phoneColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_contact_email {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_contact_emailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_contact_email\' in table \'v_my_order_detail\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_contact_emailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_ps {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_psColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_ps\' in table \'v_my_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_psColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime my_order_cr {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablev_my_order_detail.my_order_crColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_cr\' in table \'v_my_order_detail\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_crColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal my_order_total_price {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablev_my_order_detail.my_order_total_priceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_total_price\' in table \'v_my_order_detail\' is DBNul" +
+                                "l.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_total_priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_detail_uuid {
+                get {
+                    return ((string)(this[this.tablev_my_order_detail.my_order_detail_uuidColumn]));
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_detail_attendant_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_detail_attendant_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_attendant_uuid\' in table \'v_my_order_detail" +
+                                "\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_attendant_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int my_order_detail_goods_count {
+                get {
+                    try {
+                        return ((int)(this[this.tablev_my_order_detail.my_order_detail_goods_countColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_goods_count\' in table \'v_my_order_detail\' i" +
+                                "s DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_goods_countColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_detail_goods_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_detail_goods_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_goods_name\' in table \'v_my_order_detail\' is" +
+                                " DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_goods_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal my_order_detail_price {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablev_my_order_detail.my_order_detail_priceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_price\' in table \'v_my_order_detail\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal my_order_detail_total_price {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablev_my_order_detail.my_order_detail_total_priceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_total_price\' in table \'v_my_order_detail\' i" +
+                                "s DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_total_priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string supplier_goods_uuid {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.supplier_goods_uuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'supplier_goods_uuid\' in table \'v_my_order_detail\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.supplier_goods_uuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string my_order_detail_attendant_c_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablev_my_order_detail.my_order_detail_attendant_c_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'my_order_detail_attendant_c_name\' in table \'v_my_order_deta" +
+                                "il\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablev_my_order_detail.my_order_detail_attendant_c_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Issupplier_uuidNull() {
+                return this.IsNull(this.tablev_my_order_detail.supplier_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setsupplier_uuidNull() {
+                this[this.tablev_my_order_detail.supplier_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_supplier_nameNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_supplier_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_supplier_nameNull() {
+                this[this.tablev_my_order_detail.my_order_supplier_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_supplier_telNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_supplier_telColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_supplier_telNull() {
+                this[this.tablev_my_order_detail.my_order_supplier_telColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_supplier_faxNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_supplier_faxColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_supplier_faxNull() {
+                this[this.tablev_my_order_detail.my_order_supplier_faxColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_supplier_addressNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_supplier_addressColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_supplier_addressNull() {
+                this[this.tablev_my_order_detail.my_order_supplier_addressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_contact_nameNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_contact_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_contact_nameNull() {
+                this[this.tablev_my_order_detail.my_order_contact_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_contact_phoneNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_contact_phoneColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_contact_phoneNull() {
+                this[this.tablev_my_order_detail.my_order_contact_phoneColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_contact_emailNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_contact_emailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_contact_emailNull() {
+                this[this.tablev_my_order_detail.my_order_contact_emailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_psNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_psColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_psNull() {
+                this[this.tablev_my_order_detail.my_order_psColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_crNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_crColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_crNull() {
+                this[this.tablev_my_order_detail.my_order_crColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_total_priceNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_total_priceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_total_priceNull() {
+                this[this.tablev_my_order_detail.my_order_total_priceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_attendant_uuidNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_attendant_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_attendant_uuidNull() {
+                this[this.tablev_my_order_detail.my_order_detail_attendant_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_goods_countNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_goods_countColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_goods_countNull() {
+                this[this.tablev_my_order_detail.my_order_detail_goods_countColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_goods_nameNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_goods_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_goods_nameNull() {
+                this[this.tablev_my_order_detail.my_order_detail_goods_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_priceNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_priceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_priceNull() {
+                this[this.tablev_my_order_detail.my_order_detail_priceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_total_priceNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_total_priceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_total_priceNull() {
+                this[this.tablev_my_order_detail.my_order_detail_total_priceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Issupplier_goods_uuidNull() {
+                return this.IsNull(this.tablev_my_order_detail.supplier_goods_uuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setsupplier_goods_uuidNull() {
+                this[this.tablev_my_order_detail.supplier_goods_uuidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismy_order_detail_attendant_c_nameNull() {
+                return this.IsNull(this.tablev_my_order_detail.my_order_detail_attendant_c_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmy_order_detail_attendant_c_nameNull() {
+                this[this.tablev_my_order_detail.my_order_detail_attendant_c_nameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -19059,6 +21330,40 @@ namespace Limew.lib.Controller.Design {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class shipping_idRowChangeEvent : global::System.EventArgs {
+            
+            private shipping_idRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRowChangeEvent(shipping_idRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public shipping_idRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public class my_orderRowChangeEvent : global::System.EventArgs {
             
             private my_orderRow eventRow;
@@ -19075,6 +21380,74 @@ namespace Limew.lib.Controller.Design {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public my_orderRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class my_order_detailRowChangeEvent : global::System.EventArgs {
+            
+            private my_order_detailRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRowChangeEvent(my_order_detailRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public my_order_detailRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class v_my_order_detailRowChangeEvent : global::System.EventArgs {
+            
+            private v_my_order_detailRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRowChangeEvent(v_my_order_detailRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public v_my_order_detailRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -21354,7 +23727,7 @@ namespace Limew.lib.Controller.Design.LimewTableAdapters {
             this._commandCollection = new global::System.Data.Odbc.OdbcCommand[1];
             this._commandCollection[0] = new global::System.Data.Odbc.OdbcCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT * FROM `v_cust_order`";
+            this._commandCollection[0].CommandText = @"SELECT cust_order_uuid, cust_order_cr, cust_order_id, cust_order_total_price, cust_order_status_uuid, cust_order_is_active, cust_uuid, cust_order_type, cust_order_cust_name, cust_order_dept, cust_order_user_name, cust_order_user_phone, cust_order_purchase_amount, cust_order_print_user_name, cust_order_shipping_date, shipping_status_uuid, cust_order_po_number, pay_status_uuid, pay_method_uuid, cust_order_invoice_number, cust_order_limit_date, cust_org_uuid, cust_order_has_tax, cust_order_ps, CUST_ORDER_SHIPPING_NUMBER, cust_name, cust_address, cust_fax, cust_is_active, cust_last_buy, cust_ps, cust_sales_email, cust_sales_name, cust_sales_phone, cust_tel, cust_order_report_date, cust_order_report_attendant_uuid, cust_order_report_attendant_c_name, pay_status_name, pay_method_name, cust_org_sales_name, cust_org_sales_phone, cust_org_sales_email, cust_org_ps, cust_org_name, cust_org_is_active, shipping_address, company_uuid, shipping_status_name FROM v_cust_order";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -22974,6 +25347,174 @@ namespace Limew.lib.Controller.Design.LimewTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class shipping_idTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.Odbc.OdbcDataAdapter _adapter;
+        
+        private global::System.Data.Odbc.OdbcConnection _connection;
+        
+        private global::System.Data.Odbc.OdbcTransaction _transaction;
+        
+        private global::System.Data.Odbc.OdbcCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public shipping_idTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.Odbc.OdbcDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.Odbc.OdbcCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.Odbc.OdbcCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.Odbc.OdbcDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "shipping_id";
+            tableMapping.ColumnMappings.Add("shipping_id_uuid", "shipping_id_uuid");
+            tableMapping.ColumnMappings.Add("max", "max");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.Odbc.OdbcConnection();
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.Odbc.OdbcCommand[1];
+            this._commandCollection[0] = new global::System.Data.Odbc.OdbcCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT * FROM `shipping_id`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(Limew.shipping_idDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual Limew.shipping_idDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            Limew.shipping_idDataTable dataTable = new Limew.shipping_idDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
     public partial class my_orderTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.Odbc.OdbcDataAdapter _adapter;
@@ -23087,19 +25628,17 @@ namespace Limew.lib.Controller.Design.LimewTableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "my_order";
             tableMapping.ColumnMappings.Add("my_order_uuid", "my_order_uuid");
-            tableMapping.ColumnMappings.Add("my_order_date", "my_order_date");
+            tableMapping.ColumnMappings.Add("supplier_uuid", "supplier_uuid");
             tableMapping.ColumnMappings.Add("my_order_supplier_name", "my_order_supplier_name");
             tableMapping.ColumnMappings.Add("my_order_supplier_tel", "my_order_supplier_tel");
-            tableMapping.ColumnMappings.Add("my_order_supplier_man", "my_order_supplier_man");
-            tableMapping.ColumnMappings.Add("my_order_goods_name", "my_order_goods_name");
-            tableMapping.ColumnMappings.Add("my_order_goods_count", "my_order_goods_count");
-            tableMapping.ColumnMappings.Add("my_order_price", "my_order_price");
-            tableMapping.ColumnMappings.Add("my_order_total_price", "my_order_total_price");
+            tableMapping.ColumnMappings.Add("my_order_supplier_fax", "my_order_supplier_fax");
+            tableMapping.ColumnMappings.Add("my_order_supplier_address", "my_order_supplier_address");
+            tableMapping.ColumnMappings.Add("my_order_contact_name", "my_order_contact_name");
+            tableMapping.ColumnMappings.Add("my_order_contact_phone", "my_order_contact_phone");
+            tableMapping.ColumnMappings.Add("my_order_contact_email", "my_order_contact_email");
             tableMapping.ColumnMappings.Add("my_order_ps", "my_order_ps");
-            tableMapping.ColumnMappings.Add("my_order_is_finish", "my_order_is_finish");
-            tableMapping.ColumnMappings.Add("my_order_pay_method", "my_order_pay_method");
-            tableMapping.ColumnMappings.Add("my_order_is_active", "my_order_is_active");
-            tableMapping.ColumnMappings.Add("my_order_attendant_uuid", "my_order_attendant_uuid");
+            tableMapping.ColumnMappings.Add("my_order_cr", "my_order_cr");
+            tableMapping.ColumnMappings.Add("my_order_total_price", "my_order_total_price");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -23140,6 +25679,368 @@ namespace Limew.lib.Controller.Design.LimewTableAdapters {
         public virtual Limew.my_orderDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             Limew.my_orderDataTable dataTable = new Limew.my_orderDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class my_order_detailTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.Odbc.OdbcDataAdapter _adapter;
+        
+        private global::System.Data.Odbc.OdbcConnection _connection;
+        
+        private global::System.Data.Odbc.OdbcTransaction _transaction;
+        
+        private global::System.Data.Odbc.OdbcCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public my_order_detailTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.Odbc.OdbcDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.Odbc.OdbcCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.Odbc.OdbcCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.Odbc.OdbcDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "my_order_detail";
+            tableMapping.ColumnMappings.Add("my_order_detail_uuid", "my_order_detail_uuid");
+            tableMapping.ColumnMappings.Add("my_order_detail_goods_name", "my_order_detail_goods_name");
+            tableMapping.ColumnMappings.Add("my_order_detail_goods_count", "my_order_detail_goods_count");
+            tableMapping.ColumnMappings.Add("my_order_detail_price", "my_order_detail_price");
+            tableMapping.ColumnMappings.Add("my_order_detail_total_price", "my_order_detail_total_price");
+            tableMapping.ColumnMappings.Add("my_order_detail_is_finish", "my_order_detail_is_finish");
+            tableMapping.ColumnMappings.Add("my_order_detail_is_active", "my_order_detail_is_active");
+            tableMapping.ColumnMappings.Add("my_order_detail_attendant_uuid", "my_order_detail_attendant_uuid");
+            tableMapping.ColumnMappings.Add("supplier_goods_uuid", "supplier_goods_uuid");
+            tableMapping.ColumnMappings.Add("my_order_uuid", "my_order_uuid");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.Odbc.OdbcConnection();
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.Odbc.OdbcCommand[1];
+            this._commandCollection[0] = new global::System.Data.Odbc.OdbcCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT * FROM `my_order_detail`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(Limew.my_order_detailDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual Limew.my_order_detailDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            Limew.my_order_detailDataTable dataTable = new Limew.my_order_detailDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class v_my_order_detailTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.Odbc.OdbcDataAdapter _adapter;
+        
+        private global::System.Data.Odbc.OdbcConnection _connection;
+        
+        private global::System.Data.Odbc.OdbcTransaction _transaction;
+        
+        private global::System.Data.Odbc.OdbcCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public v_my_order_detailTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.Odbc.OdbcDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.Odbc.OdbcCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.Odbc.OdbcTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.Odbc.OdbcCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.Odbc.OdbcDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "v_my_order_detail";
+            tableMapping.ColumnMappings.Add("my_order_uuid", "my_order_uuid");
+            tableMapping.ColumnMappings.Add("supplier_uuid", "supplier_uuid");
+            tableMapping.ColumnMappings.Add("my_order_supplier_name", "my_order_supplier_name");
+            tableMapping.ColumnMappings.Add("my_order_supplier_tel", "my_order_supplier_tel");
+            tableMapping.ColumnMappings.Add("my_order_supplier_fax", "my_order_supplier_fax");
+            tableMapping.ColumnMappings.Add("my_order_supplier_address", "my_order_supplier_address");
+            tableMapping.ColumnMappings.Add("my_order_contact_name", "my_order_contact_name");
+            tableMapping.ColumnMappings.Add("my_order_contact_phone", "my_order_contact_phone");
+            tableMapping.ColumnMappings.Add("my_order_contact_email", "my_order_contact_email");
+            tableMapping.ColumnMappings.Add("my_order_ps", "my_order_ps");
+            tableMapping.ColumnMappings.Add("my_order_cr", "my_order_cr");
+            tableMapping.ColumnMappings.Add("my_order_total_price", "my_order_total_price");
+            tableMapping.ColumnMappings.Add("my_order_detail_uuid", "my_order_detail_uuid");
+            tableMapping.ColumnMappings.Add("my_order_detail_attendant_uuid", "my_order_detail_attendant_uuid");
+            tableMapping.ColumnMappings.Add("my_order_detail_goods_count", "my_order_detail_goods_count");
+            tableMapping.ColumnMappings.Add("my_order_detail_goods_name", "my_order_detail_goods_name");
+            tableMapping.ColumnMappings.Add("my_order_detail_price", "my_order_detail_price");
+            tableMapping.ColumnMappings.Add("my_order_detail_total_price", "my_order_detail_total_price");
+            tableMapping.ColumnMappings.Add("supplier_goods_uuid", "supplier_goods_uuid");
+            tableMapping.ColumnMappings.Add("my_order_detail_attendant_c_name", "my_order_detail_attendant_c_name");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.Odbc.OdbcConnection();
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.Odbc.OdbcCommand[1];
+            this._commandCollection[0] = new global::System.Data.Odbc.OdbcCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT * FROM `v_my_order_detail`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(Limew.v_my_order_detailDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual Limew.v_my_order_detailDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            Limew.v_my_order_detailDataTable dataTable = new Limew.v_my_order_detailDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

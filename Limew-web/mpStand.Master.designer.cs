@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limew
-{
-
-
-    public partial class mpStand
-    {
-
+namespace Limew {
+    
+    
+    public partial class mpStand {
+        
         /// <summary>
         /// Head1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-
+        
         /// <summary>
         /// head control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
         /// div1 control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
-
+        
         /// <summary>
         /// div_login_user control.
         /// </summary>
@@ -58,7 +56,16 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_login_user;
-
+        
+        /// <summary>
+        /// div_setting_user control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_setting_user;
+        
         /// <summary>
         /// menu control.
         /// </summary>
@@ -67,7 +74,7 @@ namespace Limew
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl menu;
-
+        
         /// <summary>
         /// ContentPlaceHolder1 control.
         /// </summary>

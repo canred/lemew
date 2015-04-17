@@ -183,6 +183,280 @@ public class CustAction : BaseAction
         }
     }
 
+    [DirectMethod("backToShipping", DirectAction.Load)]
+    public JObject backToShipping(string custOrderUuid, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+
+            var drs = mod.getCustOrder_By_CustOrderUuid(custOrderUuid).AllRecord();            
+            if (drs.Count > 0) {
+                var dr = drs.First();
+                dr.PAY_STATUS_UUID = null;
+                dr.SHIPPING_STATUS_UUID = "SS_INPROCESS";
+                dr.gotoTable().Update_Empty2Null(dr);
+                
+            }            
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            Hashtable ht = new Hashtable();
+            ht.Add("CUST_ORDER_UUID",custOrderUuid);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("backToOrder", DirectAction.Load)]
+    public JObject backToOrder(string custOrderUuid, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+
+            var drs = mod.getCustOrder_By_CustOrderUuid(custOrderUuid).AllRecord();
+            if (drs.Count > 0)
+            {
+                var dr = drs.First();
+                dr.CUST_ORDER_STATUS_UUID = null;
+                dr.PAY_STATUS_UUID = null;
+                dr.SHIPPING_STATUS_UUID = "SS_INIT";
+                dr.gotoTable().Update_Empty2Null(dr);
+
+            }
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            Hashtable ht = new Hashtable();
+            ht.Add("CUST_ORDER_UUID", custOrderUuid);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("shippingCustOrder", DirectAction.Load)]
+    public JObject shippingCustOrder(string arrCustOrderUuid,Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            List<Object> litCustOrderUuid = new List<object>();
+            foreach (var item in arrCustOrderUuid.Split('|')) {
+                if (item.Trim().Length > 0) {
+                    litCustOrderUuid.Add(item);
+                }
+            };
+
+            var drsCustOrder = mod.getCustOrder_By_CustOrderUuid(litCustOrderUuid);
+            var shippingCount = 0;
+            foreach (var item in drsCustOrder) {
+                item.SHIPPING_STATUS_UUID = "SS_FINISH";
+                item.PAY_STATUS_UUID = "pay_status_1";//表示未付款
+                if (item.CUST_ORDER_SHIPPING_NUMBER == null || item.CUST_ORDER_SHIPPING_NUMBER == "") {
+                    item.CUST_ORDER_SHIPPING_NUMBER = getShippingNumber();
+                };                
+                item.CUST_ORDER_STATUS_UUID = "COS_IN_PROCESS";
+                item.gotoTable().Update_Empty2Null(item);
+                shippingCount++;
+            };            
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            Hashtable ht = new Hashtable();
+            ht.Add("shippingCount", shippingCount.ToString());
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("shippingInProcessCustOrder", DirectAction.Load)]
+    public JObject shippingInProcessCustOrder(string arrCustOrderUuid, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            List<Object> litCustOrderUuid = new List<object>();
+            foreach (var item in arrCustOrderUuid.Split('|'))
+            {
+                if (item.Trim().Length > 0)
+                {
+                    litCustOrderUuid.Add(item);
+                }
+            };
+
+            var drsCustOrder = mod.getCustOrder_By_CustOrderUuid(litCustOrderUuid);
+            var shippingCount = 0;
+            foreach (var item in drsCustOrder)
+            {
+                item.SHIPPING_STATUS_UUID = "SS_INPROCESS";
+                if (item.CUST_ORDER_SHIPPING_NUMBER == null || item.CUST_ORDER_SHIPPING_NUMBER == "")
+                {
+                    item.CUST_ORDER_SHIPPING_NUMBER = getShippingNumber();
+                };
+                item.CUST_ORDER_STATUS_UUID = "COS_IN_PROCESS";
+                item.gotoTable().Update_Empty2Null(item);
+                shippingCount++;
+            };
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            Hashtable ht = new Hashtable();
+            ht.Add("shippingCount", shippingCount.ToString());
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("payCompleteCustOrder", DirectAction.Load)]
+    public JObject payCompleteCustOrder(string arrCustOrderUuid, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            List<Object> litCustOrderUuid = new List<object>();
+            foreach (var item in arrCustOrderUuid.Split('|'))
+            {
+                if (item.Trim().Length > 0)
+                {
+                    litCustOrderUuid.Add(item);
+                }
+            };
+
+            var drsCustOrder = mod.getCustOrder_By_CustOrderUuid(litCustOrderUuid);
+            var shippingCount = 0;
+            foreach (var item in drsCustOrder)
+            {
+                item.PAY_STATUS_UUID = "pay_status_2";
+                item.CUST_ORDER_STATUS_UUID = "COS_FINISH";
+                item.gotoTable().Update_Empty2Null(item);
+                shippingCount++;
+            };
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            Hashtable ht = new Hashtable();
+            ht.Add("payCompleteCount", shippingCount.ToString());
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(ht);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+    private string getShippingNumber() {
+        LwModel mod = new LwModel();
+        //var drs = mod.getCustOrderId_By_CustOrderIdUuid(DateTime.Now.ToString("yyyyMMdd")).AllRecord();
+        var drs = mod.getShippingId_By_ShippingIdUuid(DateTime.Now.ToString("yyyyMMdd")).AllRecord();
+        if (drs.Count == 0)
+        {
+
+            ShippingId_Record newRow = new ShippingId_Record();
+            newRow.SHIPPING_ID_UUID = DateTime.Now.ToString("yyyyMMdd");
+            newRow.MAX = 1;
+            newRow.gotoTable().Insert_Empty2Null(newRow);
+            return newRow.SHIPPING_ID_UUID + String.Format("{0:0000}", newRow.MAX);
+        }
+        else
+        {
+            var dr = drs.First();
+            dr.MAX = dr.MAX + 1;
+            dr.gotoTable().Update_Empty2Null(dr);
+            return dr.SHIPPING_ID_UUID + String.Format("{0:0000}", dr.MAX);
+        }
+    }
     [DirectMethod("submitCust", DirectAction.FormSubmission)]
     public JObject submitCust(string cust_uuid,
                                 string cust_name,
@@ -401,6 +675,77 @@ public class CustAction : BaseAction
     }
 
 
+    [DirectMethod("infoCustActioForPs", DirectAction.Load)]
+    public JObject infoCustActioForPs(string pCustOrderUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+
+        try
+        {  /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            var data = model.getCustOrder_By_CustOrderUuid(pCustOrderUuid);
+
+            if (data.AllRecord().Count == 1)
+            {
+                var dr = data.AllRecord().First();
+                var drRead = new CustOrder_Record();
+                drRead.CUST_ORDER_UUID = dr.CUST_ORDER_UUID;
+                drRead.CUST_ORDER_PS = dr.CUST_ORDER_PS;
+                return ExtDirect.Direct.Helper.Form.OutputJObject(JsonHelper.RecordBaseJObject(drRead));
+            }
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("Data Not Found!"));
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("infoVCustOrder", DirectAction.Load)]
+    public JObject infoVCustOrder(string pCustOrderUuid, Request request)
+    {
+        #region Declare
+        LwModel model = new LwModel();
+        #endregion
+
+        try
+        {  /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            var data = model.getVCustOrder_By_CustOrderUuid(pCustOrderUuid);
+
+            if (data.AllRecord().Count == 1)
+            {
+                // data.AllRecord().First().CUST_ORDER_REPORT_DATE = "";
+                return ExtDirect.Direct.Helper.Form.OutputJObject(JsonHelper.RecordBaseJObject(data.AllRecord().First()));
+            }
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("Data Not Found!"));
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
     [DirectMethod("createCustOrder", DirectAction.Load)]
     public JObject createCustOrder(Request request)
     {
@@ -428,9 +773,9 @@ public class CustAction : BaseAction
             record.CUST_ORDER_ID = getCustOrderId();
             record.CUST_ORDER_IS_ACTIVE = 0;
             record.CUST_ORDER_STATUS_UUID = "COS_INIT";
-            record.PAY_STATUS_UUID = "pay_status_1";
-            record.PAY_METHOD_UUID = "PM_INIT";
-            record.SHIPPING_STATUS_UUID = "SS_INIT";
+            record.PAY_STATUS_UUID = null;
+            record.PAY_METHOD_UUID = null;
+            record.SHIPPING_STATUS_UUID = null;
             record.CUST_ORDER_HAS_TAX = 1;
             record.gotoTable().Insert_Empty2Null(record);
             System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
@@ -577,7 +922,14 @@ public class CustAction : BaseAction
             {
                 record.CUST_ORDER_SHIPPING_DATE = null;
             }
-            record.SHIPPING_STATUS_UUID = shipping_status_uuid;
+
+            if (shipping_status_uuid != null && shipping_status_uuid!="")
+            {
+                record.SHIPPING_STATUS_UUID = shipping_status_uuid;
+            }
+            else {
+                record.SHIPPING_STATUS_UUID = "SS_INIT";
+            }
             record.CUST_ORDER_PO_NUMBER = cust_order_po_number;
             record.PAY_STATUS_UUID = pay_status_uuid;
             record.PAY_METHOD_UUID = pay_method_uuid;
@@ -630,6 +982,55 @@ public class CustAction : BaseAction
         }
     }
 
+
+    [DirectMethod("submitCustOrderForPs", DirectAction.FormSubmission)]
+    public JObject submitCustOrderForPs(string cust_order_uuid,                                    
+                                    string cust_order_ps, Request request)
+    {
+
+
+        #region Declare
+        var action = SubmitAction.None;
+        LwModel mod = new LwModel();
+        CustOrder_Record record = new CustOrder_Record();
+        #endregion
+        try
+        {  /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*
+             * 所有Form的動作最終是使用Submit的方式將資料傳出；
+             * 必須有一個特徵來判斷使用者，執行的動作；
+             */
+            if (cust_order_uuid.Trim().Length > 0)
+            {
+                action = SubmitAction.Edit;
+                record = mod.getCustOrder_By_CustOrderUuid(cust_order_uuid).AllRecord().First();
+            }
+           
+            record.CUST_ORDER_PS = cust_order_ps;
+            if (action == SubmitAction.Edit)
+            {
+                record.gotoTable().Update_Empty2Null(record);
+            }
+            
+            System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
+            otherParam.Add("CUST_ORDER_UUID", record.CUST_ORDER_UUID);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(otherParam);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
     [DirectMethod("destoryCustOrder", DirectAction.Store)]
     public JObject destoryCustOrder(string pCustOrderUuid, Request request)
     {
@@ -1437,7 +1838,7 @@ string supplier_goods_uuid, Request request)
     }
 
     [DirectMethod("loadVCustOrder", DirectAction.Store)]
-    public JObject loadVCustOrder(string pKeyword,string pCustOrderType,string pCompanyUuid,string pCustUuid,string pCustOrderStatusUuid,string pShippingStatusUuid, string pageNo, string limitNo, string sort, string dir, Request request)
+    public JObject loadVCustOrder(string pKeyword,string pCustOrderType,string pCompanyUuid,string pCustUuid,string pCustOrderStatusUuid,string pShippingStatusUuid, string pPayStatusUuid,string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
         List<JObject> jobject = new List<JObject>();
@@ -1458,8 +1859,8 @@ string supplier_goods_uuid, Request request)
             };
             /*取得總資料數*/
             orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
-            var totalCount = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_Count(pKeyword,pCustOrderType,pCompanyUuid,pCustUuid,pCustOrderStatusUuid,pShippingStatusUuid);
-            var data = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid(pKeyword, pCustOrderType, pCompanyUuid, pCustUuid, pCustOrderStatusUuid, pShippingStatusUuid, orderLimit);
+            var totalCount = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_PayStatusUuid_Count(pKeyword,pCustOrderType,pCompanyUuid,pCustUuid,pCustOrderStatusUuid,pShippingStatusUuid,pPayStatusUuid);
+            var data = mod.getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_PayStatusUuid(pKeyword, pCustOrderType, pCompanyUuid, pCustUuid, pCustOrderStatusUuid, pShippingStatusUuid, pPayStatusUuid, orderLimit);
             if (data.Count > 0)
             {
                 jobject = JsonHelper.RecordBaseListJObject(data.ToList());
@@ -1479,6 +1880,48 @@ string supplier_goods_uuid, Request request)
         }
     }
 
+    [DirectMethod("loadVCustOrderShipping", DirectAction.Store)]
+    public JObject loadVCustOrderShipping(string pKeyword, string pCustOrderType, string pCompanyUuid, string pCustUuid, string pCustOrderStatusUuid, string pShippingStatusUuid, string pageNo, string limitNo, string sort, string dir, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
+            var totalCount = mod.getVCustOrderForShipping_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_Count(pKeyword, pCustOrderType, pCompanyUuid, pCustUuid, pCustOrderStatusUuid, pShippingStatusUuid);
+            var data = mod.getVCustOrderForShipping_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid(pKeyword, pCustOrderType, pCompanyUuid, pCustUuid, pCustOrderStatusUuid, pShippingStatusUuid, orderLimit);
+            if (data.Count > 0)
+            {
+                jobject = JsonHelper.RecordBaseListJObject(data.ToList());
+            }
+            else
+            {
+                totalCount = 0;
+            }
+            /*使用Store Std out 『Sotre物件標準輸出格式』*/
+            return ExtDirect.Direct.Helper.Store.OutputJObject(jobject, totalCount);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
 
     [DirectMethod("batchUpdateCustOrderDetail", DirectAction.Load)]
     public JObject batchUpdateCustOrderDetail(string allItem, Request request)
@@ -1502,6 +1945,7 @@ string supplier_goods_uuid, Request request)
             };
             /*取得總資料數*/
             var drsUpdate = allItem.Split('|');
+            var custOrderUuid = "";
             foreach (var item in drsUpdate) {
                 if (item.Trim().Length > 0) {
                     var data = item.Split(',');
@@ -1520,6 +1964,87 @@ string supplier_goods_uuid, Request request)
                     drCustOrderDetail.CUST_ORDER_DETAIL_PRICE = Convert.ToDecimal(custOrderDetailPrice);
                     drCustOrderDetail.CUST_ORDER_DETAIL_TOTAL_PRICE = drCustOrderDetail.CUST_ORDER_DETAIL_COUNT * drCustOrderDetail.CUST_ORDER_DETAIL_PRICE;
                     drCustOrderDetail.gotoTable().Update_Empty2Null(drCustOrderDetail);
+                    if (custOrderUuid.Trim().Length == 0) {
+                        custOrderUuid = drCustOrderDetail.CUST_ORDER_UUID;
+                    }
+                }
+            }
+
+            if (custOrderUuid != "") {
+                var drs = mod.getCustOrderDetail_By_CustOrderUuid(custOrderUuid,new OrderLimit());
+                var drCustOrder = mod.getCustOrder_By_CustOrderUuid(custOrderUuid).AllRecord().First();
+                var orgTotal = drCustOrder.CUST_ORDER_TOTAL_PRICE.Value;
+                decimal? sum = 0;
+                foreach (var item in drs) {
+                    if (item.CUST_ORDER_DETAIL_PRICE != null) {
+                        sum += item.CUST_ORDER_DETAIL_PRICE;
+                    }
+                }
+                if (drCustOrder.CUST_ORDER_HAS_TAX == 0)
+                {
+                    drCustOrder.CUST_ORDER_TOTAL_PRICE = sum.Value * Convert.ToDecimal(1.05);
+                }
+                else {
+                    drCustOrder.CUST_ORDER_TOTAL_PRICE = sum.Value;
+                }
+
+                if (orgTotal != sum.Value)
+                {
+                    drCustOrder.gotoTable().Update_Empty2Null(drCustOrder);
+                }
+
+
+            }
+
+
+
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
+
+    [DirectMethod("batchUpdateCustOrderInvoice", DirectAction.Load)]
+    public JObject batchUpdateCustOrderInvoice(string allItem, Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            var drsUpdate = allItem.Split('|');
+            foreach (var item in drsUpdate)
+            {
+                if (item.Trim().Length > 0)
+                {
+                    var data = item.Split(',');
+                    var custOrderUuid = data[0];
+                    var payMethodUuid = data[1];
+                    var custOrderInvoiceNumber = data[2];
+                    var drCustOrder = mod.getCustOrder_By_CustOrderUuid(custOrderUuid).AllRecord().First();
+                    if (payMethodUuid.Trim().Length > 0)
+                    {
+                        drCustOrder.PAY_METHOD_UUID = payMethodUuid;
+                    }
+                    drCustOrder.CUST_ORDER_INVOICE_NUMBER = custOrderInvoiceNumber;
+                    drCustOrder.gotoTable().Update_Empty2Null(drCustOrder);
                 }
             }
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
@@ -1531,8 +2056,6 @@ string supplier_goods_uuid, Request request)
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }
-
-
 [DirectMethod("createCustOrderDetailCustomize", DirectAction.Load)]
     public JObject createCustOrderDetailCustomize(string custOrderUuid,string createNumber, Request request)
     {
@@ -1621,7 +2144,7 @@ string supplier_goods_uuid, Request request)
         #region Declare
         LwModel model = new LwModel();
         #endregion
-        pCustOrderUuid = "15031223373300495";
+        //pCustOrderUuid = "15031223373300495";
         try
         {  
             WebRequest req = WebRequest.Create("http://localhost/limew/pdftest.aspx");

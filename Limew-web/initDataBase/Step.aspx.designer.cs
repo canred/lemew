@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limew.initDataBase
-{
-
-
-    public partial class Step
-    {
+namespace Limew.initDataBase {
+    
+    
+    public partial class Step {
     }
 }

@@ -76,6 +76,9 @@ namespace Limew.Model.Lw.Table
 		public string CUST_ORDER_REPORT_ATTENDANT_C_NAME {get{return "CUST_ORDER_REPORT_ATTENDANT_C_NAME" ; }}
 		public string SHIPPING_ADDRESS {get{return "SHIPPING_ADDRESS" ; }}
 		public string COMPANY_UUID {get{return "COMPANY_UUID" ; }}
+		public string CUST_ORDER_SHIPPING_NUMBER {get{return "CUST_ORDER_SHIPPING_NUMBER" ; }}
+		public string SHIPPING_STATUS_NAME {get{return "SHIPPING_STATUS_NAME" ; }}
+		public string COMPANY_C_NAME {get{return "COMPANY_C_NAME" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VCustOrder_Record CurrentRecord(){

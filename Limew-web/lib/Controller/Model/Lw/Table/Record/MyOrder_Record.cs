@@ -16,19 +16,18 @@ namespace Limew.Model.Lw.Table.Record
 		public MyOrder_Record(){}
 		/*欄位資訊 Start*/
 		string _MY_ORDER_UUID=null;
-		DateTime? _MY_ORDER_DATE=null;
+		string _SUPPLIER_UUID=null;
 		string _MY_ORDER_SUPPLIER_NAME=null;
 		string _MY_ORDER_SUPPLIER_TEL=null;
-		string _MY_ORDER_SUPPLIER_MAN=null;
-		string _MY_ORDER_GOODS_NAME=null;
-		int? _MY_ORDER_GOODS_COUNT=null;
-		decimal? _MY_ORDER_PRICE=null;
-		decimal? _MY_ORDER_TOTAL_PRICE=null;
+		string _MY_ORDER_SUPPLIER_FAX=null;
+		string _MY_ORDER_SUPPLIER_ADDRESS=null;
+		string _MY_ORDER_CONTACT_NAME=null;
+		string _MY_ORDER_CONTACT_PHONE=null;
+		string _MY_ORDER_CONTACT_EMAIL=null;
 		string _MY_ORDER_PS=null;
-		int? _MY_ORDER_IS_FINISH=null;
-		string _MY_ORDER_PAY_METHOD=null;
+		DateTime? _MY_ORDER_CR=null;
+		decimal? _MY_ORDER_TOTAL_PRICE=null;
 		int? _MY_ORDER_IS_ACTIVE=null;
-		string _MY_ORDER_ATTENDANT_UUID=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("MY_ORDER_UUID",true,typeof(string))]
@@ -44,16 +43,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("MY_ORDER_DATE",false,typeof(DateTime?))]
-		public DateTime? MY_ORDER_DATE
+		[ColumnName("SUPPLIER_UUID",false,typeof(string))]
+		public string SUPPLIER_UUID
 		{
 			set
 			{
-				_MY_ORDER_DATE=value;
+				_SUPPLIER_UUID=value;
 			}
 			get
 			{
-				return _MY_ORDER_DATE;
+				return _SUPPLIER_UUID;
 			}
 		}
 
@@ -83,68 +82,68 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("MY_ORDER_SUPPLIER_MAN",false,typeof(string))]
-		public string MY_ORDER_SUPPLIER_MAN
+		[ColumnName("MY_ORDER_SUPPLIER_FAX",false,typeof(string))]
+		public string MY_ORDER_SUPPLIER_FAX
 		{
 			set
 			{
-				_MY_ORDER_SUPPLIER_MAN=value;
+				_MY_ORDER_SUPPLIER_FAX=value;
 			}
 			get
 			{
-				return _MY_ORDER_SUPPLIER_MAN;
+				return _MY_ORDER_SUPPLIER_FAX;
 			}
 		}
 
-		[ColumnName("MY_ORDER_GOODS_NAME",false,typeof(string))]
-		public string MY_ORDER_GOODS_NAME
+		[ColumnName("MY_ORDER_SUPPLIER_ADDRESS",false,typeof(string))]
+		public string MY_ORDER_SUPPLIER_ADDRESS
 		{
 			set
 			{
-				_MY_ORDER_GOODS_NAME=value;
+				_MY_ORDER_SUPPLIER_ADDRESS=value;
 			}
 			get
 			{
-				return _MY_ORDER_GOODS_NAME;
+				return _MY_ORDER_SUPPLIER_ADDRESS;
 			}
 		}
 
-		[ColumnName("MY_ORDER_GOODS_COUNT",false,typeof(int?))]
-		public int? MY_ORDER_GOODS_COUNT
+		[ColumnName("MY_ORDER_CONTACT_NAME",false,typeof(string))]
+		public string MY_ORDER_CONTACT_NAME
 		{
 			set
 			{
-				_MY_ORDER_GOODS_COUNT=value;
+				_MY_ORDER_CONTACT_NAME=value;
 			}
 			get
 			{
-				return _MY_ORDER_GOODS_COUNT;
+				return _MY_ORDER_CONTACT_NAME;
 			}
 		}
 
-		[ColumnName("MY_ORDER_PRICE",false,typeof(decimal?))]
-		public decimal? MY_ORDER_PRICE
+		[ColumnName("MY_ORDER_CONTACT_PHONE",false,typeof(string))]
+		public string MY_ORDER_CONTACT_PHONE
 		{
 			set
 			{
-				_MY_ORDER_PRICE=value;
+				_MY_ORDER_CONTACT_PHONE=value;
 			}
 			get
 			{
-				return _MY_ORDER_PRICE;
+				return _MY_ORDER_CONTACT_PHONE;
 			}
 		}
 
-		[ColumnName("MY_ORDER_TOTAL_PRICE",false,typeof(decimal?))]
-		public decimal? MY_ORDER_TOTAL_PRICE
+		[ColumnName("MY_ORDER_CONTACT_EMAIL",false,typeof(string))]
+		public string MY_ORDER_CONTACT_EMAIL
 		{
 			set
 			{
-				_MY_ORDER_TOTAL_PRICE=value;
+				_MY_ORDER_CONTACT_EMAIL=value;
 			}
 			get
 			{
-				return _MY_ORDER_TOTAL_PRICE;
+				return _MY_ORDER_CONTACT_EMAIL;
 			}
 		}
 
@@ -161,29 +160,29 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("MY_ORDER_IS_FINISH",false,typeof(int?))]
-		public int? MY_ORDER_IS_FINISH
+		[ColumnName("MY_ORDER_CR",false,typeof(DateTime?))]
+		public DateTime? MY_ORDER_CR
 		{
 			set
 			{
-				_MY_ORDER_IS_FINISH=value;
+				_MY_ORDER_CR=value;
 			}
 			get
 			{
-				return _MY_ORDER_IS_FINISH;
+				return _MY_ORDER_CR;
 			}
 		}
 
-		[ColumnName("MY_ORDER_PAY_METHOD",false,typeof(string))]
-		public string MY_ORDER_PAY_METHOD
+		[ColumnName("MY_ORDER_TOTAL_PRICE",false,typeof(decimal?))]
+		public decimal? MY_ORDER_TOTAL_PRICE
 		{
 			set
 			{
-				_MY_ORDER_PAY_METHOD=value;
+				_MY_ORDER_TOTAL_PRICE=value;
 			}
 			get
 			{
-				return _MY_ORDER_PAY_METHOD;
+				return _MY_ORDER_TOTAL_PRICE;
 			}
 		}
 
@@ -197,19 +196,6 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _MY_ORDER_IS_ACTIVE;
-			}
-		}
-
-		[ColumnName("MY_ORDER_ATTENDANT_UUID",false,typeof(string))]
-		public string MY_ORDER_ATTENDANT_UUID
-		{
-			set
-			{
-				_MY_ORDER_ATTENDANT_UUID=value;
-			}
-			get
-			{
-				return _MY_ORDER_ATTENDANT_UUID;
 			}
 		}
 		public MyOrder_Record Clone(){

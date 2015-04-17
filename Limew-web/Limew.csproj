@@ -9839,7 +9839,7 @@
     <None Include="lib\Controller\Design\Lw.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Lw.Designer.cs</LastGenOutput>
+      <LastGenOutput>Lw1.Designer.cs</LastGenOutput>
     </None>
     <Content Include="lib\Controller\Design\Lw.xss">
       <DependentUpon>Lw.xsd</DependentUpon>
@@ -10074,6 +10074,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Goods.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\MyOrder%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\MyOrder.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrderDetail%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrderDetail.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayStatus%40.cs" />
@@ -10088,9 +10090,11 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\File_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Gcategory_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Goods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrderDetail_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayMethod_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayStatus_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\ShippingId_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\ShippingStatus_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\SupplierGoods_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Supplier_Record.cs" />
@@ -10100,7 +10104,10 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VFilegroup_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VGoods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\VMyOrderDetail_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VSupplierGoods_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\ShippingId%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\ShippingId.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\ShippingStatus%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\ShippingStatus.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Supplier%40.cs" />
@@ -10119,6 +10126,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\VFilegroup.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VGoods%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VGoods.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VMyOrderDetail%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VMyOrderDetail.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VSupplierGoods%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VSupplierGoods.cs" />
     <Compile Include="lib\StoreSession.cs" />

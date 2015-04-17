@@ -326,12 +326,54 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.ShippingId getShippingId_By_ShippingIdUuid(string pSHIPPING_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.ShippingId shippingid = new Limew.Model.Lw.Table.ShippingId(dbc);
+				shippingid.Fill_By_PK(pSHIPPING_ID_UUID);
+				return shippingid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
 		public Limew.Model.Lw.Table.MyOrder getMyOrder_By_MyOrderUuid(string pMY_ORDER_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
 				Limew.Model.Lw.Table.MyOrder myorder = new Limew.Model.Lw.Table.MyOrder(dbc);
 				myorder.Fill_By_PK(pMY_ORDER_UUID);
 				return myorder;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.MyOrderDetail getMyOrderDetail_By_MyOrderDetailUuid(string pMY_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.MyOrderDetail myorderdetail = new Limew.Model.Lw.Table.MyOrderDetail(dbc);
+				myorderdetail.Fill_By_PK(pMY_ORDER_DETAIL_UUID);
+				return myorderdetail;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VMyOrderDetail getVMyOrderDetail_By_MyOrderUuid_And_MyOrderDetailUuid(string pMY_ORDER_UUID,string pMY_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VMyOrderDetail vmyorderdetail = new Limew.Model.Lw.Table.VMyOrderDetail(dbc);
+				vmyorderdetail.Fill_By_PK(pMY_ORDER_UUID,pMY_ORDER_DETAIL_UUID);
+				return vmyorderdetail;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

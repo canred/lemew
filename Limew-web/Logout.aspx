@@ -6,10 +6,10 @@
     <div id="systemInfo" style="margin-bottom:5px;margin-top:5px;"></div>
 </div>
 <script type="text/javascript">
-Ext.onReady(function () {    
-    var logoutPanel = Ext.create('WS.LogoutPanel',{
-        val:{
-            logonUrl:'<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().LogonPage) %>'
+    Ext.onReady(function () {
+        var logoutPanel = Ext.create('WS.LogoutPanel', {
+            val: {
+                logonUrl: '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().LogonPage) %>'
         }
     });
     logoutPanel.render('logon');

@@ -4,7 +4,8 @@ Ext.define('WS.MyOrderWindow', {
     title: '訂貨維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/Record16x16.png',
     closeAction: 'destroy',
-    closable: false, modal: true,
+    closable: false,
+    modal: true,
     param: {
         myOrderUuid: undefined
     },
@@ -12,24 +13,131 @@ Ext.define('WS.MyOrderWindow', {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
+    fnCreateMyOrderDetailCustomize: function(createNumber) {
+        WS.MyOrderAction.createMyOrderDetailCustomize(this.param.myOrderUuid, createNumber, function(obj, jsonObj) {
+            if (jsonObj.result.success) {
+                this.myStore.vMyOrderDetail.reload();
+            };
+        }, this);
+    },
     myStore: {
-
+        supplier: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'SUPPLIER',
+            remoteSort: true,
+            pageSize: 99999,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.SupplierAction.loadSupplier
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    'pKeyword': ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'SUPPLIER_NAME',
+                direction: 'ASC'
+            }]
+        }),
+        vMyOrderDetail: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: false,
+            model: 'V_MY_ORDER_DETAIL',
+            remoteSort: true,
+            pageSize: 10,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.MyOrderAction.loadVMyOrderDetail
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pMyOrderUuid', 'pSupplierUuid', 'pKeyword', 'pIsFinish', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    'pMyOrderUuid': '',
+                    'pSupplierUuid': '',
+                    'pKeyword': '',
+                    'pIsFinish': ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'MY_ORDER_DETAIL_UUID',
+                direction: 'ASC'
+            }]
+        }),
+        unit: Ext.create('Ext.data.Store', {
+            extend: 'Ext.data.Store',
+            autoLoad: true,
+            remoteSort: true,
+            model: 'UNIT',
+            pageSize: 10,
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: WS.UnitAction.loadUnit
+                },
+                reader: {
+                    root: 'data'
+                },
+                paramsAsHash: true,
+                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                extraParams: {
+                    'pKeyword': ''
+                },
+                simpleSortMode: true,
+                listeners: {
+                    exception: function(proxy, response, operation) {
+                        Ext.MessageBox.show({
+                            title: 'REMOTE EXCEPTON A',
+                            msg: operation.getError(),
+                            icon: Ext.MessageBox.ERROR,
+                            buttons: Ext.Msg.OK
+                        });
+                    }
+                }
+            },
+            sorters: [{
+                property: 'UNIT_NAME',
+                direction: 'ASC'
+            }]
+        })
     },
     width: 800,
-    height: 450,
+    height: 600,
     layout: 'fit',
     resizable: false,
     draggable: false,
-    fnCal: function(mainWin) {
-        var p = mainWin.down('#MY_ORDER_PRICE').getValue();
-        var c = mainWin.down('#MY_ORDER_GOODS_COUNT').getValue();
-        var tObj = mainWin.down('#MY_ORDER_TOTAL_PRICE');
-
-        if (Ext.isNumber(p) && Ext.isNumber(c)) {
-            tObj.setValue(p * c);
-        };
-
-    },
     initComponent: function() {
         this.items = [Ext.create('Ext.form.Panel', {
             api: {
@@ -54,169 +162,114 @@ Ext.define('WS.MyOrderWindow', {
                     title: '供應商',
                     border: true,
                     items: [{
-                        xtype: 'textfield',
-                        fieldLabel: '供應商名稱',
-                        itemId: 'MY_ORDER_SUPPLIER_NAME',
-                        name: 'MY_ORDER_SUPPLIER_NAME',
-                        anchor: '0 0',
-                        maxLength: 12,
-                        allowBlank: false,
-                        labelAlign: 'right'
-                    }, {
                         xtype: 'container',
                         layout: 'hbox',
                         margin: '0 0 5 0',
                         items: [{
-                            xtype: 'textfield',
-                            fieldLabel: '人員',
-                            labelWidth: 100,
-                            name: 'MY_ORDER_SUPPLIER_MAN',
-                            flex: 1,
-                            maxLength: 84,
-                            allowBlank: true,
-                            labelAlign: 'right'
-                        }, {
-                            xtype: 'textfield',
-                            fieldLabel: '電話',
-                            labelWidth: 100,
-                            name: 'MY_ORDER_SUPPLIER_TEL',
-                            flex: 1,
-                            maxLength: 340,
-                            labelAlign: 'right'
-                        }]
-                    }]
-                }, {
-                    xtype: 'fieldset',
-                    title: '商品資訊',
-                    border: true,
-                    flex: 1,
-                    items: [{
-                        xtype: 'textfield',
-                        fieldLabel: '貨品名稱',
-                        labelWidth: 100,
-                        margin: '5 0 5 0',
-                        name: 'MY_ORDER_GOODS_NAME',
-                        anchor: '0 0',
-                        labelAlign: 'right',
-                        allowBlank: false
-                    }, {
-                        xtype: 'container',
-                        layout: 'hbox',
-                        margin: '0 0 5 0',
-
-                        items: [{
-                            xtype: 'numberfield',
-                            fieldLabel: '價格',
-                            labelWidth: 100,
-                            name: 'MY_ORDER_PRICE',
-                            itemId: 'MY_ORDER_PRICE',
-                            flex: 1,
-                            allowBlank: false,
-                            labelAlign: 'right',
-                            listeners: {
-                                change: function(e, t, eOpts) {
-                                    var mainWin = this.up('window');
-                                    mainWin.fnCal(mainWin);
-                                }
-                            }
-                        }, {
-                            xtype: 'numberfield',
-                            fieldLabel: '數量',
-                            labelWidth: 100,
-                            name: 'MY_ORDER_GOODS_COUNT',
-                            itemId: 'MY_ORDER_GOODS_COUNT',
-                            flex: 1,
-                            allowBlank: false,
-                            labelAlign: 'right',
-                            listeners: {
-                                change: function(e, t, eOpts) {
-                                    var mainWin = this.up('window');
-                                    mainWin.fnCal(mainWin);
-                                }
-                            }
-                        }, {
-                            xtype: 'numberfield',
-                            fieldLabel: '總價',
-                            labelWidth: 100,
-                            name: 'MY_ORDER_TOTAL_PRICE',
-                            itemId: 'MY_ORDER_TOTAL_PRICE',
-                            flex: 1,
-                            labelAlign: 'right',
-                            allowBlank: false,
-                            readOnly: true
-                        }]
-                    }, {
-                        xtype: 'datefield',
-                        fieldLabel: '建立日期',
-                        value: new Date(),
-                        width: 250,
-                        format: 'Y/m/d',
-                        submitFormat: 'Y/m/d',
-                        name: 'MY_ORDER_DATE',
-                        itemId: 'MY_ORDER_DATE',
-                        labelAlign: 'right',
-                        allowBlank: false
-                    }]
-                }, {
-                    xtype: 'fieldset',
-                    title: '狀態',
-                    border: true,
-                    items: [{
-                        xtype: 'container',
-                        layout: 'hbox',
-                        margin: '0 0 5 0',
-                        items: [{
-                            xtype: 'fieldcontainer',
-                            labelAlign: 'right',
-                            fieldLabel: '完成',
-                            layout: 'hbox',
-                            defaults: {
-                                margins: '0 10 0 0'
-                            },
-                            defaultType: 'radiofield',
-                            flex: 1,
-                            items: [{
-                                xtype: 'radiofield',
-                                boxLabel: '完成',
-                                inputValue: '1',
-                                name: 'MY_ORDER_IS_FINISH',
-                                flex: 1,
-                            }, {
-                                xtype: 'radiofield',
-                                boxLabel: '處理中',
-                                inputValue: '0',
-                                name: 'MY_ORDER_IS_FINISH',
-                                flex: 1,
-                                checked: true
-                            }]
-                        }, {
-                            flex: 2,
                             xtype: 'combo',
-                            fieldLabel: '支援方式',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            itemId: 'MY_ORDER_PAY_METHOD',
-                            displayField: 'text',
-                            valueField: 'value',
-                            name: 'MY_ORDER_PAY_METHOD',
+                            fieldLabel: '供應商名稱',
+                            itemId: 'cmbSupplierUuid',
+                            displayField: 'SUPPLIER_NAME',
+                            valueField: 'SUPPLIER_UUID',
+                            name: 'SUPPLIER_UUID',
                             editable: false,
                             hidden: false,
-                            value: '未設定',
-                            store: new Ext.data.ArrayStore({
-                                fields: ['text', 'value'],
-                                data: [
-                                    ['未設定', '未設定'],
-                                    ['現金', '現金'],
-                                    ['支票', '支票'],
-                                    ['信用卡', '信用卡'],
-                                    ['其他', '其他']
-                                ]
-                            })
+                            flex: 1,
+                            store: this.myStore.supplier,
+                            listeners: {
+                                'select': function(combo, records, eOpts) {
+                                    this.down('#MY_ORDER_SUPPLIER_NAME').setValue(records.data.SUPPLIER_NAME);
+                                    this.down('#MY_ORDER_SUPPLIER_ADDRESS').setValue(records.data.SUPPLIER_ADDRESS);
+                                    this.down('#MY_ORDER_SUPPLIER_TEL').setValue(records.data.SUPPLIER_TEL);
+                                    this.down('#MY_ORDER_SUPPLIER_FAX').setValue(records.data.SUPPLIER_FAX);
+                                    this.down('#MY_ORDER_CONTACT_NAME').setValue(records.data.SUPPLIER_CONTACT_NAME);
+                                    this.down('#MY_ORDER_CONTACT_PHONE').setValue(records.data.SUPPLIER_CONTACT_PHONE);
+                                },
+                                scope: this
+                            }
+                        }, {
+                            xtype: 'datefield',
+                            fieldLabel: '製單日期',
+                            value: new Date(),
+                            format: 'Y/m/d',
+                            submitFormat: 'Y/m/d',
+                            name: 'MY_ORDER_CR',
+                            itemId: 'MY_ORDER_CR',
+                            labelAlign: 'right',
+                            value: new Date(),
+                            flex: 1
+                        }]
+                    }, {
+                        xtype: 'fieldset',
+                        border: true,
+                        padding: '5 5 0 0',
+                        defaults: {
+                            labelAlign: 'right',
+                            margin: '5 5 0 0'
+                        },
+                        items: [{
+                            xtype: 'container',
+                            layout: 'hbox',
+                            defaults: {
+                                labelAlign: 'right'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                fieldLabel: '供應商名稱',
+                                name: 'MY_ORDER_SUPPLIER_NAME',
+                                itemId: 'MY_ORDER_SUPPLIER_NAME',
+                                flex: 1
+                            }, {
+                                xtype: 'textfield',
+                                fieldLabel: '地址',
+                                name: 'MY_ORDER_SUPPLIER_ADDRESS',
+                                itemId: 'MY_ORDER_SUPPLIER_ADDRESS',
+                                flex: 1
+                            }]
+                        }, {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            defaults: {
+                                labelAlign: 'right'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                fieldLabel: '電話',
+                                name: 'MY_ORDER_SUPPLIER_TEL',
+                                itemId: 'MY_ORDER_SUPPLIER_TEL',
+                                flex: 1
+                            }, {
+                                xtype: 'textfield',
+                                fieldLabel: '傳真',
+                                name: 'MY_ORDER_SUPPLIER_FAX',
+                                itemId: 'MY_ORDER_SUPPLIER_FAX',
+                                flex: 1
+                            }]
+                        }, {
+                            xtype: 'container',
+                            layout: 'hbox',
+                            padding: '5 0 5 0',
+                            defaults: {
+                                labelAlign: 'right'
+                            },
+                            items: [{
+                                xtype: 'textfield',
+                                fieldLabel: '聯絡人',
+                                name: 'MY_ORDER_CONTACT_NAME',
+                                itemId: 'MY_ORDER_CONTACT_NAME',
+                                flex: 1
+                            }, {
+                                xtype: 'textfield',
+                                fieldLabel: '電話',
+                                name: 'MY_ORDER_CONTACT_PHONE',
+                                itemId: 'MY_ORDER_CONTACT_PHONE',
+                                flex: 1
+                            }]
                         }]
                     }]
                 }, {
                     xtype: 'fieldset',
-                    title: '備註',
+                    title: '訂貨備註',
                     border: true,
                     items: [{
                         xtype: 'textarea',
@@ -226,24 +279,375 @@ Ext.define('WS.MyOrderWindow', {
                         selectOnFocus: true,
                         grow: true
                     }]
+                }, {
+                    xtype: 'fieldset',
+                    title: '明細',
+                    border: true,
+                    flex: 1,
+                    items: [{
+                        xtype: 'gridpanel',
+                        itemId: 'grdVMyOrderDetail',
+                        store: this.myStore.vMyOrderDetail,
+                        plugins: {
+                            ptype: 'cellediting',
+                            clicksToEdit: 1,
+                            listeners: {
+                                beforeedit: function(editor, context, eOpts) {
+                                    var mainWin = context.grid.up('window');
+                                    mainWin.param.editRecord = context.record;
+                                    mainWin.param.editRowIdx = context.rowIdx;
+                                    mainWin.param.editColIdx = context.colIdx;
+                                },
+                                edit: function(editor, context, eOpts) {
+                                    var mainWin = context.grid.up('window');
+                                    mainWin.param.editRowIdx = context.rowIdx;
+                                    mainWin.param.editColIdx = context.colIdx;
+                                }
+                            }
+                        },
+                        remoteSort: true,
+                        padding: 5,
+                        autoScroll: true,
+                        columns: [{
+                            xtype: 'actioncolumn',
+                            dataIndex: 'MY_ORDER_DETAIL_UUID',
+                            align: 'center',
+                            width: 60,
+                            items: [{
+                                tooltip: '*編輯',
+                                icon: SYSTEM_URL_ROOT + '/css/custImages/edit.gif',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    var mainWin = grid.up('window'),
+                                        myOrderUuid = grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID,
+                                        myOrderDetailUuid = grid.getStore().getAt(rowIndex).data.MY_ORDER_DETAIL_UUID;
+                                    if (grid.getStore().getAt(rowIndex).data.SUPPLIER_GOODS_UUID != "") {
+                                        var subWin = Ext.create('WS.MyOrderDetailWindow', {
+                                            param: {
+                                                parentObj: mainWin,
+                                                supplierUuid: grid.getStore().getAt(rowIndex).data.SUPPLIER_UUID,
+                                                myOrderUuid: myOrderUuid,
+                                                myOrderDetailUuid: grid.getStore().getAt(rowIndex).data.MY_ORDER_DETAIL_UUID
+                                            }
+                                        });
+                                        subWin.on('closeEvent', function() {
+                                            mainWin.myStore.vMyOrderDetail.reload();
+                                        });
+                                        subWin.show();
+                                    } else {
+                                        var subWin = Ext.create('WS.MyOrderDetailCustomizedWindow', {
+                                            param: {
+                                                parentObj: mainWin,
+                                                myOrderUuid: myOrderUuid,
+                                                myOrderDetailUuid: grid.getStore().getAt(rowIndex).data.MY_ORDER_DETAIL_UUID
+                                            }
+                                        });
+                                        subWin.on('closeEvent', function() {
+                                            mainWin.myStore.vMyOrderDetail.reload();
+                                        });
+                                        subWin.show();
+                                    }
+                                }
+                            }, {
+                                tooltip: '*刪除',
+                                icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    var mainWin = grid.up('window');
+                                    var store = mainWin.down('#grdVMyOrderDetail').getStore();
+                                    var find = store.findRecord("MY_ORDER_DETAIL_UUID", grid.getStore().getAt(rowIndex).data.MY_ORDER_DETAIL_UUID);
+                                    WS.MyOrderAction.destoryMyOrderDetail(grid.getStore().getAt(rowIndex).data.MY_ORDER_DETAIL_UUID, function(obj, jsonObj) {
+                                        if (jsonObj.result.success) {
+                                            var store = mainWin.down('#grdVMyOrderDetail').getStore(),
+                                                count = store.getCount();
+                                            store.remove(find);
+                                        };
+                                    }, mainWin);
+                                }
+                            }],
+                            sortable: false,
+                            hideable: false
+                        }, {
+                            xtype: 'templatecolumn',
+                            text: "商品名稱",
+                            dataIndex: 'MY_ORDER_DETAIL_GOODS_NAME',
+                            align: 'center',
+                            width: 250,
+                            tpl: new Ext.XTemplate(
+                                "<tpl if='SUPPLIER_GOODS_UUID == \"\" '>",
+                                '<input type="text" readonly  style="width:220px" value="{MY_ORDER_DETAIL_GOODS_NAME}"/>',
+                                "<tpl else>",
+                                '{MY_ORDER_DETAIL_GOODS_NAME}',
+                                "</tpl>"),
+                            editor: {
+                                xtype: 'textfield',
+                                enableKeyEvents: true,
+                                listeners: {
+                                    change: function(obj, newValue, oldValue, eOpts) {
+                                        var mainWin = obj.up('window');
+                                        if (mainWin.param.editRecord.data.SUPPLIER_GOODS_UUID != '') {
+                                            MY_ORDER_DETAIL_GOODS_NAME = oldValue;
+                                            return;
+                                        } else {
+                                            mainWin.param.editRecord.data.MY_ORDER_DETAIL_GOODS_NAME = newValue;
+                                        }
+                                        mainWin.param.editRecord.commit();
+                                    },
+                                    focus: function(obj, eOpts) {
+                                        var mainWin = obj.up('window');
+                                        if (mainWin.param.editRecord.data.SUPPLIER_GOODS_UUID != '') {
+                                            obj.setReadOnly(true);
+                                        } else {
+                                            obj.setReadOnly(false);
+                                        }
+                                    }
+                                }
+                            }
+                        }, {
+                            text: "單價",
+                            dataIndex: 'MY_ORDER_DETAIL_PRICE',
+                            align: 'center',
+                            width: 100,
+                            xtype: 'templatecolumn',
+                            align: 'right',
+                            tpl: new Ext.XTemplate(
+                                '<input type="text" readonly  style="width:80px" value="{MY_ORDER_DETAIL_PRICE}"/>'
+                            ),
+                            editor: {
+                                xtype: 'numberfield',
+                                listeners: {
+                                    change: function(obj, newValue, oldValue, eOpts) {
+                                        var mainWin = obj.up('window');
+                                        mainWin.param.editRecord.data.MY_ORDER_DETAIL_TOTAL_PRICE = newValue * mainWin.param.editRecord.data.MY_ORDER_DETAIL_GOODS_COUNT;
+                                        mainWin.param.editRecord.commit();
+                                    }
+                                }
+                            }
+                        }, {
+                            text: "數量",
+                            dataIndex: 'MY_ORDER_DETAIL_GOODS_COUNT',
+                            align: 'center',
+                            width: 100,
+                            xtype: 'templatecolumn',
+                            align: 'right',
+                            tpl: new Ext.XTemplate(
+                                '<input type="text" readonly style="width:80px" value="{MY_ORDER_DETAIL_GOODS_COUNT}"/>'
+                            ),
+                            editor: {
+                                xtype: 'numberfield',
+                                listeners: {
+                                    change: function(obj, newValue, oldValue, eOpts) {
+                                        var mainWin = obj.up('window');
+                                        mainWin.param.editRecord.data.MY_ORDER_DETAIL_TOTAL_PRICE = newValue * mainWin.param.editRecord.data.MY_ORDER_DETAIL_PRICE;
+                                        mainWin.param.editRecord.commit();
+                                    }
+                                }
+                            }
+                        }, {
+                            text: "單位",
+                            dataIndex: 'UNIT_UUID',
+                            align: 'center',
+                            width: 100,
+                            xtype: 'templatecolumn',
+                            align: 'center',
+                            tpl: new Ext.XTemplate(
+                                '<input type="text" readonly style="width:80px" value="{MY_ORDER_DETAIL_UNIT_NAME}"/>'
+                            ),
+                            editor: {
+                                xtype: 'combo',
+                                allowBlank: false,
+                                displayField: 'UNIT_NAME',
+                                valueField: 'UNIT_UUID',
+                                store: this.myStore.unit,
+                                editable: false,
+                                hidden: false,
+                                listeners: {
+                                    change: function(obj, newValue, oldValue, eOpts) {
+                                        var mainWin = obj.up('window');
+                                        if (!Ext.isEmpty(newValue)) {
+                                            var dr = obj.getStore().findRecord("UNIT_UUID", newValue).data;
+                                            mainWin.param.editRecord.data.MY_ORDER_DETAIL_UNIT_NAME = dr.UNIT_NAME;
+                                        };
+                                    }
+                                }
+                            }
+                        }, {
+                            text: "小計",
+                            dataIndex: 'MY_ORDER_DETAIL_TOTAL_PRICE',
+                            align: 'center',
+                            fles: 1
+                        }],
+                        tbar: [{
+                            type: 'button',
+                            text: '新增商品',
+                            icon: SYSTEM_URL_ROOT + '/css/images/addC16x16.png',
+                            handler: function() {
+                                var mainWin = this.up('window'),
+                                    myOrderUuid = mainWin.down('#MY_ORDER_UUID').getValue(),
+                                    supplierUuid = mainWin.down('#cmbSupplierUuid').getValue();
+                                if (myOrderUuid && myOrderUuid != "") {
+                                    var mainWin = this.up('window');
+                                    var subWin = Ext.create('WS.MyOrderDetailWindow', {
+                                        param: {
+                                            supplierUuid: supplierUuid,
+                                            parentObj: mainWin,
+                                            myOrderUuid: myOrderUuid,
+                                            myOrderDetailUuid: ""
+                                        }
+                                    });
+                                    subWin.on('closeEvent', function() {
+                                        mainWin.myStore.vMyOrderDetail.reload();
+                                    });
+                                    subWin.show();
+                                } else {
+                                    Ext.MessageBox.show({
+                                        title: '操作通知',
+                                        icon: Ext.MessageBox.INFO,
+                                        buttons: Ext.Msg.OK,
+                                        msg: '請先執行儲存操作，才可新增子項商品內容。'
+                                    });
+                                }
+                            }
+                        }, {
+                            type: 'button',
+                            text: '新增自訂商品',
+                            icon: SYSTEM_URL_ROOT + '/css/images/addD16x16.png',
+                            handler: function() {
+                                var mainWin = this.up('window'),
+                                    myOrderUuid = mainWin.down('#MY_ORDER_UUID').getValue(),
+                                    supplierUuid = "";
+                                if (myOrderUuid && myOrderUuid != "") {
+                                    var mainWin = this.up('window');
+                                    var subWin = Ext.create('WS.MyOrderDetailCustomizedWindow', {
+                                        param: {
+                                            supplierUuid: supplierUuid,
+                                            parentObj: mainWin,
+                                            myOrderUuid: myOrderUuid,
+                                            myOrderDetailUuid: ""
+                                        }
+                                    });
+                                    subWin.on('closeEvent', function() {
+                                        mainWin.myStore.vMyOrderDetail.reload();
+                                    });
+                                    subWin.show();
+                                } else {
+                                    Ext.MessageBox.show({
+                                        title: '操作通知',
+                                        icon: Ext.MessageBox.INFO,
+                                        buttons: Ext.Msg.OK,
+                                        msg: '請先執行儲存操作，才可新增子項商品內容。'
+                                    });
+                                }
+                            }
+                        }, {
+                            xtype: 'button',
+                            text: '新增自訂商品',
+                            icon: SYSTEM_URL_ROOT + '/css/images/addD16x16.png',
+                            menu: [{
+                                text: '1項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(1);
+                                }
+                            }, {
+                                text: '2項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(2);
+                                }
+                            }, {
+                                text: '3項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(3);
+                                }
+                            }, {
+                                text: '4項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(4);
+                                }
+                            }, {
+                                text: '5項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(5);
+                                }
+                            }, {
+                                text: '6項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(6);
+                                }
+                            }, {
+                                text: '7項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(7);
+                                }
+                            }, {
+                                text: '8項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(8);
+                                }
+                            }, {
+                                text: '9項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(9);
+                                }
+                            }, {
+                                text: '10項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(10);
+                                }
+                            }, {
+                                text: '20項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(20);
+                                }
+                            }, {
+                                text: '30項',
+                                handler: function() {
+                                    var mainWin = this.up('window');
+                                    mainWin.fnCreateMyOrderDetailCustomize(30);
+                                }
+                            }]
+                        }],
+                        minHeight: 330,
+                        autoHeight: true,
+                        overflowY: 'auto'
+                    }]
                 }]
             }, {
-                xtype: 'hidden',
+                xtype: 'hiddenfield',
                 fieldLabel: 'MY_ORDER_UUID',
                 name: 'MY_ORDER_UUID',
                 anchor: '100%',
                 maxLength: 84,
                 itemId: 'MY_ORDER_UUID'
+            }, {
+                xtype: 'hiddenfield',
+                name: 'MY_ORDER_IS_ACTIVE',
+                itemId: 'MY_ORDER_IS_ACTIVE'
             }],
             fbar: [{
                 type: 'button',
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
                 handler: function() {
+                    var mw = this.up('window');
                     var form = this.up('window').down("#MyOrderForm").getForm();
                     if (form.isValid() == false) {
                         return;
                     };
+                    var updateData = "";
+                    Ext.each(mw.myStore.vMyOrderDetail.data.items, function(item) {
+                        updateData += item.data.MY_ORDER_DETAIL_UUID + "," + item.data.MY_ORDER_DETAIL_GOODS_NAME + "," + item.data.MY_ORDER_DETAIL_PRICE + "," + item.data.MY_ORDER_DETAIL_GOODS_COUNT + "," + item.data.UNIT_UUID + "|";
+                    });
+                    WS.MyOrderAction.batchUpdateMyOrderDetail(updateData, function(obj, jsonObj) {});
+                    mw.down('#MY_ORDER_IS_ACTIVE').setValue(1);
                     form.submit({
                         waitMsg: '更新中...',
                         success: function(form, action) {
@@ -254,10 +658,10 @@ Ext.define('WS.MyOrderWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -285,7 +689,7 @@ Ext.define('WS.MyOrderWindow', {
                                     this.close();
                                 } else {
                                     Ext.MessageBox.show({
-                                        title: '刪除訂貨操作(1502221728)',
+                                        title: '刪除訂貨操作(1504171344)',
                                         icon: Ext.MessageBox.INFO,
                                         buttons: Ext.Msg.OK,
                                         msg: jsonObj.result.message
@@ -311,18 +715,20 @@ Ext.define('WS.MyOrderWindow', {
     },
     listeners: {
         'show': function() {
+            this.myStore.supplier.load();
+            this.myStore.vMyOrderDetail.getProxy().setExtraParam('pMyOrderUuid', this.param.myOrderUuid);
             if (this.param.myOrderUuid != undefined) {
-                //alert(this.param.myOrderUuid);
                 this.down("#MyOrderForm").getForm().load({
                     params: {
                         'pMyOrderUuid': this.param.myOrderUuid
                     },
                     success: function(response, a, b) {
-                        if (a.result.data.MY_ORDER_DATE != '' && a.result.data.MY_ORDER_DATE != undefined) {
-                            this.down("#MY_ORDER_DATE").setValue(new Date(a.result.data.MY_ORDER_DATE));
+                        if (a.result.data.MY_ORDER_CR != '' && a.result.data.MY_ORDER_CR != undefined) {
+                            this.down("#MY_ORDER_CR").setValue(new Date(a.result.data.MY_ORDER_CR));
                         } else {
-                            this.down("#MY_ORDER_DATE").setValue(new Date());
+                            this.down("#MY_ORDER_CR").setValue(new Date());
                         };
+                        this.myStore.vMyOrderDetail.load();
                     },
                     failure: function(response, jsonObj, b) {
                         if (!jsonObj.result.success) {
@@ -334,14 +740,34 @@ Ext.define('WS.MyOrderWindow', {
                             });
                         };
                     },
-                    scope:this
+                    scope: this
                 });
             } else {
-                this.down("#MyOrderForm").getForm().reset();
+                this.down("#MyOrderForm").getForm().load({
+                    params: {
+                        'pMyOrderUuid': ""
+                    },
+                    success: function(response, a, b) {
+                        this.param.myOrderUuid = a.result.data.MY_ORDER_UUID;
+                        this.myStore.vMyOrderDetail.load();
+                    },
+                    failure: function(response, jsonObj, b) {
+                        if (!jsonObj.result.success) {
+                            Ext.MessageBox.show({
+                                title: 'Warning',
+                                icon: Ext.MessageBox.WARNING,
+                                buttons: Ext.Msg.OK,
+                                msg: jsonObj.result.message
+                            });
+                        };
+                    },
+                    scope: this
+                });
             };
         },
         'close': function() {
             this.closeEvent();
+            this.myStore.vMyOrderDetail.removeAll();
         }
     }
 });

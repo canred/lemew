@@ -5,34 +5,34 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Limew.Model.Basic;
+using Limew.Model.Basic.Table;
 using Limew.Model.Basic.Table.Record;
 namespace Limew
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default :System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (((System.Web.Configuration.HttpCapabilitiesBase)Request.Browser).IsMobileDevice == true) {
+                Response.Redirect("~/app/ist/index.aspx");
+            }
         }
-        public string getCompany()
-        {
+        public string getCompany() {
             if (Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == false)
             {
                 return Limew.Parameter.Config.ParemterConfigs.GetConfig().DEVUserCompany;
             }
-            else if (Limew.Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD") >= 0)
+            else if (Limew.Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD") >= 0)                
             {
                 return HttpContext.Current.User.Identity.Name.Split('\\')[0];
             }
-            else
-            {
+            else{
                 return "";
             }
         }
-
         public string getAccount()
         {
-            if (Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == false)
+            if (Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer==false)
             {
                 return Limew.Parameter.Config.ParemterConfigs.GetConfig().DEVUserAccount;
             }
@@ -42,9 +42,8 @@ namespace Limew
                 {
                     return HttpContext.Current.User.Identity.Name.Split('\\')[1];
                 }
-                catch (Exception ex)
-                {
-                    LK.MyException.MyException.ErrorNoThrowException(this, ex);
+                catch (Exception ex) {
+                    LK.MyException.MyException.ErrorNoThrowException(this, ex);                    
                     Response.Redirect(Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().NoPermissionPage));
                     return "";
                 }
@@ -54,26 +53,25 @@ namespace Limew
                 return "";
             }
         }
-
         public string getPassword()
         {
             BasicModel modBasic = new BasicModel();
-            if (
-                Limew.Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD") >= 0
+            if (                
+                Limew.Parameter.Config.ParemterConfigs.GetConfig().AuthenticationType.ToUpper().IndexOf("AD") >= 0 
                 )
             {
                 var dtAttendantV = modBasic.getAttendantV_By_Company_Account_Password(getCompany(), getAccount());
                 AttendantV_Record drAttendantV = null;
                 if (dtAttendantV.Count == 1)
                 {
-                    drAttendantV = dtAttendantV.First();
+                    drAttendantV = dtAttendantV.First();                    
                     return drAttendantV.PASSWORD;
-
+                   
                 }
                 else
                 {
                     return "";
-                }
+                }                           
             }
             else if (Limew.Parameter.Config.ParemterConfigs.GetConfig().IsProductionServer == false)
             {
@@ -91,8 +89,7 @@ namespace Limew
             {
                 return "false";
             }
-            else
-            {
+            else {
                 return "true";
             }
         }

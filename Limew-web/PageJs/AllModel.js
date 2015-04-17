@@ -56,7 +56,7 @@ Ext.define('APPPAGE', {
     ]
 });
 
-Ext.define('ATTEDNANTVV', {
+Ext.define('ATTENDANT_V', {
     extend: 'Ext.data.Model',
     fields: [
         'COMPANY_ID',

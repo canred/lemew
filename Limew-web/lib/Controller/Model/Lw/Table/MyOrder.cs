@@ -30,19 +30,18 @@ namespace Limew.Model.Lw.Table
 		}
 		/*欄位資訊 Start*/
 		public string MY_ORDER_UUID {get{return "MY_ORDER_UUID" ; }}
-		public string MY_ORDER_DATE {get{return "MY_ORDER_DATE" ; }}
+		public string SUPPLIER_UUID {get{return "SUPPLIER_UUID" ; }}
 		public string MY_ORDER_SUPPLIER_NAME {get{return "MY_ORDER_SUPPLIER_NAME" ; }}
 		public string MY_ORDER_SUPPLIER_TEL {get{return "MY_ORDER_SUPPLIER_TEL" ; }}
-		public string MY_ORDER_SUPPLIER_MAN {get{return "MY_ORDER_SUPPLIER_MAN" ; }}
-		public string MY_ORDER_GOODS_NAME {get{return "MY_ORDER_GOODS_NAME" ; }}
-		public string MY_ORDER_GOODS_COUNT {get{return "MY_ORDER_GOODS_COUNT" ; }}
-		public string MY_ORDER_PRICE {get{return "MY_ORDER_PRICE" ; }}
-		public string MY_ORDER_TOTAL_PRICE {get{return "MY_ORDER_TOTAL_PRICE" ; }}
+		public string MY_ORDER_SUPPLIER_FAX {get{return "MY_ORDER_SUPPLIER_FAX" ; }}
+		public string MY_ORDER_SUPPLIER_ADDRESS {get{return "MY_ORDER_SUPPLIER_ADDRESS" ; }}
+		public string MY_ORDER_CONTACT_NAME {get{return "MY_ORDER_CONTACT_NAME" ; }}
+		public string MY_ORDER_CONTACT_PHONE {get{return "MY_ORDER_CONTACT_PHONE" ; }}
+		public string MY_ORDER_CONTACT_EMAIL {get{return "MY_ORDER_CONTACT_EMAIL" ; }}
 		public string MY_ORDER_PS {get{return "MY_ORDER_PS" ; }}
-		public string MY_ORDER_IS_FINISH {get{return "MY_ORDER_IS_FINISH" ; }}
-		public string MY_ORDER_PAY_METHOD {get{return "MY_ORDER_PAY_METHOD" ; }}
+		public string MY_ORDER_CR {get{return "MY_ORDER_CR" ; }}
+		public string MY_ORDER_TOTAL_PRICE {get{return "MY_ORDER_TOTAL_PRICE" ; }}
 		public string MY_ORDER_IS_ACTIVE {get{return "MY_ORDER_IS_ACTIVE" ; }}
-		public string MY_ORDER_ATTENDANT_UUID {get{return "MY_ORDER_ATTENDANT_UUID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public MyOrder_Record CurrentRecord(){

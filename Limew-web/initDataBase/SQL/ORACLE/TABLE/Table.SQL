@@ -134,8 +134,7 @@ create table {user}.ATTENDANT
   grade           VARCHAR2(10),
   id              VARCHAR2(100),
   src_uuid        VARCHAR2(36),
-  is_default_pass VARCHAR2(1) default 'Y',
-  picture_url     VARCHAR2(10)
+  is_default_pass VARCHAR2(1) default 'Y'
 );
 create index {user}.ATTENDANT_IDX1 on {user}.ATTENDANT (COMPANY_UUID, ID);
 create index {user}.ATTENDANT_IDX2 on {user}.ATTENDANT (SRC_UUID);
@@ -276,6 +275,7 @@ create table {user}.APPMENU
   name_zh_tw            VARCHAR2(200) not null,
   name_zh_cn            VARCHAR2(200) not null,
   name_en_us            VARCHAR2(200) not null,
+  name_jpn              VARCHAR2(200) null,
   id                    VARCHAR2(100) not null,
   appmenu_uuid          VARCHAR2(36),
   haschild              VARCHAR2(1) default 'N' not null,
@@ -346,6 +346,7 @@ create table {user}.APPPAGE
   url                   VARCHAR2(200) not null,
   parameter_class       VARCHAR2(200),
   application_head_uuid VARCHAR2(36) not null,
+  runjsfunction         VARCHAR2(200) ,
   p_mode                VARCHAR2(100)
 );
 alter table {user}.APPPAGE

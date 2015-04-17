@@ -46,20 +46,6 @@ namespace Limew.Model.Basic
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.Appmenu getAppmenu_By_Uuid(string pUUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.Appmenu appmenu = new Limew.Model.Basic.Table.Appmenu(dbc);
-				appmenu.Fill_By_PK(pUUID);
-				return appmenu;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
 		public Limew.Model.Basic.Table.Apppage getApppage_By_Uuid(string pUUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
@@ -158,20 +144,6 @@ namespace Limew.Model.Basic
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.AttendantV getAttendantV_By_Uuid(string pUUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.AttendantV attendantv = new Limew.Model.Basic.Table.AttendantV(dbc);
-				attendantv.Fill_By_PK(pUUID);
-				return attendantv;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
 		public Limew.Model.Basic.Table.SitemapV getSitemapV_By_Uuid(string pUUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
@@ -206,20 +178,6 @@ namespace Limew.Model.Basic
 				Limew.Model.Basic.Table.GroupAttendantV groupattendantv = new Limew.Model.Basic.Table.GroupAttendantV(dbc);
 				groupattendantv.Fill_By_PK(pUUID);
 				return groupattendantv;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.AppmenuApppageV getAppmenuApppageV_By_Uuid(string pUUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.AppmenuApppageV appmenuapppagev = new Limew.Model.Basic.Table.AppmenuApppageV(dbc);
-				appmenuapppagev.Fill_By_PK(pUUID);
-				return appmenuapppagev;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -276,20 +234,6 @@ namespace Limew.Model.Basic
 				Limew.Model.Basic.Table.Proxy proxy = new Limew.Model.Basic.Table.Proxy(dbc);
 				proxy.Fill_By_PK(pUUID);
 				return proxy;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.VAppmenuProxyMap getVAppmenuProxyMap_By_ProxyUuid_And_Uuid_And_AppmenuProxyUuid(string pPROXY_UUID,string pUUID,string pAPPMENU_PROXY_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.VAppmenuProxyMap vappmenuproxymap = new Limew.Model.Basic.Table.VAppmenuProxyMap(dbc);
-				vappmenuproxymap.Fill_By_PK(pPROXY_UUID,pUUID,pAPPMENU_PROXY_UUID);
-				return vappmenuproxymap;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -368,12 +312,12 @@ namespace Limew.Model.Basic
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.AuthorityMenuV getAuthorityMenuV_By_Uuid(string pUUID){
+		public Limew.Model.Basic.Table.Attendant getAttendant_By_Uuid(string pUUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.AuthorityMenuV authoritymenuv = new Limew.Model.Basic.Table.AuthorityMenuV(dbc);
-				authoritymenuv.Fill_By_PK(pUUID);
-				return authoritymenuv;
+				Limew.Model.Basic.Table.Attendant attendant = new Limew.Model.Basic.Table.Attendant(dbc);
+				attendant.Fill_By_PK(pUUID);
+				return attendant;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -382,12 +326,68 @@ namespace Limew.Model.Basic
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Basic.Table.Attendant getAttendant_By_Uuid(string pUUID){
+		public Limew.Model.Basic.Table.AttendantV getAttendantV_By_Uuid(string pUUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Basic.Table.Attendant attendant = new Limew.Model.Basic.Table.Attendant(dbc);
-				attendant.Fill_By_PK(pUUID);
-				return attendant;
+				Limew.Model.Basic.Table.AttendantV attendantv = new Limew.Model.Basic.Table.AttendantV(dbc);
+				attendantv.Fill_By_PK(pUUID);
+				return attendantv;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Basic.Table.Appmenu getAppmenu_By_Uuid(string pUUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Basic.Table.Appmenu appmenu = new Limew.Model.Basic.Table.Appmenu(dbc);
+				appmenu.Fill_By_PK(pUUID);
+				return appmenu;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Basic.Table.AppmenuApppageV getAppmenuApppageV_By_Uuid(string pUUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Basic.Table.AppmenuApppageV appmenuapppagev = new Limew.Model.Basic.Table.AppmenuApppageV(dbc);
+				appmenuapppagev.Fill_By_PK(pUUID);
+				return appmenuapppagev;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Basic.Table.VAppmenuProxyMap getVAppmenuProxyMap_By_ProxyUuid_And_Uuid_And_AppmenuProxyUuid(string pPROXY_UUID,string pUUID,string pAPPMENU_PROXY_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Basic.Table.VAppmenuProxyMap vappmenuproxymap = new Limew.Model.Basic.Table.VAppmenuProxyMap(dbc);
+				vappmenuproxymap.Fill_By_PK(pPROXY_UUID,pUUID,pAPPMENU_PROXY_UUID);
+				return vappmenuproxymap;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Basic.Table.AuthorityMenuV getAuthorityMenuV_By_Uuid(string pUUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Basic.Table.AuthorityMenuV authoritymenuv = new Limew.Model.Basic.Table.AuthorityMenuV(dbc);
+				authoritymenuv.Fill_By_PK(pUUID);
+				return authoritymenuv;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

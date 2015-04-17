@@ -88,14 +88,15 @@ Ext.define('WS.CustOrderQueryPanel', {
                 //     'pCustUuid': '',
                 //     'pKeyword': ''
                 // },
-                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'pPayStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pKeyword: '',
                     pCustOrderType: '',
                     pCompanyUuid: '',
                     pCustUuid: '',
                     pCustOrderStatusUuid: '',
-                    pShippingStatusUuid: ''
+                    pShippingStatusUuid: 'SS_INIT',
+                    pPayStatusUuid: ''
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -310,7 +311,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                         ]
                     }),
                     editable: false,
-                    hidden:true
+                    hidden: true
                 }, {
                     xtype: 'combo',
                     fieldLabel: '開單公司',
@@ -320,7 +321,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                     labelAlign: 'right',
                     valueField: 'UUID',
                     editable: false,
-                    hidden:true,
+                    hidden: true,
                     store: this.myStore.company,
                     value: '',
                 }, {
@@ -345,17 +346,31 @@ Ext.define('WS.CustOrderQueryPanel', {
                     displayField: 'CUST_ORDER_STATUS_NAME',
                     valueField: 'CUST_ORDER_STATUS_UUID',
                     editable: false,
-                    hidden:true,
+                    hidden: true,
                     store: this.myStore.custOrderStatus,
                     value: '',
                     width: 160
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: '出貨狀態',
+                    queryMode: 'local',
+                    itemId: 'cmbShippingStatus',
+                    displayField: 'SHIPPING_STATUS_NAME',
+                    valueField: 'SHIPPING_STATUS_UUID',
+                    labelWidth: 80,
+                    width: 200,
+                    editable: false,
+                    hidden: false,
+                    value: 'SS_INIT',
+                    store: this.myStore.shippingStatus,
+                    editable: false
                 }, {
                     xtype: 'textfield',
                     fieldLabel: '關鍵字',
                     margin: '0 0 0 20',
                     itemId: 'txt_search',
                     labelWidth: 50,
-                    enableKeyEvents: true, 
+                    enableKeyEvents: true,
                     listeners: {
                         keyup: function(e, t, eOpts) {
                             var keyCode = t.keyCode;
@@ -380,6 +395,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                                 obj.getProxy().setExtraParam('pCompanyUuid', pl.down("#cmbCompany").getValue());
                                 obj.getProxy().setExtraParam('pCustOrderStatusUuid', pl.down("#cmbOrderStatus").getValue());
                                 obj.getProxy().setExtraParam('pShippingStatusUuid', pl.down("#cmbShippingStatus").getValue());
+                                obj.getProxy().setExtraParam('pPayStatusUuid', '');
                                 obj.loadPage(1);
                             }(store, this.up('panel'));
                     }
@@ -404,25 +420,11 @@ Ext.define('WS.CustOrderQueryPanel', {
                 xtype: 'container',
                 layout: 'hbox',
                 margin: '5 0 0 5',
-                hidden:true,
+                hidden: true,
                 defaults: {
                     labelAlign: 'right'
                 },
-                items: [{
-                    xtype: 'combo',
-                    fieldLabel: '出貨狀態',
-                    queryMode: 'local',
-                    itemId: 'cmbShippingStatus',
-                    displayField: 'SHIPPING_STATUS_NAME',
-                    valueField: 'SHIPPING_STATUS_UUID',
-                    labelWidth: 60,
-                    width: 150,
-                    editable: false,
-                    hidden: false,
-                    value: '',
-                    store: this.myStore.shippingStatus,
-                    editable: false
-                }]
+                items: []
             }, {
                 xtype: 'gridpanel',
                 store: this.myStore.vcustorder,
@@ -430,6 +432,23 @@ Ext.define('WS.CustOrderQueryPanel', {
                 border: true,
                 height: $(document).height() - 240,
                 padding: '5 15 5 5',
+                selModel: new Ext.selection.CheckboxModel({
+                    mode: 'MULTI',
+                    checkOnly: true,
+                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        if (record.data.SHIPPING_STATUS_UUID == "SS_INIT") {
+                            return '<div class="x-grid-row-checker" role="presentation">&nbsp;</div>';
+                        } else {
+                            return "";
+                        };
+                    },
+                    listeners: {
+                        selectionchange: function(selectionModel, selected, options) {}
+                    }
+                }),
+                listeners: {
+
+                },
                 columns: [{
                     text: "編輯",
                     xtype: 'actioncolumn',
@@ -463,21 +482,38 @@ Ext.define('WS.CustOrderQueryPanel', {
                     }],
                     sortable: false,
                     hideable: false
-                },{
-                    header:'建立日期',
-                    dataIndex:'CUST_ORDER_CR',
-                    align:'left',
-                    width:100
+                }, {
+                    header: '建立日期',
+                    dataIndex: 'CUST_ORDER_CR',
+                    align: 'left',
+                    width: 100
                 }, {
                     header: "訂單編號",
                     dataIndex: 'CUST_ORDER_ID',
                     align: 'left',
-                    width: 150
+                    width: 130
+                }, {
+                    header: "出貨編號",
+                    dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
+                    align: 'left',
+                    width: 150,
+                    hidden: true
+                }, {
+                    header: "出貨地址",
+                    dataIndex: 'SHIPPING_ADDRESS',
+                    align: 'left',
+                    width: 150,
+                    hidden: true
                 }, {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
                     align: 'left',
                     width: 150
+                }, {
+                    header: "單位",
+                    dataIndex: 'CUST_ORDER_DEPT',
+                    align: 'left',
+                    width: 100
                 }, {
                     header: "公司電話",
                     align: 'left',
@@ -485,15 +521,25 @@ Ext.define('WS.CustOrderQueryPanel', {
                     width: 120
                 }, {
                     header: '採購員',
-                    dataIndex: 'CUST_SALES_NAME',
+                    dataIndex: 'CUST_ORG_SALES_NAME',
                     align: 'left',
                     width: 80
                 }, {
-                    header: '採購員電話',
-                    dataIndex: 'CUST_SALES_PHONE',
+                    header: '聯絡電話',
+                    dataIndex: 'CUST_ORG_SALES_PHONE',
                     align: 'left',
-                    flex: 1,
-                    hidden: true
+                    width: 120,
+                    hidden: false
+                }, {
+                    header: '金額',
+                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                    align: 'right',
+                    width: 80
+                }, {
+                    header: '報價公司',
+                    dataIndex: 'COMPANY_C_NAME',
+                    align: 'right',
+                    width: 80
                 }, {
                     header: "傳真",
                     dataIndex: 'CUST_FAX',
@@ -510,13 +556,15 @@ Ext.define('WS.CustOrderQueryPanel', {
                     header: '採購員email',
                     dataIndex: 'CUST_SALES_EMAIL',
                     align: 'left',
-                    flex: 1,
+                    width: 120,
                     hidden: true
                 }, {
                     header: '備註',
                     dataIndex: 'CUST_ORDER_PS',
                     align: 'left',
-                    flex: 1
+                    width: 200,
+                    hidden: true
+
                 }, {
                     header: '等級',
                     dataIndex: 'CUST_LEVEL',
@@ -571,6 +619,70 @@ Ext.define('WS.CustOrderQueryPanel', {
                                 subWin.show();
                             }
                         }, main);
+
+                        /*註冊事件*/
+
+                    }
+                }, {
+                    xtype: 'tbfill'
+                }, {
+                    icon: SYSTEM_URL_ROOT + '/css/images/okA16x16.png',
+                    text: '出貨處理',
+                    handler: function() {
+                        var main = this.up('panel').up('panel').up('panel'),
+                            grid = main.down('#grdVCustOrder'),
+                            selectRecord = grid.getSelection();
+
+                        //console.log( main.down('#grdVCustOrder').getSelection() );
+
+                        if (selectRecord.length == 0) {
+                            Ext.MessageBox.show({
+                                title: '操作提示',
+                                icon: Ext.MessageBox.INFO,
+                                buttons: Ext.Msg.OK,
+                                msg: '請先選擇預出貨的訂單。'
+                            });
+                        } else {
+                            /*canred要先檢查出貨地址是否有維護*/
+                            var postData = '';
+                            var hasAddressEmpty = false;
+                            Ext.each(selectRecord, function(item) {
+                                if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
+                                    postData += item.data.CUST_ORDER_UUID + "|";
+                                } else {
+                                    hasAddressEmpty = true;
+                                };
+                            });
+
+                            if (hasAddressEmpty == true) {
+                                Ext.MessageBox.show({
+                                    title: '操作提示',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                                });
+                                return;
+                            };
+
+                            WS.CustAction.shippingInProcessCustOrder(postData, function(obj, jsonObj) {
+                                if (jsonObj.result.success && jsonObj.result.success == true) {
+                                    var shippCount = jsonObj.result.shippingCount;
+                                    if (shippCount > 0) {
+                                        Ext.MessageBox.show({
+                                            title: '完成出貨處理',
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.Msg.OK,
+                                            msg: '完成' + shippCount + '筆訂單完成出貨處理。',
+                                            scope: this,
+                                            fn: function() {
+                                                this.myStore.vcustorder.reload();
+                                            }
+                                        });
+                                    }
+                                }
+                            }, main);
+                        };
+
 
                         /*註冊事件*/
 

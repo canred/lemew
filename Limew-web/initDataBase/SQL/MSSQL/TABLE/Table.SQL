@@ -130,7 +130,6 @@ CREATE TABLE [dbo].[ATTENDANT](
 	[id] [varchar](100) NULL,
 	[src_uuid] [varchar](36) NULL,
 	[is_default_pass] [varchar](1) NULL,
-	[picture_url] [varchar](36) NULL,
  CONSTRAINT [ATTENDANT_PK] PRIMARY KEY CLUSTERED 
 (
 	[uuid] ASC
@@ -261,6 +260,7 @@ CREATE TABLE [dbo].[APPMENU](
 	[action_mode] [varchar](50) NULL,
 	[is_default_page] [varchar](1) NULL,
 	[is_admin] [varchar](1) NULL,
+	[name_jpn] [varchar](200) NULL,
  CONSTRAINT [APPMENU_PK] PRIMARY KEY CLUSTERED 
 (
 	[uuid] ASC
@@ -315,6 +315,7 @@ CREATE TABLE [dbo].[APPPAGE](
 	[parameter_class] [varchar](200) NULL,
 	[application_head_uuid] [varchar](36) NOT NULL,
 	[p_mode] [varchar](100) NULL,
+	[runjsfunction] [varchar](100) NULL,
  CONSTRAINT [APPPAGE_PK] PRIMARY KEY CLUSTERED 
 (
 	[uuid] ASC

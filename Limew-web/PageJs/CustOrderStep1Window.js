@@ -10,12 +10,12 @@ Ext.define('WS.CustOrderStep1Window', {
         custOrderUuid: undefined,
         custUuid: undefined,
         parentObj: undefined
-    },
+    }, 
     myStore: {
         attendant: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
-            model: 'ATTEDNANTVV',
+            model: 'ATTENDANT_V',
             pageSize: 10,
             proxy: {
                 type: 'direct',
@@ -336,7 +336,7 @@ Ext.define('WS.CustOrderStep1Window', {
     },
     fnCreateCustOrderDetailCustomize: function(createNumber) {
         WS.CustAction.createCustOrderDetailCustomize(this.param.custOrderUuid, createNumber, function(obj, jsonObj) {
-            if(jsonObj.result.success){
+            if (jsonObj.result.success) {
                 this.myStore.vCustOrderDetail.reload();
             };
         }, this);
@@ -736,6 +736,14 @@ Ext.define('WS.CustOrderStep1Window', {
                                     subWin.show();
                                 }
                             }]
+                        }, {
+                            xtype: 'textfield',
+                            fieldLabel: '出貨單號',
+                            name: 'CUST_ORDER_SHIPPING_NUMBER',
+                            labelAlign: 'right',
+                            allowBlank: true,
+                            readOnly: true,
+                            flex: 1
                         }]
                     }, {
                         xtype: 'container',
@@ -851,6 +859,12 @@ Ext.define('WS.CustOrderStep1Window', {
                     maxLength: 84,
                     itemId: 'CUST_ORDER_UUID'
                 }, {
+                    xtype: 'hidden',
+                    fieldLabel: '',
+                    name: 'SHIPPING_STATUS_UUID',
+                    maxLength: 84,
+                    itemId: 'SHIPPING_STATUS_UUID'
+                }, {
                     xtype: 'container',
                     layout: 'hbox',
                     flex: 1,
@@ -940,27 +954,27 @@ Ext.define('WS.CustOrderStep1Window', {
                                 // Ext.MessageBox.confirm('刪除操作', '確定要刪除這一個訂單明細?', function(result) {
                                 //     if (result == 'yes') {
                                 var store = mainWin.down('#grdVCustOrderDetail').getStore();
-                                var find = store.findRecord("CUST_ORDER_DETAIL_UUID",grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID);
-                                
+                                var find = store.findRecord("CUST_ORDER_DETAIL_UUID", grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID);
+
 
 
                                 WS.CustAction.destoryCustOrderDetail(grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID, function(obj, jsonObj) {
-                                            if (jsonObj.result.success) {
-                                                var store = mainWin.down('#grdVCustOrderDetail').getStore(),
-                                                    count = store.getCount();
-                                                    store.remove(find);
-                                                // if (count == 1) {
-                                                //     if (store.currentPage > 1) {
-                                                //         store.previousPage();
-                                                //     } else {
-                                                //         store.reload();
-                                                //     };
-                                                // } else {
-                                                //     store.reload();
-                                                // };
+                                    if (jsonObj.result.success) {
+                                        var store = mainWin.down('#grdVCustOrderDetail').getStore(),
+                                            count = store.getCount();
+                                        store.remove(find);
+                                        // if (count == 1) {
+                                        //     if (store.currentPage > 1) {
+                                        //         store.previousPage();
+                                        //     } else {
+                                        //         store.reload();
+                                        //     };
+                                        // } else {
+                                        //     store.reload();
+                                        // };
 
-                                            };
-                                        }, mainWin);       
+                                    };
+                                }, mainWin);
                                 //     };
                                 // }, mainWin);
                             }
@@ -977,10 +991,17 @@ Ext.define('WS.CustOrderStep1Window', {
                         align: 'center',
                         width: 50
                     }, {
+                        xtype:'templatecolumn',
                         text: "商品",
                         dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
                         align: 'left',
                         flex: 2,
+                        tpl: new Ext.XTemplate(
+                        "<tpl if='CUST_ORDER_DETAIL_CUSTOMIZED == 1'>",
+                        '<input type="text" readonly  style="width:210px" value="{CUST_ORDER_DETAIL_GOODS_NAME}"/>',
+                        "<tpl else>",
+                        '{CUST_ORDER_DETAIL_GOODS_NAME}',
+                        "</tpl>"),
                         editor: {
                             xtype: 'textfield',
                             enableKeyEvents: true,
@@ -1006,10 +1027,14 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
+                        xtype:'templatecolumn',
                         text: "單價",
                         dataIndex: 'CUST_ORDER_DETAIL_PRICE',
                         align: 'right',
                         flex: 1,
+                        tpl: new Ext.XTemplate(                        
+                        '<input type="text" readonly  style="width:100px" value="{CUST_ORDER_DETAIL_PRICE}"/>'
+                        ),
                         editor: {
                             xtype: 'numberfield',
                             listeners: {
@@ -1022,10 +1047,14 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
+                        xtype:'templatecolumn',
                         text: "數量",
                         dataIndex: 'CUST_ORDER_DETAIL_COUNT',
                         align: 'right',
                         flex: 1,
+                        tpl: new Ext.XTemplate(                        
+                        '<input type="text" readonly style="width:100px" value="{CUST_ORDER_DETAIL_COUNT}"/>'
+                        ),
                         editor: {
                             xtype: 'numberfield',
                             listeners: {
@@ -1038,16 +1067,18 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
+                        xtype:'templatecolumn',
                         text: "單位",
                         dataIndex: 'CUST_ORDER_DETAIL_UNIT',
                         align: 'center',
-                        width: 60,
-                        renderer: function(value, r) {
-                            return r.record.data.CUST_ORDER_DETAIL_UNIT_NAME;
-                        },
+                        width: 80,
+                        tpl: new Ext.XTemplate(                        
+                        '<input type="text" readonly style="width:60px" value="{CUST_ORDER_DETAIL_UNIT_NAME}"/>'
+                        ),
+                        
                         editor: {
                             xtype: 'combo',
-                            allowBlank: false,
+                            allowBlank: false,                            
                             displayField: 'UNIT_NAME',
                             valueField: 'UNIT_UUID',
                             store: this.myStore.unit,
@@ -1058,7 +1089,7 @@ Ext.define('WS.CustOrderStep1Window', {
                                     var mainWin = obj.up('window');
                                     var dr = obj.getStore().findRecord("UNIT_UUID", newValue).data;
                                     mainWin.param.editRecord.data.CUST_ORDER_DETAIL_UNIT_NAME = dr.UNIT_NAME;
-                                }
+                                }                                
                             }
                         }
                     }, {
@@ -1077,8 +1108,8 @@ Ext.define('WS.CustOrderStep1Window', {
                         align: 'center',
                         flex: 1
                     }],
-                    minHeight:300,
-                    autoHeight:true,
+                    minHeight: 300,
+                    autoHeight: true,
                     //height: 350,
                     // bbar: Ext.create('Ext.toolbar.Paging', {
                     //     store: this.myStore.vCustOrderDetail,
@@ -1118,11 +1149,6 @@ Ext.define('WS.CustOrderStep1Window', {
                         type: 'button',
                         text: '新增客製服務',
                         icon: SYSTEM_URL_ROOT + '/css/images/addD16x16.png',
-                        menu: [{
-                            text: 'a'
-                        }, {
-                            text: '2'
-                        }],
                         handler: function() {
                             var mainWin = this.up('window'),
                                 custOrderUuid = mainWin.down('#CUST_ORDER_UUID').getValue();
@@ -1523,10 +1549,10 @@ Ext.define('WS.CustOrderStep1Window', {
                         this.down("#CUST_ORDER_REPORT_DATE").setValue(new Date());
                     };
 
-                    if (a.result.data.CUST_ORDER_SHIPPING_DATE != '' && a.result.data.CUST_ORDER_SHIPPING_DATE != undefined) {
-                        //alert(a.result.data.CUST_ORDER_SHIPPING_DATE);
-                        this.down("#CUST_ORDER_SHIPPING_DATE").setValue(new Date(a.result.data.CUST_ORDER_SHIPPING_DATE));
-                    };
+                    // if (a.result.data.CUST_ORDER_SHIPPING_DATE != '' && a.result.data.CUST_ORDER_SHIPPING_DATE != undefined) {
+                    //     //alert(a.result.data.CUST_ORDER_SHIPPING_DATE);
+                    //     this.down("#CUST_ORDER_SHIPPING_DATE").setValue(new Date(a.result.data.CUST_ORDER_SHIPPING_DATE));
+                    // };
 
                     if (a.result.data.CUST_ORDER_LIMIT_DATE != '' && a.result.data.CUST_ORDER_LIMIT_DATE != undefined) {
                         //this.down("#CUST_ORDER_LIMIT_DATE").setValue(new Date(a.result.data.CUST_ORDER_LIMIT_DATE));

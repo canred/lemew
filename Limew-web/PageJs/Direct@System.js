@@ -1,0 +1,13 @@
+﻿Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".LimewAttendantAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".CustOrderStatusAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".FileAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GoodsAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".GcategoryAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".SupplierAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ShippingStatusAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".ScheduleAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayMethodAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayStatusAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UnitAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MyOrderAction"));

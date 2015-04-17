@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limew
-{
-
-
-    public partial class Logout
-    {
+namespace Limew {
+    
+    
+    public partial class Logout {
     }
 }

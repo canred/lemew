@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limew
-{
-
-
-    public partial class ServerInfo
-    {
+namespace Limew {
+    
+    
+    public partial class ServerInfo {
     }
 }

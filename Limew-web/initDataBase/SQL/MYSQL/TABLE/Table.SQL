@@ -102,7 +102,6 @@ CREATE TABLE `attendant` (
   `id` varchar(100) DEFAULT NULL,
   `src_uuid` varchar(36) DEFAULT NULL,
   `is_default_pass` varchar(1) DEFAULT 'Y',
-  `picture_url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `ATTENDANT_UK1` (`company_uuid`,`account`)
   
@@ -189,6 +188,7 @@ CREATE TABLE `appmenu` (
   `name_zh_tw` varchar(200) NOT NULL,
   `name_zh_cn` varchar(200) NOT NULL,
   `name_en_us` varchar(200) NOT NULL,
+  `name_jpn` varchar(200) NULL,
   `id` varchar(100) NOT NULL,
   `appmenu_uuid` varchar(36) DEFAULT NULL,
   `haschild` varchar(1) NOT NULL,
@@ -199,8 +199,7 @@ CREATE TABLE `appmenu` (
   `sitemap_uuid` varchar(36) DEFAULT NULL,
   `action_mode` varchar(50) DEFAULT NULL,
   `is_default_page` varchar(1) DEFAULT NULL,
-  `is_admin` varchar(1) DEFAULT 'N',
-  `appmenucol` varchar(45) DEFAULT 'N',
+  `is_admin` varchar(1) DEFAULT 'N'
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `APPMENU_UK1` (`id`,`appmenu_uuid`,`action_mode`),
   KEY `APPMENU_APPLICATION_HEAD_FK1_idx` (`application_head_uuid`),
@@ -237,6 +236,7 @@ CREATE TABLE `apppage` (
   `parameter_class` varchar(200) DEFAULT NULL,
   `application_head_uuid` varchar(36) NOT NULL,
   `p_mode` varchar(100) DEFAULT NULL,
+  `runjsfunction` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `APPPAGE_UK2` (`application_head_uuid`,`url`,`p_mode`,`parameter_class`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

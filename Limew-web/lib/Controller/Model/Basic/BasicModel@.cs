@@ -13,7 +13,20 @@ namespace Limew.Model.Basic
 {
     public partial class BasicModel
     {
-
+        public void setAllErrorLog_IsRead()
+        {
+            try
+            {
+            dbc = LK.Config.DataBase.Factory.getInfo();
+            Limew.Model.Basic.Table.ErrorLog table = new Limew.Model.Basic.Table.ErrorLog(dbc);
+            table.SetUpdate(new SQLUpdate(table).Set(table.IS_READ, "Y").Where(new SQLCondition(table).Equal(table.IS_READ, "N"))).ExecuteUpdate();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public IList<Department_Record> getDepartment_By_Like_ParentDepartmentUuidList(string pDepartmentUuid, OrderLimit orderlimit)
         {
             try
@@ -1655,21 +1668,6 @@ namespace Limew.Model.Basic
                                 .FetchAll<ErrorLog_Record>();
             return result;
         }
-
-        public void setAllErrorLog_IsRead()
-        {
-            try
-            {
-            dbc = LK.Config.DataBase.Factory.getInfo();
-            Limew.Model.Basic.Table.ErrorLog table = new Limew.Model.Basic.Table.ErrorLog(dbc);
-            table.SetUpdate(new SQLUpdate(table).Set(table.IS_READ, "Y").Where(new SQLCondition(table).Equal(table.IS_READ, "N"))).ExecuteUpdate();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex); LK.MyException.MyException.Error(this, ex);
-                throw ex;
-            }
-        }
         #endregion
 
         #endregion
@@ -2149,6 +2147,35 @@ namespace Limew.Model.Basic
             catch (Exception ex)
             {
                 log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public AttendantV_Record getAttendantV_By_Company_Account_ForGuest(string pCompanyName, string pAccount)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                var attendantv = new AttendantV(dbc);
+
+                var result = attendantv.Where(new SQLCondition(attendantv)
+                                                .Equal(attendantv.COMPANY_ID, pCompanyName, false)
+                                                .And()
+                                                .Equal(attendantv.ACCOUNT, pAccount, false)
+                                                ).FetchAll<AttendantV_Record>();
+                if (result.Count == 1)
+                {
+                    return result.First();
+                }
+                else
+                {
+                    throw new Exception("Domainª{√“•¢±—");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                LK.MyException.MyException.Error(this, ex);
                 throw ex;
             }
         }
