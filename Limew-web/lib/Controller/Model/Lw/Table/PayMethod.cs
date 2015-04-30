@@ -29,9 +29,15 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string PAY_METHOD_UUID {get{return "PAY_METHOD_UUID" ; }}
-		public string PAY_METHOD_NAME {get{return "PAY_METHOD_NAME" ; }}
-		public string PAY_METHOD_ORD {get{return "PAY_METHOD_ORD" ; }}
+		public string PAY_METHOD_UUID {
+			[ColumnName("PAY_METHOD_UUID",true,typeof(string))]
+			get{return "PAY_METHOD_UUID" ; }}
+		public string PAY_METHOD_NAME {
+			[ColumnName("PAY_METHOD_NAME",false,typeof(string))]
+			get{return "PAY_METHOD_NAME" ; }}
+		public string PAY_METHOD_ORD {
+			[ColumnName("PAY_METHOD_ORD",false,typeof(short?))]
+			get{return "PAY_METHOD_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public PayMethod_Record CurrentRecord(){

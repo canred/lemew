@@ -1234,7 +1234,7 @@ Ext.define('WS.CustOrderWindow', {
                         flex: 2,
                         ,
                         editor: {
-                            xtype: 'textfield',                           
+                            xtype: 'textfield',
                             listeners: {
                                 render: function(obj, eOpts) {
                                     //return new Date();

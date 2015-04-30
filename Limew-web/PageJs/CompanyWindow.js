@@ -28,7 +28,7 @@ Ext.define('WS.CompanyWindow', {
             items: [{
                     xtype: 'container',
                     layout: 'anchor',
-                    margin:'5 0 0 0',
+                    margin: '5 0 0 0',
                     defaultType: 'textfield',
                     items: [{
                         xtype: 'textfield',
@@ -42,7 +42,7 @@ Ext.define('WS.CompanyWindow', {
                     }, {
                         fieldLabel: '名稱-繁中',
                         labelWidth: 100,
-                        itemId:'C_NAME',
+                        itemId: 'C_NAME',
                         name: 'C_NAME',
                         anchor: '100%',
                         maxLength: 84,
@@ -185,11 +185,11 @@ Ext.define('WS.CompanyWindow', {
                     itemId: 'UUID'
                 }
             ],
-            buttons: [{                
+            buttons: [{
                 icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
                 text: '儲存',
-                enableKeyEvents:true,    
-                itemId:'btnSave',            
+                enableKeyEvents: true,
+                itemId: 'btnSave',
                 handler: function() {
                     var form = this.up('window').down("#CompanyForm").getForm();
                     if (form.isValid() == false) {
@@ -223,7 +223,7 @@ Ext.define('WS.CompanyWindow', {
             }, {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                 text: '關閉',
-                itemId:'btnClose',
+                itemId: 'btnClose',
                 handler: function() {
                     this.up('window').close();
                 }

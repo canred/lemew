@@ -29,20 +29,48 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ORDER_DETAIL_UUID {get{return "CUST_ORDER_DETAIL_UUID" ; }}
-		public string CUST_ORDER_UUID {get{return "CUST_ORDER_UUID" ; }}
-		public string GOODS_UUID {get{return "GOODS_UUID" ; }}
-		public string CUST_ORDER_DETAIL_GOODS_NAME {get{return "CUST_ORDER_DETAIL_GOODS_NAME" ; }}
-		public string CUST_ORDER_DETAIL_COUNT {get{return "CUST_ORDER_DETAIL_COUNT" ; }}
-		public string CUST_ORDER_DETAIL_UNIT {get{return "CUST_ORDER_DETAIL_UNIT" ; }}
-		public string CUST_ORDER_DETAIL_PRICE {get{return "CUST_ORDER_DETAIL_PRICE" ; }}
-		public string CUST_ORDER_DETAIL_TOTAL_PRICE {get{return "CUST_ORDER_DETAIL_TOTAL_PRICE" ; }}
-		public string CUST_ORDER_DETAIL_PS {get{return "CUST_ORDER_DETAIL_PS" ; }}
-		public string CUST_ORDER_DETAIL_CR {get{return "CUST_ORDER_DETAIL_CR" ; }}
-		public string CUST_ORDER_DETAIL_CUSTOMIZED {get{return "CUST_ORDER_DETAIL_CUSTOMIZED" ; }}
-		public string FILEGROUP_UUID {get{return "FILEGROUP_UUID" ; }}
-		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
-		public string CUST_ORDER_DETAIL_IS_ACTIVE {get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
+		public string CUST_ORDER_DETAIL_UUID {
+			[ColumnName("CUST_ORDER_DETAIL_UUID",true,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_UUID" ; }}
+		public string CUST_ORDER_UUID {
+			[ColumnName("CUST_ORDER_UUID",false,typeof(string))]
+			get{return "CUST_ORDER_UUID" ; }}
+		public string GOODS_UUID {
+			[ColumnName("GOODS_UUID",false,typeof(string))]
+			get{return "GOODS_UUID" ; }}
+		public string CUST_ORDER_DETAIL_GOODS_NAME {
+			[ColumnName("CUST_ORDER_DETAIL_GOODS_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_GOODS_NAME" ; }}
+		public string CUST_ORDER_DETAIL_COUNT {
+			[ColumnName("CUST_ORDER_DETAIL_COUNT",false,typeof(int?))]
+			get{return "CUST_ORDER_DETAIL_COUNT" ; }}
+		public string CUST_ORDER_DETAIL_UNIT {
+			[ColumnName("CUST_ORDER_DETAIL_UNIT",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_UNIT" ; }}
+		public string CUST_ORDER_DETAIL_PRICE {
+			[ColumnName("CUST_ORDER_DETAIL_PRICE",false,typeof(decimal?))]
+			get{return "CUST_ORDER_DETAIL_PRICE" ; }}
+		public string CUST_ORDER_DETAIL_TOTAL_PRICE {
+			[ColumnName("CUST_ORDER_DETAIL_TOTAL_PRICE",false,typeof(decimal?))]
+			get{return "CUST_ORDER_DETAIL_TOTAL_PRICE" ; }}
+		public string CUST_ORDER_DETAIL_PS {
+			[ColumnName("CUST_ORDER_DETAIL_PS",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_PS" ; }}
+		public string CUST_ORDER_DETAIL_CR {
+			[ColumnName("CUST_ORDER_DETAIL_CR",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_DETAIL_CR" ; }}
+		public string CUST_ORDER_DETAIL_CUSTOMIZED {
+			[ColumnName("CUST_ORDER_DETAIL_CUSTOMIZED",false,typeof(int?))]
+			get{return "CUST_ORDER_DETAIL_CUSTOMIZED" ; }}
+		public string FILEGROUP_UUID {
+			[ColumnName("FILEGROUP_UUID",false,typeof(string))]
+			get{return "FILEGROUP_UUID" ; }}
+		public string SUPPLIER_GOODS_UUID {
+			[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string CUST_ORDER_DETAIL_IS_ACTIVE {
+			[ColumnName("CUST_ORDER_DETAIL_IS_ACTIVE",false,typeof(short?))]
+			get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrderDetail_Record CurrentRecord(){

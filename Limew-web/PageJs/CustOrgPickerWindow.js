@@ -181,6 +181,7 @@ Ext.define('WS.CustOrgPickerWindow', {
         },
         'close': function() {
             this.down('#txtKeyword').setValue('');
+            this.myStore.custOrg.removeAll();
             this.closeEvent();
         }
     }

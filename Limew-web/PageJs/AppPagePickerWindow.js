@@ -18,7 +18,7 @@ Ext.define('WS.AppPagePickerWindow', {
         uuid: undefined,
         applicationHeadUuid: undefined
     },
-	modal: true,
+    modal: true,
     width: 800,
     height: 600,
     layout: 'fit',
@@ -171,11 +171,11 @@ Ext.define('WS.AppPagePickerWindow', {
         this.down('#grdAppPage').getStore().reload();
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             this.down('#btnQuery').handler(this.down('#btnQuery'));
         },
         'close': function() {
-            this.closeEvent();            
+            this.closeEvent();
         }
     }
 });

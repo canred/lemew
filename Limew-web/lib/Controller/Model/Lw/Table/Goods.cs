@@ -29,17 +29,39 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string GOODS_UUID {get{return "GOODS_UUID" ; }}
-		public string GOODS_SN {get{return "GOODS_SN" ; }}
-		public string GOODS_COST {get{return "GOODS_COST" ; }}
-		public string GOODS_SALE {get{return "GOODS_SALE" ; }}
-		public string GOODS_PRICE {get{return "GOODS_PRICE" ; }}
-		public string GOODS_FOCUS {get{return "GOODS_FOCUS" ; }}
-		public string GOODS_IS_ACTIVE {get{return "GOODS_IS_ACTIVE" ; }}
-		public string SUPPLIER_UUID {get{return "SUPPLIER_UUID" ; }}
-		public string GCATEGORY_UUID {get{return "GCATEGORY_UUID" ; }}
-		public string GOODS_NAME {get{return "GOODS_NAME" ; }}
-		public string GOODS_PS {get{return "GOODS_PS" ; }}
+		public string GOODS_UUID {
+			[ColumnName("GOODS_UUID",true,typeof(string))]
+			get{return "GOODS_UUID" ; }}
+		public string GOODS_SN {
+			[ColumnName("GOODS_SN",false,typeof(string))]
+			get{return "GOODS_SN" ; }}
+		public string GOODS_COST {
+			[ColumnName("GOODS_COST",false,typeof(decimal?))]
+			get{return "GOODS_COST" ; }}
+		public string GOODS_SALE {
+			[ColumnName("GOODS_SALE",false,typeof(decimal?))]
+			get{return "GOODS_SALE" ; }}
+		public string GOODS_PRICE {
+			[ColumnName("GOODS_PRICE",false,typeof(decimal?))]
+			get{return "GOODS_PRICE" ; }}
+		public string GOODS_FOCUS {
+			[ColumnName("GOODS_FOCUS",false,typeof(int?))]
+			get{return "GOODS_FOCUS" ; }}
+		public string GOODS_IS_ACTIVE {
+			[ColumnName("GOODS_IS_ACTIVE",false,typeof(int?))]
+			get{return "GOODS_IS_ACTIVE" ; }}
+		public string SUPPLIER_UUID {
+			[ColumnName("SUPPLIER_UUID",false,typeof(string))]
+			get{return "SUPPLIER_UUID" ; }}
+		public string GCATEGORY_UUID {
+			[ColumnName("GCATEGORY_UUID",false,typeof(string))]
+			get{return "GCATEGORY_UUID" ; }}
+		public string GOODS_NAME {
+			[ColumnName("GOODS_NAME",false,typeof(string))]
+			get{return "GOODS_NAME" ; }}
+		public string GOODS_PS {
+			[ColumnName("GOODS_PS",false,typeof(string))]
+			get{return "GOODS_PS" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Goods_Record CurrentRecord(){

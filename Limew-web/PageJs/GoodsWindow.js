@@ -3,17 +3,18 @@ Ext.define('WS.GoodsWindow', {
     title: '商品維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
     closeAction: 'destroy',
+    modal: true,
     closable: false,
     param: {
         goodsUuid: undefined
     },
     myStore: {
-        supplier: Ext.create('Ext.data.Store', {
+        supplier: Ext.create('Ext.data.Store', { 
             extend: 'Ext.data.Store',
             autoLoad: false,
             remoteSort: true,
             model: 'SUPPLIER',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -23,9 +24,10 @@ Ext.define('WS.GoodsWindow', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                 paramOrder: ['pKeyword', 'pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    'pKeyword': ''
+                    'pKeyword': '',
+                    pSupplierIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -312,6 +314,7 @@ Ext.define('WS.GoodsWindow', {
     },
     listeners: {
         'show': function() {
+            this.mask("資訊載入中…請稍後…");
             this.myStore.supplier.load({
                 callback: function(obj, jsonObj) {
                     if (this.param.goodsUuid != undefined) {
@@ -319,7 +322,9 @@ Ext.define('WS.GoodsWindow', {
                             params: {
                                 'pGoodsUuid': this.param.goodsUuid
                             },
-                            success: function(response, a, b) {},
+                            success: function(response, a, b) {
+                                this.unmask();                                
+                            },
                             failure: function(response, jsonObj, b) {
                                 if (!jsonObj.result.success) {
                                     Ext.MessageBox.show({
@@ -329,10 +334,12 @@ Ext.define('WS.GoodsWindow', {
                                         msg: jsonObj.result.message
                                     });
                                 };
-                            }
+                            },
+                            scope:this
                         });
                     } else {
                         this.down("#GoodsForm").getForm().reset();
+                        this.unmask();
 
                     };
                 },
@@ -340,7 +347,9 @@ Ext.define('WS.GoodsWindow', {
             })
         },
         'close': function() {
+            this.myStore.supplier.removeAll();
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

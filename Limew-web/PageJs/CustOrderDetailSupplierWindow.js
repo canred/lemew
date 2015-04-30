@@ -164,7 +164,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
                 }
             },
             remoteSort: true,
-            listeners: {                
+            listeners: {
                 scope: this
             },
             sorters: [{
@@ -692,7 +692,7 @@ Ext.define('WS.CustOrderDetailSupplierWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {        
+    listeners: {
         'show': function() {
             this.down('#btnQuery').handler();
             if (this.param.custOrderUuid) {

@@ -1,4 +1,4 @@
-/*BASIC*/ 
+/*BASIC*/
 Ext.define('COMPANY', {
     extend: 'Ext.data.Model',
     fields: ['UUID', 'ID', 'C_NAME', 'E_NAME', 'WEEK_SHIFT', 'NAME_ZH_CN', 'IS_ACTIVE']
@@ -633,10 +633,9 @@ Ext.define('MY_ORDER', {
         'MY_ORDER_SUPPLIER_TEL',
         'MY_ORDER_SUPPLIER_MAN',
         'MY_ORDER_GOODS_NAME',
-        'MY_ORDER_GOODS_COUNT',
-        {
-            name:'MY_ORDER_PRICE',
-            type:'number'
+        'MY_ORDER_GOODS_COUNT', {
+            name: 'MY_ORDER_PRICE',
+            type: 'number'
         },
         'MY_ORDER_PRICE',
         'MY_ORDER_TOTAL_PRICE',

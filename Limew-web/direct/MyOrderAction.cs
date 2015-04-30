@@ -99,6 +99,7 @@ public class MyOrderAction : BaseAction
                 
                 dr.MY_ORDER_UUID = LK.Util.UID.Instance.GetUniqueID();
                 dr.MY_ORDER_IS_ACTIVE = 0;
+                dr.MY_ORDER_CR = DateTime.Now;
                 dr.gotoTable().Insert_Empty2Null(dr);
             }
 
@@ -352,6 +353,9 @@ string my_order_total_price,
             record.MY_ORDER_CONTACT_EMAIL = my_order_contact_email;
             record.MY_ORDER_PS = my_order_ps;
             record.MY_ORDER_IS_ACTIVE = Convert.ToInt32(my_order_is_active);
+            if (record.MY_ORDER_ID == null || record.MY_ORDER_ID == "") {
+                record.MY_ORDER_ID = getMyOrderId();
+            }
             if (my_order_cr!=null && my_order_cr.Trim().Length > 0)
             {
                 record.MY_ORDER_CR = Convert.ToDateTime(my_order_cr);
@@ -375,7 +379,28 @@ string my_order_total_price,
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
         }
     }
+    public string getMyOrderId()
+    {
+        LwModel mod = new LwModel();
+        var drs = mod.getMyOrderId_By_MyOrderIdUuid(DateTime.Now.ToString("yyyyMMdd")).AllRecord();
+        if (drs.Count == 0)
+        {
+            MyOrderId_Record newRow = new MyOrderId_Record();
+            newRow.MY_ORDER_ID_UUID = DateTime.Now.ToString("yyyyMMdd");
+            newRow.MAX = 1;
+            newRow.gotoTable().Insert_Empty2Null(newRow);
+            return newRow.MY_ORDER_ID_UUID + String.Format("{0:0000}", newRow.MAX);
+        }
+        else
+        {
+            var dr = drs.First();
+            
+            dr.MAX = dr.MAX + 1;
+            dr.gotoTable().Update_Empty2Null(dr);
+            return dr.MY_ORDER_ID_UUID + String.Format("{0:0000}", dr.MAX);
+        }
 
+    }
     [DirectMethod("submitMyOrderDetail", DirectAction.FormSubmission)]
     public JObject submitMyOrderDetail(string my_order_detail_uuid,
 string my_order_detail_goods_name,

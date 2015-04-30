@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mpStand.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Limew.Default" EnableViewState="false"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mpStand.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Limew.Default" EnableViewState="false"   %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -17,19 +17,16 @@
     WS_LOGONPANEL.urlSuccess = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().DefaultPage)%>';
     WS_LOGONPANEL.urlFail = '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().NoPermissionPage)%>';
     WS_LOGONPANEL.down('#ExtLogonForm').title = '<img src="' + SYSTEM_ROOT_PATH + '/css/custimages/login.gif" style="height:16px;margin-bottom:4px;margin-right:10px;" align="middle"><%= Limew.Parameter.Config.ParemterConfigs.GetConfig().SystemName%>';
-    WS_LOGONPANEL.render('logon');
+     var myWin = Ext.create('WS.LogonWindow',{
+        param:{
+            logonPanel:WS_LOGONPANEL
+        }
+    });
+
+    myWin.show();        
+    $('#divDefault').css("height",$(document).height()-130);
     });
 </script>
-<!--Echart Demo-->
-
-<table width="100%">
-    <tr>
-        <td width="30%"></td>
-        <td width="40%" >
-        <div id="logon" style="margin-bottom:5px;margin-top:5px;width:2"></div>
-        </td>
-        <td width="30%"></td>
-    </tr>
-</table>   
+<div id='divDefault' style="width:90%;"></div>  
 
 </asp:Content>

@@ -11,19 +11,17 @@
             width:400,
             logonUrl : '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().LogonPage) %>'
         });
-        NOPERMISSIONPANEL.render('noPermission');
+        var logoutWin = Ext.create('WS.NoPermissionWindow',{
+            param:{
+                noPermissionPanel : NOPERMISSIONPANEL
+            }
+        });
+        logoutWin.show();
+        $('#divNoPermission').css("height",$(document).height()-130);
         
     });
 </script>
-<table>
-    <tr>
-        <td width="30%"></td>
-        <td width="40%" align="center">
-        <div id="noPermission" style="margin-bottom:5px;margin-top:5px;"></div>
-        </td>
-        <td width="30%"></td>
-    </tr>
-</table>
+<div id='divNoPermission' style="width:90%;"></div>
 
 </center>
                            

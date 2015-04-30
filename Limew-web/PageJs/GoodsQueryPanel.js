@@ -15,7 +15,7 @@ Ext.define('WS.GoodsQueryPanel', {
     subWinGoods: undefined,
     /*語言擴展*/
     lan: {},
-    /*參數擴展*/   
+    /*參數擴展*/
     /*值擴展*/
     val: {},
     /*物件會用到的Store物件*/
@@ -57,7 +57,7 @@ Ext.define('WS.GoodsQueryPanel', {
             }]
         })
     },
-    fnActiveRender: function (value, id, r) {
+    fnActiveRender: function(value, id, r) {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
@@ -84,7 +84,7 @@ Ext.define('WS.GoodsQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
             frame: true,
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -136,7 +136,7 @@ Ext.define('WS.GoodsQueryPanel', {
                 store: this.myStore.vgoods,
                 itemId: 'grdSupplierQuery',
                 border: true,
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 columns: [{
                     text: "編輯",
@@ -182,9 +182,9 @@ Ext.define('WS.GoodsQueryPanel', {
                     header: '類別(全)',
                     dataIndex: 'GCATEGORY_FULL_NAME',
                     align: 'left',
-                    hidden:true,
+                    hidden: true,
                     flex: 1
-                },{
+                }, {
                     header: '商品(備註)',
                     dataIndex: 'GOODS_PS',
                     align: 'left',
@@ -214,7 +214,7 @@ Ext.define('WS.GoodsQueryPanel', {
                     dataIndex: 'GOODS_IS_ACTIVE',
                     align: 'center',
                     flex: 1,
-                    renderer:this.fnActiveRender
+                    renderer: this.fnActiveRender
                 }, {
                     header: '供應商',
                     dataIndex: 'SUPPLIER_NAME',

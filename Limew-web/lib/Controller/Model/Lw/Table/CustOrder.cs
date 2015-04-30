@@ -29,35 +29,93 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ORDER_UUID {get{return "CUST_ORDER_UUID" ; }}
-		public string CUST_ORDER_CR {get{return "CUST_ORDER_CR" ; }}
-		public string CUST_ORDER_ID {get{return "CUST_ORDER_ID" ; }}
-		public string CUST_ORDER_TOTAL_PRICE {get{return "CUST_ORDER_TOTAL_PRICE" ; }}
-		public string CUST_ORDER_STATUS_UUID {get{return "CUST_ORDER_STATUS_UUID" ; }}
-		public string CUST_ORDER_IS_ACTIVE {get{return "CUST_ORDER_IS_ACTIVE" ; }}
-		public string CUST_UUID {get{return "CUST_UUID" ; }}
-		public string CUST_ORDER_TYPE {get{return "CUST_ORDER_TYPE" ; }}
-		public string CUST_ORDER_CUST_NAME {get{return "CUST_ORDER_CUST_NAME" ; }}
-		public string CUST_ORDER_DEPT {get{return "CUST_ORDER_DEPT" ; }}
-		public string CUST_ORDER_USER_NAME {get{return "CUST_ORDER_USER_NAME" ; }}
-		public string CUST_ORDER_USER_PHONE {get{return "CUST_ORDER_USER_PHONE" ; }}
-		public string CUST_ORDER_PURCHASE_AMOUNT {get{return "CUST_ORDER_PURCHASE_AMOUNT" ; }}
-		public string CUST_ORDER_PRINT_USER_NAME {get{return "CUST_ORDER_PRINT_USER_NAME" ; }}
-		public string CUST_ORDER_SHIPPING_DATE {get{return "CUST_ORDER_SHIPPING_DATE" ; }}
-		public string SHIPPING_STATUS_UUID {get{return "SHIPPING_STATUS_UUID" ; }}
-		public string CUST_ORDER_PO_NUMBER {get{return "CUST_ORDER_PO_NUMBER" ; }}
-		public string PAY_STATUS_UUID {get{return "PAY_STATUS_UUID" ; }}
-		public string PAY_METHOD_UUID {get{return "PAY_METHOD_UUID" ; }}
-		public string CUST_ORDER_INVOICE_NUMBER {get{return "CUST_ORDER_INVOICE_NUMBER" ; }}
-		public string CUST_ORDER_LIMIT_DATE {get{return "CUST_ORDER_LIMIT_DATE" ; }}
-		public string CUST_ORG_UUID {get{return "CUST_ORG_UUID" ; }}
-		public string CUST_ORDER_HAS_TAX {get{return "CUST_ORDER_HAS_TAX" ; }}
-		public string CUST_ORDER_PS {get{return "CUST_ORDER_PS" ; }}
-		public string COMPANY_UUID {get{return "COMPANY_UUID" ; }}
-		public string CUST_ORDER_REPORT_DATE {get{return "CUST_ORDER_REPORT_DATE" ; }}
-		public string CUST_ORDER_REPORT_ATTENDANT_UUID {get{return "CUST_ORDER_REPORT_ATTENDANT_UUID" ; }}
-		public string CUST_ORDER_SHIPPING_NUMBER {get{return "CUST_ORDER_SHIPPING_NUMBER" ; }}
-		public string SHIPPING_ADDRESS {get{return "SHIPPING_ADDRESS" ; }}
+		public string CUST_ORDER_UUID {
+			[ColumnName("CUST_ORDER_UUID",true,typeof(string))]
+			get{return "CUST_ORDER_UUID" ; }}
+		public string CUST_ORDER_CR {
+			[ColumnName("CUST_ORDER_CR",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_CR" ; }}
+		public string CUST_ORDER_ID {
+			[ColumnName("CUST_ORDER_ID",false,typeof(string))]
+			get{return "CUST_ORDER_ID" ; }}
+		public string CUST_ORDER_TOTAL_PRICE {
+			[ColumnName("CUST_ORDER_TOTAL_PRICE",false,typeof(decimal?))]
+			get{return "CUST_ORDER_TOTAL_PRICE" ; }}
+		public string CUST_ORDER_STATUS_UUID {
+			[ColumnName("CUST_ORDER_STATUS_UUID",false,typeof(string))]
+			get{return "CUST_ORDER_STATUS_UUID" ; }}
+		public string CUST_ORDER_IS_ACTIVE {
+			[ColumnName("CUST_ORDER_IS_ACTIVE",false,typeof(int?))]
+			get{return "CUST_ORDER_IS_ACTIVE" ; }}
+		public string CUST_UUID {
+			[ColumnName("CUST_UUID",false,typeof(string))]
+			get{return "CUST_UUID" ; }}
+		public string CUST_ORDER_TYPE {
+			[ColumnName("CUST_ORDER_TYPE",false,typeof(string))]
+			get{return "CUST_ORDER_TYPE" ; }}
+		public string CUST_ORDER_CUST_NAME {
+			[ColumnName("CUST_ORDER_CUST_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_CUST_NAME" ; }}
+		public string CUST_ORDER_DEPT {
+			[ColumnName("CUST_ORDER_DEPT",false,typeof(string))]
+			get{return "CUST_ORDER_DEPT" ; }}
+		public string CUST_ORDER_USER_NAME {
+			[ColumnName("CUST_ORDER_USER_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_USER_NAME" ; }}
+		public string CUST_ORDER_USER_PHONE {
+			[ColumnName("CUST_ORDER_USER_PHONE",false,typeof(string))]
+			get{return "CUST_ORDER_USER_PHONE" ; }}
+		public string CUST_ORDER_PURCHASE_AMOUNT {
+			[ColumnName("CUST_ORDER_PURCHASE_AMOUNT",false,typeof(string))]
+			get{return "CUST_ORDER_PURCHASE_AMOUNT" ; }}
+		public string CUST_ORDER_PRINT_USER_NAME {
+			[ColumnName("CUST_ORDER_PRINT_USER_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_PRINT_USER_NAME" ; }}
+		public string CUST_ORDER_SHIPPING_DATE {
+			[ColumnName("CUST_ORDER_SHIPPING_DATE",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_SHIPPING_DATE" ; }}
+		public string SHIPPING_STATUS_UUID {
+			[ColumnName("SHIPPING_STATUS_UUID",false,typeof(string))]
+			get{return "SHIPPING_STATUS_UUID" ; }}
+		public string CUST_ORDER_PO_NUMBER {
+			[ColumnName("CUST_ORDER_PO_NUMBER",false,typeof(string))]
+			get{return "CUST_ORDER_PO_NUMBER" ; }}
+		public string PAY_STATUS_UUID {
+			[ColumnName("PAY_STATUS_UUID",false,typeof(string))]
+			get{return "PAY_STATUS_UUID" ; }}
+		public string PAY_METHOD_UUID {
+			[ColumnName("PAY_METHOD_UUID",false,typeof(string))]
+			get{return "PAY_METHOD_UUID" ; }}
+		public string CUST_ORDER_INVOICE_NUMBER {
+			[ColumnName("CUST_ORDER_INVOICE_NUMBER",false,typeof(string))]
+			get{return "CUST_ORDER_INVOICE_NUMBER" ; }}
+		public string CUST_ORDER_LIMIT_DATE {
+			[ColumnName("CUST_ORDER_LIMIT_DATE",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_LIMIT_DATE" ; }}
+		public string CUST_ORG_UUID {
+			[ColumnName("CUST_ORG_UUID",false,typeof(string))]
+			get{return "CUST_ORG_UUID" ; }}
+		public string CUST_ORDER_HAS_TAX {
+			[ColumnName("CUST_ORDER_HAS_TAX",false,typeof(int?))]
+			get{return "CUST_ORDER_HAS_TAX" ; }}
+		public string CUST_ORDER_PS {
+			[ColumnName("CUST_ORDER_PS",false,typeof(string))]
+			get{return "CUST_ORDER_PS" ; }}
+		public string COMPANY_UUID {
+			[ColumnName("COMPANY_UUID",false,typeof(string))]
+			get{return "COMPANY_UUID" ; }}
+		public string CUST_ORDER_REPORT_DATE {
+			[ColumnName("CUST_ORDER_REPORT_DATE",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_REPORT_DATE" ; }}
+		public string CUST_ORDER_REPORT_ATTENDANT_UUID {
+			[ColumnName("CUST_ORDER_REPORT_ATTENDANT_UUID",false,typeof(string))]
+			get{return "CUST_ORDER_REPORT_ATTENDANT_UUID" ; }}
+		public string CUST_ORDER_SHIPPING_NUMBER {
+			[ColumnName("CUST_ORDER_SHIPPING_NUMBER",false,typeof(string))]
+			get{return "CUST_ORDER_SHIPPING_NUMBER" ; }}
+		public string SHIPPING_ADDRESS {
+			[ColumnName("SHIPPING_ADDRESS",false,typeof(string))]
+			get{return "SHIPPING_ADDRESS" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrder_Record CurrentRecord(){

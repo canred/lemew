@@ -154,7 +154,7 @@ Ext.define('WS.AttendantWindow', {
                             inputValue: 'N',
                             padding: '0 0 0 60'
                         }]
-                    },{
+                    }, {
                         xtype: 'container',
                         layout: 'hbox',
                         defaultType: 'radiofield',
@@ -244,8 +244,8 @@ Ext.define('WS.AttendantWindow', {
                         waitMsg: '更新中...',
                         success: function(form, action) {
                             this.param.uuid = action.result.UUID;
-                            this.down("#UUID").setValue(action.result.UUID);                            
-                            if(action.result.ChangeLanguage=='YES'){
+                            this.down("#UUID").setValue(action.result.UUID);
+                            if (action.result.ChangeLanguage == 'YES') {
                                 this.param.ChangeLanguage = true;
                             };
                             this.down("#AttendantForm").getForm().load({
@@ -294,7 +294,7 @@ Ext.define('WS.AttendantWindow', {
             }, {
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                 text: '關閉',
-                handler: function() {                    
+                handler: function() {
                     this.up('window').close();
                 }
             }]
@@ -336,7 +336,7 @@ Ext.define('WS.AttendantWindow', {
             };
         },
         'close': function() {
-            if(this.param.ChangeLanguage && this.param.ChangeLanguage==true){
+            if (this.param.ChangeLanguage && this.param.ChangeLanguage == true) {
                 location.href = location.href;
             };
             this.closeEvent();

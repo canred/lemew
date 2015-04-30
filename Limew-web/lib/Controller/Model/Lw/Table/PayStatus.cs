@@ -29,9 +29,15 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string PAY_STATUS_UUID {get{return "PAY_STATUS_UUID" ; }}
-		public string PAY_STATUS_NAME {get{return "PAY_STATUS_NAME" ; }}
-		public string PAY_STATUS_ORD {get{return "PAY_STATUS_ORD" ; }}
+		public string PAY_STATUS_UUID {
+			[ColumnName("PAY_STATUS_UUID",true,typeof(string))]
+			get{return "PAY_STATUS_UUID" ; }}
+		public string PAY_STATUS_NAME {
+			[ColumnName("PAY_STATUS_NAME",false,typeof(string))]
+			get{return "PAY_STATUS_NAME" ; }}
+		public string PAY_STATUS_ORD {
+			[ColumnName("PAY_STATUS_ORD",false,typeof(short?))]
+			get{return "PAY_STATUS_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public PayStatus_Record CurrentRecord(){

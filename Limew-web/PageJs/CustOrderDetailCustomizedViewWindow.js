@@ -1,6 +1,6 @@
 Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
     extend: 'Ext.window.Window',
-    title: '訂單-客製化商品',
+    title: '訂單-客製化商品(唯讀模式)',
     icon: SYSTEM_URL_ROOT + '/css/custimages/gift16x16.png',
     closeAction: 'destroy',
     modal: true,
@@ -8,7 +8,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
     width: 800,
     height: 600,
     fnLoadFile: function() {
-        
+
     },
     fnCal: function() {
         var mainWin = this.up('window'),
@@ -85,7 +85,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
         };
         return true;
     },
-    initComponent: function() {        
+    initComponent: function() {
         this.myStore.unit = Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
@@ -154,29 +154,32 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                     fieldLabel: '商品名稱',
                     name: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     itemId: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                    allowBlank: true,readOnly:true,
-                    flex:1
+                    allowBlank: true,
+                    readOnly: true,
+                    flex: 1
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 layout: 'hbox',
-                margin:'5 0 0 0',
+                margin: '5 0 0 0',
                 defaults: {
                     labelAlign: 'right'
                 },
-                items: [ {
+                items: [{
                     xtype: 'numberfield',
                     fieldLabel: '數量',
                     name: 'CUST_ORDER_DETAIL_COUNT',
                     itemId: 'CUST_ORDER_DETAIL_COUNT',
-                    allowBlank: false,readOnly:true,
+                    allowBlank: false,
+                    readOnly: true,
                     minValue: 1,
                     listeners: {
                         change: this.fnCal
                     }
                 }, {
                     xtype: 'combo',
-                    fieldLabel: '單位',     readOnly:true,               
+                    fieldLabel: '單位',
+                    readOnly: true,
                     allowBlank: false,
                     itemId: 'CUST_ORDER_DETAIL_UNIT',
                     displayField: 'UNIT_NAME',
@@ -195,7 +198,8 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                 },
                 items: [{
                     xtype: 'numberfield',
-                    fieldLabel: '單價',readOnly:true,
+                    fieldLabel: '單價',
+                    readOnly: true,
                     name: 'CUST_ORDER_DETAIL_PRICE',
                     itemId: 'CUST_ORDER_DETAIL_PRICE',
                     minValue: 0,
@@ -208,7 +212,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                     fieldLabel: '總價',
                     name: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
                     itemId: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
-                    readOnly:true,
+                    readOnly: true,
                     allowBlank: false
                 }, {
 
@@ -224,10 +228,11 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                     xtype: 'textarea',
                     fieldLabel: '備註',
                     name: 'CUST_ORDER_DETAIL_PS',
-                    itemId: 'CUST_ORDER_DETAIL_PS',readOnly:true,
+                    itemId: 'CUST_ORDER_DETAIL_PS',
+                    readOnly: true,
                     flex: 1
                 }]
-            },  {
+            }, {
                 xtype: 'container',
                 layout: 'hbox',
                 padding: '5 0 0 0',
@@ -280,7 +285,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                             html += '">' + value + '</a>'
                             return html;
                         },
-                        flex: 1
+                        width:200
                     }, {
                         text: "備註",
                         dataIndex: 'FILE_PS',
@@ -329,13 +334,13 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                     xtype: 'hiddenfield',
                     name: 'FILEGROUP_UUID',
                     itemId: 'FILEGROUP_UUID'
-                },{
-                    xtype : 'hiddenfield',
-                    value:'1',
-                    name : 'cust_order_detail_customized'                
+                }, {
+                    xtype: 'hiddenfield',
+                    value: '1',
+                    name: 'cust_order_detail_customized'
                 }]
             }],
-            buttonAlign:'center',
+            buttonAlign: 'center',
             buttons: [{
                 xtype: 'button',
                 icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
@@ -350,9 +355,9 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {        
+    listeners: {
         'show': function() {
-
+this.mask("資訊載入中…請稍後…");
             if (this.param.custOrderUuid) {
                 this.down("#CUST_ORDER_UUID").setValue(this.param.custOrderUuid);
             };
@@ -381,6 +386,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                                 this.down('#btnDelete').setDisabled(true);
 
                             };
+                            this.unmask();
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -410,9 +416,11 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
         'afterrender': function() {
             /*畫面開啟後載入資料*/
         },
-        'close': function() {           
+        'close': function() {
             this.myStore.vFilegroup.removeAll();
+            this.myStore.unit.removeAll();
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

@@ -29,36 +29,96 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ORDER_DETAIL_UUID {get{return "CUST_ORDER_DETAIL_UUID" ; }}
-		public string CUST_ORDER_UUID {get{return "CUST_ORDER_UUID" ; }}
-		public string GOODS_UUID {get{return "GOODS_UUID" ; }}
-		public string CUST_ORDER_DETAIL_GOODS_NAME {get{return "CUST_ORDER_DETAIL_GOODS_NAME" ; }}
-		public string CUST_ORDER_DETAIL_COUNT {get{return "CUST_ORDER_DETAIL_COUNT" ; }}
-		public string CUST_ORDER_DETAIL_UNIT {get{return "CUST_ORDER_DETAIL_UNIT" ; }}
-		public string CUST_ORDER_DETAIL_PRICE {get{return "CUST_ORDER_DETAIL_PRICE" ; }}
-		public string CUST_ORDER_DETAIL_TOTAL_PRICE {get{return "CUST_ORDER_DETAIL_TOTAL_PRICE" ; }}
-		public string CUST_ORDER_DETAIL_PS {get{return "CUST_ORDER_DETAIL_PS" ; }}
-		public string CUST_ORDER_DETAIL_CR {get{return "CUST_ORDER_DETAIL_CR" ; }}
-		public string CUST_ORDER_DETAIL_CUSTOMIZED {get{return "CUST_ORDER_DETAIL_CUSTOMIZED" ; }}
-		public string FILEGROUP_UUID {get{return "FILEGROUP_UUID" ; }}
-		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
-		public string CUST_ORDER_DETAIL_IS_ACTIVE {get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
-		public string GCATEGORY_FULL_NAME {get{return "GCATEGORY_FULL_NAME" ; }}
-		public string GCATEGORY_NAME {get{return "GCATEGORY_NAME" ; }}
-		public string GCATEGORY_UUID {get{return "GCATEGORY_UUID" ; }}
-		public string GOODS_NAME {get{return "GOODS_NAME" ; }}
-		public string GOODS_PRICE {get{return "GOODS_PRICE" ; }}
-		public string GOODS_PS {get{return "GOODS_PS" ; }}
-		public string GOODS_SN {get{return "GOODS_SN" ; }}
-		public string SUPPLIER_GOODS_NAME {get{return "SUPPLIER_GOODS_NAME" ; }}
-		public string SUPPLIER_GOODS_PRICE {get{return "SUPPLIER_GOODS_PRICE" ; }}
-		public string SUPPLIER_GOODS_SN {get{return "SUPPLIER_GOODS_SN" ; }}
-		public string SUPPLIER_GOODS_UNIT_UUID {get{return "SUPPLIER_GOODS_UNIT_UUID" ; }}
-		public string UNIT_NAME {get{return "UNIT_NAME" ; }}
-		public string CUST_ORDER_DETAIL_UNIT_NAME {get{return "CUST_ORDER_DETAIL_UNIT_NAME" ; }}
-		public string FILEGROUP_DISPLAY_NAME {get{return "FILEGROUP_DISPLAY_NAME" ; }}
-		public string FILEGROUP_TAG {get{return "FILEGROUP_TAG" ; }}
-		public string FILE_COUNT {get{return "FILE_COUNT" ; }}
+		public string CUST_ORDER_DETAIL_UUID {
+			[ColumnName("CUST_ORDER_DETAIL_UUID",true,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_UUID" ; }}
+		public string CUST_ORDER_UUID {
+			[ColumnName("CUST_ORDER_UUID",false,typeof(string))]
+			get{return "CUST_ORDER_UUID" ; }}
+		public string GOODS_UUID {
+			[ColumnName("GOODS_UUID",false,typeof(string))]
+			get{return "GOODS_UUID" ; }}
+		public string CUST_ORDER_DETAIL_GOODS_NAME {
+			[ColumnName("CUST_ORDER_DETAIL_GOODS_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_GOODS_NAME" ; }}
+		public string CUST_ORDER_DETAIL_COUNT {
+			[ColumnName("CUST_ORDER_DETAIL_COUNT",false,typeof(int?))]
+			get{return "CUST_ORDER_DETAIL_COUNT" ; }}
+		public string CUST_ORDER_DETAIL_UNIT {
+			[ColumnName("CUST_ORDER_DETAIL_UNIT",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_UNIT" ; }}
+		public string CUST_ORDER_DETAIL_PRICE {
+			[ColumnName("CUST_ORDER_DETAIL_PRICE",false,typeof(decimal?))]
+			get{return "CUST_ORDER_DETAIL_PRICE" ; }}
+		public string CUST_ORDER_DETAIL_TOTAL_PRICE {
+			[ColumnName("CUST_ORDER_DETAIL_TOTAL_PRICE",false,typeof(decimal?))]
+			get{return "CUST_ORDER_DETAIL_TOTAL_PRICE" ; }}
+		public string CUST_ORDER_DETAIL_PS {
+			[ColumnName("CUST_ORDER_DETAIL_PS",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_PS" ; }}
+		public string CUST_ORDER_DETAIL_CR {
+			[ColumnName("CUST_ORDER_DETAIL_CR",false,typeof(DateTime?))]
+			get{return "CUST_ORDER_DETAIL_CR" ; }}
+		public string CUST_ORDER_DETAIL_CUSTOMIZED {
+			[ColumnName("CUST_ORDER_DETAIL_CUSTOMIZED",false,typeof(int?))]
+			get{return "CUST_ORDER_DETAIL_CUSTOMIZED" ; }}
+		public string FILEGROUP_UUID {
+			[ColumnName("FILEGROUP_UUID",false,typeof(string))]
+			get{return "FILEGROUP_UUID" ; }}
+		public string SUPPLIER_GOODS_UUID {
+			[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string CUST_ORDER_DETAIL_IS_ACTIVE {
+			[ColumnName("CUST_ORDER_DETAIL_IS_ACTIVE",false,typeof(int?))]
+			get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
+		public string GCATEGORY_FULL_NAME {
+			[ColumnName("GCATEGORY_FULL_NAME",false,typeof(string))]
+			get{return "GCATEGORY_FULL_NAME" ; }}
+		public string GCATEGORY_NAME {
+			[ColumnName("GCATEGORY_NAME",false,typeof(string))]
+			get{return "GCATEGORY_NAME" ; }}
+		public string GCATEGORY_UUID {
+			[ColumnName("GCATEGORY_UUID",false,typeof(string))]
+			get{return "GCATEGORY_UUID" ; }}
+		public string GOODS_NAME {
+			[ColumnName("GOODS_NAME",false,typeof(string))]
+			get{return "GOODS_NAME" ; }}
+		public string GOODS_PRICE {
+			[ColumnName("GOODS_PRICE",false,typeof(decimal?))]
+			get{return "GOODS_PRICE" ; }}
+		public string GOODS_PS {
+			[ColumnName("GOODS_PS",false,typeof(string))]
+			get{return "GOODS_PS" ; }}
+		public string GOODS_SN {
+			[ColumnName("GOODS_SN",false,typeof(string))]
+			get{return "GOODS_SN" ; }}
+		public string SUPPLIER_GOODS_NAME {
+			[ColumnName("SUPPLIER_GOODS_NAME",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_NAME" ; }}
+		public string SUPPLIER_GOODS_PRICE {
+			[ColumnName("SUPPLIER_GOODS_PRICE",false,typeof(decimal?))]
+			get{return "SUPPLIER_GOODS_PRICE" ; }}
+		public string SUPPLIER_GOODS_SN {
+			[ColumnName("SUPPLIER_GOODS_SN",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_SN" ; }}
+		public string SUPPLIER_GOODS_UNIT_UUID {
+			[ColumnName("SUPPLIER_GOODS_UNIT_UUID",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_UNIT_UUID" ; }}
+		public string UNIT_NAME {
+			[ColumnName("UNIT_NAME",false,typeof(string))]
+			get{return "UNIT_NAME" ; }}
+		public string CUST_ORDER_DETAIL_UNIT_NAME {
+			[ColumnName("CUST_ORDER_DETAIL_UNIT_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_DETAIL_UNIT_NAME" ; }}
+		public string FILEGROUP_DISPLAY_NAME {
+			[ColumnName("FILEGROUP_DISPLAY_NAME",false,typeof(string))]
+			get{return "FILEGROUP_DISPLAY_NAME" ; }}
+		public string FILEGROUP_TAG {
+			[ColumnName("FILEGROUP_TAG",false,typeof(string))]
+			get{return "FILEGROUP_TAG" ; }}
+		public string FILE_COUNT {
+			[ColumnName("FILE_COUNT",false,typeof(string))]
+			get{return "FILE_COUNT" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VCustOrderDetail_Record CurrentRecord(){

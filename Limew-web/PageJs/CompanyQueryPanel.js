@@ -251,7 +251,7 @@ Ext.define('WS.CompanyQueryPanel', {
                         var subWin = Ext.create(main.subWinCompany, {
                             param: {
                                 uuid: undefined,
-                                parentObj:main
+                                parentObj: main
                             }
                         });
                         subWin.on('closeEvent', function(obj) {

@@ -3,7 +3,8 @@ Ext.define('WS.FileWindow', {
     title: '檔案備註',
     icon: SYSTEM_URL_ROOT + '/css/custimages/box16x16.png',
     closeAction: 'destroy',
-    closable: false, modal: true,
+    closable: false,
+    modal: true,
     param: {
         fileUuid: undefined,
         parentObj: undefined
@@ -43,13 +44,13 @@ Ext.define('WS.FileWindow', {
                         maxLength: 50,
                         allowBlank: false,
                         labelAlign: 'right',
-                        readOnly:true
+                        readOnly: true
                     }, {
-                        xtype : 'textarea',                        
-                        selectOnFocus : true,                        
+                        xtype: 'textarea',
+                        selectOnFocus: true,
                         fieldLabel: '檔案備註',
                         labelWidth: 100,
-                        height:170,
+                        height: 170,
                         name: 'FILE_PS',
                         padding: 5,
                         anchor: '0 0',
@@ -104,31 +105,33 @@ Ext.define('WS.FileWindow', {
                             scope: this.up('window')
                         });
                     }
-                }, {
-                    type: 'button',
-                    icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
-                    text: '刪除',
-                    handler: function() {
-                        var mainWin = this.up('window');
-                        Ext.MessageBox.confirm('刪除此檔案', '確定要刪除這一個檔案?', function(result) {
-                            if (result == 'yes') {
-                                var fileUuid = mainWin.param.fileUuid;
-                                WS.FileAction.destoryFile(fileUuid, function(obj, jsonObj) {
-                                    if (jsonObj.result.success) {
-                                        this.close();
-                                    } else {
-                                        Ext.MessageBox.show({
-                                            title: '刪除檔案操作(1503100944)，造成原因可能是此資料已被使用!',
-                                            icon: Ext.MessageBox.INFO,
-                                            buttons: Ext.Msg.OK,
-                                            msg: jsonObj.result.message
-                                        });
-                                    }
-                                }, mainWin);
-                            }
-                        });
-                    }
-                }, {
+                }, 
+                // {
+                //     type: 'button',
+                //     icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
+                //     text: '刪除',
+                //     handler: function() {
+                //         var mainWin = this.up('window');
+                //         Ext.MessageBox.confirm('刪除此檔案', '確定要刪除這一個檔案?', function(result) {
+                //             if (result == 'yes') {
+                //                 var fileUuid = mainWin.param.fileUuid;
+                //                 WS.FileAction.destoryFile(fileUuid, function(obj, jsonObj) {
+                //                     if (jsonObj.result.success) {
+                //                         this.close();
+                //                     } else {
+                //                         Ext.MessageBox.show({
+                //                             title: '刪除檔案操作(1503100944)，造成原因可能是此資料已被使用!',
+                //                             icon: Ext.MessageBox.INFO,
+                //                             buttons: Ext.Msg.OK,
+                //                             msg: jsonObj.result.message
+                //                         });
+                //                     }
+                //                 }, mainWin);
+                //             }
+                //         });
+                //     }
+                // },
+                 {
                     type: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/exit16x16.png',
                     text: '關閉',
@@ -144,7 +147,7 @@ Ext.define('WS.FileWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             if (this.param.fileUuid != undefined) {
                 this.down("#FileForm").getForm().load({
                     params: {

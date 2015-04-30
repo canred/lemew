@@ -5,7 +5,7 @@ Ext.define('WS.CustPickerWindow', {
     title: '挑選客戶',
     icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',
     closeAction: 'destroy',
-	modal: true,
+    modal: true,
     myStore: {
         cust: Ext.create('Ext.data.Store', {
             successProperty: 'success',
@@ -21,9 +21,10 @@ Ext.define('WS.CustPickerWindow', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: [ 'keyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['keyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    keyword: ''
+                    keyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -90,7 +91,7 @@ Ext.define('WS.CustPickerWindow', {
                         var mainWin = this.up('window'),
                             proxy = mainWin.myStore.cust.getProxy(),
                             store = mainWin.myStore.cust;
-                        
+
                         proxy.setExtraParam('keyword', mainWin.down('#txtKeyword').getValue());
                         store.load();
                     }
@@ -147,19 +148,20 @@ Ext.define('WS.CustPickerWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    selectedEvent: function(obj, result ) {
+    selectedEvent: function(obj, result) {
         this.fireEvent('selectedEvent', obj, result);
     },
     listeners: {
-        'beforeshow': function() {            
+        'beforeshow': function() {
             var store = this.myStore.cust,
                 proxy = store.getProxy();
-            
+
             proxy.setExtraParam('keyword', this.down('#txtKeyword').getValue());
             store.load();
         },
         'close': function() {
             this.down('#txtKeyword').setValue('');
+            this.myStore.cust.removeAll();
             this.closeEvent();
         }
     }

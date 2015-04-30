@@ -36,9 +36,10 @@ Ext.define('WS.MyOrderWindow', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword','pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    'pKeyword': ''
+                    'pKeyword': '',
+                    pSupplierIsActive:'1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -101,7 +102,7 @@ Ext.define('WS.MyOrderWindow', {
             autoLoad: true,
             remoteSort: true,
             model: 'UNIT',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -715,8 +716,12 @@ Ext.define('WS.MyOrderWindow', {
     },
     listeners: {
         'show': function() {
+             this.mask('資訊載入中…請稍後…');
             this.myStore.supplier.load();
-            this.myStore.vMyOrderDetail.getProxy().setExtraParam('pMyOrderUuid', this.param.myOrderUuid);
+
+            //     if(this.param.myOrderUuid){
+            //     this.myStore.vMyOrderDetail.getProxy().setExtraParam('pMyOrderUuid', this.param.myOrderUuid);
+            // };
             if (this.param.myOrderUuid != undefined) {
                 this.down("#MyOrderForm").getForm().load({
                     params: {
@@ -728,7 +733,10 @@ Ext.define('WS.MyOrderWindow', {
                         } else {
                             this.down("#MY_ORDER_CR").setValue(new Date());
                         };
+                        this.myStore.vMyOrderDetail.getProxy().setExtraParam('pMyOrderUuid', a.result.data.MY_ORDER_UUID);
+
                         this.myStore.vMyOrderDetail.load();
+                        this.unmask();
                     },
                     failure: function(response, jsonObj, b) {
                         if (!jsonObj.result.success) {
@@ -749,7 +757,10 @@ Ext.define('WS.MyOrderWindow', {
                     },
                     success: function(response, a, b) {
                         this.param.myOrderUuid = a.result.data.MY_ORDER_UUID;
+                        this.myStore.vMyOrderDetail.getProxy().setExtraParam('pMyOrderUuid', a.result.data.MY_ORDER_UUID);
                         this.myStore.vMyOrderDetail.load();
+
+                        this.unmask();
                     },
                     failure: function(response, jsonObj, b) {
                         if (!jsonObj.result.success) {
@@ -768,6 +779,10 @@ Ext.define('WS.MyOrderWindow', {
         'close': function() {
             this.closeEvent();
             this.myStore.vMyOrderDetail.removeAll();
+            this.myStore.supplier.removeAll();
+            this.myStore.unit.removeAll();
+            this.down('form').reset();
+
         }
     }
 });

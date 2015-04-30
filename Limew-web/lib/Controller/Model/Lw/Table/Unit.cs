@@ -29,9 +29,15 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string UNIT_UUID {get{return "UNIT_UUID" ; }}
-		public string UNIT_NAME {get{return "UNIT_NAME" ; }}
-		public string UNIT_IS_ACTIVE {get{return "UNIT_IS_ACTIVE" ; }}
+		public string UNIT_UUID {
+			[ColumnName("UNIT_UUID",true,typeof(string))]
+			get{return "UNIT_UUID" ; }}
+		public string UNIT_NAME {
+			[ColumnName("UNIT_NAME",false,typeof(string))]
+			get{return "UNIT_NAME" ; }}
+		public string UNIT_IS_ACTIVE {
+			[ColumnName("UNIT_IS_ACTIVE",false,typeof(int?))]
+			get{return "UNIT_IS_ACTIVE" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Unit_Record CurrentRecord(){

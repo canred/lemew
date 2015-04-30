@@ -8,7 +8,7 @@ Ext.define('WS.AppPageWindow', {
     param: {
         uuid: undefined
     },
-	modal: true,
+    modal: true,
     width: 550,
     height: 350,
     layout: 'fit',
@@ -109,16 +109,16 @@ Ext.define('WS.AppPageWindow', {
                 name: 'URL',
                 maxLength: 84,
                 allowBlank: false
-            },{
-                fieldLabel:'RunJsFunction',
-                name:'RUNJSFUNCTION',
-                maxLength:84,
-                allowBlank:true
+            }, {
+                fieldLabel: 'RunJsFunction',
+                name: 'RUNJSFUNCTION',
+                maxLength: 84,
+                allowBlank: true
             }, {
                 xtype: 'container',
                 layout: 'hbox',
-                fieldLabel: '啟用',                
-                defaultType: 'radiofield',                
+                fieldLabel: '啟用',
+                defaultType: 'radiofield',
                 items: [{
                     fieldLabel: '啟用',
                     labelAlign: 'right',
@@ -217,7 +217,7 @@ Ext.define('WS.AppPageWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             this.down('#Ext_AppPageForm_Form_application_head_uuid').getStore().load({
                 callback: function() {
                     if (this.param.uuid != undefined) {
@@ -246,7 +246,7 @@ Ext.define('WS.AppPageWindow', {
             });
 
         },
-        'hide': function() {            
+        'hide': function() {
             this.closeEvent();
         }
     }

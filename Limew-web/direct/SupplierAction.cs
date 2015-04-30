@@ -52,6 +52,14 @@ public class SupplierAction : BaseAction
             {
                 return ExtDirect.Direct.Helper.Form.OutputJObject(JsonHelper.RecordBaseJObject(data.AllRecord().First()));
             }
+            else if (data.AllRecord().Count==0)
+            {
+                Supplier_Record newDr = new Supplier_Record();
+                newDr.SUPPLIER_UUID = LK.Util.UID.Instance.GetUniqueID();
+                newDr.SUPPLIER_IS_ACTIVE = -1;
+                newDr.gotoTable().Insert_Empty2Null(newDr);
+                return ExtDirect.Direct.Helper.Form.OutputJObject(JsonHelper.RecordBaseJObject(newDr));
+            }
             return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(new Exception("Data Not Found!"));
         }
         catch (Exception ex)
@@ -62,7 +70,7 @@ public class SupplierAction : BaseAction
     }
 
     [DirectMethod("loadSupplier", DirectAction.Store)]
-    public JObject loadSupplier(string pKeyword, string pageNo, string limitNo, string sort, string dir, Request request)
+    public JObject loadSupplier(string pKeyword,string pSupplierIsActive, string pageNo, string limitNo, string sort, string dir, Request request)
     {
         #region Declare
         List<JObject> jobject = new List<JObject>();
@@ -84,8 +92,8 @@ public class SupplierAction : BaseAction
             };
             /*取得總資料數*/
             orderLimit = ExtDirect.Direct.Helper.Order.getOrderLimit(pageNo, limitNo, sort, dir);
-            var totalCount = mod.getSupplier_By_Keyword_Count(pKeyword);
-            var data = mod.getSupplier_By_Keyword(pKeyword, orderLimit);
+            var totalCount = mod.getSupplier_By_Keyword_SupplierIsActive_Count(pKeyword,pSupplierIsActive);
+            var data = mod.getSupplier_By_Keyword_SupplierIsActive(pKeyword, pSupplierIsActive, orderLimit);
             if (data.Count > 0)
             {
                 jobject = JsonHelper.RecordBaseListJObject(data.ToList());
@@ -105,6 +113,44 @@ public class SupplierAction : BaseAction
         }
     }
 
+    [DirectMethod("createSupplier", DirectAction.Load)]
+    public JObject createSupplier( Request request)
+    {
+        #region Declare
+        List<JObject> jobject = new List<JObject>();
+        Limew.Model.Basic.BasicModel model = new Limew.Model.Basic.BasicModel();
+        LwModel mod = new LwModel();
+        OrderLimit orderLimit = new OrderLimit();
+
+        #endregion
+        try
+        {     /*Cloud身份檢查*/
+            checkUser(request.HttpRequest);
+            if (this.getUser() == null)
+            {
+                throw new Exception("Identity authentication failed.");
+            }/*權限檢查*/
+            if (!checkProxy(new StackTrace().GetFrame(0)))
+            {
+                throw new Exception("Permission Denied!");
+            };
+            /*取得總資料數*/
+            Supplier_Record newDr = new Supplier_Record();
+            newDr.SUPPLIER_UUID = LK.Util.UID.Instance.GetUniqueID();
+            newDr.SUPPLIER_IS_ACTIVE = -1;
+            newDr.gotoTable().Insert_Empty2Null(newDr);
+
+            System.Collections.Hashtable otherParam = new System.Collections.Hashtable();
+            otherParam.Add("SUPPLIER_UUID", newDr.SUPPLIER_UUID);
+            return ExtDirect.Direct.Helper.Message.Success.OutputJObject(otherParam);
+        }
+        catch (Exception ex)
+        {
+            log.Error(ex); LK.MyException.MyException.Error(this, ex);
+            /*將Exception轉成EXT Exception JSON格式*/
+            return ExtDirect.Direct.Helper.Message.Fail.OutputJObject(ex);
+        }
+    }
     [DirectMethod("submitSupplier", DirectAction.FormSubmission)]
     public JObject submitSupplier(  string supplier_uuid,
                                     string supplier_name,

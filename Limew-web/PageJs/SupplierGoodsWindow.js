@@ -2,10 +2,12 @@ Ext.define('WS.SupplierGoodsWindow', {
     extend: 'Ext.window.Window',
     title: '供應商-商品維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/box16x16.png',
-    closeAction: 'destroy', modal: true,
+    closeAction: 'destroy',
+    modal: true,
     closable: false,
     param: {
         supplierGoodsUuid: undefined,
+        supplierUuid: undefined,
         parentObj: undefined
     },
     myStore: {
@@ -14,7 +16,7 @@ Ext.define('WS.SupplierGoodsWindow', {
             autoLoad: false,
             remoteSort: true,
             model: 'SUPPLIER',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -24,9 +26,10 @@ Ext.define('WS.SupplierGoodsWindow', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    'pKeyword': ''
+                    'pKeyword': '',
+                    pSupplierIsActive: 1
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -50,7 +53,7 @@ Ext.define('WS.SupplierGoodsWindow', {
             autoLoad: false,
             remoteSort: true,
             model: 'UNIT',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -290,6 +293,7 @@ Ext.define('WS.SupplierGoodsWindow', {
     },
     listeners: {
         'show': function() {
+            this.mask("資訊載入中…請稍後…");
             this.myStore.unit.load({
                 callback: function(obj, jsonObj) {
                     this.myStore.supplier.load({
@@ -299,7 +303,9 @@ Ext.define('WS.SupplierGoodsWindow', {
                                     params: {
                                         'pSupplierGoodsUuid': this.param.supplierGoodsUuid
                                     },
-                                    success: function(response, a, b) {},
+                                    success: function(response, a, b) {
+                                        this.unmask();
+                                    },
                                     failure: function(response, jsonObj, b) {
                                         if (!jsonObj.result.success) {
                                             Ext.MessageBox.show({
@@ -312,8 +318,14 @@ Ext.define('WS.SupplierGoodsWindow', {
                                     }
                                 });
                             } else {
-                                this.down("#SupplierGoodsForm").getForm().reset();
+                                //alert(this.param.supplierUuid);
 
+                                this.down("#SupplierGoodsForm").getForm().reset();
+                                if (this.param.supplierUuid) {
+                                    this.down("#cmbSupplier").setValue(this.param.supplierUuid);
+
+                                };
+                                this.unmask();
                             };
                         },
                         scope: this
@@ -324,6 +336,9 @@ Ext.define('WS.SupplierGoodsWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.myStore.supplier.removeAll();
+            this.myStore.unit.removeAll();
+            this.down('form').reset();
         }
     }
 });

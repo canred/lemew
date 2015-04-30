@@ -29,16 +29,36 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ORG_UUID {get{return "CUST_ORG_UUID" ; }}
-		public string CUST_UUID {get{return "CUST_UUID" ; }}
-		public string CUST_ORG_SALES_NAME {get{return "CUST_ORG_SALES_NAME" ; }}
-		public string CUST_ORG_SALES_PHONE {get{return "CUST_ORG_SALES_PHONE" ; }}
-		public string CUST_ORG_SALES_EMAIL {get{return "CUST_ORG_SALES_EMAIL" ; }}
-		public string CUST_ORG_PS {get{return "CUST_ORG_PS" ; }}
-		public string CUST_ORG_NAME {get{return "CUST_ORG_NAME" ; }}
-		public string CUST_ORG_IS_ACTIVE {get{return "CUST_ORG_IS_ACTIVE" ; }}
-		public string CUST_ORG_ADDRESS {get{return "CUST_ORG_ADDRESS" ; }}
-		public string CUST_ORG_IS_DEFAULT {get{return "CUST_ORG_IS_DEFAULT" ; }}
+		public string CUST_ORG_UUID {
+			[ColumnName("CUST_ORG_UUID",true,typeof(string))]
+			get{return "CUST_ORG_UUID" ; }}
+		public string CUST_UUID {
+			[ColumnName("CUST_UUID",false,typeof(string))]
+			get{return "CUST_UUID" ; }}
+		public string CUST_ORG_SALES_NAME {
+			[ColumnName("CUST_ORG_SALES_NAME",false,typeof(string))]
+			get{return "CUST_ORG_SALES_NAME" ; }}
+		public string CUST_ORG_SALES_PHONE {
+			[ColumnName("CUST_ORG_SALES_PHONE",false,typeof(string))]
+			get{return "CUST_ORG_SALES_PHONE" ; }}
+		public string CUST_ORG_SALES_EMAIL {
+			[ColumnName("CUST_ORG_SALES_EMAIL",false,typeof(string))]
+			get{return "CUST_ORG_SALES_EMAIL" ; }}
+		public string CUST_ORG_PS {
+			[ColumnName("CUST_ORG_PS",false,typeof(string))]
+			get{return "CUST_ORG_PS" ; }}
+		public string CUST_ORG_NAME {
+			[ColumnName("CUST_ORG_NAME",false,typeof(string))]
+			get{return "CUST_ORG_NAME" ; }}
+		public string CUST_ORG_IS_ACTIVE {
+			[ColumnName("CUST_ORG_IS_ACTIVE",false,typeof(int?))]
+			get{return "CUST_ORG_IS_ACTIVE" ; }}
+		public string CUST_ORG_ADDRESS {
+			[ColumnName("CUST_ORG_ADDRESS",false,typeof(string))]
+			get{return "CUST_ORG_ADDRESS" ; }}
+		public string CUST_ORG_IS_DEFAULT {
+			[ColumnName("CUST_ORG_IS_DEFAULT",false,typeof(int?))]
+			get{return "CUST_ORG_IS_DEFAULT" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrg_Record CurrentRecord(){

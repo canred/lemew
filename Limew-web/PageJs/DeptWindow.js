@@ -4,7 +4,7 @@ Ext.define('WS.DeptWindow', {
     icon: SYSTEM_URL_ROOT + '/css/images/organisation16x16.png',
     title: '部門維護',
     closable: false,
-	modal: true,
+    modal: true,
     closeAction: 'destroy',
     param: {
         uuid: undefined,
@@ -198,12 +198,12 @@ Ext.define('WS.DeptWindow', {
                     hidden: false,
                     width: 475,
                     store: this.myStore.department,
-                    validator:function(value){
+                    validator: function(value) {
                         var mainWin = this.up('window');
-                        if( mainWin.param.uuid ){
-                            if(this.getValue()==mainWin.param.uuid){
-                                return "不可以選擇"+value+"部門";
-                            }else{
+                        if (mainWin.param.uuid) {
+                            if (this.getValue() == mainWin.param.uuid) {
+                                return "不可以選擇" + value + "部門";
+                            } else {
                                 return true;
                             }
                         }
@@ -223,7 +223,7 @@ Ext.define('WS.DeptWindow', {
                         subWin.on('selected', function(obj, returnData) {
                             obj.param.parentObj.down('#PARENT_DEPARTMENT_UUID').setValue(returnData.UUID);
                             obj.close();
-                        });                        
+                        });
                         subWin.show();
                     }
                 }]
@@ -306,7 +306,7 @@ Ext.define('WS.DeptWindow', {
                     msg: '初始化錯誤【1504011343】'
                 });
                 return false;
-            };            
+            };
             var proxy = this.myStore.department.getProxy();
             proxy.setExtraParam('pCompanyUuid', this.param.companyUuid);
             this.myStore.department.load();
@@ -346,7 +346,7 @@ Ext.define('WS.DeptWindow', {
             };
         },
         'close': function() {
-            this.closeEvent();            
+            this.closeEvent();
         }
     }
 });

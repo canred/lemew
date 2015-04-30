@@ -29,19 +29,48 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string MY_ORDER_UUID {get{return "MY_ORDER_UUID" ; }}
-		public string SUPPLIER_UUID {get{return "SUPPLIER_UUID" ; }}
-		public string MY_ORDER_SUPPLIER_NAME {get{return "MY_ORDER_SUPPLIER_NAME" ; }}
-		public string MY_ORDER_SUPPLIER_TEL {get{return "MY_ORDER_SUPPLIER_TEL" ; }}
-		public string MY_ORDER_SUPPLIER_FAX {get{return "MY_ORDER_SUPPLIER_FAX" ; }}
-		public string MY_ORDER_SUPPLIER_ADDRESS {get{return "MY_ORDER_SUPPLIER_ADDRESS" ; }}
-		public string MY_ORDER_CONTACT_NAME {get{return "MY_ORDER_CONTACT_NAME" ; }}
-		public string MY_ORDER_CONTACT_PHONE {get{return "MY_ORDER_CONTACT_PHONE" ; }}
-		public string MY_ORDER_CONTACT_EMAIL {get{return "MY_ORDER_CONTACT_EMAIL" ; }}
-		public string MY_ORDER_PS {get{return "MY_ORDER_PS" ; }}
-		public string MY_ORDER_CR {get{return "MY_ORDER_CR" ; }}
-		public string MY_ORDER_TOTAL_PRICE {get{return "MY_ORDER_TOTAL_PRICE" ; }}
-		public string MY_ORDER_IS_ACTIVE {get{return "MY_ORDER_IS_ACTIVE" ; }}
+		public string MY_ORDER_UUID {
+			[ColumnName("MY_ORDER_UUID",true,typeof(string))]
+			get{return "MY_ORDER_UUID" ; }}
+		public string SUPPLIER_UUID {
+			[ColumnName("SUPPLIER_UUID",false,typeof(string))]
+			get{return "SUPPLIER_UUID" ; }}
+		public string MY_ORDER_SUPPLIER_NAME {
+			[ColumnName("MY_ORDER_SUPPLIER_NAME",false,typeof(string))]
+			get{return "MY_ORDER_SUPPLIER_NAME" ; }}
+		public string MY_ORDER_SUPPLIER_TEL {
+			[ColumnName("MY_ORDER_SUPPLIER_TEL",false,typeof(string))]
+			get{return "MY_ORDER_SUPPLIER_TEL" ; }}
+		public string MY_ORDER_SUPPLIER_FAX {
+			[ColumnName("MY_ORDER_SUPPLIER_FAX",false,typeof(string))]
+			get{return "MY_ORDER_SUPPLIER_FAX" ; }}
+		public string MY_ORDER_SUPPLIER_ADDRESS {
+			[ColumnName("MY_ORDER_SUPPLIER_ADDRESS",false,typeof(string))]
+			get{return "MY_ORDER_SUPPLIER_ADDRESS" ; }}
+		public string MY_ORDER_CONTACT_NAME {
+			[ColumnName("MY_ORDER_CONTACT_NAME",false,typeof(string))]
+			get{return "MY_ORDER_CONTACT_NAME" ; }}
+		public string MY_ORDER_CONTACT_PHONE {
+			[ColumnName("MY_ORDER_CONTACT_PHONE",false,typeof(string))]
+			get{return "MY_ORDER_CONTACT_PHONE" ; }}
+		public string MY_ORDER_CONTACT_EMAIL {
+			[ColumnName("MY_ORDER_CONTACT_EMAIL",false,typeof(string))]
+			get{return "MY_ORDER_CONTACT_EMAIL" ; }}
+		public string MY_ORDER_PS {
+			[ColumnName("MY_ORDER_PS",false,typeof(string))]
+			get{return "MY_ORDER_PS" ; }}
+		public string MY_ORDER_CR {
+			[ColumnName("MY_ORDER_CR",false,typeof(DateTime?))]
+			get{return "MY_ORDER_CR" ; }}
+		public string MY_ORDER_TOTAL_PRICE {
+			[ColumnName("MY_ORDER_TOTAL_PRICE",false,typeof(decimal?))]
+			get{return "MY_ORDER_TOTAL_PRICE" ; }}
+		public string MY_ORDER_IS_ACTIVE {
+			[ColumnName("MY_ORDER_IS_ACTIVE",false,typeof(int?))]
+			get{return "MY_ORDER_IS_ACTIVE" ; }}
+		public string MY_ORDER_ID {
+			[ColumnName("MY_ORDER_ID",false,typeof(string))]
+			get{return "MY_ORDER_ID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public MyOrder_Record CurrentRecord(){

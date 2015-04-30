@@ -306,7 +306,7 @@ Ext.define('WS.AppPageQueryPanel', {
     listeners: {
         afterrender: function(obj, eOpts) {
             this.myStore.application.load({
-                callback: function(obj) {                    
+                callback: function(obj) {
                     if (obj.length > 0) {
                         this.down('#function_Query_Application').setValue(obj[0].data.UUID);
                         this.down('#btnQuery').handler(this.down('#btnQuery'));

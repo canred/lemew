@@ -162,7 +162,9 @@ Ext.define('WS.LogonPanel', {
                 text: '登入',
                 itemId: 'bntLogin',
                 handler: function() {
-                    Ext.getBody().mask();
+                    if( this.up('window')){
+                        this.up('window').mask('系統登入中…');
+                    };
                     WS_LOGONPANEL.down("#txt_pw").allowBlank = false;
                     this.up('form').getForm().isValid();
                     var urlSuccess = this.up('panel').up('panel').urlSuccess,
@@ -186,7 +188,9 @@ Ext.define('WS.LogonPanel', {
                                         };
                                     },
                                     failure: function(obj, res) {
-                                        Ext.getBody().unmask();
+                                        if( this.up('window')){
+                                            this.up('window').unmask();
+                                        };
                                         if (res.failureType === Ext.form.Action.CONNECT_FAILURE) {
                                             Ext.Msg.alert('Logon Failure', '請檢查您的帳號密碼是否正確。');
                                         };

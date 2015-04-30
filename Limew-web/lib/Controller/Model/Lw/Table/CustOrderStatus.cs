@@ -29,10 +29,18 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ORDER_STATUS_UUID {get{return "CUST_ORDER_STATUS_UUID" ; }}
-		public string CUST_ORDER_STATUS_NAME {get{return "CUST_ORDER_STATUS_NAME" ; }}
-		public string CUST_ORDER_STATUS_IS_ACTIVE {get{return "CUST_ORDER_STATUS_IS_ACTIVE" ; }}
-		public string CUST_ORDER_STATUS_ORD {get{return "CUST_ORDER_STATUS_ORD" ; }}
+		public string CUST_ORDER_STATUS_UUID {
+			[ColumnName("CUST_ORDER_STATUS_UUID",true,typeof(string))]
+			get{return "CUST_ORDER_STATUS_UUID" ; }}
+		public string CUST_ORDER_STATUS_NAME {
+			[ColumnName("CUST_ORDER_STATUS_NAME",false,typeof(string))]
+			get{return "CUST_ORDER_STATUS_NAME" ; }}
+		public string CUST_ORDER_STATUS_IS_ACTIVE {
+			[ColumnName("CUST_ORDER_STATUS_IS_ACTIVE",false,typeof(int?))]
+			get{return "CUST_ORDER_STATUS_IS_ACTIVE" ; }}
+		public string CUST_ORDER_STATUS_ORD {
+			[ColumnName("CUST_ORDER_STATUS_ORD",false,typeof(short?))]
+			get{return "CUST_ORDER_STATUS_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public CustOrderStatus_Record CurrentRecord(){

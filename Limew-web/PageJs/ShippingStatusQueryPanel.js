@@ -14,8 +14,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
-    param: {
-    },
+    param: {},
     /*值擴展*/
     val: {},
     /*物件會用到的Store物件*/
@@ -34,7 +33,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: [ 'keyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['keyword', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     keyword: ''
                 },
@@ -63,7 +62,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
-    initComponent: function() { 
+    initComponent: function() {
         /*佈局設定*/
         this.items = [{
             xtype: 'panel',
@@ -101,7 +100,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
                     itemId: 'btnQuery',
                     handler: function() {
                         var _main = this.up('panel').up('panel'),
-                            _txtSearch = _main.down("#txt_search").getValue();                       
+                            _txtSearch = _main.down("#txt_search").getValue();
                         _main.myStore.shippingStatus.getProxy().setExtraParam('keyword', _txtSearch);
                         _main.myStore.shippingStatus.loadPage(1);
                     }
@@ -135,7 +134,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
                         width: 60,
                         items: [{
                             tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT+'/css/images/edit16x16.png',
+                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                             handler: function(grid, rowIndex, colIndex) {
                                 var main = grid.up('panel').up('panel').up('panel');
                                 if (!main.subWinShippingStatus) {
@@ -165,7 +164,7 @@ Ext.define('WS.ShippingStatusQueryPanel', {
                     }, {
                         header: "出貨狀態",
                         dataIndex: 'SHIPPING_STATUS_NAME',
-                        flex:1
+                        flex: 1
                     }, {
                         header: '順序',
                         dataIndex: 'SHIPPING_STATUS_ORD',

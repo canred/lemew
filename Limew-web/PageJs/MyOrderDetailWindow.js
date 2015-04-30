@@ -89,7 +89,7 @@ Ext.define('WS.MyOrderDetailWindow', {
             autoLoad: false,
             remoteSort: true,
             model: 'UNIT',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -451,6 +451,7 @@ Ext.define('WS.MyOrderDetailWindow', {
     },
     listeners: {
         'show': function() {
+            this.mask('資訊載入中…請稍後…');
             this.down('#btnQuery').handler();
             if (this.param.myOrderUuid) {
                 this.down("#MY_ORDER_UUID").setValue(this.param.myOrderUuid);
@@ -473,6 +474,7 @@ Ext.define('WS.MyOrderDetailWindow', {
                             } else {
                                 this.down('#btnDelete').setDisabled(false);
                             };
+                            this.unmask();
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -496,6 +498,9 @@ Ext.define('WS.MyOrderDetailWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.myStore.vSupplierGoods.removeAll();
+            this.myStore.unit.removeAll();
+            this.down('form').reset();
         }
     }
 });

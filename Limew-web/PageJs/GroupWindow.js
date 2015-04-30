@@ -23,7 +23,7 @@ Ext.define('WS.GroupWindow', {
     icon: SYSTEM_URL_ROOT + '/css/images/lock16x16.png',
     closeAction: 'destroy',
     border: false,
-	modal: true,
+    modal: true,
     param: {
         uuid: undefined,
         companyUuid: undefined,
@@ -611,7 +611,7 @@ Ext.define('WS.GroupWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             var mainWin = this;
             if (this.param.companyUuid == undefined) {
                 WS.UserAction.getUserInfo(function(jsonObj) {

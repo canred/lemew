@@ -12,16 +12,14 @@
                 logonUrl: '<%= Page.ResolveUrl(Limew.Parameter.Config.ParemterConfigs.GetConfig().LogonPage) %>'
         }
     });
-    logoutPanel.render('logon');
+    var logoutWin = Ext.create('WS.LogoutWindow',{
+        param:{
+            logoutPanel : logoutPanel
+        }
+    });
+    logoutWin.show();
+    $('#divLogout').css("height",$(document).height()-130);
 });
 </script>
-<table width="100%">
-    <tr>
-        <td width="30%"></td>
-        <td width="40%" >
-			<div id="logon" style="margin-bottom:5px;margin-top:5px;"></div>
-        </td>
-        <td width="30%"></td>
-    </tr>
-</table>
+<div id='divLogout' style="width:90%;"></div>
 </asp:Content>

@@ -13,21 +13,17 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
     subWinCustOrder: undefined,
-    /*語言擴展*/
     lan: {},
-    /*參數擴展*/
     param: {
         showADSync: true
     },
-    /*值擴展*/
     val: {},
-    /*物件會用到的Store物件*/
     myStore: {
         cust: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -37,9 +33,10 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    pKeyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -82,12 +79,6 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                // paramOrder: ['pCustOrderStatus', 'pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
-                // extraParams: {
-                //     'pCustOrderStatus': '',
-                //     'pCustUuid': '',
-                //     'pKeyword': ''
-                // },
                 paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'pPayStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pKeyword: '',
@@ -164,7 +155,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST_ORDER_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -210,7 +201,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'SHIPPING_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -257,7 +248,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
             autoLoad: true,
             model: 'PAY_METHOD',
             remoteSort: true,
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -297,7 +288,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                 fields: ['COLUMN_A', 'COLUMN_B']
             }),
             remoteSort: true,
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -334,7 +325,6 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
         return value === "Y" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
     fnCheckSubWindowns: function() {
-
         if (Ext.isEmpty(this.subWinCustOrder)) {
             Ext.MessageBox.show({
                 title: '系統提示',
@@ -356,7 +346,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
             frame: true,
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -557,7 +547,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                 }),
                 itemId: 'grdVCustOrder',
                 border: true,
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 columns: [{
                     text: "",
@@ -580,11 +570,8 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                                 return false;
                             };
                             var subWin = Ext.create(main.subWinCustOrder, {});
-                            //Ext.getBody().mask();
-                            subWin.on('closeEvent', function(obj) {
-                                //main.down("#grdVCustOrder").getStore().load();
-                                //Ext.getBody().unmask();
-                            }, main);
+
+                            subWin.on('closeEvent', function(obj) {}, main);
                             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
                             subWin.show();
@@ -604,6 +591,17 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                         handler: function(grid, rowIndex, colIndex) {
                             var main = grid.up('panel').up('panel').up('panel');
                             var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+
+                            if (grid.getStore().getAt(rowIndex).data.PAY_STATUS_UUID != 'pay_status_1') {
+                                Ext.MessageBox.show({
+                                    title: '系統提示',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    msg: '此訂單付款狀態為「' + grid.getStore().getAt(rowIndex).data.PAY_STATUS_NAME + '」無法執行退回操作'
+                                });
+                                return;
+                            };
+
                             Ext.MessageBox.confirm('請確認', '將此單退回到出貨狀態?', function(result) {
                                 if (result == 'yes') {
                                     WS.CustAction.backToShipping(custOrderUuid, function(obj, jsonObj) {
@@ -665,7 +663,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     width: 100,
                     dataIndex: 'PAY_METHOD_UUID',
                     renderer: function(value, r) {
-                        return r.record.data.PAY_METHOD_NAME;
+                        return "<div style='background-color:#75D966;width:80px;'>&nbsp;" + r.record.data.PAY_METHOD_NAME + "</div>";
                     },
                     editor: {
                         xtype: 'combo',
@@ -683,6 +681,14 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                                 };
                                 var dr = obj.getStore().findRecord("PAY_METHOD_UUID", newValue).data;
                                 mainPanel.param.editRecord.data.PAY_METHOD_NAME = dr.PAY_METHOD_NAME;
+                            },
+                            focus: function(obj, eOpts) {
+                                var mainPanel = obj.up('panel').up('panel').up('panel');
+                                if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
+                                    obj.setReadOnly(false);
+                                } else {
+                                    obj.setReadOnly(true);
+                                }
                             }
                         }
                     }
@@ -693,26 +699,18 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     align: 'right',
                     width: 140,
                     layout: 'hbox',
-                    tpl: '<input type="text" readonly style="width:130px" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
-                    // tpl: new Ext.XTemplate(
-                    // "<tpl if='SHIPPING_STATUS_UUID == \"SS_INPROCESS\"'>",
-                    // '<input type="text" style="width:130px" value="{CUST_ORDER_INVOICE_NUMBER}"/>'),
-                    // "<tpl else>",
-                    // '{CUST_ORDER_INVOICE_NUMBER}',
-                    // "</tpl>"),                               
+                    tpl: '<input type="text" readonly style="width:130px;background-color:#75D966;" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
                     editor: {
                         xtype: 'textfield',
                         flex: 1,
                         listeners: {
                             focus: function(obj, eOpts) {
                                 var mainPanel = obj.up('panel').up('panel').up('panel');
-
-
-                                // if (mainPanel.param.editRecord.data.SHIPPING_STATUS_UUID != "SS_INPROCESS") {
-                                //     obj.setReadOnly(true);
-                                // } else {
-                                //     obj.setReadOnly(false);
-                                // }
+                                if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
+                                    obj.setReadOnly(false);
+                                } else {
+                                    obj.setReadOnly(true);
+                                }
                             }
                         }
                     }
@@ -761,54 +759,18 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     align: 'left',
                     flex: 1
                 }, {
+                    xtype: 'templatecolumn',
                     header: '備註',
                     dataIndex: 'CUST_ORDER_PS',
-                    align: 'left',
-                    flex: 1,
-                    renderer: function (value,r) {
-                        var id = Ext.id();
-                        var mainPanel = this.up('panel').up('panel');
-
-                        Ext.defer(function () {    
-                            var s = {};
-                            if(r.record.data.CUST_ORDER_PS.length>0){
-                                s = {
-                                    'background-color':'red'
-                                }
-                            };
-                            Ext.widget('button', {
-                                renderTo: id,
-                                style:s,
-                                text: '備註',
-                                width: 50,
-                                handler: function () {
-                                    var subWin = Ext.create('WS.CustOrderPsWindow',{
-                                        param:{
-                                            custOrderUuid:r.record.data.CUST_ORDER_UUID,
-                                            parentObj:mainPanel
-                                        }
-                                    });
-                                    subWin.on('closeEvent',function(obj){
-                                        obj.param.parentObj.myStore.vcustorder.reload();
-                                    });
-                                    subWin.show();
-                                }
-                            });  
-                        }, 50);
-                        return Ext.String.format('<div id="{0}"></div>', id);
-                    }                
-                }, {
-                    header: '等級',
-                    dataIndex: 'CUST_LEVEL',
                     align: 'center',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '最近採購日',
-                    dataIndex: 'CUST_LAST_BUY',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
+                    width: 140,
+                    layout: 'hbox',
+                    tpl: new Ext.XTemplate(
+                        "<tpl if='CUST_ORDER_PS != \"\"'>",
+                        '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                        "<tpl else>",
+                        '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                        "</tpl>")
                 }],
                 tbarCfg: {
                     buttonAlign: 'right'
@@ -843,11 +805,6 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                         var main = this.up('panel').up('panel').up('panel'),
                             grid = main.down('#grdVCustOrder'),
                             selectRecord = grid.getSelection();
-
-
-
-                        //console.log( main.down('#grdVCustOrder').getSelection() );
-
                         if (selectRecord.length == 0) {
                             Ext.MessageBox.show({
                                 title: '操作提示',
@@ -858,12 +815,10 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                         } else {
                             //canred 要先檢查每一筆的付款方式，與發票號碼都不可以為空
                             if (main.myStore.vcustorder.getModifiedRecords().length > 0) {
-
                                 var updateData = "";
                                 Ext.each(main.myStore.vcustorder.data.items, function(item) {
                                     updateData += item.data.CUST_ORDER_UUID + "," + item.data.PAY_METHOD_UUID + "," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
                                 });
-
                                 WS.CustAction.batchUpdateCustOrderInvoice(updateData, function(obj, jsonObj) {
                                     var postData = '';
                                     var hasErrorData = false;
@@ -965,6 +920,34 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
     },
     listeners: {
         afterrender: function(obj, eOpts) {
+            if (!document.fnOpenPsControlObj) {
+                document.fnOpenPsControlObj = this;
+            };
+
+            if (!document.fnOpenPs) {
+                document.fnOpenPs = function(custOrderUuid, custOrderStatus, payStatus) {
+                    if (payStatus != 'pay_status_2') {
+                        var subWin = Ext.create('WS.CustOrderPsWindow', {
+                            param: {
+                                custOrderUuid: custOrderUuid,
+                                parentObj: document.fnOpenPsControlObj
+                            }
+                        });
+                        subWin.on('closeEvent', function(obj) {
+                            obj.param.parentObj.myStore.vcustorder.reload();
+                        });
+                        subWin.show();
+                    } else {
+                        var subWin = Ext.create('WS.CustOrderPsViewWindow', {
+                            param: {
+                                custOrderUuid: custOrderUuid
+                            }
+                        });
+                        subWin.on('closeEvent', function(obj) {});
+                        subWin.show();
+                    }
+                };
+            };
             this.myStore.cust.load({
                 scope: this
             });

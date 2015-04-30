@@ -22,9 +22,10 @@ Ext.define('WS.MyOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword','pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    'pKeyword': ''
+                    'pKeyword': '',
+                    pSupplierIsActive:'1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -85,7 +86,7 @@ Ext.define('WS.MyOrderQueryPanel', {
             },
             remoteSort: true,
             sorters: [{
-                property: 'MY_ORDER_CR',
+                property: 'MY_ORDER_ID',
                 direction: 'DESC'
             }]
         })
@@ -116,7 +117,7 @@ Ext.define('WS.MyOrderQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/Record16x16.png',
             frame: true,
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -181,7 +182,7 @@ Ext.define('WS.MyOrderQueryPanel', {
                 store: this.myStore.myOrder,
                 itemId: 'grdMyOrderQuery',
                 border: true,
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 columns: [{
                     text: "編輯",
@@ -233,10 +234,16 @@ Ext.define('WS.MyOrderQueryPanel', {
                     sortable: false,
                     hideable: false
                 }, {
+                    header: "訂貨編號",
+                    dataIndex: 'MY_ORDER_ID',
+                    align: 'left',
+                    width: 140
+                }, {
                     header: "訂貨日期",
                     dataIndex: 'MY_ORDER_CR',
                     align: 'left',
                     width: 120,
+                    hidden: true,
                     renderer: function(value, r) {
                         return value.split(' ')[0];
                     }
@@ -306,6 +313,14 @@ Ext.define('WS.MyOrderQueryPanel', {
                             main.down("#grdMyOrderQuery").getStore().load();
                         }, main);
                         subWin.show();
+                    }
+                }, {
+                    xtype: 'tbfill'
+                }, {
+                    icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+                    text: '展開查詢',
+                    handler: function() {
+                        location.href = './goodsRecordExpand.aspx'
                     }
                 }]
             }]

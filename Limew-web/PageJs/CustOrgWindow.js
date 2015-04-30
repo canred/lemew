@@ -3,7 +3,8 @@ Ext.define('WS.CustOrgWindow', {
     title: '單位採購人員維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/custOrg16x16.png',
     closeAction: 'destroy',
-    closable: false, modal: true,
+    closable: false,
+    modal: true,
     param: {
         custOrgUuid: undefined,
         custUuid: undefined
@@ -119,6 +120,15 @@ Ext.define('WS.CustOrgWindow', {
                     anchor: '100%',
                     maxLength: 84,
                     itemId: 'CUST_ORG_UUID'
+                }, {
+                    xtype: 'hidden',
+                    fieldLabel: 'CUST_ORG_IS_DEFAULT',
+                    name: 'CUST_ORG_IS_DEFAULT',
+                    padding: '5 0 0 0',
+                    anchor: '100%',
+                    maxLength: 84,
+                    value: '0',
+                    itemId: 'CUST_ORG_IS_DEFAULT'
                 }],
                 fbar: [{
                     type: 'button',
@@ -196,7 +206,7 @@ Ext.define('WS.CustOrgWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function () {
+        'show': function() {
             if (this.param.custOrgUuid != undefined) {
 
                 this.down("#CustOrgForm").getForm().load({
@@ -221,13 +231,15 @@ Ext.define('WS.CustOrgWindow', {
 
             } else {
                 this.down("#CustOrgForm").getForm().reset();
+                this.down('#CUST_ORG_IS_DEFAULT').setValue('0');
 
             };
 
             this.down('#CUST_UUID').setValue(this.param.custUuid);
         },
-        'close': function() {            
+        'close': function() {
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

@@ -30,7 +30,7 @@ Ext.define('WS.MenuTreeStore', {
             "UUID": ''
         }
     },
-    listeners:{
+    listeners: {
         beforeload: function(store, operation, eOpts) {
             // var p = store.getProxy().getExtraParams();
             // if(p.UUID==''){

@@ -10,13 +10,13 @@ Ext.define('WS.CustOrderStep1Window', {
         custOrderUuid: undefined,
         custUuid: undefined,
         parentObj: undefined
-    }, 
+    },
     myStore: {
         attendant: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: false,
             model: 'ATTENDANT_V',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -52,7 +52,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -89,7 +89,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -99,9 +99,10 @@ Ext.define('WS.CustOrderStep1Window', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    pKeyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -125,7 +126,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST_ORDER_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -161,7 +162,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -197,7 +198,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -233,7 +234,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -270,7 +271,7 @@ Ext.define('WS.CustOrderStep1Window', {
             autoLoad: true,
             remoteSort: true,
             model: 'UNIT',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -301,7 +302,6 @@ Ext.define('WS.CustOrderStep1Window', {
                 direction: 'ASC'
             }]
         })
-
     },
     width: 1000,
     height: 660,
@@ -408,7 +408,7 @@ Ext.define('WS.CustOrderStep1Window', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST_ORG',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -648,8 +648,10 @@ Ext.define('WS.CustOrderStep1Window', {
                                         var mainWin = this.up('window'),
                                             store = mainWin.myStore.custOrg,
                                             proxy = store.getProxy();
-                                        proxy.setExtraParam('pCustUuid', this.getValue());
-                                        store.loadPage(1);
+                                        if (this.getValue()) {
+                                            proxy.setExtraParam('pCustUuid', this.getValue());
+                                            store.loadPage(1);
+                                        };
                                     }
                                 }
                             }, {
@@ -991,17 +993,17 @@ Ext.define('WS.CustOrderStep1Window', {
                         align: 'center',
                         width: 50
                     }, {
-                        xtype:'templatecolumn',
+                        xtype: 'templatecolumn',
                         text: "商品",
                         dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
                         align: 'left',
                         flex: 2,
                         tpl: new Ext.XTemplate(
-                        "<tpl if='CUST_ORDER_DETAIL_CUSTOMIZED == 1'>",
-                        '<input type="text" readonly  style="width:210px" value="{CUST_ORDER_DETAIL_GOODS_NAME}"/>',
-                        "<tpl else>",
-                        '{CUST_ORDER_DETAIL_GOODS_NAME}',
-                        "</tpl>"),
+                            "<tpl if='CUST_ORDER_DETAIL_CUSTOMIZED == 1'>",
+                            '<input type="text" readonly  style="width:210px" value="{CUST_ORDER_DETAIL_GOODS_NAME}"/>',
+                            "<tpl else>",
+                            '{CUST_ORDER_DETAIL_GOODS_NAME}',
+                            "</tpl>"),
                         editor: {
                             xtype: 'textfield',
                             enableKeyEvents: true,
@@ -1027,13 +1029,13 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
-                        xtype:'templatecolumn',
+                        xtype: 'templatecolumn',
                         text: "單價",
                         dataIndex: 'CUST_ORDER_DETAIL_PRICE',
                         align: 'right',
                         flex: 1,
-                        tpl: new Ext.XTemplate(                        
-                        '<input type="text" readonly  style="width:100px" value="{CUST_ORDER_DETAIL_PRICE}"/>'
+                        tpl: new Ext.XTemplate(
+                            '<input type="text" readonly  style="width:100px" value="{CUST_ORDER_DETAIL_PRICE}"/>'
                         ),
                         editor: {
                             xtype: 'numberfield',
@@ -1047,13 +1049,13 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
-                        xtype:'templatecolumn',
+                        xtype: 'templatecolumn',
                         text: "數量",
                         dataIndex: 'CUST_ORDER_DETAIL_COUNT',
                         align: 'right',
                         flex: 1,
-                        tpl: new Ext.XTemplate(                        
-                        '<input type="text" readonly style="width:100px" value="{CUST_ORDER_DETAIL_COUNT}"/>'
+                        tpl: new Ext.XTemplate(
+                            '<input type="text" readonly style="width:100px" value="{CUST_ORDER_DETAIL_COUNT}"/>'
                         ),
                         editor: {
                             xtype: 'numberfield',
@@ -1067,18 +1069,18 @@ Ext.define('WS.CustOrderStep1Window', {
                             }
                         }
                     }, {
-                        xtype:'templatecolumn',
+                        xtype: 'templatecolumn',
                         text: "單位",
                         dataIndex: 'CUST_ORDER_DETAIL_UNIT',
                         align: 'center',
                         width: 80,
-                        tpl: new Ext.XTemplate(                        
-                        '<input type="text" readonly style="width:60px" value="{CUST_ORDER_DETAIL_UNIT_NAME}"/>'
+                        tpl: new Ext.XTemplate(
+                            '<input type="text" readonly style="width:60px" value="{CUST_ORDER_DETAIL_UNIT_NAME}"/>'
                         ),
-                        
+
                         editor: {
                             xtype: 'combo',
-                            allowBlank: false,                            
+                            allowBlank: false,
                             displayField: 'UNIT_NAME',
                             valueField: 'UNIT_UUID',
                             store: this.myStore.unit,
@@ -1089,7 +1091,7 @@ Ext.define('WS.CustOrderStep1Window', {
                                     var mainWin = obj.up('window');
                                     var dr = obj.getStore().findRecord("UNIT_UUID", newValue).data;
                                     mainWin.param.editRecord.data.CUST_ORDER_DETAIL_UNIT_NAME = dr.UNIT_NAME;
-                                }                                
+                                }
                             }
                         }
                     }, {
@@ -1417,65 +1419,65 @@ Ext.define('WS.CustOrderStep1Window', {
         });
     },
     //2
-    fnCustOrderStatus: function(mainObj, cb) {
-        // mainObj.myStore.custOrderStatus.load({
-        //     callback: function() {
-        //         var custOrderStatus = mainObj.myStore.custOrderStatus;
-        // if (mainObj.myStore.custOrderStatus.getCount() > 0) {
-        //     mainObj.down("#CUST_ORDER_STATUS_UUID").setValue(custOrderStatus.getAt(0).get('CUST_ORDER_STATUS_UUID'));
-        // };
-        mainObj.storeCount++;
-        mainObj.fnLoadData(mainObj);
-        //3 4
-        //cb(mainObj, mainObj.fnPayStatus);
-        //     }
-        // });
-    },
+    // fnCustOrderStatus: function(mainObj, cb) {
+    //     // mainObj.myStore.custOrderStatus.load({
+    //     //     callback: function() {
+    //     //         var custOrderStatus = mainObj.myStore.custOrderStatus;
+    //     // if (mainObj.myStore.custOrderStatus.getCount() > 0) {
+    //     //     mainObj.down("#CUST_ORDER_STATUS_UUID").setValue(custOrderStatus.getAt(0).get('CUST_ORDER_STATUS_UUID'));
+    //     // };
+    //     mainObj.storeCount++;
+    //     mainObj.fnLoadData(mainObj);
+    //     //3 4
+    //     //cb(mainObj, mainObj.fnPayStatus);
+    //     //     }
+    //     // });
+    // },
     //3
-    fnShippingStatus: function(mainObj, cb) {
-        // mainObj.myStore.shippingStatus.load({
-        //     callback: function() {
-        //         var shippingStatus = mainObj.myStore.shippingStatus;
-        //         if (mainObj.myStore.shippingStatus.getCount() > 0) {
-        //             mainObj.down("#SHIPPING_STATUS_UUID").setValue(shippingStatus.getAt(0).get('SHIPPING_STATUS_UUID'));
-        //         };
-        mainObj.storeCount++;
-        mainObj.fnLoadData(mainObj);
-        //         //4 5
-        //         //cb(mainObj, mainObj.fnPayMethod);
-        //     }
-        // });
-    },
+    // fnShippingStatus: function(mainObj, cb) {
+    //     // mainObj.myStore.shippingStatus.load({
+    //     //     callback: function() {
+    //     //         var shippingStatus = mainObj.myStore.shippingStatus;
+    //     //         if (mainObj.myStore.shippingStatus.getCount() > 0) {
+    //     //             mainObj.down("#SHIPPING_STATUS_UUID").setValue(shippingStatus.getAt(0).get('SHIPPING_STATUS_UUID'));
+    //     //         };
+    //     mainObj.storeCount++;
+    //     mainObj.fnLoadData(mainObj);
+    //     //         //4 5
+    //     //         //cb(mainObj, mainObj.fnPayMethod);
+    //     //     }
+    //     // });
+    // },
     //4
-    fnPayStatus: function(mainObj, cb) {
-        // mainObj.myStore.payStatus.load({
-        //     callback: function() {
-        //         var payStatus = mainObj.myStore.payStatus;
-        //         if (mainObj.myStore.payStatus.getCount() > 0) {
-        //             mainObj.down("#PAY_STATUS_UUID").setValue(payStatus.getAt(0).get('PAY_STATUS_UUID'));
-        //         };
-        mainObj.storeCount++;
-        mainObj.fnLoadData(mainObj);
-        //         //5 6 
-        //         //cb(mainObj, mainObj.fnCust);
-        //     }
-        // });
-    },
+    // fnPayStatus: function(mainObj, cb) {
+    //     // mainObj.myStore.payStatus.load({
+    //     //     callback: function() {
+    //     //         var payStatus = mainObj.myStore.payStatus;
+    //     //         if (mainObj.myStore.payStatus.getCount() > 0) {
+    //     //             mainObj.down("#PAY_STATUS_UUID").setValue(payStatus.getAt(0).get('PAY_STATUS_UUID'));
+    //     //         };
+    //     mainObj.storeCount++;
+    //     mainObj.fnLoadData(mainObj);
+    //     //         //5 6 
+    //     //         //cb(mainObj, mainObj.fnCust);
+    //     //     }
+    //     // });
+    // },
     //5
-    fnPayMethod: function(mainObj, cb) {
-        // mainObj.myStore.payMethod.load({
-        //     callback: function() {
-        //         var payMethod = mainObj.myStore.payMethod;
-        //         if (mainObj.myStore.payMethod.getCount() > 0) {
-        //             mainObj.down("#PAY_METHOD_UUID").setValue(payMethod.getAt(0).get('PAY_METHOD_UUID'));
-        //         };
-        mainObj.storeCount++;
-        mainObj.fnLoadData(mainObj);
-        //         //6 7
-        //         //cb(mainObj, mainObj.fnCustOrg);
-        //     }
-        // });
-    },
+    // fnPayMethod: function(mainObj, cb) {
+    //     // mainObj.myStore.payMethod.load({
+    //     //     callback: function() {
+    //     //         var payMethod = mainObj.myStore.payMethod;
+    //     //         if (mainObj.myStore.payMethod.getCount() > 0) {
+    //     //             mainObj.down("#PAY_METHOD_UUID").setValue(payMethod.getAt(0).get('PAY_METHOD_UUID'));
+    //     //         };
+    //     mainObj.storeCount++;
+    //     mainObj.fnLoadData(mainObj);
+    //     //         //6 7
+    //     //         //cb(mainObj, mainObj.fnCustOrg);
+    //     //     }
+    //     // });
+    // },
     //6
     fnCust: function(mainObj, cb) {
         mainObj.myStore.cust.load({
@@ -1523,8 +1525,8 @@ Ext.define('WS.CustOrderStep1Window', {
     },
     //9
     fnLoadData: function(mainObj) {
-        console.log(mainObj.storeCount);
-        if (mainObj.storeCount != 9) {
+        //console.log(mainObj.storeCount);
+        if (mainObj.storeCount != 5) {
             return false;
         };
 
@@ -1557,6 +1559,7 @@ Ext.define('WS.CustOrderStep1Window', {
                     if (a.result.data.CUST_ORDER_LIMIT_DATE != '' && a.result.data.CUST_ORDER_LIMIT_DATE != undefined) {
                         //this.down("#CUST_ORDER_LIMIT_DATE").setValue(new Date(a.result.data.CUST_ORDER_LIMIT_DATE));
                     };
+                    mainObj.unmask();
                 },
                 failure: function(response, jsonObj, b) {
                     if (!jsonObj.result.success) {
@@ -1573,13 +1576,13 @@ Ext.define('WS.CustOrderStep1Window', {
 
             mainObj.myStore.vCustOrderDetail.getProxy().setExtraParam('pCustOrderUuid', mainObj.param.custOrderUuid);
             mainObj.myStore.vCustOrderDetail.reload();
-            mainObj.unmask();
+
         } else {
             WS.UserAction.getUserInfo(function(obj, jsonObj) {
                 this.down("#CUST_ORDER_REPORT_ATTENDANT_UUID").setValue(jsonObj.result.UUID);
             }, mainObj);
             mainObj.down("#CUST_ORDER_REPORT_DATE").setValue(new Date());
-            mainObj.unmask();
+
         };
     },
     listeners: {
@@ -1587,16 +1590,27 @@ Ext.define('WS.CustOrderStep1Window', {
             this.mask('資訊載入中…請稍後…');
             //1 2 
             this.fnCompany(this);
-            this.fnCustOrderStatus(this);
-            this.fnShippingStatus(this);
-            this.fnPayStatus(this);
-            this.fnPayMethod(this);
+            //this.fnCustOrderStatus(this);
+            //this.fnShippingStatus(this);
+            //this.fnPayStatus(this);
+            //this.fnPayMethod(this);
             this.fnCust(this);
             this.fnCustOrg(this);
             this.fnAttendant(this);
         },
         'close': function() {
+            this.myStore.attendant.removeAll();
+            this.myStore.company.removeAll();
+            this.myStore.cust.removeAll();
+            //this.myStore.custOrderStatus.removeAll();
+            //this.myStore.shippingStatus.removeAll();
+            //this.myStore.payMethod.removeAll();
+            //this.myStore.payStatus.removeAll();
+            this.myStore.unit.removeAll();
+            this.myStore.vCustOrderDetail.removeAll();
+            this.myStore.custOrg.removeAll();
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

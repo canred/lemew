@@ -27,7 +27,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -37,9 +37,10 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    pKeyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -82,12 +83,6 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                // paramOrder: ['pCustOrderStatus', 'pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
-                // extraParams: {
-                //     'pCustOrderStatus': '',
-                //     'pCustUuid': '',
-                //     'pKeyword': ''
-                // },
                 paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pKeyword: '',
@@ -163,7 +158,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST_ORDER_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -209,7 +204,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'SHIPPING_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -279,7 +274,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
             frame: true,
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -451,7 +446,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                         }
                     }
                 },
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 selModel: new Ext.selection.CheckboxModel({
                     mode: 'MULTI',
@@ -491,11 +486,8 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                                 return false;
                             };
                             var subWin = Ext.create(main.subWinCustOrder, {});
-                            //Ext.getBody().mask();
-                            subWin.on('closeEvent', function(obj) {
-                                //main.down("#grdVCustOrder").getStore().load();
-                                //Ext.getBody().unmask();
-                            }, main);
+
+                            subWin.on('closeEvent', function(obj) {}, main);
                             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
                             subWin.show();
@@ -515,6 +507,17 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                         handler: function(grid, rowIndex, colIndex) {
                             var main = grid.up('panel').up('panel').up('panel');
                             var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+
+                            if (grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_UUID != 'SS_INPROCESS') {
+                                Ext.MessageBox.show({
+                                    title: '系統提示',
+                                    icon: Ext.MessageBox.INFO,
+                                    buttons: Ext.Msg.OK,
+                                    msg: '此訂單狀態為「' + grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_NAME + '」無法執行退回操作'
+                                });
+                                return;
+                            };
+
                             Ext.MessageBox.confirm('請確認', '將此單退回到訂單狀態?', function(result) {
                                 if (result == 'yes') {
                                     WS.CustAction.backToOrder(custOrderUuid, function(obj, jsonObj) {
@@ -531,16 +534,17 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                 }, {
                     header: '建立日期',
                     dataIndex: 'CUST_ORDER_CR',
-                    align: 'left',
+                    align: 'left',hidden:true,
                     width: 100
+                },
+                {
+                    header: "訂單編號",
+                    dataIndex: 'CUST_ORDER_ID',
+                    align: 'left',
+                    width: 130
                 }, {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "單位",
-                    dataIndex: 'CUST_ORDER_DEPT',
                     align: 'left',
                     width: 150
                 }, {
@@ -548,6 +552,11 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     align: 'left',
                     dataIndex: 'CUST_TEL',
                     width: 120
+                }, {
+                    header: "單位",
+                    dataIndex: 'CUST_ORDER_DEPT',
+                    align: 'left',
+                    width: 80
                 }, {
                     header: '採購員',
                     dataIndex: 'CUST_ORG_SALES_NAME',
@@ -559,12 +568,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     align: 'left',
                     width: 120,
                     hidden: false
-                }, {
-                    header: '金額',
-                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    width: 80
-                }, {
+                },  {
                     xtype: 'templatecolumn',
                     header: '發票號碼',
                     dataIndex: 'CUST_ORDER_INVOICE_NUMBER',
@@ -573,7 +577,7 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     layout: 'hbox',
                     tpl: new Ext.XTemplate(
                         "<tpl if='SHIPPING_STATUS_UUID == \"SS_INPROCESS\"'>",
-                        '<input readonly type="text" style="width:130px" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
+                        '<input readonly type="text" style="width:130px;background-color:#75D966" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
                         "<tpl else>",
                         '{CUST_ORDER_INVOICE_NUMBER}',
                         "</tpl>"),
@@ -594,11 +598,18 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                         }
                     }
                 }, {
-                    header: "訂單編號",
-                    dataIndex: 'CUST_ORDER_ID',
-                    align: 'left',
-                    width: 150
-                }, {
+                    header: '金額',
+                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                    align: 'right',
+                    width: 80
+                },
+                // {
+                //     header: "訂單編號",
+                //     dataIndex: 'CUST_ORDER_ID',
+                //     align: 'left',
+                //     width: 150
+                // },
+                 {
                     header: "出貨編號",
                     dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
                     align: 'left',
@@ -636,24 +647,20 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                     header: '出貨狀態',
                     dataIndex: 'SHIPPING_STATUS_NAME',
                     align: 'left',
-                    flex: 1
+                    width:120
                 }, {
+                    xtype: 'templatecolumn',
                     header: '備註',
                     dataIndex: 'CUST_ORDER_PS',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '等級',
-                    dataIndex: 'CUST_LEVEL',
                     align: 'center',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '最近採購日',
-                    dataIndex: 'CUST_LAST_BUY',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
+                    width: 140,
+                    layout: 'hbox',
+                    tpl: new Ext.XTemplate(
+                        "<tpl if='CUST_ORDER_PS != \"\"'>",
+                        '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                        "<tpl else>",
+                        '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                        "</tpl>")
                 }],
                 tbarCfg: {
                     buttonAlign: 'right'
@@ -810,6 +817,36 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
     },
     listeners: {
         afterrender: function(obj, eOpts) {
+
+            if (!document.fnOpenPsControlObj) {
+                document.fnOpenPsControlObj = this;
+            };
+
+            if (!document.fnOpenPs) {
+                document.fnOpenPs = function(custOrderUuid, custOrderStatus, payStatus) {
+                    if (payStatus != 'pay_status_2') {
+                        var subWin = Ext.create('WS.CustOrderPsWindow', {
+                            param: {
+                                custOrderUuid: custOrderUuid,
+                                parentObj: document.fnOpenPsControlObj
+                            }
+                        });
+                        subWin.on('closeEvent', function(obj) {
+                            obj.param.parentObj.myStore.vcustorder.reload();
+                        });
+                        subWin.show();
+                    } else {
+                        var subWin = Ext.create('WS.CustOrderPsViewWindow', {
+                            param: {
+                                custOrderUuid: custOrderUuid
+                            }
+                        });
+                        subWin.on('closeEvent', function(obj) {});
+                        subWin.show();
+                    }
+                };
+            };
+
             this.myStore.cust.load({
                 scope: this
             });

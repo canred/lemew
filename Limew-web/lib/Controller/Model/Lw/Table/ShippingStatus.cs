@@ -29,9 +29,15 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string SHIPPING_STATUS_UUID {get{return "SHIPPING_STATUS_UUID" ; }}
-		public string SHIPPING_STATUS_NAME {get{return "SHIPPING_STATUS_NAME" ; }}
-		public string SHIPPING_STATUS_ORD {get{return "SHIPPING_STATUS_ORD" ; }}
+		public string SHIPPING_STATUS_UUID {
+			[ColumnName("SHIPPING_STATUS_UUID",true,typeof(string))]
+			get{return "SHIPPING_STATUS_UUID" ; }}
+		public string SHIPPING_STATUS_NAME {
+			[ColumnName("SHIPPING_STATUS_NAME",false,typeof(string))]
+			get{return "SHIPPING_STATUS_NAME" ; }}
+		public string SHIPPING_STATUS_ORD {
+			[ColumnName("SHIPPING_STATUS_ORD",false,typeof(short?))]
+			get{return "SHIPPING_STATUS_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public ShippingStatus_Record CurrentRecord(){

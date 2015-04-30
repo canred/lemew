@@ -28,6 +28,7 @@ namespace Limew.Model.Lw.Table.Record
 		DateTime? _MY_ORDER_CR=null;
 		decimal? _MY_ORDER_TOTAL_PRICE=null;
 		int? _MY_ORDER_IS_ACTIVE=null;
+		string _MY_ORDER_ID=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("MY_ORDER_UUID",true,typeof(string))]
@@ -196,6 +197,19 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _MY_ORDER_IS_ACTIVE;
+			}
+		}
+
+		[ColumnName("MY_ORDER_ID",false,typeof(string))]
+		public string MY_ORDER_ID
+		{
+			set
+			{
+				_MY_ORDER_ID=value;
+			}
+			get
+			{
+				return _MY_ORDER_ID;
 			}
 		}
 		public MyOrder_Record Clone(){

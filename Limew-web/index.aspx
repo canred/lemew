@@ -7,33 +7,39 @@
 </div>
 <style>
 .btn1 {
+  /*客戶*/
     width:160px!important; height:160px!important;
-    background-image: url('./css/custimages/customer160x160.png') !important; 
+    background-image: url('./css/custimages/customer160x160.png') !important;     
 }
 
 .btn2 {
+  /*供應商*/
     width:160px!important; height:160px!important;
     background-image: url('./css/custimages/supplier160x160.png') !important; 
 }
 
 .btn3 {
+  /*商品*/
     width:160px!important; height:160px!important;
     background-image: url('./css/custimages/product160x160.png') !important; 
 }
 
 .btn4 {
+  /*訂單*/
     width:160px!important; height:160px!important;
     background-image: url('./css/custimages/order160x160.png') !important; 
 }
 
 .btn5 {
+  /*款項*/
     width:160px!important; height:160px!important;
     background-image: url('./css/custimages/money160x160.png') !important; 
 }
 
 .btn6 {
+  /*出貨*/
     width:160px!important; height:160px!important;
-    background-image: url('./css/custimages/truck160x160.png') !important; 
+    background-image: url('./css/custimages/shipping160x160.png') !important; 
 }
 .btn7 {
     width:160px!important; height:160px!important;
@@ -46,7 +52,135 @@
 }
 </style>
 <script language="javascript" type="text/javascript">
-    Ext.onReady(function () {
+    var allMenu = '<%=this.getDrsAuthortyMenuV()%>';
+    Ext.onReady(function () {        
+        /*
+        客戶
+        供應商
+        商品
+        訂單
+        出貨
+        款項        
+        */
+        var allIconButton = Array();
+        if (allMenu.indexOf('客戶') != -1) {
+            allIconButton.push({
+                xtype: 'button',                
+                text: '',
+                cls: 'btn1',
+                border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                margin: '10 10 0 10',
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/cust.aspx';
+                }
+            });
+        };
+
+        if (allMenu.indexOf('供應商') != -1) {
+            allIconButton.push({
+                xtype: 'button',
+                text: '',
+                cls: 'btn2',border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                margin: '10 10 0 10',
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/supplier.aspx';
+                }
+            });
+        };
+
+        if (allMenu.indexOf('商品') != -1) {
+            allIconButton.push({
+                xtype: 'button',
+                text: '',
+                cls: 'btn3',
+                margin: '10 10 0 10',border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/goods.aspx';
+                }
+            });
+        };
+
+        if (allMenu.indexOf('訂單') != -1) {
+            allIconButton.push({
+                xtype: 'button',
+                text: '',
+                cls: 'btn4',
+                margin: '10 10 0 10',border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/order.aspx';
+                }
+            });
+        };
+
+        if (allMenu.indexOf('出貨') != -1) {
+            allIconButton.push({
+                xtype: 'button',
+                text: '',
+                cls: 'btn6',
+                margin: '10 10 0 10',border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/shippingManager.aspx';
+                }
+            });
+        };
+
+        if (allMenu.indexOf('款項') != -1) {
+            allIconButton.push({
+                xtype: 'button',
+                text: '',
+                cls: 'btn5',
+                margin: '10 10 0 10',border:false,
+                style:{
+                  backgroundColor:'white'
+                },
+                handler: function (handler, scope) {
+                    window.location.href = './admin/limew/money.aspx';
+                }
+            });
+        };
+
+        var line = Math.floor(allIconButton.length / 3)+1;
+        var allContainer = Array();
+        for (var i = 1 ; i <= line ; i++) {
+            var items = Array();
+            var i1 = allIconButton.shift();
+            var i2 = allIconButton.shift();
+            var i3 = allIconButton.shift();
+            if(i1!=undefined)
+                items.push(i1);
+
+            if (i2 != undefined)
+                items.push(i2);
+
+            if (i2 != undefined)
+                items.push(i3);
+            allContainer.push({
+                xtype: 'container',
+                layout: {
+                    type: 'hbox',
+                    align: 'center',
+                    pack: 'center'
+                },
+                items:items
+            });
+        }
+        
+
        	Ext.define('LimewPanel', {
        	    extend: 'Ext.panel.Panel',
        	    height:$(this).height()*.8,
@@ -54,98 +188,7 @@
        	    closeAction: 'destroy',
        	    border:false,
        	    initComponent: function() {
-       	        this.items = [{
-       	        	xtype : 'container',
-       	        	layout : {
-       	        		type : 'hbox',      
-       	        		align : 'center' , 
-       	        		pack : 'center'     
-       	        	},
-       	        	items : [{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn1',
-       	        		margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			window.location.href = './admin/limew/cust.aspx';
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		margin:'10 10 0 10',
-       	        		cls:'btn2',
-       	        		handler:function(handler,scope){
-       	        			window.location.href = './admin/limew/supplier.aspx';
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn3',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-                                    window.location.href = './admin/limew/goods.aspx';
-       	        			//your code
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn4',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			window.location.href = './admin/limew/order.aspx';
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn5',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			//your code
-       	        		}
-       	        	}]
-       	        },{
-       	        	xtype : 'container',
-       	        	layout : {
-       	        		type : 'hbox',      /* hbox */
-       	        		align : 'center' , /* stretch , center , left , right */
-       	        		pack : 'center'     /* stretch , center , left , right */
-       	        	},
-       	        	items : [{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn6',
-       	        		margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-                      window.location.href = './admin/limew/goodsRecord.aspx';
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		margin:'10 10 0 10',
-       	        		cls:'btn7',
-       	        		handler:function(handler,scope){
-       	        			//your code
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn11',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			//your code
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn11',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			//your code
-       	        		}
-       	        	},{
-       	        		xtype:'button',
-       	        		text:'',
-       	        		cls:'btn11',margin:'10 10 0 10',
-       	        		handler:function(handler,scope){
-       	        			//your code
-       	        		}
-       	        	}]
-       	        }]
+       	        this.items = allContainer;
        	        this.callParent(arguments);
        	    }
        	});

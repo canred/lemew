@@ -29,10 +29,18 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string FILEGROUP_UUID {get{return "FILEGROUP_UUID" ; }}
-		public string FILEGROUP_DISPLAY_NAME {get{return "FILEGROUP_DISPLAY_NAME" ; }}
-		public string FILE_COUNT {get{return "FILE_COUNT" ; }}
-		public string FILEGROUP_TAG {get{return "FILEGROUP_TAG" ; }}
+		public string FILEGROUP_UUID {
+			[ColumnName("FILEGROUP_UUID",true,typeof(string))]
+			get{return "FILEGROUP_UUID" ; }}
+		public string FILEGROUP_DISPLAY_NAME {
+			[ColumnName("FILEGROUP_DISPLAY_NAME",false,typeof(string))]
+			get{return "FILEGROUP_DISPLAY_NAME" ; }}
+		public string FILE_COUNT {
+			[ColumnName("FILE_COUNT",false,typeof(int?))]
+			get{return "FILE_COUNT" ; }}
+		public string FILEGROUP_TAG {
+			[ColumnName("FILEGROUP_TAG",false,typeof(string))]
+			get{return "FILEGROUP_TAG" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Filegroup_Record CurrentRecord(){

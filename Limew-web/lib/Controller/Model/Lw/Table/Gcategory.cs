@@ -29,12 +29,24 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string GCATEGORY_UUID {get{return "GCATEGORY_UUID" ; }}
-		public string GCATEGORY_NAME {get{return "GCATEGORY_NAME" ; }}
-		public string GCATEGORY_FULL_NAME {get{return "GCATEGORY_FULL_NAME" ; }}
-		public string GCATEGORY_FULL_UUID {get{return "GCATEGORY_FULL_UUID" ; }}
-		public string GCATEGORY_IS_ACTIVE {get{return "GCATEGORY_IS_ACTIVE" ; }}
-		public string GCATEGORY_PARENT_UUID {get{return "GCATEGORY_PARENT_UUID" ; }}
+		public string GCATEGORY_UUID {
+			[ColumnName("GCATEGORY_UUID",true,typeof(string))]
+			get{return "GCATEGORY_UUID" ; }}
+		public string GCATEGORY_NAME {
+			[ColumnName("GCATEGORY_NAME",false,typeof(string))]
+			get{return "GCATEGORY_NAME" ; }}
+		public string GCATEGORY_FULL_NAME {
+			[ColumnName("GCATEGORY_FULL_NAME",false,typeof(string))]
+			get{return "GCATEGORY_FULL_NAME" ; }}
+		public string GCATEGORY_FULL_UUID {
+			[ColumnName("GCATEGORY_FULL_UUID",false,typeof(string))]
+			get{return "GCATEGORY_FULL_UUID" ; }}
+		public string GCATEGORY_IS_ACTIVE {
+			[ColumnName("GCATEGORY_IS_ACTIVE",false,typeof(string))]
+			get{return "GCATEGORY_IS_ACTIVE" ; }}
+		public string GCATEGORY_PARENT_UUID {
+			[ColumnName("GCATEGORY_PARENT_UUID",false,typeof(string))]
+			get{return "GCATEGORY_PARENT_UUID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Gcategory_Record CurrentRecord(){

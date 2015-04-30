@@ -1,16 +1,17 @@
 Ext.define('WS.GcategoryPicker', {
     extend: 'Ext.window.Window',
     closeAction: 'destroy',
-    title:'挑選類別',
+    title: '挑選類別',
     icon: SYSTEM_URL_ROOT + '/css/images/menu16x16.png',
-    width:600,
-    height: 400, modal: true,
-    autoScroll:true,
+    width: 600,
+    height: 400,
+    modal: true,
+    autoScroll: true,
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
     param: {
-        parentObj:undefined
+        parentObj: undefined
     },
     /*值擴展*/
     val: {},
@@ -22,6 +23,7 @@ Ext.define('WS.GcategoryPicker', {
         this.fnQuery(this);
     },
     fnQuery: function(obj) {
+        this.mask("資訊載入中…請稍後…");
         /*obj要是主體*/
         WS.GcategoryAction.loadGcagegoryTree(function(data) {
             if (data[0].GCATEGORY_UUID != undefined) {
@@ -32,10 +34,12 @@ Ext.define('WS.GcategoryPicker', {
                     params: {
                         'pGcategoryParentUuid': data[0].GCATEGORY_UUID
                     },
-                    callback : function() {
+                    callback: function() {
                         this.down('#trp').expandAll();
+                        this.unmask();
+
                     },
-                    scope:this
+                    scope: this
                 });
             };
         }, obj);
@@ -55,9 +59,8 @@ Ext.define('WS.GcategoryPicker', {
             autoHeight: true,
             autoWidth: true,
             items: [{
-                
                 xtype: 'treepanel',
-                itemId:'trp',
+                itemId: 'trp',
                 padding: 5,
                 border: true,
                 autoWidth: true,
@@ -79,7 +82,7 @@ Ext.define('WS.GcategoryPicker', {
                         handler: function(grid, rowIndex, colIndex) {
                             var mainPanel = grid.up('window');
                             var gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
-                            mainPanel.fireEvent('selected',mainPanel,grid.getStore().getAt(rowIndex).data);
+                            mainPanel.fireEvent('selected', mainPanel, grid.getStore().getAt(rowIndex).data);
                         }
                     }],
                     hideable: false
@@ -103,9 +106,11 @@ Ext.define('WS.GcategoryPicker', {
         this.callParent(arguments);
     },
     listeners: {
-        'show': function(obj, eOpts) {           
-            this.fnQuery
-(obj);
+        'show': function(obj, eOpts) {
+            this.fnQuery(obj);
+        },
+        close: function() {
+            this.myStore.tree.removeAll();
         }
     }
 });

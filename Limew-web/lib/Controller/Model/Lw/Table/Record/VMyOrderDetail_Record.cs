@@ -37,6 +37,7 @@ namespace Limew.Model.Lw.Table.Record
 		string _MY_ORDER_DETAIL_ATTENDANT_C_NAME=null;
 		string _UNIT_UUID=null;
 		string _MY_ORDER_DETAIL_UNIT_NAME=null;
+		string _MY_ORDER_ID=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("MY_ORDER_UUID",true,typeof(string))]
@@ -322,6 +323,19 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _MY_ORDER_DETAIL_UNIT_NAME;
+			}
+		}
+
+		[ColumnName("MY_ORDER_ID",false,typeof(string))]
+		public string MY_ORDER_ID
+		{
+			set
+			{
+				_MY_ORDER_ID=value;
+			}
+			get
+			{
+				return _MY_ORDER_ID;
 			}
 		}
 		public VMyOrderDetail_Record Clone(){

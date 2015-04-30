@@ -85,7 +85,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
         };
         return true;
     },
-    initComponent: function() {        
+    initComponent: function() {
         this.myStore.unit = Ext.create('Ext.data.Store', {
             extend: 'Ext.data.Store',
             autoLoad: false,
@@ -156,16 +156,16 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     name: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     itemId: 'CUST_ORDER_DETAIL_GOODS_NAME',
                     allowBlank: true,
-                    flex:1
+                    flex: 1
                 }]
-            },{
+            }, {
                 xtype: 'container',
                 layout: 'hbox',
-                margin:'5 0 0 0',
+                margin: '5 0 0 0',
                 defaults: {
                     labelAlign: 'right'
                 },
-                items: [ {
+                items: [{
                     xtype: 'numberfield',
                     fieldLabel: '數量',
                     name: 'CUST_ORDER_DETAIL_COUNT',
@@ -177,7 +177,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     }
                 }, {
                     xtype: 'combo',
-                    fieldLabel: '單位',                    
+                    fieldLabel: '單位',
                     allowBlank: false,
                     itemId: 'CUST_ORDER_DETAIL_UNIT',
                     displayField: 'UNIT_NAME',
@@ -362,7 +362,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                             html += '">' + value + '</a>'
                             return html;
                         },
-                        flex: 1
+                        width:200
                     }, {
                         text: "備註",
                         dataIndex: 'FILE_PS',
@@ -375,13 +375,13 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                         width: 140
                     }],
                     height: 310
-                    // ,
-                    // bbar: Ext.create('Ext.toolbar.Paging', {
-                    //     store: this.myStore.vFilegroup,
-                    //     displayInfo: true,
-                    //     displayMsg: '第{0}~{1}資料/共{2}筆',
-                    //     emptyMsg: "無資料顯示"
-                    // })
+                        // ,
+                        // bbar: Ext.create('Ext.toolbar.Paging', {
+                        //     store: this.myStore.vFilegroup,
+                        //     displayInfo: true,
+                        //     displayMsg: '第{0}~{1}資料/共{2}筆',
+                        //     emptyMsg: "無資料顯示"
+                        // })
                 }]
             }, {
                 xtype: 'container',
@@ -418,10 +418,10 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     xtype: 'hiddenfield',
                     name: 'FILEGROUP_UUID',
                     itemId: 'FILEGROUP_UUID'
-                },{
-                    xtype : 'hiddenfield',
-                    value:'1',
-                    name : 'cust_order_detail_customized'                
+                }, {
+                    xtype: 'hiddenfield',
+                    value: '1',
+                    name: 'cust_order_detail_customized'
                 }]
             }],
             fbar: [{
@@ -447,10 +447,10 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -497,9 +497,9 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
     closeEvent: function() {
         this.fireEvent('closeEvent', this);
     },
-    listeners: {        
+    listeners: {
         'show': function() {
-
+this.mask("資訊載入中…請稍後…");
             if (this.param.custOrderUuid) {
                 this.down("#CUST_ORDER_UUID").setValue(this.param.custOrderUuid);
             };
@@ -530,6 +530,7 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                             } else {
                                 this.down('#btnDelete').setDisabled(false);
                             };
+                            this.unmask();
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -559,9 +560,11 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
         'afterrender': function() {
             /*畫面開啟後載入資料*/
         },
-        'close': function() {           
+        'close': function() {
             this.myStore.vFilegroup.removeAll();
+            this.myStore.unit.removeAll();
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

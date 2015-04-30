@@ -191,7 +191,7 @@ Ext.define('WS.ProxyQueryPanel', {
                 padding: 5,
                 columns: {
                     defaults: {
-                        align:'left'
+                        align: 'left'
                     },
                     items: [{
                         text: "編輯",
@@ -227,7 +227,7 @@ Ext.define('WS.ProxyQueryPanel', {
                         hideable: false
                     }, {
                         header: "Action",
-                        dataIndex: 'PROXY_ACTION',                        
+                        dataIndex: 'PROXY_ACTION',
                         flex: 2
                     }, {
                         header: "Method",
@@ -244,7 +244,7 @@ Ext.define('WS.ProxyQueryPanel', {
                         header: "方式",
                         align: 'center',
                         dataIndex: 'PROXY_TYPE',
-                        width:60,
+                        width: 60,
                         renderer: function(value) {
                             return '<div align="left">' + value + '</div>';
                         }
@@ -252,11 +252,11 @@ Ext.define('WS.ProxyQueryPanel', {
                         header: '跨服務',
                         dataIndex: 'NEED_REDIRECT',
                         align: 'center',
-                        width:60,
+                        width: 60,
                         renderer: this.fnActiveRender
                     }, {
                         header: "SRC(跨服務)",
-                        dataIndex: 'REDIRECT_SRC',                        
+                        dataIndex: 'REDIRECT_SRC',
                         flex: 1,
                         hidden: true
                     }, {
@@ -271,7 +271,7 @@ Ext.define('WS.ProxyQueryPanel', {
                         hidden: true
                     }]
                 },
-                height: $(document).height() - 240,                
+                height: $(document).height() - 240,
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     store: this.myStore.proxy,
                     displayInfo: true,

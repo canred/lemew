@@ -548,7 +548,7 @@ Ext.define('WS.MenuWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             this.myMask = new Ext.LoadMask(this.down('#AppMenuForm'), {
                 msg: "資料載入中，請稍等...",
                 store: this.myStore.menu,
@@ -560,7 +560,7 @@ Ext.define('WS.MenuWindow', {
                 callback: function() {
                     this.myStore.menu.getProxy().setExtraParam('pApplicationHeadUuid', this.param.applicationHeadUuid);
                     this.myStore.menu.load({
-                        callback: function() {                            
+                        callback: function() {
                             if (this.param.uuid != undefined) {
                                 this.down('#btnDelete').setDisabled(true);
                                 this.down('#AppMenuForm').getForm().load({

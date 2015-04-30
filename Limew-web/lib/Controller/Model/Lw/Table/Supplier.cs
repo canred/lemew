@@ -29,19 +29,45 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string SUPPLIER_UUID {get{return "SUPPLIER_UUID" ; }}
-		public string SUPPLIER_NAME {get{return "SUPPLIER_NAME" ; }}
-		public string SUPPLIER_TEL {get{return "SUPPLIER_TEL" ; }}
-		public string SUPPLIER_FAX {get{return "SUPPLIER_FAX" ; }}
-		public string SUPPLIER_ADDRESS {get{return "SUPPLIER_ADDRESS" ; }}
-		public string SUPPLIER_CONTACT_NAME {get{return "SUPPLIER_CONTACT_NAME" ; }}
-		public string SUPPLIER_SALES_NAME {get{return "SUPPLIER_SALES_NAME" ; }}
-		public string SUPPLIER_SALES_PHONE {get{return "SUPPLIER_SALES_PHONE" ; }}
-		public string SUPPLIER_CONTACT_PHONE {get{return "SUPPLIER_CONTACT_PHONE" ; }}
-		public string SUPPLIER_CONTACT_EMAIL {get{return "SUPPLIER_CONTACT_EMAIL" ; }}
-		public string SUPPLIER_SALES_EMAIL {get{return "SUPPLIER_SALES_EMAIL" ; }}
-		public string SUPPLIER_PS {get{return "SUPPLIER_PS" ; }}
-		public string SUPPLIER_IS_ACTIVE {get{return "SUPPLIER_IS_ACTIVE" ; }}
+		public string SUPPLIER_UUID {
+			[ColumnName("SUPPLIER_UUID",true,typeof(string))]
+			get{return "SUPPLIER_UUID" ; }}
+		public string SUPPLIER_NAME {
+			[ColumnName("SUPPLIER_NAME",false,typeof(string))]
+			get{return "SUPPLIER_NAME" ; }}
+		public string SUPPLIER_TEL {
+			[ColumnName("SUPPLIER_TEL",false,typeof(string))]
+			get{return "SUPPLIER_TEL" ; }}
+		public string SUPPLIER_FAX {
+			[ColumnName("SUPPLIER_FAX",false,typeof(string))]
+			get{return "SUPPLIER_FAX" ; }}
+		public string SUPPLIER_ADDRESS {
+			[ColumnName("SUPPLIER_ADDRESS",false,typeof(string))]
+			get{return "SUPPLIER_ADDRESS" ; }}
+		public string SUPPLIER_CONTACT_NAME {
+			[ColumnName("SUPPLIER_CONTACT_NAME",false,typeof(string))]
+			get{return "SUPPLIER_CONTACT_NAME" ; }}
+		public string SUPPLIER_SALES_NAME {
+			[ColumnName("SUPPLIER_SALES_NAME",false,typeof(string))]
+			get{return "SUPPLIER_SALES_NAME" ; }}
+		public string SUPPLIER_SALES_PHONE {
+			[ColumnName("SUPPLIER_SALES_PHONE",false,typeof(string))]
+			get{return "SUPPLIER_SALES_PHONE" ; }}
+		public string SUPPLIER_CONTACT_PHONE {
+			[ColumnName("SUPPLIER_CONTACT_PHONE",false,typeof(string))]
+			get{return "SUPPLIER_CONTACT_PHONE" ; }}
+		public string SUPPLIER_CONTACT_EMAIL {
+			[ColumnName("SUPPLIER_CONTACT_EMAIL",false,typeof(string))]
+			get{return "SUPPLIER_CONTACT_EMAIL" ; }}
+		public string SUPPLIER_SALES_EMAIL {
+			[ColumnName("SUPPLIER_SALES_EMAIL",false,typeof(string))]
+			get{return "SUPPLIER_SALES_EMAIL" ; }}
+		public string SUPPLIER_PS {
+			[ColumnName("SUPPLIER_PS",false,typeof(string))]
+			get{return "SUPPLIER_PS" ; }}
+		public string SUPPLIER_IS_ACTIVE {
+			[ColumnName("SUPPLIER_IS_ACTIVE",false,typeof(int?))]
+			get{return "SUPPLIER_IS_ACTIVE" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Supplier_Record CurrentRecord(){

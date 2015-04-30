@@ -100,7 +100,7 @@ Ext.define('WS.CustOrderPsWindow', {
                     'pCustOrderUuid': this.param.custOrderUuid
                 },
                 success: function(response, a, b) {
-                	this.unmask();
+                    this.unmask();
                 },
                 failure: function(response, jsonObj, b) {
                     if (!jsonObj.result.success) {

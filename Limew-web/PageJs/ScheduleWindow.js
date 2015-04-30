@@ -9,7 +9,7 @@
      width: 800,
      height: 600,
      layout: 'fit',
-	 modal: true,
+     modal: true,
      resizable: false,
      draggable: false,
      weekChangeInWeek: function(obj) {

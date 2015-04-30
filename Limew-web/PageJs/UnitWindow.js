@@ -4,7 +4,8 @@ Ext.define('WS.UnitWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/unit16x16.png',
     title: '單位維護',
     closable: false,
-    closeAction: 'destroy', modal: true,
+    closeAction: 'destroy',
+    modal: true,
     param: {
         unitUuid: undefined
     },
@@ -85,10 +86,10 @@ Ext.define('WS.UnitWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -140,6 +141,7 @@ Ext.define('WS.UnitWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

@@ -661,6 +661,117 @@
             </Mappings>
             <Sources />
           </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="my_order_idTableAdapter" GeneratorDataComponentClassName="my_order_idTableAdapter" Name="my_order_id" UserDataComponentName="my_order_idTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT * FROM `my_order_id`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="my_order_id_uuid" DataSetColumn="my_order_id_uuid" />
+              <Mapping SourceColumn="max" DataSetColumn="max" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="v_cust_order_searchTableAdapter" GeneratorDataComponentClassName="v_cust_order_searchTableAdapter" Name="v_cust_order_search" UserDataComponentName="v_cust_order_searchTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT * FROM `v_cust_order_search`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="cust_order_uuid" DataSetColumn="cust_order_uuid" />
+              <Mapping SourceColumn="cust_order_cr" DataSetColumn="cust_order_cr" />
+              <Mapping SourceColumn="cust_order_id" DataSetColumn="cust_order_id" />
+              <Mapping SourceColumn="cust_order_total_price" DataSetColumn="cust_order_total_price" />
+              <Mapping SourceColumn="cust_order_status_uuid" DataSetColumn="cust_order_status_uuid" />
+              <Mapping SourceColumn="cust_order_is_active" DataSetColumn="cust_order_is_active" />
+              <Mapping SourceColumn="cust_uuid" DataSetColumn="cust_uuid" />
+              <Mapping SourceColumn="cust_order_type" DataSetColumn="cust_order_type" />
+              <Mapping SourceColumn="cust_order_cust_name" DataSetColumn="cust_order_cust_name" />
+              <Mapping SourceColumn="cust_order_dept" DataSetColumn="cust_order_dept" />
+              <Mapping SourceColumn="cust_order_user_name" DataSetColumn="cust_order_user_name" />
+              <Mapping SourceColumn="cust_order_user_phone" DataSetColumn="cust_order_user_phone" />
+              <Mapping SourceColumn="cust_order_purchase_amount" DataSetColumn="cust_order_purchase_amount" />
+              <Mapping SourceColumn="cust_order_print_user_name" DataSetColumn="cust_order_print_user_name" />
+              <Mapping SourceColumn="cust_order_shipping_date" DataSetColumn="cust_order_shipping_date" />
+              <Mapping SourceColumn="shipping_status_uuid" DataSetColumn="shipping_status_uuid" />
+              <Mapping SourceColumn="cust_order_po_number" DataSetColumn="cust_order_po_number" />
+              <Mapping SourceColumn="pay_status_uuid" DataSetColumn="pay_status_uuid" />
+              <Mapping SourceColumn="pay_method_uuid" DataSetColumn="pay_method_uuid" />
+              <Mapping SourceColumn="cust_order_invoice_number" DataSetColumn="cust_order_invoice_number" />
+              <Mapping SourceColumn="cust_order_limit_date" DataSetColumn="cust_order_limit_date" />
+              <Mapping SourceColumn="cust_org_uuid" DataSetColumn="cust_org_uuid" />
+              <Mapping SourceColumn="cust_order_has_tax" DataSetColumn="cust_order_has_tax" />
+              <Mapping SourceColumn="cust_order_ps" DataSetColumn="cust_order_ps" />
+              <Mapping SourceColumn="CUST_ORDER_SHIPPING_NUMBER" DataSetColumn="CUST_ORDER_SHIPPING_NUMBER" />
+              <Mapping SourceColumn="cust_name" DataSetColumn="cust_name" />
+              <Mapping SourceColumn="cust_address" DataSetColumn="cust_address" />
+              <Mapping SourceColumn="cust_fax" DataSetColumn="cust_fax" />
+              <Mapping SourceColumn="cust_is_active" DataSetColumn="cust_is_active" />
+              <Mapping SourceColumn="cust_last_buy" DataSetColumn="cust_last_buy" />
+              <Mapping SourceColumn="cust_ps" DataSetColumn="cust_ps" />
+              <Mapping SourceColumn="cust_sales_email" DataSetColumn="cust_sales_email" />
+              <Mapping SourceColumn="cust_sales_name" DataSetColumn="cust_sales_name" />
+              <Mapping SourceColumn="cust_sales_phone" DataSetColumn="cust_sales_phone" />
+              <Mapping SourceColumn="cust_tel" DataSetColumn="cust_tel" />
+              <Mapping SourceColumn="cust_order_report_date" DataSetColumn="cust_order_report_date" />
+              <Mapping SourceColumn="cust_order_report_attendant_uuid" DataSetColumn="cust_order_report_attendant_uuid" />
+              <Mapping SourceColumn="cust_order_report_attendant_c_name" DataSetColumn="cust_order_report_attendant_c_name" />
+              <Mapping SourceColumn="pay_status_name" DataSetColumn="pay_status_name" />
+              <Mapping SourceColumn="pay_method_name" DataSetColumn="pay_method_name" />
+              <Mapping SourceColumn="cust_org_sales_name" DataSetColumn="cust_org_sales_name" />
+              <Mapping SourceColumn="cust_org_sales_phone" DataSetColumn="cust_org_sales_phone" />
+              <Mapping SourceColumn="cust_org_sales_email" DataSetColumn="cust_org_sales_email" />
+              <Mapping SourceColumn="cust_org_ps" DataSetColumn="cust_org_ps" />
+              <Mapping SourceColumn="cust_org_name" DataSetColumn="cust_org_name" />
+              <Mapping SourceColumn="cust_org_is_active" DataSetColumn="cust_org_is_active" />
+              <Mapping SourceColumn="shipping_address" DataSetColumn="shipping_address" />
+              <Mapping SourceColumn="company_uuid" DataSetColumn="company_uuid" />
+              <Mapping SourceColumn="company_c_name" DataSetColumn="company_c_name" />
+              <Mapping SourceColumn="shipping_status_name" DataSetColumn="shipping_status_name" />
+              <Mapping SourceColumn="cust_order_detail_count" DataSetColumn="cust_order_detail_count" />
+              <Mapping SourceColumn="cust_order_detail_cr" DataSetColumn="cust_order_detail_cr" />
+              <Mapping SourceColumn="cust_order_detail_customized" DataSetColumn="cust_order_detail_customized" />
+              <Mapping SourceColumn="cust_order_detail_goods_name" DataSetColumn="cust_order_detail_goods_name" />
+              <Mapping SourceColumn="cust_order_detail_is_active" DataSetColumn="cust_order_detail_is_active" />
+              <Mapping SourceColumn="cust_order_detail_price" DataSetColumn="cust_order_detail_price" />
+              <Mapping SourceColumn="cust_order_detail_ps" DataSetColumn="cust_order_detail_ps" />
+              <Mapping SourceColumn="cust_order_detail_total_price" DataSetColumn="cust_order_detail_total_price" />
+              <Mapping SourceColumn="cust_order_detail_unit" DataSetColumn="cust_order_detail_unit" />
+              <Mapping SourceColumn="cust_order_detail_unit_name" DataSetColumn="cust_order_detail_unit_name" />
+              <Mapping SourceColumn="cust_order_detail_uuid" DataSetColumn="cust_order_detail_uuid" />
+              <Mapping SourceColumn="filegroup_display_name" DataSetColumn="filegroup_display_name" />
+              <Mapping SourceColumn="filegroup_tag" DataSetColumn="filegroup_tag" />
+              <Mapping SourceColumn="filegroup_uuid" DataSetColumn="filegroup_uuid" />
+              <Mapping SourceColumn="file_count" DataSetColumn="file_count" />
+              <Mapping SourceColumn="gcategory_full_name" DataSetColumn="gcategory_full_name" />
+              <Mapping SourceColumn="gcategory_name" DataSetColumn="gcategory_name" />
+              <Mapping SourceColumn="gcategory_uuid" DataSetColumn="gcategory_uuid" />
+              <Mapping SourceColumn="goods_name" DataSetColumn="goods_name" />
+              <Mapping SourceColumn="goods_price" DataSetColumn="goods_price" />
+              <Mapping SourceColumn="goods_ps" DataSetColumn="goods_ps" />
+              <Mapping SourceColumn="goods_sn" DataSetColumn="goods_sn" />
+              <Mapping SourceColumn="goods_uuid" DataSetColumn="goods_uuid" />
+              <Mapping SourceColumn="supplier_goods_name" DataSetColumn="supplier_goods_name" />
+              <Mapping SourceColumn="supplier_goods_price" DataSetColumn="supplier_goods_price" />
+              <Mapping SourceColumn="supplier_goods_sn" DataSetColumn="supplier_goods_sn" />
+              <Mapping SourceColumn="supplier_goods_unit_uuid" DataSetColumn="supplier_goods_unit_uuid" />
+              <Mapping SourceColumn="supplier_goods_uuid" DataSetColumn="supplier_goods_uuid" />
+              <Mapping SourceColumn="UNIT_NAME" DataSetColumn="UNIT_NAME" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
         </Tables>
         <Sources />
       </DataSource>
@@ -669,7 +780,7 @@
   <xs:element name="Limew" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Limew" msprop:Generator_UserDSName="Limew">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="cust" msprop:Generator_TableClassName="custDataTable" msprop:Generator_TableVarName="tablecust" msprop:Generator_RowChangedName="custRowChanged" msprop:Generator_TablePropName="cust" msprop:Generator_RowDeletingName="custRowDeleting" msprop:Generator_RowChangingName="custRowChanging" msprop:Generator_RowEvHandlerName="custRowChangeEventHandler" msprop:Generator_RowDeletedName="custRowDeleted" msprop:Generator_RowClassName="custRow" msprop:Generator_UserTableName="cust" msprop:Generator_RowEvArgName="custRowChangeEvent">
+        <xs:element name="cust" msprop:Generator_TableClassName="custDataTable" msprop:Generator_TableVarName="tablecust" msprop:Generator_TablePropName="cust" msprop:Generator_RowDeletingName="custRowDeleting" msprop:Generator_RowChangingName="custRowChanging" msprop:Generator_RowEvHandlerName="custRowChangeEventHandler" msprop:Generator_RowDeletedName="custRowDeleted" msprop:Generator_UserTableName="cust" msprop:Generator_RowChangedName="custRowChanged" msprop:Generator_RowEvArgName="custRowChangeEvent" msprop:Generator_RowClassName="custRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_uuid" msprop:Generator_ColumnVarNameInTable="columncust_uuid" msprop:Generator_ColumnPropNameInRow="cust_uuid" msprop:Generator_ColumnPropNameInTable="cust_uuidColumn" msprop:Generator_UserColumnName="cust_uuid">
@@ -741,7 +852,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="cust_order_status" msprop:Generator_TableClassName="cust_order_statusDataTable" msprop:Generator_TableVarName="tablecust_order_status" msprop:Generator_RowChangedName="cust_order_statusRowChanged" msprop:Generator_TablePropName="cust_order_status" msprop:Generator_RowDeletingName="cust_order_statusRowDeleting" msprop:Generator_RowChangingName="cust_order_statusRowChanging" msprop:Generator_RowEvHandlerName="cust_order_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_statusRowDeleted" msprop:Generator_RowClassName="cust_order_statusRow" msprop:Generator_UserTableName="cust_order_status" msprop:Generator_RowEvArgName="cust_order_statusRowChangeEvent">
+        <xs:element name="cust_order_status" msprop:Generator_TableClassName="cust_order_statusDataTable" msprop:Generator_TableVarName="tablecust_order_status" msprop:Generator_TablePropName="cust_order_status" msprop:Generator_RowDeletingName="cust_order_statusRowDeleting" msprop:Generator_RowChangingName="cust_order_statusRowChanging" msprop:Generator_RowEvHandlerName="cust_order_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_statusRowDeleted" msprop:Generator_UserTableName="cust_order_status" msprop:Generator_RowChangedName="cust_order_statusRowChanged" msprop:Generator_RowEvArgName="cust_order_statusRowChangeEvent" msprop:Generator_RowClassName="cust_order_statusRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_status_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_status_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_status_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_status_uuidColumn" msprop:Generator_UserColumnName="cust_order_status_uuid">
@@ -763,7 +874,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="gcategory" msprop:Generator_TableClassName="gcategoryDataTable" msprop:Generator_TableVarName="tablegcategory" msprop:Generator_RowChangedName="gcategoryRowChanged" msprop:Generator_TablePropName="gcategory" msprop:Generator_RowDeletingName="gcategoryRowDeleting" msprop:Generator_RowChangingName="gcategoryRowChanging" msprop:Generator_RowEvHandlerName="gcategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="gcategoryRowDeleted" msprop:Generator_RowClassName="gcategoryRow" msprop:Generator_UserTableName="gcategory" msprop:Generator_RowEvArgName="gcategoryRowChangeEvent">
+        <xs:element name="gcategory" msprop:Generator_TableClassName="gcategoryDataTable" msprop:Generator_TableVarName="tablegcategory" msprop:Generator_TablePropName="gcategory" msprop:Generator_RowDeletingName="gcategoryRowDeleting" msprop:Generator_RowChangingName="gcategoryRowChanging" msprop:Generator_RowEvHandlerName="gcategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="gcategoryRowDeleted" msprop:Generator_UserTableName="gcategory" msprop:Generator_RowChangedName="gcategoryRowChanged" msprop:Generator_RowEvArgName="gcategoryRowChangeEvent" msprop:Generator_RowClassName="gcategoryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="gcategory_uuid" msprop:Generator_ColumnVarNameInTable="columngcategory_uuid" msprop:Generator_ColumnPropNameInRow="gcategory_uuid" msprop:Generator_ColumnPropNameInTable="gcategory_uuidColumn" msprop:Generator_UserColumnName="gcategory_uuid">
@@ -811,7 +922,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="goods" msprop:Generator_TableClassName="goodsDataTable" msprop:Generator_TableVarName="tablegoods" msprop:Generator_RowChangedName="goodsRowChanged" msprop:Generator_TablePropName="goods" msprop:Generator_RowDeletingName="goodsRowDeleting" msprop:Generator_RowChangingName="goodsRowChanging" msprop:Generator_RowEvHandlerName="goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="goodsRowDeleted" msprop:Generator_RowClassName="goodsRow" msprop:Generator_UserTableName="goods" msprop:Generator_RowEvArgName="goodsRowChangeEvent">
+        <xs:element name="goods" msprop:Generator_TableClassName="goodsDataTable" msprop:Generator_TableVarName="tablegoods" msprop:Generator_TablePropName="goods" msprop:Generator_RowDeletingName="goodsRowDeleting" msprop:Generator_RowChangingName="goodsRowChanging" msprop:Generator_RowEvHandlerName="goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="goodsRowDeleted" msprop:Generator_UserTableName="goods" msprop:Generator_RowChangedName="goodsRowChanged" msprop:Generator_RowEvArgName="goodsRowChangeEvent" msprop:Generator_RowClassName="goodsRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="goods_uuid" msprop:Generator_ColumnVarNameInTable="columngoods_uuid" msprop:Generator_ColumnPropNameInRow="goods_uuid" msprop:Generator_ColumnPropNameInTable="goods_uuidColumn" msprop:Generator_UserColumnName="goods_uuid">
@@ -858,7 +969,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="pay_method" msprop:Generator_TableClassName="pay_methodDataTable" msprop:Generator_TableVarName="tablepay_method" msprop:Generator_RowChangedName="pay_methodRowChanged" msprop:Generator_TablePropName="pay_method" msprop:Generator_RowDeletingName="pay_methodRowDeleting" msprop:Generator_RowChangingName="pay_methodRowChanging" msprop:Generator_RowEvHandlerName="pay_methodRowChangeEventHandler" msprop:Generator_RowDeletedName="pay_methodRowDeleted" msprop:Generator_RowClassName="pay_methodRow" msprop:Generator_UserTableName="pay_method" msprop:Generator_RowEvArgName="pay_methodRowChangeEvent">
+        <xs:element name="pay_method" msprop:Generator_TableClassName="pay_methodDataTable" msprop:Generator_TableVarName="tablepay_method" msprop:Generator_TablePropName="pay_method" msprop:Generator_RowDeletingName="pay_methodRowDeleting" msprop:Generator_RowChangingName="pay_methodRowChanging" msprop:Generator_RowEvHandlerName="pay_methodRowChangeEventHandler" msprop:Generator_RowDeletedName="pay_methodRowDeleted" msprop:Generator_UserTableName="pay_method" msprop:Generator_RowChangedName="pay_methodRowChanged" msprop:Generator_RowEvArgName="pay_methodRowChangeEvent" msprop:Generator_RowClassName="pay_methodRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="pay_method_uuid" msprop:Generator_ColumnVarNameInTable="columnpay_method_uuid" msprop:Generator_ColumnPropNameInRow="pay_method_uuid" msprop:Generator_ColumnPropNameInTable="pay_method_uuidColumn" msprop:Generator_UserColumnName="pay_method_uuid">
@@ -879,7 +990,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="shipping_status" msprop:Generator_TableClassName="shipping_statusDataTable" msprop:Generator_TableVarName="tableshipping_status" msprop:Generator_RowChangedName="shipping_statusRowChanged" msprop:Generator_TablePropName="shipping_status" msprop:Generator_RowDeletingName="shipping_statusRowDeleting" msprop:Generator_RowChangingName="shipping_statusRowChanging" msprop:Generator_RowEvHandlerName="shipping_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="shipping_statusRowDeleted" msprop:Generator_RowClassName="shipping_statusRow" msprop:Generator_UserTableName="shipping_status" msprop:Generator_RowEvArgName="shipping_statusRowChangeEvent">
+        <xs:element name="shipping_status" msprop:Generator_TableClassName="shipping_statusDataTable" msprop:Generator_TableVarName="tableshipping_status" msprop:Generator_TablePropName="shipping_status" msprop:Generator_RowDeletingName="shipping_statusRowDeleting" msprop:Generator_RowChangingName="shipping_statusRowChanging" msprop:Generator_RowEvHandlerName="shipping_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="shipping_statusRowDeleted" msprop:Generator_UserTableName="shipping_status" msprop:Generator_RowChangedName="shipping_statusRowChanged" msprop:Generator_RowEvArgName="shipping_statusRowChangeEvent" msprop:Generator_RowClassName="shipping_statusRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="shipping_status_uuid" msprop:Generator_ColumnVarNameInTable="columnshipping_status_uuid" msprop:Generator_ColumnPropNameInRow="shipping_status_uuid" msprop:Generator_ColumnPropNameInTable="shipping_status_uuidColumn" msprop:Generator_UserColumnName="shipping_status_uuid">
@@ -900,7 +1011,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="supplier" msprop:Generator_TableClassName="supplierDataTable" msprop:Generator_TableVarName="tablesupplier" msprop:Generator_RowChangedName="supplierRowChanged" msprop:Generator_TablePropName="supplier" msprop:Generator_RowDeletingName="supplierRowDeleting" msprop:Generator_RowChangingName="supplierRowChanging" msprop:Generator_RowEvHandlerName="supplierRowChangeEventHandler" msprop:Generator_RowDeletedName="supplierRowDeleted" msprop:Generator_RowClassName="supplierRow" msprop:Generator_UserTableName="supplier" msprop:Generator_RowEvArgName="supplierRowChangeEvent">
+        <xs:element name="supplier" msprop:Generator_TableClassName="supplierDataTable" msprop:Generator_TableVarName="tablesupplier" msprop:Generator_TablePropName="supplier" msprop:Generator_RowDeletingName="supplierRowDeleting" msprop:Generator_RowChangingName="supplierRowChanging" msprop:Generator_RowEvHandlerName="supplierRowChangeEventHandler" msprop:Generator_RowDeletedName="supplierRowDeleted" msprop:Generator_UserTableName="supplier" msprop:Generator_RowChangedName="supplierRowChanged" msprop:Generator_RowEvArgName="supplierRowChangeEvent" msprop:Generator_RowClassName="supplierRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="supplier_uuid" msprop:Generator_ColumnVarNameInTable="columnsupplier_uuid" msprop:Generator_ColumnPropNameInRow="supplier_uuid" msprop:Generator_ColumnPropNameInTable="supplier_uuidColumn" msprop:Generator_UserColumnName="supplier_uuid">
@@ -991,7 +1102,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="supplier_goods" msprop:Generator_TableClassName="supplier_goodsDataTable" msprop:Generator_TableVarName="tablesupplier_goods" msprop:Generator_RowChangedName="supplier_goodsRowChanged" msprop:Generator_TablePropName="supplier_goods" msprop:Generator_RowDeletingName="supplier_goodsRowDeleting" msprop:Generator_RowChangingName="supplier_goodsRowChanging" msprop:Generator_RowEvHandlerName="supplier_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="supplier_goodsRowDeleted" msprop:Generator_RowClassName="supplier_goodsRow" msprop:Generator_UserTableName="supplier_goods" msprop:Generator_RowEvArgName="supplier_goodsRowChangeEvent">
+        <xs:element name="supplier_goods" msprop:Generator_TableClassName="supplier_goodsDataTable" msprop:Generator_TableVarName="tablesupplier_goods" msprop:Generator_TablePropName="supplier_goods" msprop:Generator_RowDeletingName="supplier_goodsRowDeleting" msprop:Generator_RowChangingName="supplier_goodsRowChanging" msprop:Generator_RowEvHandlerName="supplier_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="supplier_goodsRowDeleted" msprop:Generator_UserTableName="supplier_goods" msprop:Generator_RowChangedName="supplier_goodsRowChanged" msprop:Generator_RowEvArgName="supplier_goodsRowChangeEvent" msprop:Generator_RowClassName="supplier_goodsRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="supplier_goods_uuid" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_uuid" msprop:Generator_ColumnPropNameInRow="supplier_goods_uuid" msprop:Generator_ColumnPropNameInTable="supplier_goods_uuidColumn" msprop:Generator_UserColumnName="supplier_goods_uuid">
@@ -1042,7 +1153,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_goods" msprop:Generator_TableClassName="v_goodsDataTable" msprop:Generator_TableVarName="tablev_goods" msprop:Generator_TablePropName="v_goods" msprop:Generator_RowDeletingName="v_goodsRowDeleting" msprop:Generator_RowChangingName="v_goodsRowChanging" msprop:Generator_RowEvHandlerName="v_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="v_goodsRowDeleted" msprop:Generator_UserTableName="v_goods" msprop:Generator_RowChangedName="v_goodsRowChanged" msprop:Generator_RowEvArgName="v_goodsRowChangeEvent" msprop:Generator_RowClassName="v_goodsRow">
+        <xs:element name="v_goods" msprop:Generator_TableClassName="v_goodsDataTable" msprop:Generator_TableVarName="tablev_goods" msprop:Generator_RowChangedName="v_goodsRowChanged" msprop:Generator_TablePropName="v_goods" msprop:Generator_RowDeletingName="v_goodsRowDeleting" msprop:Generator_RowChangingName="v_goodsRowChanging" msprop:Generator_RowEvHandlerName="v_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="v_goodsRowDeleted" msprop:Generator_RowClassName="v_goodsRow" msprop:Generator_UserTableName="v_goods" msprop:Generator_RowEvArgName="v_goodsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="goods_uuid" msprop:Generator_ColumnVarNameInTable="columngoods_uuid" msprop:Generator_ColumnPropNameInRow="goods_uuid" msprop:Generator_ColumnPropNameInTable="goods_uuidColumn" msprop:Generator_UserColumnName="goods_uuid">
@@ -1111,7 +1222,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="unit" msprop:Generator_TableClassName="unitDataTable" msprop:Generator_TableVarName="tableunit" msprop:Generator_RowChangedName="unitRowChanged" msprop:Generator_TablePropName="unit" msprop:Generator_RowDeletingName="unitRowDeleting" msprop:Generator_RowChangingName="unitRowChanging" msprop:Generator_RowEvHandlerName="unitRowChangeEventHandler" msprop:Generator_RowDeletedName="unitRowDeleted" msprop:Generator_RowClassName="unitRow" msprop:Generator_UserTableName="unit" msprop:Generator_RowEvArgName="unitRowChangeEvent">
+        <xs:element name="unit" msprop:Generator_TableClassName="unitDataTable" msprop:Generator_TableVarName="tableunit" msprop:Generator_TablePropName="unit" msprop:Generator_RowDeletingName="unitRowDeleting" msprop:Generator_RowChangingName="unitRowChanging" msprop:Generator_RowEvHandlerName="unitRowChangeEventHandler" msprop:Generator_RowDeletedName="unitRowDeleted" msprop:Generator_UserTableName="unit" msprop:Generator_RowChangedName="unitRowChanged" msprop:Generator_RowEvArgName="unitRowChangeEvent" msprop:Generator_RowClassName="unitRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="UNIT_UUID" msprop:Generator_ColumnVarNameInTable="columnUNIT_UUID" msprop:Generator_ColumnPropNameInRow="UNIT_UUID" msprop:Generator_ColumnPropNameInTable="UNIT_UUIDColumn" msprop:Generator_UserColumnName="UNIT_UUID">
@@ -1132,7 +1243,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_supplier_goods" msprop:Generator_TableClassName="v_supplier_goodsDataTable" msprop:Generator_TableVarName="tablev_supplier_goods" msprop:Generator_TablePropName="v_supplier_goods" msprop:Generator_RowDeletingName="v_supplier_goodsRowDeleting" msprop:Generator_RowChangingName="v_supplier_goodsRowChanging" msprop:Generator_RowEvHandlerName="v_supplier_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="v_supplier_goodsRowDeleted" msprop:Generator_UserTableName="v_supplier_goods" msprop:Generator_RowChangedName="v_supplier_goodsRowChanged" msprop:Generator_RowEvArgName="v_supplier_goodsRowChangeEvent" msprop:Generator_RowClassName="v_supplier_goodsRow">
+        <xs:element name="v_supplier_goods" msprop:Generator_TableClassName="v_supplier_goodsDataTable" msprop:Generator_TableVarName="tablev_supplier_goods" msprop:Generator_RowChangedName="v_supplier_goodsRowChanged" msprop:Generator_TablePropName="v_supplier_goods" msprop:Generator_RowDeletingName="v_supplier_goodsRowDeleting" msprop:Generator_RowChangingName="v_supplier_goodsRowChanging" msprop:Generator_RowEvHandlerName="v_supplier_goodsRowChangeEventHandler" msprop:Generator_RowDeletedName="v_supplier_goodsRowDeleted" msprop:Generator_RowClassName="v_supplier_goodsRow" msprop:Generator_UserTableName="v_supplier_goods" msprop:Generator_RowEvArgName="v_supplier_goodsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="supplier_name" msprop:Generator_ColumnVarNameInTable="columnsupplier_name" msprop:Generator_ColumnPropNameInRow="supplier_name" msprop:Generator_ColumnPropNameInTable="supplier_nameColumn" msprop:Generator_UserColumnName="supplier_name" minOccurs="0">
@@ -1196,7 +1307,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="cust_org" msprop:Generator_TableClassName="cust_orgDataTable" msprop:Generator_TableVarName="tablecust_org" msprop:Generator_TablePropName="cust_org" msprop:Generator_RowDeletingName="cust_orgRowDeleting" msprop:Generator_RowChangingName="cust_orgRowChanging" msprop:Generator_RowEvHandlerName="cust_orgRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_orgRowDeleted" msprop:Generator_UserTableName="cust_org" msprop:Generator_RowChangedName="cust_orgRowChanged" msprop:Generator_RowEvArgName="cust_orgRowChangeEvent" msprop:Generator_RowClassName="cust_orgRow">
+        <xs:element name="cust_org" msprop:Generator_TableClassName="cust_orgDataTable" msprop:Generator_TableVarName="tablecust_org" msprop:Generator_RowChangedName="cust_orgRowChanged" msprop:Generator_TablePropName="cust_org" msprop:Generator_RowDeletingName="cust_orgRowDeleting" msprop:Generator_RowChangingName="cust_orgRowChanging" msprop:Generator_RowEvHandlerName="cust_orgRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_orgRowDeleted" msprop:Generator_RowClassName="cust_orgRow" msprop:Generator_UserTableName="cust_org" msprop:Generator_RowEvArgName="cust_orgRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_org_uuid" msprop:Generator_ColumnVarNameInTable="columncust_org_uuid" msprop:Generator_ColumnPropNameInRow="cust_org_uuid" msprop:Generator_ColumnPropNameInTable="cust_org_uuidColumn" msprop:Generator_UserColumnName="cust_org_uuid">
@@ -1254,7 +1365,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_cust_order" msprop:Generator_TableClassName="v_cust_orderDataTable" msprop:Generator_TableVarName="tablev_cust_order" msprop:Generator_RowChangedName="v_cust_orderRowChanged" msprop:Generator_TablePropName="v_cust_order" msprop:Generator_RowDeletingName="v_cust_orderRowDeleting" msprop:Generator_RowChangingName="v_cust_orderRowChanging" msprop:Generator_RowEvHandlerName="v_cust_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_orderRowDeleted" msprop:Generator_RowClassName="v_cust_orderRow" msprop:Generator_UserTableName="v_cust_order" msprop:Generator_RowEvArgName="v_cust_orderRowChangeEvent">
+        <xs:element name="v_cust_order" msprop:Generator_TableClassName="v_cust_orderDataTable" msprop:Generator_TableVarName="tablev_cust_order" msprop:Generator_TablePropName="v_cust_order" msprop:Generator_RowDeletingName="v_cust_orderRowDeleting" msprop:Generator_RowChangingName="v_cust_orderRowChanging" msprop:Generator_RowEvHandlerName="v_cust_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_orderRowDeleted" msprop:Generator_UserTableName="v_cust_order" msprop:Generator_RowChangedName="v_cust_orderRowChanged" msprop:Generator_RowEvArgName="v_cust_orderRowChangeEvent" msprop:Generator_RowClassName="v_cust_orderRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_uuidColumn" msprop:Generator_UserColumnName="cust_order_uuid">
@@ -1502,7 +1613,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="cust_order" msprop:Generator_TableClassName="cust_orderDataTable" msprop:Generator_TableVarName="tablecust_order" msprop:Generator_TablePropName="cust_order" msprop:Generator_RowDeletingName="cust_orderRowDeleting" msprop:Generator_RowChangingName="cust_orderRowChanging" msprop:Generator_RowEvHandlerName="cust_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_orderRowDeleted" msprop:Generator_UserTableName="cust_order" msprop:Generator_RowChangedName="cust_orderRowChanged" msprop:Generator_RowEvArgName="cust_orderRowChangeEvent" msprop:Generator_RowClassName="cust_orderRow">
+        <xs:element name="cust_order" msprop:Generator_TableClassName="cust_orderDataTable" msprop:Generator_TableVarName="tablecust_order" msprop:Generator_RowChangedName="cust_orderRowChanged" msprop:Generator_TablePropName="cust_order" msprop:Generator_RowDeletingName="cust_orderRowDeleting" msprop:Generator_RowChangingName="cust_orderRowChanging" msprop:Generator_RowEvHandlerName="cust_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_orderRowDeleted" msprop:Generator_RowClassName="cust_orderRow" msprop:Generator_UserTableName="cust_order" msprop:Generator_RowEvArgName="cust_orderRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_uuidColumn" msprop:Generator_UserColumnName="cust_order_uuid">
@@ -1645,7 +1756,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="cust_order_detail" msprop:Generator_TableClassName="cust_order_detailDataTable" msprop:Generator_TableVarName="tablecust_order_detail" msprop:Generator_RowChangedName="cust_order_detailRowChanged" msprop:Generator_TablePropName="cust_order_detail" msprop:Generator_RowDeletingName="cust_order_detailRowDeleting" msprop:Generator_RowChangingName="cust_order_detailRowChanging" msprop:Generator_RowEvHandlerName="cust_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_detailRowDeleted" msprop:Generator_RowClassName="cust_order_detailRow" msprop:Generator_UserTableName="cust_order_detail" msprop:Generator_RowEvArgName="cust_order_detailRowChangeEvent">
+        <xs:element name="cust_order_detail" msprop:Generator_TableClassName="cust_order_detailDataTable" msprop:Generator_TableVarName="tablecust_order_detail" msprop:Generator_TablePropName="cust_order_detail" msprop:Generator_RowDeletingName="cust_order_detailRowDeleting" msprop:Generator_RowChangingName="cust_order_detailRowChanging" msprop:Generator_RowEvHandlerName="cust_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_detailRowDeleted" msprop:Generator_UserTableName="cust_order_detail" msprop:Generator_RowChangedName="cust_order_detailRowChanged" msprop:Generator_RowEvArgName="cust_order_detailRowChangeEvent" msprop:Generator_RowClassName="cust_order_detailRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_detail_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_detail_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_detail_uuidColumn" msprop:Generator_UserColumnName="cust_order_detail_uuid">
@@ -1713,7 +1824,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="pay_status" msprop:Generator_TableClassName="pay_statusDataTable" msprop:Generator_TableVarName="tablepay_status" msprop:Generator_RowChangedName="pay_statusRowChanged" msprop:Generator_TablePropName="pay_status" msprop:Generator_RowDeletingName="pay_statusRowDeleting" msprop:Generator_RowChangingName="pay_statusRowChanging" msprop:Generator_RowEvHandlerName="pay_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="pay_statusRowDeleted" msprop:Generator_RowClassName="pay_statusRow" msprop:Generator_UserTableName="pay_status" msprop:Generator_RowEvArgName="pay_statusRowChangeEvent">
+        <xs:element name="pay_status" msprop:Generator_TableClassName="pay_statusDataTable" msprop:Generator_TableVarName="tablepay_status" msprop:Generator_TablePropName="pay_status" msprop:Generator_RowDeletingName="pay_statusRowDeleting" msprop:Generator_RowChangingName="pay_statusRowChanging" msprop:Generator_RowEvHandlerName="pay_statusRowChangeEventHandler" msprop:Generator_RowDeletedName="pay_statusRowDeleted" msprop:Generator_UserTableName="pay_status" msprop:Generator_RowChangedName="pay_statusRowChanged" msprop:Generator_RowEvArgName="pay_statusRowChangeEvent" msprop:Generator_RowClassName="pay_statusRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="pay_status_uuid" msprop:Generator_ColumnVarNameInTable="columnpay_status_uuid" msprop:Generator_ColumnPropNameInRow="pay_status_uuid" msprop:Generator_ColumnPropNameInTable="pay_status_uuidColumn" msprop:Generator_UserColumnName="pay_status_uuid">
@@ -1734,7 +1845,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="filegroup" msprop:Generator_TableClassName="filegroupDataTable" msprop:Generator_TableVarName="tablefilegroup" msprop:Generator_TablePropName="filegroup" msprop:Generator_RowDeletingName="filegroupRowDeleting" msprop:Generator_RowChangingName="filegroupRowChanging" msprop:Generator_RowEvHandlerName="filegroupRowChangeEventHandler" msprop:Generator_RowDeletedName="filegroupRowDeleted" msprop:Generator_UserTableName="filegroup" msprop:Generator_RowChangedName="filegroupRowChanged" msprop:Generator_RowEvArgName="filegroupRowChangeEvent" msprop:Generator_RowClassName="filegroupRow">
+        <xs:element name="filegroup" msprop:Generator_TableClassName="filegroupDataTable" msprop:Generator_TableVarName="tablefilegroup" msprop:Generator_RowChangedName="filegroupRowChanged" msprop:Generator_TablePropName="filegroup" msprop:Generator_RowDeletingName="filegroupRowDeleting" msprop:Generator_RowChangingName="filegroupRowChanging" msprop:Generator_RowEvHandlerName="filegroupRowChangeEventHandler" msprop:Generator_RowDeletedName="filegroupRowDeleted" msprop:Generator_RowClassName="filegroupRow" msprop:Generator_UserTableName="filegroup" msprop:Generator_RowEvArgName="filegroupRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="filegroup_uuid" msprop:Generator_ColumnVarNameInTable="columnfilegroup_uuid" msprop:Generator_ColumnPropNameInRow="filegroup_uuid" msprop:Generator_ColumnPropNameInTable="filegroup_uuidColumn" msprop:Generator_UserColumnName="filegroup_uuid">
@@ -1756,7 +1867,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="file" msprop:Generator_TableClassName="fileDataTable" msprop:Generator_TableVarName="tablefile" msprop:Generator_TablePropName="file" msprop:Generator_RowDeletingName="fileRowDeleting" msprop:Generator_RowChangingName="fileRowChanging" msprop:Generator_RowEvHandlerName="fileRowChangeEventHandler" msprop:Generator_RowDeletedName="fileRowDeleted" msprop:Generator_UserTableName="file" msprop:Generator_RowChangedName="fileRowChanged" msprop:Generator_RowEvArgName="fileRowChangeEvent" msprop:Generator_RowClassName="fileRow">
+        <xs:element name="file" msprop:Generator_TableClassName="fileDataTable" msprop:Generator_TableVarName="tablefile" msprop:Generator_RowChangedName="fileRowChanged" msprop:Generator_TablePropName="file" msprop:Generator_RowDeletingName="fileRowDeleting" msprop:Generator_RowChangingName="fileRowChanging" msprop:Generator_RowEvHandlerName="fileRowChangeEventHandler" msprop:Generator_RowDeletedName="fileRowDeleted" msprop:Generator_RowClassName="fileRow" msprop:Generator_UserTableName="file" msprop:Generator_RowEvArgName="fileRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="file_uuid" msprop:Generator_ColumnVarNameInTable="columnfile_uuid" msprop:Generator_ColumnPropNameInRow="file_uuid" msprop:Generator_ColumnPropNameInTable="file_uuidColumn" msprop:Generator_UserColumnName="file_uuid">
@@ -1805,7 +1916,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_filegroup" msprop:Generator_TableClassName="v_filegroupDataTable" msprop:Generator_TableVarName="tablev_filegroup" msprop:Generator_RowChangedName="v_filegroupRowChanged" msprop:Generator_TablePropName="v_filegroup" msprop:Generator_RowDeletingName="v_filegroupRowDeleting" msprop:Generator_RowChangingName="v_filegroupRowChanging" msprop:Generator_RowEvHandlerName="v_filegroupRowChangeEventHandler" msprop:Generator_RowDeletedName="v_filegroupRowDeleted" msprop:Generator_RowClassName="v_filegroupRow" msprop:Generator_UserTableName="v_filegroup" msprop:Generator_RowEvArgName="v_filegroupRowChangeEvent">
+        <xs:element name="v_filegroup" msprop:Generator_TableClassName="v_filegroupDataTable" msprop:Generator_TableVarName="tablev_filegroup" msprop:Generator_TablePropName="v_filegroup" msprop:Generator_RowDeletingName="v_filegroupRowDeleting" msprop:Generator_RowChangingName="v_filegroupRowChanging" msprop:Generator_RowEvHandlerName="v_filegroupRowChangeEventHandler" msprop:Generator_RowDeletedName="v_filegroupRowDeleted" msprop:Generator_UserTableName="v_filegroup" msprop:Generator_RowChangedName="v_filegroupRowChanged" msprop:Generator_RowEvArgName="v_filegroupRowChangeEvent" msprop:Generator_RowClassName="v_filegroupRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="file_uuid" msprop:Generator_ColumnVarNameInTable="columnfile_uuid" msprop:Generator_ColumnPropNameInRow="file_uuid" msprop:Generator_ColumnPropNameInTable="file_uuidColumn" msprop:Generator_UserColumnName="file_uuid">
@@ -1863,7 +1974,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_cust_order_detail" msprop:Generator_TableClassName="v_cust_order_detailDataTable" msprop:Generator_TableVarName="tablev_cust_order_detail" msprop:Generator_RowChangedName="v_cust_order_detailRowChanged" msprop:Generator_TablePropName="v_cust_order_detail" msprop:Generator_RowDeletingName="v_cust_order_detailRowDeleting" msprop:Generator_RowChangingName="v_cust_order_detailRowChanging" msprop:Generator_RowEvHandlerName="v_cust_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_order_detailRowDeleted" msprop:Generator_RowClassName="v_cust_order_detailRow" msprop:Generator_UserTableName="v_cust_order_detail" msprop:Generator_RowEvArgName="v_cust_order_detailRowChangeEvent">
+        <xs:element name="v_cust_order_detail" msprop:Generator_TableClassName="v_cust_order_detailDataTable" msprop:Generator_TableVarName="tablev_cust_order_detail" msprop:Generator_TablePropName="v_cust_order_detail" msprop:Generator_RowDeletingName="v_cust_order_detailRowDeleting" msprop:Generator_RowChangingName="v_cust_order_detailRowChanging" msprop:Generator_RowEvHandlerName="v_cust_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_order_detailRowDeleted" msprop:Generator_UserTableName="v_cust_order_detail" msprop:Generator_RowChangedName="v_cust_order_detailRowChanged" msprop:Generator_RowEvArgName="v_cust_order_detailRowChangeEvent" msprop:Generator_RowClassName="v_cust_order_detailRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_detail_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_detail_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_detail_uuidColumn" msprop:Generator_UserColumnName="cust_order_detail_uuid">
@@ -2007,7 +2118,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_cust_address" msprop:Generator_TableClassName="v_cust_addressDataTable" msprop:Generator_TableVarName="tablev_cust_address" msprop:Generator_TablePropName="v_cust_address" msprop:Generator_RowDeletingName="v_cust_addressRowDeleting" msprop:Generator_RowChangingName="v_cust_addressRowChanging" msprop:Generator_RowEvHandlerName="v_cust_addressRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_addressRowDeleted" msprop:Generator_UserTableName="v_cust_address" msprop:Generator_RowChangedName="v_cust_addressRowChanged" msprop:Generator_RowEvArgName="v_cust_addressRowChangeEvent" msprop:Generator_RowClassName="v_cust_addressRow">
+        <xs:element name="v_cust_address" msprop:Generator_TableClassName="v_cust_addressDataTable" msprop:Generator_TableVarName="tablev_cust_address" msprop:Generator_RowChangedName="v_cust_addressRowChanged" msprop:Generator_TablePropName="v_cust_address" msprop:Generator_RowDeletingName="v_cust_addressRowDeleting" msprop:Generator_RowChangingName="v_cust_addressRowChanging" msprop:Generator_RowEvHandlerName="v_cust_addressRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_addressRowDeleted" msprop:Generator_RowClassName="v_cust_addressRow" msprop:Generator_UserTableName="v_cust_address" msprop:Generator_RowEvArgName="v_cust_addressRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_address" msprop:Generator_ColumnVarNameInTable="columncust_address" msprop:Generator_ColumnPropNameInRow="cust_address" msprop:Generator_ColumnPropNameInTable="cust_addressColumn" msprop:Generator_UserColumnName="cust_address">
@@ -2041,7 +2152,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="cust_order_id" msprop:Generator_TableClassName="cust_order_idDataTable" msprop:Generator_TableVarName="tablecust_order_id" msprop:Generator_RowChangedName="cust_order_idRowChanged" msprop:Generator_TablePropName="cust_order_id" msprop:Generator_RowDeletingName="cust_order_idRowDeleting" msprop:Generator_RowChangingName="cust_order_idRowChanging" msprop:Generator_RowEvHandlerName="cust_order_idRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_idRowDeleted" msprop:Generator_RowClassName="cust_order_idRow" msprop:Generator_UserTableName="cust_order_id" msprop:Generator_RowEvArgName="cust_order_idRowChangeEvent">
+        <xs:element name="cust_order_id" msprop:Generator_TableClassName="cust_order_idDataTable" msprop:Generator_TableVarName="tablecust_order_id" msprop:Generator_TablePropName="cust_order_id" msprop:Generator_RowDeletingName="cust_order_idRowDeleting" msprop:Generator_RowChangingName="cust_order_idRowChanging" msprop:Generator_RowEvHandlerName="cust_order_idRowChangeEventHandler" msprop:Generator_RowDeletedName="cust_order_idRowDeleted" msprop:Generator_UserTableName="cust_order_id" msprop:Generator_RowChangedName="cust_order_idRowChanged" msprop:Generator_RowEvArgName="cust_order_idRowChangeEvent" msprop:Generator_RowClassName="cust_order_idRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="cust_order_id_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_id_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_id_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_id_uuidColumn" msprop:Generator_UserColumnName="cust_order_id_uuid">
@@ -2055,7 +2166,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="shipping_id" msprop:Generator_TableClassName="shipping_idDataTable" msprop:Generator_TableVarName="tableshipping_id" msprop:Generator_TablePropName="shipping_id" msprop:Generator_RowDeletingName="shipping_idRowDeleting" msprop:Generator_RowChangingName="shipping_idRowChanging" msprop:Generator_RowEvHandlerName="shipping_idRowChangeEventHandler" msprop:Generator_RowDeletedName="shipping_idRowDeleted" msprop:Generator_UserTableName="shipping_id" msprop:Generator_RowChangedName="shipping_idRowChanged" msprop:Generator_RowEvArgName="shipping_idRowChangeEvent" msprop:Generator_RowClassName="shipping_idRow">
+        <xs:element name="shipping_id" msprop:Generator_TableClassName="shipping_idDataTable" msprop:Generator_TableVarName="tableshipping_id" msprop:Generator_RowChangedName="shipping_idRowChanged" msprop:Generator_TablePropName="shipping_id" msprop:Generator_RowDeletingName="shipping_idRowDeleting" msprop:Generator_RowChangingName="shipping_idRowChanging" msprop:Generator_RowEvHandlerName="shipping_idRowChangeEventHandler" msprop:Generator_RowDeletedName="shipping_idRowDeleted" msprop:Generator_RowClassName="shipping_idRow" msprop:Generator_UserTableName="shipping_id" msprop:Generator_RowEvArgName="shipping_idRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="shipping_id_uuid" msprop:Generator_ColumnVarNameInTable="columnshipping_id_uuid" msprop:Generator_ColumnPropNameInRow="shipping_id_uuid" msprop:Generator_ColumnPropNameInTable="shipping_id_uuidColumn" msprop:Generator_UserColumnName="shipping_id_uuid">
@@ -2069,7 +2180,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="my_order" msprop:Generator_TableClassName="my_orderDataTable" msprop:Generator_TableVarName="tablemy_order" msprop:Generator_RowChangedName="my_orderRowChanged" msprop:Generator_TablePropName="my_order" msprop:Generator_RowDeletingName="my_orderRowDeleting" msprop:Generator_RowChangingName="my_orderRowChanging" msprop:Generator_RowEvHandlerName="my_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="my_orderRowDeleted" msprop:Generator_RowClassName="my_orderRow" msprop:Generator_UserTableName="my_order" msprop:Generator_RowEvArgName="my_orderRowChangeEvent">
+        <xs:element name="my_order" msprop:Generator_TableClassName="my_orderDataTable" msprop:Generator_TableVarName="tablemy_order" msprop:Generator_TablePropName="my_order" msprop:Generator_RowDeletingName="my_orderRowDeleting" msprop:Generator_RowChangingName="my_orderRowChanging" msprop:Generator_RowEvHandlerName="my_orderRowChangeEventHandler" msprop:Generator_RowDeletedName="my_orderRowDeleted" msprop:Generator_UserTableName="my_order" msprop:Generator_RowChangedName="my_orderRowChanged" msprop:Generator_RowEvArgName="my_orderRowChangeEvent" msprop:Generator_RowClassName="my_orderRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="my_order_uuid" msprop:Generator_ColumnVarNameInTable="columnmy_order_uuid" msprop:Generator_ColumnPropNameInRow="my_order_uuid" msprop:Generator_ColumnPropNameInTable="my_order_uuidColumn" msprop:Generator_UserColumnName="my_order_uuid">
@@ -2145,10 +2256,11 @@
               <xs:element name="my_order_cr" msprop:Generator_ColumnVarNameInTable="columnmy_order_cr" msprop:Generator_ColumnPropNameInRow="my_order_cr" msprop:Generator_ColumnPropNameInTable="my_order_crColumn" msprop:Generator_UserColumnName="my_order_cr" type="xs:dateTime" minOccurs="0" />
               <xs:element name="my_order_total_price" msprop:Generator_ColumnVarNameInTable="columnmy_order_total_price" msprop:Generator_ColumnPropNameInRow="my_order_total_price" msprop:Generator_ColumnPropNameInTable="my_order_total_priceColumn" msprop:Generator_UserColumnName="my_order_total_price" type="xs:decimal" minOccurs="0" />
               <xs:element name="my_order_is_active" msprop:Generator_ColumnVarNameInTable="columnmy_order_is_active" msprop:Generator_ColumnPropNameInRow="my_order_is_active" msprop:Generator_ColumnPropNameInTable="my_order_is_activeColumn" msprop:Generator_UserColumnName="my_order_is_active" type="xs:int" minOccurs="0" />
+              <xs:element name="my_order_id" msprop:Generator_ColumnVarNameInTable="columnmy_order_id" msprop:Generator_ColumnPropNameInRow="my_order_id" msprop:Generator_ColumnPropNameInTable="my_order_idColumn" msprop:Generator_UserColumnName="my_order_id" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="my_order_detail" msprop:Generator_TableClassName="my_order_detailDataTable" msprop:Generator_TableVarName="tablemy_order_detail" msprop:Generator_RowChangedName="my_order_detailRowChanged" msprop:Generator_TablePropName="my_order_detail" msprop:Generator_RowDeletingName="my_order_detailRowDeleting" msprop:Generator_RowChangingName="my_order_detailRowChanging" msprop:Generator_RowEvHandlerName="my_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="my_order_detailRowDeleted" msprop:Generator_RowClassName="my_order_detailRow" msprop:Generator_UserTableName="my_order_detail" msprop:Generator_RowEvArgName="my_order_detailRowChangeEvent">
+        <xs:element name="my_order_detail" msprop:Generator_TableClassName="my_order_detailDataTable" msprop:Generator_TableVarName="tablemy_order_detail" msprop:Generator_TablePropName="my_order_detail" msprop:Generator_RowDeletingName="my_order_detailRowDeleting" msprop:Generator_RowChangingName="my_order_detailRowChanging" msprop:Generator_RowEvHandlerName="my_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="my_order_detailRowDeleted" msprop:Generator_UserTableName="my_order_detail" msprop:Generator_RowChangedName="my_order_detailRowChanged" msprop:Generator_RowEvArgName="my_order_detailRowChangeEvent" msprop:Generator_RowClassName="my_order_detailRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="my_order_detail_uuid" msprop:Generator_ColumnVarNameInTable="columnmy_order_detail_uuid" msprop:Generator_ColumnPropNameInRow="my_order_detail_uuid" msprop:Generator_ColumnPropNameInTable="my_order_detail_uuidColumn" msprop:Generator_UserColumnName="my_order_detail_uuid">
@@ -2195,7 +2307,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="v_my_order_detail" msprop:Generator_TableClassName="v_my_order_detailDataTable" msprop:Generator_TableVarName="tablev_my_order_detail" msprop:Generator_RowChangedName="v_my_order_detailRowChanged" msprop:Generator_TablePropName="v_my_order_detail" msprop:Generator_RowDeletingName="v_my_order_detailRowDeleting" msprop:Generator_RowChangingName="v_my_order_detailRowChanging" msprop:Generator_RowEvHandlerName="v_my_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="v_my_order_detailRowDeleted" msprop:Generator_RowClassName="v_my_order_detailRow" msprop:Generator_UserTableName="v_my_order_detail" msprop:Generator_RowEvArgName="v_my_order_detailRowChangeEvent">
+        <xs:element name="v_my_order_detail" msprop:Generator_TableClassName="v_my_order_detailDataTable" msprop:Generator_TableVarName="tablev_my_order_detail" msprop:Generator_TablePropName="v_my_order_detail" msprop:Generator_RowDeletingName="v_my_order_detailRowDeleting" msprop:Generator_RowChangingName="v_my_order_detailRowChanging" msprop:Generator_RowEvHandlerName="v_my_order_detailRowChangeEventHandler" msprop:Generator_RowDeletedName="v_my_order_detailRowDeleted" msprop:Generator_UserTableName="v_my_order_detail" msprop:Generator_RowChangedName="v_my_order_detailRowChanged" msprop:Generator_RowEvArgName="v_my_order_detailRowChangeEvent" msprop:Generator_RowClassName="v_my_order_detailRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="my_order_uuid" msprop:Generator_ColumnVarNameInTable="columnmy_order_uuid" msprop:Generator_ColumnPropNameInRow="my_order_uuid" msprop:Generator_ColumnPropNameInTable="my_order_uuidColumn" msprop:Generator_UserColumnName="my_order_uuid">
@@ -2310,6 +2422,466 @@
               </xs:element>
               <xs:element name="unit_uuid" msprop:Generator_ColumnVarNameInTable="columnunit_uuid" msprop:Generator_ColumnPropNameInRow="unit_uuid" msprop:Generator_ColumnPropNameInTable="unit_uuidColumn" msprop:Generator_UserColumnName="unit_uuid" type="xs:string" minOccurs="0" />
               <xs:element name="my_order_detail_unit_name" msprop:Generator_ColumnVarNameInTable="columnmy_order_detail_unit_name" msprop:Generator_ColumnPropNameInRow="my_order_detail_unit_name" msprop:Generator_ColumnPropNameInTable="my_order_detail_unit_nameColumn" msprop:Generator_UserColumnName="my_order_detail_unit_name" type="xs:string" minOccurs="0" />
+              <xs:element name="my_order_id" msprop:Generator_ColumnVarNameInTable="columnmy_order_id" msprop:Generator_ColumnPropNameInRow="my_order_id" msprop:Generator_ColumnPropNameInTable="my_order_idColumn" msprop:Generator_UserColumnName="my_order_id" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="my_order_id" msprop:Generator_TableClassName="my_order_idDataTable" msprop:Generator_TableVarName="tablemy_order_id" msprop:Generator_RowChangedName="my_order_idRowChanged" msprop:Generator_TablePropName="my_order_id" msprop:Generator_RowDeletingName="my_order_idRowDeleting" msprop:Generator_RowChangingName="my_order_idRowChanging" msprop:Generator_RowEvHandlerName="my_order_idRowChangeEventHandler" msprop:Generator_RowDeletedName="my_order_idRowDeleted" msprop:Generator_RowClassName="my_order_idRow" msprop:Generator_UserTableName="my_order_id" msprop:Generator_RowEvArgName="my_order_idRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="my_order_id_uuid" msprop:Generator_ColumnVarNameInTable="columnmy_order_id_uuid" msprop:Generator_ColumnPropNameInRow="my_order_id_uuid" msprop:Generator_ColumnPropNameInTable="my_order_id_uuidColumn" msprop:Generator_UserColumnName="my_order_id_uuid">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="max" msprop:Generator_ColumnVarNameInTable="columnmax" msprop:Generator_ColumnPropNameInRow="max" msprop:Generator_ColumnPropNameInTable="maxColumn" msprop:Generator_UserColumnName="max" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="v_cust_order_search" msprop:Generator_TableClassName="v_cust_order_searchDataTable" msprop:Generator_TableVarName="tablev_cust_order_search" msprop:Generator_TablePropName="v_cust_order_search" msprop:Generator_RowDeletingName="v_cust_order_searchRowDeleting" msprop:Generator_RowChangingName="v_cust_order_searchRowChanging" msprop:Generator_RowEvHandlerName="v_cust_order_searchRowChangeEventHandler" msprop:Generator_RowDeletedName="v_cust_order_searchRowDeleted" msprop:Generator_UserTableName="v_cust_order_search" msprop:Generator_RowChangedName="v_cust_order_searchRowChanged" msprop:Generator_RowEvArgName="v_cust_order_searchRowChangeEvent" msprop:Generator_RowClassName="v_cust_order_searchRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cust_order_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_uuidColumn" msprop:Generator_UserColumnName="cust_order_uuid">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_cr" msprop:Generator_ColumnVarNameInTable="columncust_order_cr" msprop:Generator_ColumnPropNameInRow="cust_order_cr" msprop:Generator_ColumnPropNameInTable="cust_order_crColumn" msprop:Generator_UserColumnName="cust_order_cr" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_order_id" msprop:Generator_ColumnVarNameInTable="columncust_order_id" msprop:Generator_ColumnPropNameInRow="cust_order_id" msprop:Generator_ColumnPropNameInTable="cust_order_idColumn" msprop:Generator_UserColumnName="cust_order_id" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_total_price" msprop:Generator_ColumnVarNameInTable="columncust_order_total_price" msprop:Generator_ColumnPropNameInRow="cust_order_total_price" msprop:Generator_ColumnPropNameInTable="cust_order_total_priceColumn" msprop:Generator_UserColumnName="cust_order_total_price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cust_order_status_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_status_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_status_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_status_uuidColumn" msprop:Generator_UserColumnName="cust_order_status_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_is_active" msprop:Generator_ColumnVarNameInTable="columncust_order_is_active" msprop:Generator_ColumnPropNameInRow="cust_order_is_active" msprop:Generator_ColumnPropNameInTable="cust_order_is_activeColumn" msprop:Generator_UserColumnName="cust_order_is_active" type="xs:int" minOccurs="0" />
+              <xs:element name="cust_uuid" msprop:Generator_ColumnVarNameInTable="columncust_uuid" msprop:Generator_ColumnPropNameInRow="cust_uuid" msprop:Generator_ColumnPropNameInTable="cust_uuidColumn" msprop:Generator_UserColumnName="cust_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_type" msprop:Generator_ColumnVarNameInTable="columncust_order_type" msprop:Generator_ColumnPropNameInRow="cust_order_type" msprop:Generator_ColumnPropNameInTable="cust_order_typeColumn" msprop:Generator_UserColumnName="cust_order_type" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_cust_name" msprop:Generator_ColumnVarNameInTable="columncust_order_cust_name" msprop:Generator_ColumnPropNameInRow="cust_order_cust_name" msprop:Generator_ColumnPropNameInTable="cust_order_cust_nameColumn" msprop:Generator_UserColumnName="cust_order_cust_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_dept" msprop:Generator_ColumnVarNameInTable="columncust_order_dept" msprop:Generator_ColumnPropNameInRow="cust_order_dept" msprop:Generator_ColumnPropNameInTable="cust_order_deptColumn" msprop:Generator_UserColumnName="cust_order_dept" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_user_name" msprop:Generator_ColumnVarNameInTable="columncust_order_user_name" msprop:Generator_ColumnPropNameInRow="cust_order_user_name" msprop:Generator_ColumnPropNameInTable="cust_order_user_nameColumn" msprop:Generator_UserColumnName="cust_order_user_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_user_phone" msprop:Generator_ColumnVarNameInTable="columncust_order_user_phone" msprop:Generator_ColumnPropNameInRow="cust_order_user_phone" msprop:Generator_ColumnPropNameInTable="cust_order_user_phoneColumn" msprop:Generator_UserColumnName="cust_order_user_phone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_purchase_amount" msprop:Generator_ColumnVarNameInTable="columncust_order_purchase_amount" msprop:Generator_ColumnPropNameInRow="cust_order_purchase_amount" msprop:Generator_ColumnPropNameInTable="cust_order_purchase_amountColumn" msprop:Generator_UserColumnName="cust_order_purchase_amount" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_print_user_name" msprop:Generator_ColumnVarNameInTable="columncust_order_print_user_name" msprop:Generator_ColumnPropNameInRow="cust_order_print_user_name" msprop:Generator_ColumnPropNameInTable="cust_order_print_user_nameColumn" msprop:Generator_UserColumnName="cust_order_print_user_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_shipping_date" msprop:Generator_ColumnVarNameInTable="columncust_order_shipping_date" msprop:Generator_ColumnPropNameInRow="cust_order_shipping_date" msprop:Generator_ColumnPropNameInTable="cust_order_shipping_dateColumn" msprop:Generator_UserColumnName="cust_order_shipping_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="shipping_status_uuid" msprop:Generator_ColumnVarNameInTable="columnshipping_status_uuid" msprop:Generator_ColumnPropNameInRow="shipping_status_uuid" msprop:Generator_ColumnPropNameInTable="shipping_status_uuidColumn" msprop:Generator_UserColumnName="shipping_status_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_po_number" msprop:Generator_ColumnVarNameInTable="columncust_order_po_number" msprop:Generator_ColumnPropNameInRow="cust_order_po_number" msprop:Generator_ColumnPropNameInTable="cust_order_po_numberColumn" msprop:Generator_UserColumnName="cust_order_po_number" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="pay_status_uuid" msprop:Generator_ColumnVarNameInTable="columnpay_status_uuid" msprop:Generator_ColumnPropNameInRow="pay_status_uuid" msprop:Generator_ColumnPropNameInTable="pay_status_uuidColumn" msprop:Generator_UserColumnName="pay_status_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="pay_method_uuid" msprop:Generator_ColumnVarNameInTable="columnpay_method_uuid" msprop:Generator_ColumnPropNameInRow="pay_method_uuid" msprop:Generator_ColumnPropNameInTable="pay_method_uuidColumn" msprop:Generator_UserColumnName="pay_method_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_invoice_number" msprop:Generator_ColumnVarNameInTable="columncust_order_invoice_number" msprop:Generator_ColumnPropNameInRow="cust_order_invoice_number" msprop:Generator_ColumnPropNameInTable="cust_order_invoice_numberColumn" msprop:Generator_UserColumnName="cust_order_invoice_number" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_limit_date" msprop:Generator_ColumnVarNameInTable="columncust_order_limit_date" msprop:Generator_ColumnPropNameInRow="cust_order_limit_date" msprop:Generator_ColumnPropNameInTable="cust_order_limit_dateColumn" msprop:Generator_UserColumnName="cust_order_limit_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_org_uuid" msprop:Generator_ColumnVarNameInTable="columncust_org_uuid" msprop:Generator_ColumnPropNameInRow="cust_org_uuid" msprop:Generator_ColumnPropNameInTable="cust_org_uuidColumn" msprop:Generator_UserColumnName="cust_org_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_has_tax" msprop:Generator_ColumnVarNameInTable="columncust_order_has_tax" msprop:Generator_ColumnPropNameInRow="cust_order_has_tax" msprop:Generator_ColumnPropNameInTable="cust_order_has_taxColumn" msprop:Generator_UserColumnName="cust_order_has_tax" type="xs:int" minOccurs="0" />
+              <xs:element name="cust_order_ps" msprop:Generator_ColumnVarNameInTable="columncust_order_ps" msprop:Generator_ColumnPropNameInRow="cust_order_ps" msprop:Generator_ColumnPropNameInTable="cust_order_psColumn" msprop:Generator_UserColumnName="cust_order_ps" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="131070" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CUST_ORDER_SHIPPING_NUMBER" msprop:Generator_ColumnVarNameInTable="columnCUST_ORDER_SHIPPING_NUMBER" msprop:Generator_ColumnPropNameInRow="CUST_ORDER_SHIPPING_NUMBER" msprop:Generator_ColumnPropNameInTable="CUST_ORDER_SHIPPING_NUMBERColumn" msprop:Generator_UserColumnName="CUST_ORDER_SHIPPING_NUMBER" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_name" msprop:Generator_ColumnVarNameInTable="columncust_name" msprop:Generator_ColumnPropNameInRow="cust_name" msprop:Generator_ColumnPropNameInTable="cust_nameColumn" msprop:Generator_UserColumnName="cust_name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_address" msprop:Generator_ColumnVarNameInTable="columncust_address" msprop:Generator_ColumnPropNameInRow="cust_address" msprop:Generator_ColumnPropNameInTable="cust_addressColumn" msprop:Generator_UserColumnName="cust_address">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3072" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_fax" msprop:Generator_ColumnVarNameInTable="columncust_fax" msprop:Generator_ColumnPropNameInRow="cust_fax" msprop:Generator_ColumnPropNameInTable="cust_faxColumn" msprop:Generator_UserColumnName="cust_fax" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_is_active" msprop:Generator_ColumnVarNameInTable="columncust_is_active" msprop:Generator_ColumnPropNameInRow="cust_is_active" msprop:Generator_ColumnPropNameInTable="cust_is_activeColumn" msprop:Generator_UserColumnName="cust_is_active" type="xs:int" />
+              <xs:element name="cust_last_buy" msprop:Generator_ColumnVarNameInTable="columncust_last_buy" msprop:Generator_ColumnPropNameInRow="cust_last_buy" msprop:Generator_ColumnPropNameInTable="cust_last_buyColumn" msprop:Generator_UserColumnName="cust_last_buy" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_ps" msprop:Generator_ColumnVarNameInTable="columncust_ps" msprop:Generator_ColumnPropNameInRow="cust_ps" msprop:Generator_ColumnPropNameInTable="cust_psColumn" msprop:Generator_UserColumnName="cust_ps" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="131070" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_sales_email" msprop:Generator_ColumnVarNameInTable="columncust_sales_email" msprop:Generator_ColumnPropNameInRow="cust_sales_email" msprop:Generator_ColumnPropNameInTable="cust_sales_emailColumn" msprop:Generator_UserColumnName="cust_sales_email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_sales_name" msprop:Generator_ColumnVarNameInTable="columncust_sales_name" msprop:Generator_ColumnPropNameInRow="cust_sales_name" msprop:Generator_ColumnPropNameInTable="cust_sales_nameColumn" msprop:Generator_UserColumnName="cust_sales_name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_sales_phone" msprop:Generator_ColumnVarNameInTable="columncust_sales_phone" msprop:Generator_ColumnPropNameInRow="cust_sales_phone" msprop:Generator_ColumnPropNameInTable="cust_sales_phoneColumn" msprop:Generator_UserColumnName="cust_sales_phone">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_tel" msprop:Generator_ColumnVarNameInTable="columncust_tel" msprop:Generator_ColumnPropNameInRow="cust_tel" msprop:Generator_ColumnPropNameInTable="cust_telColumn" msprop:Generator_UserColumnName="cust_tel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_report_date" msprop:Generator_ColumnVarNameInTable="columncust_order_report_date" msprop:Generator_ColumnPropNameInRow="cust_order_report_date" msprop:Generator_ColumnPropNameInTable="cust_order_report_dateColumn" msprop:Generator_UserColumnName="cust_order_report_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_order_report_attendant_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_report_attendant_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_report_attendant_uuidColumn" msprop:Generator_UserColumnName="cust_order_report_attendant_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_report_attendant_c_name" msprop:Generator_ColumnVarNameInTable="columncust_order_report_attendant_c_name" msprop:Generator_ColumnPropNameInRow="cust_order_report_attendant_c_name" msprop:Generator_ColumnPropNameInTable="cust_order_report_attendant_c_nameColumn" msprop:Generator_UserColumnName="cust_order_report_attendant_c_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="pay_status_name" msprop:Generator_ColumnVarNameInTable="columnpay_status_name" msprop:Generator_ColumnPropNameInRow="pay_status_name" msprop:Generator_ColumnPropNameInTable="pay_status_nameColumn" msprop:Generator_UserColumnName="pay_status_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="pay_method_name" msprop:Generator_ColumnVarNameInTable="columnpay_method_name" msprop:Generator_ColumnPropNameInRow="pay_method_name" msprop:Generator_ColumnPropNameInTable="pay_method_nameColumn" msprop:Generator_UserColumnName="pay_method_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_sales_name" msprop:Generator_ColumnVarNameInTable="columncust_org_sales_name" msprop:Generator_ColumnPropNameInRow="cust_org_sales_name" msprop:Generator_ColumnPropNameInTable="cust_org_sales_nameColumn" msprop:Generator_UserColumnName="cust_org_sales_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_sales_phone" msprop:Generator_ColumnVarNameInTable="columncust_org_sales_phone" msprop:Generator_ColumnPropNameInRow="cust_org_sales_phone" msprop:Generator_ColumnPropNameInTable="cust_org_sales_phoneColumn" msprop:Generator_UserColumnName="cust_org_sales_phone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_sales_email" msprop:Generator_ColumnVarNameInTable="columncust_org_sales_email" msprop:Generator_ColumnPropNameInRow="cust_org_sales_email" msprop:Generator_ColumnPropNameInTable="cust_org_sales_emailColumn" msprop:Generator_UserColumnName="cust_org_sales_email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_ps" msprop:Generator_ColumnVarNameInTable="columncust_org_ps" msprop:Generator_ColumnPropNameInRow="cust_org_ps" msprop:Generator_ColumnPropNameInTable="cust_org_psColumn" msprop:Generator_UserColumnName="cust_org_ps" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_name" msprop:Generator_ColumnVarNameInTable="columncust_org_name" msprop:Generator_ColumnPropNameInRow="cust_org_name" msprop:Generator_ColumnPropNameInTable="cust_org_nameColumn" msprop:Generator_UserColumnName="cust_org_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_org_is_active" msprop:Generator_ColumnVarNameInTable="columncust_org_is_active" msprop:Generator_ColumnPropNameInRow="cust_org_is_active" msprop:Generator_ColumnPropNameInTable="cust_org_is_activeColumn" msprop:Generator_UserColumnName="cust_org_is_active" type="xs:int" minOccurs="0" />
+              <xs:element name="shipping_address" msprop:Generator_ColumnVarNameInTable="columnshipping_address" msprop:Generator_ColumnPropNameInRow="shipping_address" msprop:Generator_ColumnPropNameInTable="shipping_addressColumn" msprop:Generator_UserColumnName="shipping_address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2400" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="company_uuid" msprop:Generator_ColumnVarNameInTable="columncompany_uuid" msprop:Generator_ColumnPropNameInRow="company_uuid" msprop:Generator_ColumnPropNameInTable="company_uuidColumn" msprop:Generator_UserColumnName="company_uuid">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="company_c_name" msprop:Generator_ColumnVarNameInTable="columncompany_c_name" msprop:Generator_ColumnPropNameInRow="company_c_name" msprop:Generator_ColumnPropNameInTable="company_c_nameColumn" msprop:Generator_UserColumnName="company_c_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="shipping_status_name" msprop:Generator_ColumnVarNameInTable="columnshipping_status_name" msprop:Generator_ColumnPropNameInRow="shipping_status_name" msprop:Generator_ColumnPropNameInTable="shipping_status_nameColumn" msprop:Generator_UserColumnName="shipping_status_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_detail_count" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_count" msprop:Generator_ColumnPropNameInRow="cust_order_detail_count" msprop:Generator_ColumnPropNameInTable="cust_order_detail_countColumn" msprop:Generator_UserColumnName="cust_order_detail_count" type="xs:int" minOccurs="0" />
+              <xs:element name="cust_order_detail_cr" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_cr" msprop:Generator_ColumnPropNameInRow="cust_order_detail_cr" msprop:Generator_ColumnPropNameInTable="cust_order_detail_crColumn" msprop:Generator_UserColumnName="cust_order_detail_cr" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="cust_order_detail_customized" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_customized" msprop:Generator_ColumnPropNameInRow="cust_order_detail_customized" msprop:Generator_ColumnPropNameInTable="cust_order_detail_customizedColumn" msprop:Generator_UserColumnName="cust_order_detail_customized" type="xs:int" minOccurs="0" />
+              <xs:element name="cust_order_detail_goods_name" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_goods_name" msprop:Generator_ColumnPropNameInRow="cust_order_detail_goods_name" msprop:Generator_ColumnPropNameInTable="cust_order_detail_goods_nameColumn" msprop:Generator_UserColumnName="cust_order_detail_goods_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_detail_is_active" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_is_active" msprop:Generator_ColumnPropNameInRow="cust_order_detail_is_active" msprop:Generator_ColumnPropNameInTable="cust_order_detail_is_activeColumn" msprop:Generator_UserColumnName="cust_order_detail_is_active" type="xs:int" minOccurs="0" />
+              <xs:element name="cust_order_detail_price" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_price" msprop:Generator_ColumnPropNameInRow="cust_order_detail_price" msprop:Generator_ColumnPropNameInTable="cust_order_detail_priceColumn" msprop:Generator_UserColumnName="cust_order_detail_price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cust_order_detail_ps" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_ps" msprop:Generator_ColumnPropNameInRow="cust_order_detail_ps" msprop:Generator_ColumnPropNameInTable="cust_order_detail_psColumn" msprop:Generator_UserColumnName="cust_order_detail_ps" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="131070" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_detail_total_price" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_total_price" msprop:Generator_ColumnPropNameInRow="cust_order_detail_total_price" msprop:Generator_ColumnPropNameInTable="cust_order_detail_total_priceColumn" msprop:Generator_UserColumnName="cust_order_detail_total_price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cust_order_detail_unit" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_unit" msprop:Generator_ColumnPropNameInRow="cust_order_detail_unit" msprop:Generator_ColumnPropNameInTable="cust_order_detail_unitColumn" msprop:Generator_UserColumnName="cust_order_detail_unit" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_detail_unit_name" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_unit_name" msprop:Generator_ColumnPropNameInRow="cust_order_detail_unit_name" msprop:Generator_ColumnPropNameInTable="cust_order_detail_unit_nameColumn" msprop:Generator_UserColumnName="cust_order_detail_unit_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cust_order_detail_uuid" msprop:Generator_ColumnVarNameInTable="columncust_order_detail_uuid" msprop:Generator_ColumnPropNameInRow="cust_order_detail_uuid" msprop:Generator_ColumnPropNameInTable="cust_order_detail_uuidColumn" msprop:Generator_UserColumnName="cust_order_detail_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="216" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="filegroup_display_name" msprop:Generator_ColumnVarNameInTable="columnfilegroup_display_name" msprop:Generator_ColumnPropNameInRow="filegroup_display_name" msprop:Generator_ColumnPropNameInTable="filegroup_display_nameColumn" msprop:Generator_UserColumnName="filegroup_display_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="filegroup_tag" msprop:Generator_ColumnVarNameInTable="columnfilegroup_tag" msprop:Generator_ColumnPropNameInRow="filegroup_tag" msprop:Generator_ColumnPropNameInTable="filegroup_tagColumn" msprop:Generator_UserColumnName="filegroup_tag" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="filegroup_uuid" msprop:Generator_ColumnVarNameInTable="columnfilegroup_uuid" msprop:Generator_ColumnPropNameInRow="filegroup_uuid" msprop:Generator_ColumnPropNameInTable="filegroup_uuidColumn" msprop:Generator_UserColumnName="filegroup_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="file_count" msprop:Generator_ColumnVarNameInTable="columnfile_count" msprop:Generator_ColumnPropNameInRow="file_count" msprop:Generator_ColumnPropNameInTable="file_countColumn" msprop:Generator_UserColumnName="file_count" type="xs:int" minOccurs="0" />
+              <xs:element name="gcategory_full_name" msprop:Generator_ColumnVarNameInTable="columngcategory_full_name" msprop:Generator_ColumnPropNameInRow="gcategory_full_name" msprop:Generator_ColumnPropNameInTable="gcategory_full_nameColumn" msprop:Generator_UserColumnName="gcategory_full_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3072" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="gcategory_name" msprop:Generator_ColumnVarNameInTable="columngcategory_name" msprop:Generator_ColumnPropNameInRow="gcategory_name" msprop:Generator_ColumnPropNameInTable="gcategory_nameColumn" msprop:Generator_UserColumnName="gcategory_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="gcategory_uuid" msprop:Generator_ColumnVarNameInTable="columngcategory_uuid" msprop:Generator_ColumnPropNameInRow="gcategory_uuid" msprop:Generator_ColumnPropNameInTable="gcategory_uuidColumn" msprop:Generator_UserColumnName="gcategory_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="goods_name" msprop:Generator_ColumnVarNameInTable="columngoods_name" msprop:Generator_ColumnPropNameInRow="goods_name" msprop:Generator_ColumnPropNameInTable="goods_nameColumn" msprop:Generator_UserColumnName="goods_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="goods_price" msprop:Generator_ColumnVarNameInTable="columngoods_price" msprop:Generator_ColumnPropNameInRow="goods_price" msprop:Generator_ColumnPropNameInTable="goods_priceColumn" msprop:Generator_UserColumnName="goods_price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="goods_ps" msprop:Generator_ColumnVarNameInTable="columngoods_ps" msprop:Generator_ColumnPropNameInRow="goods_ps" msprop:Generator_ColumnPropNameInTable="goods_psColumn" msprop:Generator_UserColumnName="goods_ps" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="131070" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="goods_sn" msprop:Generator_ColumnVarNameInTable="columngoods_sn" msprop:Generator_ColumnPropNameInRow="goods_sn" msprop:Generator_ColumnPropNameInTable="goods_snColumn" msprop:Generator_UserColumnName="goods_sn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="goods_uuid" msprop:Generator_ColumnVarNameInTable="columngoods_uuid" msprop:Generator_ColumnPropNameInRow="goods_uuid" msprop:Generator_ColumnPropNameInTable="goods_uuidColumn" msprop:Generator_UserColumnName="goods_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="supplier_goods_name" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_name" msprop:Generator_ColumnPropNameInRow="supplier_goods_name" msprop:Generator_ColumnPropNameInTable="supplier_goods_nameColumn" msprop:Generator_UserColumnName="supplier_goods_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="supplier_goods_price" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_price" msprop:Generator_ColumnPropNameInRow="supplier_goods_price" msprop:Generator_ColumnPropNameInTable="supplier_goods_priceColumn" msprop:Generator_UserColumnName="supplier_goods_price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="supplier_goods_sn" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_sn" msprop:Generator_ColumnPropNameInRow="supplier_goods_sn" msprop:Generator_ColumnPropNameInTable="supplier_goods_snColumn" msprop:Generator_UserColumnName="supplier_goods_sn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="supplier_goods_unit_uuid" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_unit_uuid" msprop:Generator_ColumnPropNameInRow="supplier_goods_unit_uuid" msprop:Generator_ColumnPropNameInTable="supplier_goods_unit_uuidColumn" msprop:Generator_UserColumnName="supplier_goods_unit_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="600" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="supplier_goods_uuid" msprop:Generator_ColumnVarNameInTable="columnsupplier_goods_uuid" msprop:Generator_ColumnPropNameInRow="supplier_goods_uuid" msprop:Generator_ColumnPropNameInTable="supplier_goods_uuidColumn" msprop:Generator_UserColumnName="supplier_goods_uuid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UNIT_NAME" msprop:Generator_ColumnVarNameInTable="columnUNIT_NAME" msprop:Generator_ColumnPropNameInRow="UNIT_NAME" msprop:Generator_ColumnPropNameInTable="UNIT_NAMEColumn" msprop:Generator_UserColumnName="UNIT_NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="270" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -2422,23 +2994,32 @@
       <xs:field xpath="mstns:my_order_uuid" />
       <xs:field xpath="mstns:my_order_detail_uuid" />
     </xs:unique>
+    <xs:unique name="my_order_id_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:my_order_id" />
+      <xs:field xpath="mstns:my_order_id_uuid" />
+    </xs:unique>
+    <xs:unique name="v_cust_order_search_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:v_cust_order_search" />
+      <xs:field xpath="mstns:cust_order_uuid" />
+      <xs:field xpath="mstns:cust_order_detail_uuid" />
+    </xs:unique>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="gcategory_goods" msdata:parent="gcategory" msdata:child="goods" msdata:parentkey="gcategory_uuid" msdata:childkey="gcategory_uuid" msprop:Generator_UserChildTable="goods" msprop:Generator_ChildPropName="GetgoodsRows" msprop:Generator_UserRelationName="gcategory_goods" msprop:Generator_RelationVarName="relationgcategory_goods" msprop:Generator_UserParentTable="gcategory" msprop:Generator_ParentPropName="gcategoryRow" />
-      <msdata:Relationship name="supplier_supplier_goods" msdata:parent="supplier" msdata:child="supplier_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="supplier_goods" msprop:Generator_ChildPropName="Getsupplier_goodsRows" msprop:Generator_UserRelationName="supplier_supplier_goods" msprop:Generator_RelationVarName="relationsupplier_supplier_goods" msprop:Generator_UserParentTable="supplier" msprop:Generator_ParentPropName="supplierRow" />
-      <msdata:Relationship name="goods_v_goods" msdata:parent="goods" msdata:child="v_goods" msdata:parentkey="goods_uuid" msdata:childkey="goods_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="goods_v_goods" msprop:Generator_ParentPropName="goodsRow" msprop:Generator_RelationVarName="relationgoods_v_goods" msprop:Generator_UserParentTable="goods" />
-      <msdata:Relationship name="supplier_v_goods" msdata:parent="supplier" msdata:child="v_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="supplier_v_goods" msprop:Generator_ParentPropName="supplierRow" msprop:Generator_RelationVarName="relationsupplier_v_goods" msprop:Generator_UserParentTable="supplier" />
-      <msdata:Relationship name="gcategory_v_goods" msdata:parent="gcategory" msdata:child="v_goods" msdata:parentkey="gcategory_uuid" msdata:childkey="gcategory_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="gcategory_v_goods" msprop:Generator_ParentPropName="gcategoryRow" msprop:Generator_RelationVarName="relationgcategory_v_goods" msprop:Generator_UserParentTable="gcategory" />
-      <msdata:Relationship name="unit_supplier_goods" msdata:parent="unit" msdata:child="supplier_goods" msdata:parentkey="UNIT_UUID" msdata:childkey="unit_uuid" msprop:Generator_UserChildTable="supplier_goods" msprop:Generator_ChildPropName="Getsupplier_goodsRows" msprop:Generator_UserRelationName="unit_supplier_goods" msprop:Generator_ParentPropName="unitRow" msprop:Generator_RelationVarName="relationunit_supplier_goods" msprop:Generator_UserParentTable="unit" />
-      <msdata:Relationship name="supplier_v_supplier_goods" msdata:parent="supplier" msdata:child="v_supplier_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="v_supplier_goods" msprop:Generator_ChildPropName="Getv_supplier_goodsRows" msprop:Generator_UserRelationName="supplier_v_supplier_goods" msprop:Generator_ParentPropName="supplierRow" msprop:Generator_RelationVarName="relationsupplier_v_supplier_goods" msprop:Generator_UserParentTable="supplier" />
-      <msdata:Relationship name="supplier_goods_v_supplier_goods" msdata:parent="supplier_goods" msdata:child="v_supplier_goods" msdata:parentkey="supplier_goods_uuid" msdata:childkey="supplier_goods_uuid" msprop:Generator_UserChildTable="v_supplier_goods" msprop:Generator_ChildPropName="Getv_supplier_goodsRows" msprop:Generator_UserRelationName="supplier_goods_v_supplier_goods" msprop:Generator_ParentPropName="supplier_goodsRow" msprop:Generator_RelationVarName="relationsupplier_goods_v_supplier_goods" msprop:Generator_UserParentTable="supplier_goods" />
-      <msdata:Relationship name="cust_cust_org" msdata:parent="cust" msdata:child="cust_org" msdata:parentkey="cust_uuid" msdata:childkey="cust_uuid" msprop:Generator_UserChildTable="cust_org" msprop:Generator_ChildPropName="Getcust_orgRows" msprop:Generator_UserRelationName="cust_cust_org" msprop:Generator_ParentPropName="custRow" msprop:Generator_RelationVarName="relationcust_cust_org" msprop:Generator_UserParentTable="cust" />
-      <msdata:Relationship name="cust_v_cust_order" msdata:parent="cust" msdata:child="v_cust_order" msdata:parentkey="cust_uuid" msdata:childkey="cust_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_v_cust_order" msprop:Generator_RelationVarName="relationcust_v_cust_order" msprop:Generator_UserParentTable="cust" msprop:Generator_ParentPropName="custRow" />
-      <msdata:Relationship name="cust_order_status_v_cust_order" msdata:parent="cust_order_status" msdata:child="v_cust_order" msdata:parentkey="cust_order_status_uuid" msdata:childkey="cust_order_status_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_order_status_v_cust_order" msprop:Generator_RelationVarName="relationcust_order_status_v_cust_order" msprop:Generator_UserParentTable="cust_order_status" msprop:Generator_ParentPropName="cust_order_statusRow" />
-      <msdata:Relationship name="pay_method_v_cust_order" msdata:parent="pay_method" msdata:child="v_cust_order" msdata:parentkey="pay_method_uuid" msdata:childkey="pay_method_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="pay_method_v_cust_order" msprop:Generator_RelationVarName="relationpay_method_v_cust_order" msprop:Generator_UserParentTable="pay_method" msprop:Generator_ParentPropName="pay_methodRow" />
-      <msdata:Relationship name="cust_org_v_cust_order" msdata:parent="cust_org" msdata:child="v_cust_order" msdata:parentkey="cust_org_uuid" msdata:childkey="cust_org_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_org_v_cust_order" msprop:Generator_RelationVarName="relationcust_org_v_cust_order" msprop:Generator_UserParentTable="cust_org" msprop:Generator_ParentPropName="cust_orgRow" />
-      <msdata:Relationship name="cust_order_cust_order_detail" msdata:parent="cust_order" msdata:child="cust_order_detail" msdata:parentkey="cust_order_uuid" msdata:childkey="cust_order_uuid" msprop:Generator_UserChildTable="cust_order_detail" msprop:Generator_ChildPropName="Getcust_order_detailRows" msprop:Generator_UserRelationName="cust_order_cust_order_detail" msprop:Generator_RelationVarName="relationcust_order_cust_order_detail" msprop:Generator_UserParentTable="cust_order" msprop:Generator_ParentPropName="cust_orderRow" />
+      <msdata:Relationship name="gcategory_goods" msdata:parent="gcategory" msdata:child="goods" msdata:parentkey="gcategory_uuid" msdata:childkey="gcategory_uuid" msprop:Generator_UserChildTable="goods" msprop:Generator_ChildPropName="GetgoodsRows" msprop:Generator_UserRelationName="gcategory_goods" msprop:Generator_ParentPropName="gcategoryRow" msprop:Generator_RelationVarName="relationgcategory_goods" msprop:Generator_UserParentTable="gcategory" />
+      <msdata:Relationship name="supplier_supplier_goods" msdata:parent="supplier" msdata:child="supplier_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="supplier_goods" msprop:Generator_ChildPropName="Getsupplier_goodsRows" msprop:Generator_UserRelationName="supplier_supplier_goods" msprop:Generator_ParentPropName="supplierRow" msprop:Generator_RelationVarName="relationsupplier_supplier_goods" msprop:Generator_UserParentTable="supplier" />
+      <msdata:Relationship name="goods_v_goods" msdata:parent="goods" msdata:child="v_goods" msdata:parentkey="goods_uuid" msdata:childkey="goods_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="goods_v_goods" msprop:Generator_RelationVarName="relationgoods_v_goods" msprop:Generator_UserParentTable="goods" msprop:Generator_ParentPropName="goodsRow" />
+      <msdata:Relationship name="supplier_v_goods" msdata:parent="supplier" msdata:child="v_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="supplier_v_goods" msprop:Generator_RelationVarName="relationsupplier_v_goods" msprop:Generator_UserParentTable="supplier" msprop:Generator_ParentPropName="supplierRow" />
+      <msdata:Relationship name="gcategory_v_goods" msdata:parent="gcategory" msdata:child="v_goods" msdata:parentkey="gcategory_uuid" msdata:childkey="gcategory_uuid" msprop:Generator_UserChildTable="v_goods" msprop:Generator_ChildPropName="Getv_goodsRows" msprop:Generator_UserRelationName="gcategory_v_goods" msprop:Generator_RelationVarName="relationgcategory_v_goods" msprop:Generator_UserParentTable="gcategory" msprop:Generator_ParentPropName="gcategoryRow" />
+      <msdata:Relationship name="unit_supplier_goods" msdata:parent="unit" msdata:child="supplier_goods" msdata:parentkey="UNIT_UUID" msdata:childkey="unit_uuid" msprop:Generator_UserChildTable="supplier_goods" msprop:Generator_ChildPropName="Getsupplier_goodsRows" msprop:Generator_UserRelationName="unit_supplier_goods" msprop:Generator_RelationVarName="relationunit_supplier_goods" msprop:Generator_UserParentTable="unit" msprop:Generator_ParentPropName="unitRow" />
+      <msdata:Relationship name="supplier_v_supplier_goods" msdata:parent="supplier" msdata:child="v_supplier_goods" msdata:parentkey="supplier_uuid" msdata:childkey="supplier_uuid" msprop:Generator_UserChildTable="v_supplier_goods" msprop:Generator_ChildPropName="Getv_supplier_goodsRows" msprop:Generator_UserRelationName="supplier_v_supplier_goods" msprop:Generator_RelationVarName="relationsupplier_v_supplier_goods" msprop:Generator_UserParentTable="supplier" msprop:Generator_ParentPropName="supplierRow" />
+      <msdata:Relationship name="supplier_goods_v_supplier_goods" msdata:parent="supplier_goods" msdata:child="v_supplier_goods" msdata:parentkey="supplier_goods_uuid" msdata:childkey="supplier_goods_uuid" msprop:Generator_UserChildTable="v_supplier_goods" msprop:Generator_ChildPropName="Getv_supplier_goodsRows" msprop:Generator_UserRelationName="supplier_goods_v_supplier_goods" msprop:Generator_RelationVarName="relationsupplier_goods_v_supplier_goods" msprop:Generator_UserParentTable="supplier_goods" msprop:Generator_ParentPropName="supplier_goodsRow" />
+      <msdata:Relationship name="cust_cust_org" msdata:parent="cust" msdata:child="cust_org" msdata:parentkey="cust_uuid" msdata:childkey="cust_uuid" msprop:Generator_UserChildTable="cust_org" msprop:Generator_ChildPropName="Getcust_orgRows" msprop:Generator_UserRelationName="cust_cust_org" msprop:Generator_RelationVarName="relationcust_cust_org" msprop:Generator_UserParentTable="cust" msprop:Generator_ParentPropName="custRow" />
+      <msdata:Relationship name="cust_v_cust_order" msdata:parent="cust" msdata:child="v_cust_order" msdata:parentkey="cust_uuid" msdata:childkey="cust_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_v_cust_order" msprop:Generator_ParentPropName="custRow" msprop:Generator_RelationVarName="relationcust_v_cust_order" msprop:Generator_UserParentTable="cust" />
+      <msdata:Relationship name="cust_order_status_v_cust_order" msdata:parent="cust_order_status" msdata:child="v_cust_order" msdata:parentkey="cust_order_status_uuid" msdata:childkey="cust_order_status_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_order_status_v_cust_order" msprop:Generator_ParentPropName="cust_order_statusRow" msprop:Generator_RelationVarName="relationcust_order_status_v_cust_order" msprop:Generator_UserParentTable="cust_order_status" />
+      <msdata:Relationship name="pay_method_v_cust_order" msdata:parent="pay_method" msdata:child="v_cust_order" msdata:parentkey="pay_method_uuid" msdata:childkey="pay_method_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="pay_method_v_cust_order" msprop:Generator_ParentPropName="pay_methodRow" msprop:Generator_RelationVarName="relationpay_method_v_cust_order" msprop:Generator_UserParentTable="pay_method" />
+      <msdata:Relationship name="cust_org_v_cust_order" msdata:parent="cust_org" msdata:child="v_cust_order" msdata:parentkey="cust_org_uuid" msdata:childkey="cust_org_uuid" msprop:Generator_UserChildTable="v_cust_order" msprop:Generator_ChildPropName="Getv_cust_orderRows" msprop:Generator_UserRelationName="cust_org_v_cust_order" msprop:Generator_ParentPropName="cust_orgRow" msprop:Generator_RelationVarName="relationcust_org_v_cust_order" msprop:Generator_UserParentTable="cust_org" />
+      <msdata:Relationship name="cust_order_cust_order_detail" msdata:parent="cust_order" msdata:child="cust_order_detail" msdata:parentkey="cust_order_uuid" msdata:childkey="cust_order_uuid" msprop:Generator_UserChildTable="cust_order_detail" msprop:Generator_ChildPropName="Getcust_order_detailRows" msprop:Generator_UserRelationName="cust_order_cust_order_detail" msprop:Generator_ParentPropName="cust_orderRow" msprop:Generator_RelationVarName="relationcust_order_cust_order_detail" msprop:Generator_UserParentTable="cust_order" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

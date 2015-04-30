@@ -331,6 +331,7 @@ Ext.define('WS.MyOrderDetailCustomizedWindow', {
     },
     listeners: {
         'show': function() {
+            this.mask('資訊載入中…請稍後…');
             if (this.param.myOrderUuid) {
                 this.down("#MY_ORDER_UUID").setValue(this.param.myOrderUuid);
             };
@@ -352,6 +353,7 @@ Ext.define('WS.MyOrderDetailCustomizedWindow', {
                             } else {
                                 this.down('#btnDelete').setDisabled(false);
                             };
+                            this.unmask();
                         },
                         failure: function(response, jsonObj, b) {
                             if (!jsonObj.result.success) {
@@ -374,6 +376,9 @@ Ext.define('WS.MyOrderDetailCustomizedWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.myStore.vSupplierGoods.removeAll();
+            this.myStore.unit.removeAll();
+            this.down('form').reset();
         }
     }
 });

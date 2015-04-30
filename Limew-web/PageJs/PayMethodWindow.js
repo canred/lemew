@@ -4,7 +4,8 @@ Ext.define('WS.PayMethodWindow', {
     icon: SYSTEM_URL_ROOT + '/css/custimages/payMethod16x16.png',
     title: '付款方式維護',
     closable: false,
-    closeAction: 'destroy', modal: true,
+    closeAction: 'destroy',
+    modal: true,
     param: {
         payMethodUuid: undefined
     },
@@ -39,8 +40,8 @@ Ext.define('WS.PayMethodWindow', {
                     name: 'PAY_METHOD_NAME',
                     maxLength: 84,
                     allowBlank: false
-                },{
-                    xtype:'numberfield',
+                }, {
+                    xtype: 'numberfield',
                     fieldLabel: '順序',
                     name: 'PAY_METHOD_ORD',
                     maxLength: 84,
@@ -72,10 +73,10 @@ Ext.define('WS.PayMethodWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -127,6 +128,7 @@ Ext.define('WS.PayMethodWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

@@ -234,12 +234,10 @@ Ext.define('V_CUST_ORDER', {
     extend: 'Ext.data.Model',
     fields: [
         'COMPANY_UUID',
-        'CUST_ORDER_UUID',
-        //'CUST_ORDER_CR',
-        {
+        'CUST_ORDER_UUID', {
             name: 'CUST_ORDER_CR',
             convert: function(v) {
-                if (typeof v.getFullYear == 'function') {
+                if (v != undefined && typeof v.getFullYear == 'function') {
                     var month = (v.getMonth() + 1);
                     var day = v.getDate();
                     if (month < 10) {
@@ -250,7 +248,8 @@ Ext.define('V_CUST_ORDER', {
                     };
                     return v.getFullYear() + '/' + month + "/" + day;
                 } else {
-                    if (v.split(' ').length > 1) {
+
+                    if (v != undefined && v.split(' ').length > 1) {
                         return v.split(' ')[0];
                     } else {
                         return v;
@@ -258,8 +257,10 @@ Ext.define('V_CUST_ORDER', {
                 }
             }
         },
-        'CUST_ORDER_ID',
-        'CUST_ORDER_TOTAL_PRICE',
+        'CUST_ORDER_ID', {
+            name: 'CUST_ORDER_TOTAL_PRICE',
+            type: 'number'
+        },
         'CUST_ORDER_STATUS_UUID',
         'CUST_ORDER_IS_ACTIVE',
         'CUST_UUID',
@@ -309,9 +310,7 @@ Ext.define('V_CUST_ORDER', {
 
 Ext.define('V_CUST_ORDER_DETAIL', {
     extend: 'Ext.data.Model',
-    fields: [
-
-        {
+    fields: [{
             name: 'CUST_ORDER_DETAIL_COUNT',
             type: 'number'
         },
@@ -327,8 +326,11 @@ Ext.define('V_CUST_ORDER_DETAIL', {
             name: 'CUST_ORDER_DETAIL_PRICE',
             type: 'number'
         },
-        'CUST_ORDER_DETAIL_PS',
-        'CUST_ORDER_DETAIL_TOTAL_PRICE',
+        'CUST_ORDER_DETAIL_PS', {
+            name: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
+            type: 'number'
+        },
+
         'CUST_ORDER_DETAIL_UNIT',
         'CUST_ORDER_DETAIL_UNIT_NAME',
         'CUST_ORDER_DETAIL_UUID',
@@ -407,6 +409,7 @@ Ext.define('MY_ORDER', {
     fields: [
         'MY_ORDER_UUID',
         'SUPPLIER_UUID',
+        'MY_ORDER_ID',
         'MY_ORDER_SUPPLIER_NAME',
         'MY_ORDER_SUPPLIER_TEL',
         'MY_ORDER_SUPPLIER_FAX',
@@ -446,6 +449,7 @@ Ext.define('V_MY_ORDER_DETAIL', {
     fields: [
         'MY_ORDER_UUID',
         'SUPPLIER_UUID',
+        'MY_ORDER_ID',
         'MY_ORDER_SUPPLIER_NAME',
         'MY_ORDER_SUPPLIER_TEL',
         'MY_ORDER_SUPPLIER_FAX',
@@ -485,5 +489,98 @@ Ext.define('V_MY_ORDER_DETAIL', {
         'SUPPLIER_GOODS_UUID',
         'MY_ORDER_DETAIL_ATTENDANT_C_NAME',
         'UNIT_UUID'
+    ]
+});
+
+
+Ext.define('V_CUST_ORDER_SEARCH', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'COMPANY_C_NAME',
+        'COMPANY_UUID',
+        'CUST_ADDRESS',
+        'CUST_FAX',
+        'CUST_IS_ACTIVE',
+        'CUST_LAST_BUY',
+        'CUST_NAME',
+        'CUST_ORDER_CR',
+        'CUST_ORDER_CUST_NAME',
+        'CUST_ORDER_DEPT',
+        'CUST_ORDER_DETAIL_COUNT',
+        'CUST_ORDER_DETAIL_CR', {
+            name: 'CUST_ORDER_DETAIL_CUSTOMIZED',
+            type: 'boolean'
+        },
+        'CUST_ORDER_DETAIL_GOODS_NAME',
+        'CUST_ORDER_DETAIL_IS_ACTIVE', {
+            name: 'CUST_ORDER_DETAIL_PRICE',
+            type: 'number'
+        },
+        'CUST_ORDER_DETAIL_PS', {
+            name: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
+            type: 'number'
+        },
+
+        'CUST_ORDER_DETAIL_UNIT',
+        'CUST_ORDER_DETAIL_UNIT_NAME',
+        'CUST_ORDER_DETAIL_UUID',
+        'CUST_ORDER_HAS_TAX',
+        'CUST_ORDER_ID',
+        'CUST_ORDER_INVOICE_NUMBER',
+        'CUST_ORDER_IS_ACTIVE',
+        'CUST_ORDER_LIMIT_DATE',
+        'CUST_ORDER_PO_NUMBER',
+        'CUST_ORDER_PRINT_USER_NAME',
+        'CUST_ORDER_PS',
+        'CUST_ORDER_PURCHASE_AMOUNT',
+        'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
+        'CUST_ORDER_REPORT_ATTENDANT_UUID',
+        'CUST_ORDER_REPORT_DATE',
+        'CUST_ORDER_SHIPPING_DATE',
+        'CUST_ORDER_SHIPPING_NUMBER',
+        'CUST_ORDER_STATUS_UUID',
+        'CUST_ORDER_TOTAL_PRICE',
+        'CUST_ORDER_TYPE',
+        'CUST_ORDER_USER_NAME',
+        'CUST_ORDER_USER_PHONE',
+        'CUST_ORDER_UUID',
+        'CUST_ORG_IS_ACTIVE',
+        'CUST_ORG_NAME',
+        'CUST_ORG_PS',
+        'CUST_ORG_SALES_EMAIL',
+        'CUST_ORG_SALES_NAME',
+        'CUST_ORG_SALES_PHONE',
+        'CUST_ORG_UUID',
+        'CUST_PS',
+        'CUST_SALES_EMAIL',
+        'CUST_SALES_NAME',
+        'CUST_SALES_PHONE',
+        'CUST_TEL',
+        'CUST_UUID',
+        'FILEGROUP_DISPLAY_NAME',
+        'FILEGROUP_TAG',
+        'FILEGROUP_UUID',
+        'FILE_COUNT',
+        'GCATEGORY_FULL_NAME',
+        'GCATEGORY_NAME',
+        'GCATEGORY_UUID',
+        'GOODS_NAME',
+        'GOODS_PRICE',
+        'GOODS_PS',
+        'GOODS_SN',
+        'GOODS_UUID',
+        'PAY_METHOD_NAME',
+        'PAY_METHOD_UUID',
+        'PAY_STATUS_NAME',
+        'PAY_STATUS_UUID',
+        'SHIPPING_ADDRESS',
+        'SHIPPING_STATUS_NAME',
+        'SHIPPING_STATUS_UUID',
+        'SUPPLIER_GOODS_NAME',
+        'SUPPLIER_GOODS_PRICE',
+        'SUPPLIER_GOODS_SN',
+        'SUPPLIER_GOODS_UNIT_UUID',
+        'SUPPLIER_GOODS_UUID',
+        'UNIT_NAME'
     ]
 });

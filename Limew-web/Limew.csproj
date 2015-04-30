@@ -58,10 +58,6 @@
     <Reference Include="itextsharp.xtra">
       <HintPath>refDll\itextsharp.xtra.dll</HintPath>
     </Reference>
-    <Reference Include="LK, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>refDll\LK.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json.Net35, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
@@ -92,13 +88,17 @@
     <Content Include="admin\basic\changeattendant.aspx" />
     <Content Include="admin\limew\CustOrderStatus.aspx" />
     <Content Include="admin\limew\goodsRecord.aspx" />
+    <Content Include="admin\limew\goodsRecordExpand.aspx" />
     <Content Include="admin\limew\money.aspx" />
     <Content Include="admin\limew\order.aspx" />
     <Content Include="admin\limew\cust.aspx" />
     <Content Include="admin\limew\gcategory.aspx" />
     <Content Include="admin\limew\goods.aspx" />
+    <Content Include="admin\limew\orderSerach.aspx" />
     <Content Include="admin\limew\payMethod.aspx" />
     <Content Include="admin\limew\payStatus.aspx" />
+    <Content Include="admin\limew\reportOrder.aspx" />
+    <Content Include="admin\limew\reportOrderCutsTop.aspx" />
     <Content Include="admin\limew\shippingManager.aspx" />
     <Content Include="admin\limew\shippingStatus.aspx" />
     <Content Include="admin\limew\supplier.aspx" />
@@ -9877,6 +9877,13 @@
     <Compile Include="admin\limew\goodsRecord.aspx.designer.cs">
       <DependentUpon>goodsRecord.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\limew\goodsRecordExpand.aspx.cs">
+      <DependentUpon>goodsRecordExpand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\goodsRecordExpand.aspx.designer.cs">
+      <DependentUpon>goodsRecordExpand.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\limew\money.aspx.cs">
       <DependentUpon>money.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -9912,6 +9919,13 @@
     <Compile Include="admin\limew\goods.aspx.designer.cs">
       <DependentUpon>goods.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\limew\orderSerach.aspx.cs">
+      <DependentUpon>orderSerach.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\orderSerach.aspx.designer.cs">
+      <DependentUpon>orderSerach.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\limew\payMethod.aspx.cs">
       <DependentUpon>payMethod.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -9925,6 +9939,20 @@
     </Compile>
     <Compile Include="admin\limew\payStatus.aspx.designer.cs">
       <DependentUpon>payStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\reportOrder.aspx.cs">
+      <DependentUpon>reportOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\reportOrder.aspx.designer.cs">
+      <DependentUpon>reportOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\limew\reportOrderCutsTop.aspx.cs">
+      <DependentUpon>reportOrderCutsTop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\limew\reportOrderCutsTop.aspx.designer.cs">
+      <DependentUpon>reportOrderCutsTop.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\limew\shippingManager.aspx.cs">
       <DependentUpon>shippingManager.aspx</DependentUpon>
@@ -10076,6 +10104,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\MyOrder.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\MyOrderDetail%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\MyOrderDetail.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrderId%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\MyOrderId.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayMethod.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\PayStatus%40.cs" />
@@ -10091,6 +10121,7 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Gcategory_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Goods_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrderDetail_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrderId_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\MyOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayMethod_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\PayStatus_Record.cs" />
@@ -10101,6 +10132,7 @@
     <Compile Include="lib\Controller\Model\Lw\Table\Record\Unit_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustAddress_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrderDetail_Record.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrderSearch_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VCustOrder_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VFilegroup_Record.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\Record\VGoods_Record.cs" />
@@ -10122,6 +10154,8 @@
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrder.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrderDetail%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VCustOrderDetail.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VCustOrderSearch%40.cs" />
+    <Compile Include="lib\Controller\Model\Lw\Table\VCustOrderSearch.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VFilegroup%40.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VFilegroup.cs" />
     <Compile Include="lib\Controller\Model\Lw\Table\VGoods%40.cs" />
@@ -14701,6 +14735,12 @@
     <Folder Include="js\packages\ext-aria\docs\" />
     <Folder Include="js\packages\ext-aria\licenses\" />
     <Folder Include="Upload\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\LK4\trunk\LK\LK.csproj">
+      <Project>{432fae84-a610-4369-8b98-09eb97c269ca}</Project>
+      <Name>LK</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

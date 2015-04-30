@@ -13,15 +13,11 @@ Ext.define('WS.CustQueryPanel', {
     extend: 'Ext.panel.Panel',
     closeAction: 'destroy',
     subWinCust: undefined,
-    /*語言擴展*/
     lan: {},
-    /*參數擴展*/
     param: {
         showADSync: true
     },
-    /*值擴展*/
     val: {},
-    /*物件會用到的Store物件*/
     myStore: {
         cust: Ext.create('Ext.data.Store', {
             successProperty: 'success',
@@ -37,9 +33,10 @@ Ext.define('WS.CustQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    pKeyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -88,7 +85,7 @@ Ext.define('WS.CustQueryPanel', {
             frame: true,
 
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -140,7 +137,7 @@ Ext.define('WS.CustQueryPanel', {
                 store: this.myStore.cust,
                 itemId: 'grdSupplierQuery',
                 border: true,
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 columns: [{
                     text: "編輯",
@@ -163,7 +160,7 @@ Ext.define('WS.CustQueryPanel', {
                                 return false;
                             };
                             var subWin = Ext.create(main.subWinCust, {
-                                subWinCustOrder: 'WS.CustOrderWindow'
+                                subWinCustOrder: 'WS.CustOrderStep1Window'
                             });
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdSupplierQuery").getStore().load();
@@ -178,7 +175,7 @@ Ext.define('WS.CustQueryPanel', {
                     header: "公司名稱",
                     dataIndex: 'CUST_NAME',
                     align: 'left',
-                    flex: 1
+                    width:200
                 }, {
                     header: "電話",
                     align: 'left',
@@ -187,7 +184,7 @@ Ext.define('WS.CustQueryPanel', {
                 }, {
                     header: "傳真",
                     dataIndex: 'CUST_FAX',
-                    align: 'left',
+                    align: 'left',hidden:true,
                     flex: 1
                 }, {
                     header: '地址',
@@ -207,22 +204,12 @@ Ext.define('WS.CustQueryPanel', {
                 }, {
                     header: '採購員email',
                     dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'left',
+                    align: 'left',hidden:true,
                     flex: 1
                 }, {
                     header: '備註',
                     dataIndex: 'CUST_PS',
                     align: 'left',
-                    flex: 1
-                }, {
-                    header: '等級',
-                    dataIndex: 'CUST_LEVEL',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '最近採購日',
-                    dataIndex: 'CUST_LAST_BUY',
-                    align: 'center',
                     flex: 1
                 }],
                 tbarCfg: {
@@ -249,16 +236,21 @@ Ext.define('WS.CustQueryPanel', {
                             });
                             return false;
                         };
-                        /*註冊事件*/
-                        var subWin = Ext.create(main.subWinCust, {
-                            param: {
-                                uuid: undefined
-                            }
-                        });
-                        subWin.on('closeEvent', function(obj) {
-                            main.down("#grdSupplierQuery").getStore().load();
+
+                        WS.CustAction.infoCust("", function(obj, jsonObj) {
+                            var subWin = Ext.create(main.subWinCust, {
+                                param: {
+                                    custUuid: jsonObj.result.data.CUST_UUID
+                                },
+                                subWinCustOrder: 'WS.CustOrderStep1Window'
+                            });
+                            subWin.on('closeEvent', function(obj) {
+                                this.down("#grdSupplierQuery").getStore().load();
+                            }, this);
+                            subWin.show();
                         }, main);
-                        subWin.show();
+
+
                     }
                 }]
             }]

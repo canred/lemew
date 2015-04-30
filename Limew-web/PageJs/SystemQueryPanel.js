@@ -183,7 +183,7 @@ Ext.define('WS.SystemQueryPanel', {
                         header: '啟用',
                         dataIndex: 'IS_ACTIVE',
                         align: 'center',
-                        width:60,
+                        width: 60,
                         renderer: this.fnActiveRender
                     }]
                 },

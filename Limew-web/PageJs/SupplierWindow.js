@@ -3,7 +3,8 @@ Ext.define('WS.SupplierWindow', {
     extend: 'Ext.window.Window',
     title: '廠商維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/supplier16x16.png',
-    closeAction: 'destroy', modal: true,
+    closeAction: 'destroy',
+    modal: true,
     closable: false,
     param: {
         supplierUuid: undefined
@@ -85,7 +86,7 @@ Ext.define('WS.SupplierWindow', {
                     labelAlign: 'right'
                 }, {
                     xtype: 'container',
-                    layout: 'hbox',                    
+                    layout: 'hbox',
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: '電話',
@@ -114,7 +115,7 @@ Ext.define('WS.SupplierWindow', {
                 }, {
                     xtype: 'fieldcontainer',
                     labelAlign: 'right',
-                    fieldLabel: '啟用',                    
+                    fieldLabel: '啟用',
                     layout: 'hbox',
                     defaults: {
                         margins: '0 10 0 0'
@@ -215,7 +216,8 @@ Ext.define('WS.SupplierWindow', {
                 itemId: 'SUPPLIER_UUID'
             }, {
                 xtype: 'tabpanel',
-                plain: true,
+                plain: false,
+                border: true,
                 padding: 10,
                 maxWidth: 880,
                 items: [{
@@ -252,43 +254,46 @@ Ext.define('WS.SupplierWindow', {
                             }],
                             sortable: false,
                             hideable: false
-                        },  {
+                        }, {
                             text: "名稱",
                             dataIndex: 'SUPPLIER_GOODS_NAME',
-                            align: 'center',
+                            align: 'left',
                             flex: 1
                         }, {
                             text: "單位",
                             dataIndex: 'UNIT_NAME',
                             align: 'center',
-                            flex: 1
-                        },{
-                            text: "代號",
+                            width: 120
+                        }, {
+                            text: "序號",
                             dataIndex: 'SUPPLIER_GOODS_SN',
-                            align: 'center',
+                            align: 'left',
                             flex: 1
                         }, {
                             text: "售價",
                             dataIndex: 'SUPPLIER_GOODS_PRICE',
-                            align: 'center',
-                            flex: 1
+                            align: 'right',
+                            width: 120
                         }, {
                             text: "成本",
                             dataIndex: 'SUPPLIER_GOODS_COST',
-                            align: 'center',
-                            flex: 1
+                            align: 'right',
+                            width: 120
                         }],
                         height: 400,
                         tbar: [{
                             xtype: 'tbfill'
                         }, {
                             icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
-                            text: '新增',
+                            text: '新增供應商商品',
+                            itemId: 'btnAddSupplierGood',
                             handler: function() {
                                 var mainWin = this.up('window');
+
                                 var subWin = Ext.create('WS.SupplierGoodsWindow', {
                                     param: {
                                         supplierGoodsUuid: undefined,
+                                        supplierUuid: mainWin.down("#SUPPLIER_UUID").getValue(),
                                         parentObj: mainWin
                                     }
                                 });
@@ -322,15 +327,52 @@ Ext.define('WS.SupplierWindow', {
                         success: function(form, action) {
                             this.param.supplierUuid = action.result.SUPPLIER_UUID;
                             this.down("#SUPPLIER_UUID").setValue(action.result.SUPPLIER_UUID);
+                            this.down('#btnAddSupplierGood').setDisabled(false);
                             Ext.MessageBox.show({
                                 title: '操作完成',
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
+                                    //this.close();
+                                },
+                                scope: this
+                            });
+                        },
+                        failure: function(form, action) {
+                            Ext.MessageBox.show({
+                                title: 'Warning',
+                                msg: action.result.message,
+                                icon: Ext.MessageBox.ERROR,
+                                buttons: Ext.Msg.OK
+                            });
+                        },
+                        scope: this.up('window')
+                    });
+                }
+            }, {
+                type: 'button',
+                icon: SYSTEM_URL_ROOT + '/css/custimages/save16x16.png',
+                text: '儲存&關閉',
+                handler: function() {
+                    var form = this.up('window').down("#SupplierForm").getForm();
+                    if (form.isValid() == false) {
+                        return;
+                    };
+                    form.submit({
+                        waitMsg: '更新中...',
+                        success: function(form, action) {
+                            this.param.supplierUuid = action.result.SUPPLIER_UUID;
+                            this.down("#SUPPLIER_UUID").setValue(action.result.SUPPLIER_UUID);
+                            Ext.MessageBox.show({
+                                title: '操作完成',
+                                msg: '操作完成',
+                                icon: Ext.MessageBox.INFO,
+                                buttons: Ext.Msg.OK,
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -384,36 +426,46 @@ Ext.define('WS.SupplierWindow', {
     },
     listeners: {
         'show': function() {
-            if (this.param.supplierUuid != undefined) {
-                this.down("#SupplierForm").getForm().load({
-                    params: {
-                        'pSupplierUuid': this.param.supplierUuid
-                    },
-                    success: function(response, a, b) {},
-                    failure: function(response, jsonObj, b) {
-                        if (!jsonObj.result.success) {
-                            Ext.MessageBox.show({
-                                title: 'Warning',
-                                icon: Ext.MessageBox.WARNING,
-                                buttons: Ext.Msg.OK,
-                                msg: jsonObj.result.message
-                            });
-                        };
-                    }
-                });
+            this.mask('資料準備中…');
+            //if (this.param.supplierUuid != undefined) {
+            this.down("#SupplierForm").getForm().load({
+                params: {
+                    'pSupplierUuid': this.param.supplierUuid
+                },
+                success: function(response, a, b) {
+                    if (a.result.data.SUPPLIER_IS_ACTIVE == '-1') {
+                        this.down('#btnAddSupplierGood').setDisabled(true);
+                    };
+                    this.unmask();
+                },
+                failure: function(response, jsonObj, b) {
+                    if (!jsonObj.result.success) {
+                        Ext.MessageBox.show({
+                            title: 'Warning',
+                            icon: Ext.MessageBox.WARNING,
+                            buttons: Ext.Msg.OK,
+                            msg: jsonObj.result.message
+                        });
+                    };
+                },
+                scope: this
+            });
 
-                var proxy = this.myStore.vSupplierGoods.getProxy();
-                proxy.setExtraParam('pSupplierUuid', this.param.supplierUuid);
-                this.myStore.vSupplierGoods.loadPage(1);
+            var proxy = this.myStore.vSupplierGoods.getProxy();
+            proxy.setExtraParam('pSupplierUuid', this.param.supplierUuid);
+            this.myStore.vSupplierGoods.loadPage(1);
 
-            } else {
-                this.down("#SupplierForm").getForm().reset();
-            };
+            //} 
+            // else {
+            //     this.down("#SupplierForm").getForm().reset();
+            // };
 
 
         },
         'close': function() {
             this.closeEvent();
+            this.myStore.vSupplierGoods.removeAll();
+            this.down('form').reset();
         }
     }
 });

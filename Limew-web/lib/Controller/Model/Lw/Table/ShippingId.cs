@@ -29,8 +29,12 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string SHIPPING_ID_UUID {get{return "SHIPPING_ID_UUID" ; }}
-		public string MAX {get{return "MAX" ; }}
+		public string SHIPPING_ID_UUID {
+			[ColumnName("SHIPPING_ID_UUID",true,typeof(string))]
+			get{return "SHIPPING_ID_UUID" ; }}
+		public string MAX {
+			[ColumnName("MAX",false,typeof(int?))]
+			get{return "MAX" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public ShippingId_Record CurrentRecord(){

@@ -27,7 +27,7 @@ Ext.define('WS.CustOrderQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -37,9 +37,10 @@ Ext.define('WS.CustOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pCustIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    pKeyword: ''
+                    pKeyword: '',
+                    pCustIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -82,12 +83,6 @@ Ext.define('WS.CustOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                // paramOrder: ['pCustOrderStatus', 'pCustUuid', 'pKeyword', 'page', 'limit', 'sort', 'dir'],
-                // extraParams: {
-                //     'pCustOrderStatus': '',
-                //     'pCustUuid': '',
-                //     'pKeyword': ''
-                // },
                 paramOrder: ['pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'pPayStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pKeyword: '',
@@ -164,7 +159,7 @@ Ext.define('WS.CustOrderQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST_ORDER_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -210,7 +205,7 @@ Ext.define('WS.CustOrderQueryPanel', {
             successProperty: 'success',
             autoLoad: false,
             model: 'SHIPPING_STATUS',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -280,7 +275,7 @@ Ext.define('WS.CustOrderQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
             frame: true,
             border: false,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -430,7 +425,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                 store: this.myStore.vcustorder,
                 itemId: 'grdVCustOrder',
                 border: true,
-                height: $(document).height() - 240,
+                height: $(document).height() - 200,
                 padding: '5 15 5 5',
                 selModel: new Ext.selection.CheckboxModel({
                     mode: 'MULTI',
@@ -441,9 +436,6 @@ Ext.define('WS.CustOrderQueryPanel', {
                         } else {
                             return "";
                         };
-                    },
-                    listeners: {
-                        selectionchange: function(selectionModel, selected, options) {}
                     }
                 }),
                 listeners: {
@@ -470,10 +462,8 @@ Ext.define('WS.CustOrderQueryPanel', {
                                 return false;
                             };
                             var subWin = Ext.create(main.subWinCustOrder, {});
-                            Ext.getBody().mask();
                             subWin.on('closeEvent', function(obj) {
                                 main.down("#grdVCustOrder").getStore().load();
-                                Ext.getBody().unmask();
                             }, main);
                             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
                             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
@@ -485,7 +475,7 @@ Ext.define('WS.CustOrderQueryPanel', {
                 }, {
                     header: '建立日期',
                     dataIndex: 'CUST_ORDER_CR',
-                    align: 'left',
+                    align: 'left',hidden:true,
                     width: 100
                 }, {
                     header: "訂單編號",
@@ -611,10 +601,10 @@ Ext.define('WS.CustOrderQueryPanel', {
                                         parentObj: this
                                     }
                                 });
-                                Ext.getBody().mask();
+
                                 subWin.on('closeEvent', function(obj) {
                                     main.down("#grdVCustOrder").getStore().load();
-                                    Ext.getBody().unmask();
+
                                 }, this);
                                 subWin.show();
                             }

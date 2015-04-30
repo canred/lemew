@@ -5,7 +5,7 @@ Ext.define('WS.DepartmentPicker', {
     icon: SYSTEM_URL_ROOT + '/css/images/organisation16x16.png',
     width: 600,
     height: 400,
-	modal: true,
+    modal: true,
     autoScroll: true,
     /*語言擴展*/
     lan: {},

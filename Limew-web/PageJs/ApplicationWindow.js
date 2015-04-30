@@ -4,7 +4,7 @@ Ext.define('WS.ApplicationWindow', {
     title: '系統維護',
     icon: SYSTEM_URL_ROOT + '/css/images/application16x16.png',
     closeAction: 'destroy',
-	modal: true,
+    modal: true,
     param: {
         uuid: undefined
     },
@@ -128,7 +128,7 @@ Ext.define('WS.ApplicationWindow', {
         this.fireEvent('closeEvent', this);
     },
     listeners: {
-        'show': function() {            
+        'show': function() {
             if (this.param.uuid != undefined) {
                 this.down("#ID").setDisabled(true);
                 this.down("#ApplicationForm").getForm().load({

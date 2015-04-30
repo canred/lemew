@@ -14,8 +14,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
     /*語言擴展*/
     lan: {},
     /*參數擴展*/
-    param: {
-    },
+    param: {},
     /*值擴展*/
     val: {},
     /*物件會用到的Store物件*/
@@ -34,7 +33,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: [ 'keyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['keyword', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     keyword: ''
                 },
@@ -63,14 +62,14 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
         var html = "<img src='" + SYSTEM_URL_ROOT;
         return value === "1" ? html + "/css/custimages/active03.png'>" : html + "/css/custimages/unactive03.png'>";
     },
-    initComponent: function() { 
+    initComponent: function() {
         /*佈局設定*/
         this.items = [{
             xtype: 'panel',
             icon: SYSTEM_URL_ROOT + '/css/custimages/list16x16.png',
             title: '訂單狀態查詢',
             frame: true,
-            height: $(document).height() - 150,
+            height: $(document).height() - 130,
             items: [{
                 xtype: 'container',
                 layout: 'hbox',
@@ -101,7 +100,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                     itemId: 'btnQuery',
                     handler: function() {
                         var _main = this.up('panel').up('panel'),
-                            _txtSearch = _main.down("#txt_search").getValue();                       
+                            _txtSearch = _main.down("#txt_search").getValue();
                         _main.myStore.custOrderStatus.getProxy().setExtraParam('keyword', _txtSearch);
                         _main.myStore.custOrderStatus.loadPage(1);
                     }
@@ -122,7 +121,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                 itemId: 'grdCustOrderStatusQuery',
                 padding: 5,
                 border: true,
-                height: $(document).height() - 220,
+                height: $(document).height() - 200,
                 columns: {
                     defaults: {
                         align: 'left'
@@ -135,7 +134,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                         width: 60,
                         items: [{
                             tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT+'/css/images/edit16x16.png',
+                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
                             handler: function(grid, rowIndex, colIndex) {
                                 var main = grid.up('panel').up('panel').up('panel');
                                 if (!main.subWinCustOrderStatus) {
@@ -164,7 +163,7 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                     }, {
                         header: "狀態名稱",
                         dataIndex: 'CUST_ORDER_STATUS_NAME',
-                        flex:1
+                        flex: 1
                     }, {
                         header: "順序",
                         dataIndex: 'CUST_ORDER_STATUS_ORD',

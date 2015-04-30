@@ -381,5 +381,33 @@ namespace Limew.Model.Lw
 			}
 		}
 
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.MyOrderId getMyOrderId_By_MyOrderIdUuid(string pMY_ORDER_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.MyOrderId myorderid = new Limew.Model.Lw.Table.MyOrderId(dbc);
+				myorderid.Fill_By_PK(pMY_ORDER_ID_UUID);
+				return myorderid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustOrderSearch getVCustOrderSearch_By_CustOrderUuid_And_CustOrderDetailUuid(string pCUST_ORDER_UUID,string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustOrderSearch vcustordersearch = new Limew.Model.Lw.Table.VCustOrderSearch(dbc);
+				vcustordersearch.Fill_By_PK(pCUST_ORDER_UUID,pCUST_ORDER_DETAIL_UUID);
+				return vcustordersearch;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
 	}
 }

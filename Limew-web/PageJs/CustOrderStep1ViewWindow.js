@@ -1,6 +1,6 @@
 Ext.define('WS.CustOrderStep1ViewWindow', {
     extend: 'Ext.window.Window',
-    title: '單訂資訊',
+    title: '單訂資訊(唯讀模式)',
     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
     closeAction: 'destroy',
     closable: false,
@@ -16,7 +16,7 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
             successProperty: 'success',
             autoLoad: false,
             model: 'CUST',
-            pageSize: 10,
+            pageSize: 9999,
             proxy: {
                 type: 'direct',
                 api: {
@@ -638,7 +638,7 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
         this.fireEvent('closeEvent', this);
     },
     fnLoadData: function(mainObj) {
-
+        this.mask('資訊載入中…請稍後…');
         if (mainObj.param.custOrderUuid != undefined) {
             mainObj.fnCompany(this);
             mainObj.down("#CustOrderForm").getForm().load({
@@ -646,7 +646,9 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                     'pCustOrderUuid': mainObj.param.custOrderUuid
                 },
                 success: function(response, a, b) {
-
+                    this.myStore.vCustOrderDetail.getProxy().setExtraParam('pCustOrderUuid', this.param.custOrderUuid);
+                    this.myStore.vCustOrderDetail.reload();
+                    this.unmask();
                 },
                 failure: function(response, jsonObj, b) {
                     if (!jsonObj.result.success) {
@@ -660,19 +662,17 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                 },
                 scope: mainObj
             });
-
-            mainObj.myStore.vCustOrderDetail.getProxy().setExtraParam('pCustOrderUuid', mainObj.param.custOrderUuid);
-            mainObj.myStore.vCustOrderDetail.reload();
-            mainObj.unmask();
         };
     },
     listeners: {
         'show': function() {
-            this.mask('資訊載入中…請稍後…');
             this.fnLoadData(this);
         },
         'close': function() {
+            this.myStore.company.removeAll();
+            this.myStore.vCustOrderDetail.removeAll();
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

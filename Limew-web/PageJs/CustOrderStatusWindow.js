@@ -40,8 +40,8 @@ Ext.define('WS.CustOrderStatusWindow', {
                     name: 'CUST_ORDER_STATUS_NAME',
                     maxLength: 84,
                     allowBlank: false
-                },{
-                    xtype:'numberfield',
+                }, {
+                    xtype: 'numberfield',
                     fieldLabel: '順序',
                     name: 'CUST_ORDER_STATUS_ORD',
                     maxLength: 84,
@@ -92,10 +92,10 @@ Ext.define('WS.CustOrderStatusWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -147,6 +147,7 @@ Ext.define('WS.CustOrderStatusWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

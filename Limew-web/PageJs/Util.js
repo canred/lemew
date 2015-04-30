@@ -1,4 +1,4 @@
-Ext.define('WS.Util', {    
+Ext.define('WS.Util', {
     session: {
         param: {
             redirectUrl: SYSTEM_HTTP_URL + SYSTEM_ROOT_PATH + "/default.aspx",
@@ -7,7 +7,7 @@ Ext.define('WS.Util', {
         _task: {
             run: function() {
                 WS.UserAction.keepSession(function(data) {
-                    try {                                                
+                    try {
                         if (data.validation != 'ok') {
                             location.href = this.param.redirectUrl;
                         };
@@ -44,7 +44,7 @@ Ext.define('WS.Util', {
             interval: 5,
             stop: false
         },
-        _task: {            
+        _task: {
             run: function() {
                 if (IsProductionServer.toLowerCase() == "false") {
                     if (!this.param.stop) {
@@ -82,7 +82,7 @@ Ext.define('WS.Util', {
     },
     runAll: function() {
         this.trace._task.scope = this.trace;
-        this.session._task.scope = this.session;        
+        this.session._task.scope = this.session;
         this.session.fnKeep.call(this.session);
         this.trace.fnTrace.call(this.trace);
     }

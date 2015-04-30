@@ -29,17 +29,39 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string MY_ORDER_DETAIL_UUID {get{return "MY_ORDER_DETAIL_UUID" ; }}
-		public string MY_ORDER_DETAIL_GOODS_NAME {get{return "MY_ORDER_DETAIL_GOODS_NAME" ; }}
-		public string MY_ORDER_DETAIL_GOODS_COUNT {get{return "MY_ORDER_DETAIL_GOODS_COUNT" ; }}
-		public string MY_ORDER_DETAIL_PRICE {get{return "MY_ORDER_DETAIL_PRICE" ; }}
-		public string MY_ORDER_DETAIL_TOTAL_PRICE {get{return "MY_ORDER_DETAIL_TOTAL_PRICE" ; }}
-		public string MY_ORDER_DETAIL_IS_FINISH {get{return "MY_ORDER_DETAIL_IS_FINISH" ; }}
-		public string MY_ORDER_DETAIL_IS_ACTIVE {get{return "MY_ORDER_DETAIL_IS_ACTIVE" ; }}
-		public string MY_ORDER_DETAIL_ATTENDANT_UUID {get{return "MY_ORDER_DETAIL_ATTENDANT_UUID" ; }}
-		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
-		public string MY_ORDER_UUID {get{return "MY_ORDER_UUID" ; }}
-		public string UNIT_UUID {get{return "UNIT_UUID" ; }}
+		public string MY_ORDER_DETAIL_UUID {
+			[ColumnName("MY_ORDER_DETAIL_UUID",true,typeof(string))]
+			get{return "MY_ORDER_DETAIL_UUID" ; }}
+		public string MY_ORDER_DETAIL_GOODS_NAME {
+			[ColumnName("MY_ORDER_DETAIL_GOODS_NAME",false,typeof(string))]
+			get{return "MY_ORDER_DETAIL_GOODS_NAME" ; }}
+		public string MY_ORDER_DETAIL_GOODS_COUNT {
+			[ColumnName("MY_ORDER_DETAIL_GOODS_COUNT",false,typeof(int?))]
+			get{return "MY_ORDER_DETAIL_GOODS_COUNT" ; }}
+		public string MY_ORDER_DETAIL_PRICE {
+			[ColumnName("MY_ORDER_DETAIL_PRICE",false,typeof(decimal?))]
+			get{return "MY_ORDER_DETAIL_PRICE" ; }}
+		public string MY_ORDER_DETAIL_TOTAL_PRICE {
+			[ColumnName("MY_ORDER_DETAIL_TOTAL_PRICE",false,typeof(decimal?))]
+			get{return "MY_ORDER_DETAIL_TOTAL_PRICE" ; }}
+		public string MY_ORDER_DETAIL_IS_FINISH {
+			[ColumnName("MY_ORDER_DETAIL_IS_FINISH",false,typeof(int?))]
+			get{return "MY_ORDER_DETAIL_IS_FINISH" ; }}
+		public string MY_ORDER_DETAIL_IS_ACTIVE {
+			[ColumnName("MY_ORDER_DETAIL_IS_ACTIVE",false,typeof(int?))]
+			get{return "MY_ORDER_DETAIL_IS_ACTIVE" ; }}
+		public string MY_ORDER_DETAIL_ATTENDANT_UUID {
+			[ColumnName("MY_ORDER_DETAIL_ATTENDANT_UUID",false,typeof(string))]
+			get{return "MY_ORDER_DETAIL_ATTENDANT_UUID" ; }}
+		public string SUPPLIER_GOODS_UUID {
+			[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string MY_ORDER_UUID {
+			[ColumnName("MY_ORDER_UUID",false,typeof(string))]
+			get{return "MY_ORDER_UUID" ; }}
+		public string UNIT_UUID {
+			[ColumnName("UNIT_UUID",false,typeof(string))]
+			get{return "UNIT_UUID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public MyOrderDetail_Record CurrentRecord(){

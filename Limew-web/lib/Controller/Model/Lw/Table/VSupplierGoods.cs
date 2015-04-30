@@ -29,16 +29,36 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string SUPPLIER_NAME {get{return "SUPPLIER_NAME" ; }}
-		public string SUPPLIER_GOODS_UUID {get{return "SUPPLIER_GOODS_UUID" ; }}
-		public string SUPPLIER_GOODS_NAME {get{return "SUPPLIER_GOODS_NAME" ; }}
-		public string UNIT_UUID {get{return "UNIT_UUID" ; }}
-		public string SUPPLIER_GOODS_SN {get{return "SUPPLIER_GOODS_SN" ; }}
-		public string SUPPLIER_GOODS_PRICE {get{return "SUPPLIER_GOODS_PRICE" ; }}
-		public string SUPPLIER_GOODS_COST {get{return "SUPPLIER_GOODS_COST" ; }}
-		public string SUPPLIER_GOODS_IS_ACTIVE {get{return "SUPPLIER_GOODS_IS_ACTIVE" ; }}
-		public string SUPPLIER_UUID {get{return "SUPPLIER_UUID" ; }}
-		public string UNIT_NAME {get{return "UNIT_NAME" ; }}
+		public string SUPPLIER_NAME {
+			[ColumnName("SUPPLIER_NAME",false,typeof(string))]
+			get{return "SUPPLIER_NAME" ; }}
+		public string SUPPLIER_GOODS_UUID {
+			[ColumnName("SUPPLIER_GOODS_UUID",true,typeof(string))]
+			get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string SUPPLIER_GOODS_NAME {
+			[ColumnName("SUPPLIER_GOODS_NAME",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_NAME" ; }}
+		public string UNIT_UUID {
+			[ColumnName("UNIT_UUID",false,typeof(string))]
+			get{return "UNIT_UUID" ; }}
+		public string SUPPLIER_GOODS_SN {
+			[ColumnName("SUPPLIER_GOODS_SN",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_SN" ; }}
+		public string SUPPLIER_GOODS_PRICE {
+			[ColumnName("SUPPLIER_GOODS_PRICE",false,typeof(decimal?))]
+			get{return "SUPPLIER_GOODS_PRICE" ; }}
+		public string SUPPLIER_GOODS_COST {
+			[ColumnName("SUPPLIER_GOODS_COST",false,typeof(string))]
+			get{return "SUPPLIER_GOODS_COST" ; }}
+		public string SUPPLIER_GOODS_IS_ACTIVE {
+			[ColumnName("SUPPLIER_GOODS_IS_ACTIVE",false,typeof(int?))]
+			get{return "SUPPLIER_GOODS_IS_ACTIVE" ; }}
+		public string SUPPLIER_UUID {
+			[ColumnName("SUPPLIER_UUID",true,typeof(string))]
+			get{return "SUPPLIER_UUID" ; }}
+		public string UNIT_NAME {
+			[ColumnName("UNIT_NAME",false,typeof(string))]
+			get{return "UNIT_NAME" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VSupplierGoods_Record CurrentRecord(){

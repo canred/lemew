@@ -93,7 +93,7 @@ Ext.define('ATTENDANT_V', {
         'GRADE',
         'ID',
         'IS_DEFAULT_PASS',
-		'PICTURE_URL'
+        'PICTURE_URL'
     ]
 });
 

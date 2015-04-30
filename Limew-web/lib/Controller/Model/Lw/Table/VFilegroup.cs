@@ -29,16 +29,36 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string FILE_UUID {get{return "FILE_UUID" ; }}
-		public string FILE_NAME {get{return "FILE_NAME" ; }}
-		public string FILE_URL {get{return "FILE_URL" ; }}
-		public string FILE_PS {get{return "FILE_PS" ; }}
-		public string FILE_PATH {get{return "FILE_PATH" ; }}
-		public string FILEGROUP_UUID {get{return "FILEGROUP_UUID" ; }}
-		public string FILE_CR {get{return "FILE_CR" ; }}
-		public string FILEGROUP_DISPLAY_NAME {get{return "FILEGROUP_DISPLAY_NAME" ; }}
-		public string FILE_COUNT {get{return "FILE_COUNT" ; }}
-		public string FILEGROUP_TAG {get{return "FILEGROUP_TAG" ; }}
+		public string FILE_UUID {
+			[ColumnName("FILE_UUID",true,typeof(string))]
+			get{return "FILE_UUID" ; }}
+		public string FILE_NAME {
+			[ColumnName("FILE_NAME",false,typeof(string))]
+			get{return "FILE_NAME" ; }}
+		public string FILE_URL {
+			[ColumnName("FILE_URL",false,typeof(string))]
+			get{return "FILE_URL" ; }}
+		public string FILE_PS {
+			[ColumnName("FILE_PS",false,typeof(string))]
+			get{return "FILE_PS" ; }}
+		public string FILE_PATH {
+			[ColumnName("FILE_PATH",false,typeof(string))]
+			get{return "FILE_PATH" ; }}
+		public string FILEGROUP_UUID {
+			[ColumnName("FILEGROUP_UUID",false,typeof(string))]
+			get{return "FILEGROUP_UUID" ; }}
+		public string FILE_CR {
+			[ColumnName("FILE_CR",false,typeof(DateTime?))]
+			get{return "FILE_CR" ; }}
+		public string FILEGROUP_DISPLAY_NAME {
+			[ColumnName("FILEGROUP_DISPLAY_NAME",false,typeof(string))]
+			get{return "FILEGROUP_DISPLAY_NAME" ; }}
+		public string FILE_COUNT {
+			[ColumnName("FILE_COUNT",false,typeof(int?))]
+			get{return "FILE_COUNT" ; }}
+		public string FILEGROUP_TAG {
+			[ColumnName("FILEGROUP_TAG",false,typeof(string))]
+			get{return "FILEGROUP_TAG" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VFilegroup_Record CurrentRecord(){

@@ -3,11 +3,12 @@ Ext.define('WS.GcategoryWindow', {
     extend: 'Ext.window.Window',
     icon: SYSTEM_URL_ROOT + '/css/images/manb16x16.png',
     title: '商品類別維護',
-    closable:false,
-    closeAction: 'destroy', modal: true,
+    closable: false,
+    closeAction: 'destroy',
+    modal: true,
     param: {
         gcategoryUuid: undefined,
-        gcategoryParentUuid:undefined
+        gcategoryParentUuid: undefined
     },
     height: 200,
     width: 550,
@@ -43,13 +44,13 @@ Ext.define('WS.GcategoryWindow', {
                     anchor: '-50 0',
                     maxLength: 84,
                     allowBlank: false
-                },{
-                    xtype:'hiddenfield',
-                    fieldLabel:'GCATEGORY_PARENT_UUID',
-                    name:'GCATEGORY_PARENT_UUID',
-                    itemId:'GCATEGORY_PARENT_UUID'                    
+                }, {
+                    xtype: 'hiddenfield',
+                    fieldLabel: 'GCATEGORY_PARENT_UUID',
+                    name: 'GCATEGORY_PARENT_UUID',
+                    itemId: 'GCATEGORY_PARENT_UUID'
                 }]
-            },  {
+            }, {
                 xtype: 'container',
                 layout: 'hbox',
                 defaultType: 'radiofield',
@@ -63,10 +64,10 @@ Ext.define('WS.GcategoryWindow', {
                 }, {
                     boxLabel: '否',
                     name: 'GCATEGORY_IS_ACTIVE',
-                    inputValue: '0',                    
+                    inputValue: '0',
                     padding: '0 0 0 60'
                 }]
-            },  {
+            }, {
                 xtype: 'hidden',
                 fieldLabel: 'GCATEGORY_UUID',
                 name: 'GCATEGORY_UUID',
@@ -95,10 +96,10 @@ Ext.define('WS.GcategoryWindow', {
                                 msg: '操作完成',
                                 icon: Ext.MessageBox.INFO,
                                 buttons: Ext.Msg.OK,
-                                fn:function(){
+                                fn: function() {
                                     this.close();
                                 },
-                                scope:this
+                                scope: this
                             });
                         },
                         failure: function(form, action) {
@@ -152,6 +153,7 @@ Ext.define('WS.GcategoryWindow', {
         },
         'close': function() {
             this.closeEvent();
+            this.down('form').reset();
         }
     }
 });

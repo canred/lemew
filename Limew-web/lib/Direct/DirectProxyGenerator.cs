@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 namespace ExtDirect.Direct
 {
-    public static class DirectProxyGenerator
+    public static class DirectProxyGenerator 
     {
         public static string generateDirectApi(string dllName,string pClassName,bool isTouch)
         {

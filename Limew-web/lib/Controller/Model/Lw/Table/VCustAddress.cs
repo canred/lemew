@@ -29,10 +29,18 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_ADDRESS {get{return "CUST_ADDRESS" ; }}
-		public string CUST_ORG_ADDRESS {get{return "CUST_ORG_ADDRESS" ; }}
-		public string CUST_UUID {get{return "CUST_UUID" ; }}
-		public string CUST_ORG_UUID {get{return "CUST_ORG_UUID" ; }}
+		public string CUST_ADDRESS {
+			[ColumnName("CUST_ADDRESS",false,typeof(string))]
+			get{return "CUST_ADDRESS" ; }}
+		public string CUST_ORG_ADDRESS {
+			[ColumnName("CUST_ORG_ADDRESS",false,typeof(string))]
+			get{return "CUST_ORG_ADDRESS" ; }}
+		public string CUST_UUID {
+			[ColumnName("CUST_UUID",true,typeof(string))]
+			get{return "CUST_UUID" ; }}
+		public string CUST_ORG_UUID {
+			[ColumnName("CUST_ORG_UUID",true,typeof(string))]
+			get{return "CUST_ORG_UUID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public VCustAddress_Record CurrentRecord(){

@@ -26,7 +26,8 @@ namespace Limew
                     //var menuList = model.getAuthorityMenuVByAttendantUuid(attendant_uuid, "13111517364100129");
                     //setMenu(attendant_uuid, menuList);
                     var menuList = model.getAuthorityMenuVByAttendantUuid(attendant_uuid, Limew.Parameter.Config.ParemterConfigs.GetConfig().InitAppUuid);
-                    menuList=menuList.OrderBy(c => c.ORD).ToList();
+                    menuList=menuList.OrderBy(c => c.ORD).ToList();                    
+                    ss.setObject("USERMENU", menuList);
                     setMenu(attendant_uuid, menuList);
                 }
             }
@@ -41,6 +42,18 @@ namespace Limew
             if (ss.ExistKey("USER"))
             {                
                 return (Limew.Model.Basic.Table.Record.AttendantV_Record)ss.getObject("USER");
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public IList<Limew.Model.Basic.Table.Record.AuthorityMenuV_Record> getUserMenu()
+        {
+            if (ss.ExistKey("USERMENU"))
+            {
+                return (IList<Limew.Model.Basic.Table.Record.AuthorityMenuV_Record>)ss.getObject("USERMENU");
             }
             else
             {

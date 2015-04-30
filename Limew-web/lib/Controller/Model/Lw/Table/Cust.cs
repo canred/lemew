@@ -29,18 +29,42 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string CUST_UUID {get{return "CUST_UUID" ; }}
-		public string CUST_NAME {get{return "CUST_NAME" ; }}
-		public string CUST_TEL {get{return "CUST_TEL" ; }}
-		public string CUST_FAX {get{return "CUST_FAX" ; }}
-		public string CUST_ADDRESS {get{return "CUST_ADDRESS" ; }}
-		public string CUST_SALES_NAME {get{return "CUST_SALES_NAME" ; }}
-		public string CUST_SALES_PHONE {get{return "CUST_SALES_PHONE" ; }}
-		public string CUST_SALES_EMAIL {get{return "CUST_SALES_EMAIL" ; }}
-		public string CUST_PS {get{return "CUST_PS" ; }}
-		public string CUST_LEVEL {get{return "CUST_LEVEL" ; }}
-		public string CUST_IS_ACTIVE {get{return "CUST_IS_ACTIVE" ; }}
-		public string CUST_LAST_BUY {get{return "CUST_LAST_BUY" ; }}
+		public string CUST_UUID {
+			[ColumnName("CUST_UUID",true,typeof(string))]
+			get{return "CUST_UUID" ; }}
+		public string CUST_NAME {
+			[ColumnName("CUST_NAME",false,typeof(string))]
+			get{return "CUST_NAME" ; }}
+		public string CUST_TEL {
+			[ColumnName("CUST_TEL",false,typeof(string))]
+			get{return "CUST_TEL" ; }}
+		public string CUST_FAX {
+			[ColumnName("CUST_FAX",false,typeof(string))]
+			get{return "CUST_FAX" ; }}
+		public string CUST_ADDRESS {
+			[ColumnName("CUST_ADDRESS",false,typeof(string))]
+			get{return "CUST_ADDRESS" ; }}
+		public string CUST_SALES_NAME {
+			[ColumnName("CUST_SALES_NAME",false,typeof(string))]
+			get{return "CUST_SALES_NAME" ; }}
+		public string CUST_SALES_PHONE {
+			[ColumnName("CUST_SALES_PHONE",false,typeof(string))]
+			get{return "CUST_SALES_PHONE" ; }}
+		public string CUST_SALES_EMAIL {
+			[ColumnName("CUST_SALES_EMAIL",false,typeof(string))]
+			get{return "CUST_SALES_EMAIL" ; }}
+		public string CUST_PS {
+			[ColumnName("CUST_PS",false,typeof(string))]
+			get{return "CUST_PS" ; }}
+		public string CUST_LEVEL {
+			[ColumnName("CUST_LEVEL",false,typeof(int?))]
+			get{return "CUST_LEVEL" ; }}
+		public string CUST_IS_ACTIVE {
+			[ColumnName("CUST_IS_ACTIVE",false,typeof(int?))]
+			get{return "CUST_IS_ACTIVE" ; }}
+		public string CUST_LAST_BUY {
+			[ColumnName("CUST_LAST_BUY",false,typeof(DateTime?))]
+			get{return "CUST_LAST_BUY" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public Cust_Record CurrentRecord(){
