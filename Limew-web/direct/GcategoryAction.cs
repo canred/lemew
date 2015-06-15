@@ -91,7 +91,7 @@ string gcategory_parent_uuid, Request request)
             {
                 action = SubmitAction.Edit;
                 record = mod.getGcategory_By_GcategoryUuid(gcategory_uuid).AllRecord().First();
-                record.GCATEGORY_IS_ACTIVE = gcategory_is_active;
+                record.GCATEGORY_IS_ACTIVE =Convert.ToInt16( gcategory_is_active);
                 record.GCATEGORY_NAME = gcategory_name;
                 record.GCATEGORY_PARENT_UUID = gcategory_parent_uuid;
             }
@@ -99,7 +99,7 @@ string gcategory_parent_uuid, Request request)
             {
                 action = SubmitAction.Create;
                 record.GCATEGORY_UUID = LK.Util.UID.Instance.GetUniqueID();
-                record.GCATEGORY_IS_ACTIVE = gcategory_is_active;
+                record.GCATEGORY_IS_ACTIVE =Convert.ToInt16( gcategory_is_active);
                 record.GCATEGORY_NAME = gcategory_name;
                 record.GCATEGORY_PARENT_UUID = gcategory_parent_uuid;
                 record.gotoTable().Insert_Empty2Null(record);
@@ -277,7 +277,7 @@ string gcategory_parent_uuid, Request request)
                 newDr.GCATEGORY_FULL_NAME = "ROOT|";
                 newDr.GCATEGORY_UUID = LK.Util.UID.Instance.GetUniqueID();
                 newDr.GCATEGORY_FULL_UUID = newDr.GCATEGORY_UUID + "|";
-                newDr.GCATEGORY_IS_ACTIVE = "Y";
+                newDr.GCATEGORY_IS_ACTIVE = 1;
                 newDr.GCATEGORY_NAME = "ROOT";
                 newDr.GCATEGORY_PARENT_UUID = null;
                 newDr.gotoTable().Insert_Empty2Null(newDr);

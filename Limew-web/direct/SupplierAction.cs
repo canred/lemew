@@ -252,7 +252,75 @@ public class SupplierAction : BaseAction
             var data = mod.getSupplier_By_SupplierUuid(pUuid);
             if (data.AllRecord().Count > 0)
             {
+
+                
+
                 var delDr = data.AllRecord().First();
+
+
+                if (delDr!=null )
+                {
+                    SupplierGoods suppliergoods = new SupplierGoods();
+
+                    Goods goods = new Goods();
+                    MyOrderDetail myorderdetail = new MyOrderDetail();
+                    MyOrder myorder = new MyOrder();
+
+                    var drsSupplierGoods = mod.getSupplierGoods_By_SupplierUuid_Keyword(delDr.SUPPLIER_UUID, "", new OrderLimit());
+
+                    List<object> suppliergoodsUuidList = new List<object>();
+                    foreach (var item in drsSupplierGoods)
+                    {
+                        suppliergoodsUuidList.Add(item.SUPPLIER_GOODS_UUID);
+                    }
+
+                    if (suppliergoodsUuidList.Count > 0)
+                    {
+                        delDr.gotoTable().SetUpdate(
+                                new LK.DB.SQLUpdate(myorderdetail)
+                                .Set(myorderdetail.SUPPLIER_GOODS_UUID, null)                                
+                                .Where(new LK.DB.SQLCondition(myorderdetail)
+                                    .In(myorderdetail.SUPPLIER_GOODS_UUID, suppliergoodsUuidList)
+                                )
+                           ).ExecuteUpdate();
+                    }
+
+                   
+
+                   
+                    //table.SetUpdate(new SQLUpdate(table).Set(table.IS_READ, "Y").Where(new SQLCondition(table).Equal(table.IS_READ, "N"))).ExecuteUpdate();
+
+
+
+                    delDr.gotoTable().SetUpdate(
+                                new LK.DB.SQLUpdate(goods)
+                                .Set(goods.SUPPLIER_UUID, null)
+                                .Where(new LK.DB.SQLCondition(goods)
+                                    .Equal(goods.SUPPLIER_UUID,delDr.SUPPLIER_UUID)
+                                )
+                           ).ExecuteUpdate();
+
+                    delDr.gotoTable().SetUpdate(
+                                new LK.DB.SQLUpdate(myorder)
+                                .Set(myorder.SUPPLIER_UUID, null)
+                                .Where(new LK.DB.SQLCondition(myorder)
+                                    .Equal(myorder.SUPPLIER_UUID, delDr.SUPPLIER_UUID)
+                                )
+                           ).ExecuteUpdate();
+
+                    delDr.gotoTable().SetDelete(
+                           new LK.DB.SQLDelete(suppliergoods)
+                           .Where(new LK.DB.SQLCondition(suppliergoods)
+                          .Equal(suppliergoods.SUPPLIER_UUID,delDr.SUPPLIER_UUID)
+                           )
+                       ).ExecuteDelete();
+
+
+                    
+                }
+
+
+
                 delDr.gotoTable().Delete(delDr);
             }           
             return ExtDirect.Direct.Helper.Message.Success.OutputJObject();
