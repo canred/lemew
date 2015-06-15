@@ -44,7 +44,7 @@ namespace Limew.Model.Lw.Table.Record
 		string _CUST_ORDER_DETAIL_UNIT_NAME=null;
 		string _FILEGROUP_DISPLAY_NAME=null;
 		string _FILEGROUP_TAG=null;
-		string _FILE_COUNT=null;
+		int? _FILE_COUNT=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_ORDER_DETAIL_UUID",true,typeof(string))]
@@ -424,8 +424,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("FILE_COUNT",false,typeof(string))]
-		public string FILE_COUNT
+		[ColumnName("FILE_COUNT",false,typeof(int?))]
+		public int? FILE_COUNT
 		{
 			set
 			{

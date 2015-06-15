@@ -117,7 +117,7 @@ namespace Limew.Model.Lw.Table
 			[ColumnName("FILEGROUP_TAG",false,typeof(string))]
 			get{return "FILEGROUP_TAG" ; }}
 		public string FILE_COUNT {
-			[ColumnName("FILE_COUNT",false,typeof(string))]
+			[ColumnName("FILE_COUNT",false,typeof(int?))]
 			get{return "FILE_COUNT" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/

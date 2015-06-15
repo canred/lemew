@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("SHIPPING_ID", false)]
+	[TableView("SHIPPING_ID", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class ShippingId_Record : RecordBase{

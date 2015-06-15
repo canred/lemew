@@ -228,58 +228,93 @@ Ext.define('WS.SupplierWindow', {
                         store: this.myStore.vSupplierGoods,
                         paramsAsHash: false,
                         autoScroll: true,
-                        columns: [{
-                            text: "編輯",
-                            xtype: 'actioncolumn',
-                            dataIndex: 'SUPPLIER_GOODS_UUID',
-                            align: 'center',
-                            width: 60,
-                            items: [{
-                                tooltip: '*編輯',
-                                icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                                handler: function(grid, rowIndex, colIndex) {
-                                    var mainWin = this.up('window');
-                                    var subWin = Ext.create('WS.SupplierGoodsWindow', {
-                                        param: {
-                                            supplierGoodsUuid: grid.getStore().getAt(rowIndex).data.SUPPLIER_GOODS_UUID,
-                                            parentObj: mainWin
-                                        }
-                                    });
-                                    subWin.on('closeEvent', function(obj) {
-                                        obj.param.parentObj.myStore.vSupplierGoods.loadPage(1);
-                                    });
+                        columns: [
+                            // {
+                            //     text: "編輯",
+                            //     xtype: 'actioncolumn',
+                            //     dataIndex: 'SUPPLIER_GOODS_UUID',
+                            //     align: 'center',
+                            //     width: 60,
+                            //     items: [{
+                            //         tooltip: '*編輯',
+                            //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                            //         handler: function(grid, rowIndex, colIndex) {
+                            //             var mainWin = this.up('window');
+                            //             var subWin = Ext.create('WS.SupplierGoodsWindow', {
+                            //                 param: {
+                            //                     supplierGoodsUuid: grid.getStore().getAt(rowIndex).data.SUPPLIER_GOODS_UUID,
+                            //                     parentObj: mainWin
+                            //                 }
+                            //             });
+                            //             subWin.on('closeEvent', function(obj) {
+                            //                 obj.param.parentObj.myStore.vSupplierGoods.loadPage(1);
+                            //             });
 
-                                    subWin.show();
-                                }
-                            }],
-                            sortable: false,
-                            hideable: false
-                        }, {
-                            text: "名稱",
-                            dataIndex: 'SUPPLIER_GOODS_NAME',
-                            align: 'left',
-                            flex: 1
-                        }, {
-                            text: "單位",
-                            dataIndex: 'UNIT_NAME',
-                            align: 'center',
-                            width: 120
-                        }, {
-                            text: "序號",
-                            dataIndex: 'SUPPLIER_GOODS_SN',
-                            align: 'left',
-                            flex: 1
-                        }, {
-                            text: "售價",
-                            dataIndex: 'SUPPLIER_GOODS_PRICE',
-                            align: 'right',
-                            width: 120
-                        }, {
-                            text: "成本",
-                            dataIndex: 'SUPPLIER_GOODS_COST',
-                            align: 'right',
-                            width: 120
-                        }],
+                            //             subWin.show();
+                            //         }
+                            //     }],
+                            //     sortable: false,
+                            //     hideable: false
+                            // },
+                            {
+                                xtype: 'templatecolumn',
+                                text: '編輯',
+                                width: 60,
+                                sortable: false,
+                                hideable: false,
+                                tpl: new Ext.XTemplate(
+                                    "<tpl >",
+                                    '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="SupplierWindowFnEdit(\'{SUPPLIER_GOODS_UUID}\')"/>',
+                                    "</tpl>", {
+                                        scope: this,
+                                        fnInit: function() {
+                                            document.SupplierWindow = this.scope;
+                                            if (!document.SupplierWindowFnEdit) {
+                                                document.SupplierWindowFnEdit = function(SUPPLIER_GOODS_UUID) {
+                                                    var mainWin = document.SupplierWindow;
+                                                    var subWin = Ext.create('WS.SupplierGoodsWindow', {
+                                                        param: {
+                                                            supplierGoodsUuid: SUPPLIER_GOODS_UUID,
+                                                            parentObj: mainWin
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function(obj) {
+                                                        obj.param.parentObj.myStore.vSupplierGoods.loadPage(1);
+                                                    });
+                                                    subWin.show();
+                                                }
+                                            }
+
+                                        }
+                                    }),
+
+                            }, {
+                                text: "名稱",
+                                dataIndex: 'SUPPLIER_GOODS_NAME',
+                                align: 'left',
+                                flex: 1
+                            }, {
+                                text: "單位",
+                                dataIndex: 'UNIT_NAME',
+                                align: 'center',
+                                width: 120
+                            }, {
+                                text: "序號",
+                                dataIndex: 'SUPPLIER_GOODS_SN',
+                                align: 'left',
+                                flex: 1
+                            }, {
+                                text: "售價",
+                                dataIndex: 'SUPPLIER_GOODS_PRICE',
+                                align: 'right',
+                                width: 120
+                            }, {
+                                text: "成本",
+                                dataIndex: 'SUPPLIER_GOODS_COST',
+                                align: 'right',
+                                width: 120
+                            }
+                        ],
                         height: 400,
                         tbar: [{
                             xtype: 'tbfill'

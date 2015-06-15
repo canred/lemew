@@ -44,14 +44,16 @@ Ext.define('WS.LogonPanel', {
             items: [{
                 xtype: 'textfield',
                 fieldLabel: '公司',
+                hidden: true,
                 labelAlign: 'right',
                 afterLabelTextTpl: '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>',
                 name: 'company',
                 allowBlank: false,
                 tooltip: '*公司名稱',
-                value: this.val.company,
+                //value: this.val.company,
                 itemId: 'txt_company',
                 blankText: '*請輸入您的公司代碼',
+                value: 'Limew',
                 enableKeyEvents: true,
                 listeners: {
                     keyup: function(e, t, eOpts) {
@@ -134,6 +136,7 @@ Ext.define('WS.LogonPanel', {
             }],
             buttons: [{
                 text: '忘記密碼',
+                hidden: true,
                 handler: function() {
                     var company = WS_LOGONPANEL.down('#txt_company'),
                         account = WS_LOGONPANEL.down('#txt_account');
@@ -162,7 +165,7 @@ Ext.define('WS.LogonPanel', {
                 text: '登入',
                 itemId: 'bntLogin',
                 handler: function() {
-                    if( this.up('window')){
+                    if (this.up('window')) {
                         this.up('window').mask('系統登入中…');
                     };
                     WS_LOGONPANEL.down("#txt_pw").allowBlank = false;
@@ -188,7 +191,7 @@ Ext.define('WS.LogonPanel', {
                                         };
                                     },
                                     failure: function(obj, res) {
-                                        if( this.up('window')){
+                                        if (this.up('window')) {
                                             this.up('window').unmask();
                                         };
                                         if (res.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -226,6 +229,30 @@ Ext.define('WS.LogonPanel', {
                             Ext.getBody().unmask();
                         }
                     });
+                }
+            }
+            , {
+                xtype: 'button',
+                text: 'test',
+                handler: function(handler, scope) {
+                    var mainWin = this.up('window');
+                    // WS.MyOrderAction.pdfMyOrder("15052715283303684", function(obj, jsonObj) {
+                    //     if (jsonObj.result.success) {
+
+                    //         var downloadUrl = SYSTEM_URL_ROOT + '/upload/myOrder/' + jsonObj.result.file;
+                    //         window.open(downloadUrl);
+                    //     }
+                    // }, mainWin);
+
+                    WS.BillingAction.pdfBilling("15060316280100056", function(obj, jsonObj) {
+                        if (jsonObj.result.success) {
+
+                            var downloadUrl = SYSTEM_URL_ROOT + '/upload/billing/' + jsonObj.result.file;
+                            window.open(downloadUrl);
+                        }
+                    }, mainWin);
+
+
                 }
             }]
         }];

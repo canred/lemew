@@ -59,30 +59,59 @@ Ext.define('WS.CustAddressPicker', {
             items: [{
                 xtype: 'gridpanel',
                 autoScroll: true,
-                columns: [{
-                    text: "選擇",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'center',
-                    width: 80,
-                    items: [{
-                        tooltip: '*選擇',
-                        icon: SYSTEM_URL_ROOT + '/css/images/mouseSelect16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var mainWin = grid.up('window');
-                            //取得當前行的欄位資訊     
-                            mainWin.fireEvent('closeEvent', mainWin, grid.getStore().getAt(rowIndex).data.CUST_ADDRESS);
-                            mainWin.close();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    text: "地址",
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'left',
-                    flex: 4
-                }],
+                columns: [
+                    // {
+                    //     text: "選擇",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'CUST_ADDRESS',
+                    //     align: 'center',
+                    //     width: 80,
+                    //     items: [{
+                    //         tooltip: '*選擇',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/mouseSelect16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var mainWin = grid.up('window');
+                    //             //取得當前行的欄位資訊     
+                    //             mainWin.fireEvent('closeEvent', mainWin, grid.getStore().getAt(rowIndex).data.CUST_ADDRESS);
+                    //             mainWin.close();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '選擇',
+                        width: 100,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:80px" value="選擇" onclick="CustAddressPickerFnPickerHandler(\'{CUST_ADDRESS}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustAddressPicker = this.scope;
+                                    if (!document.CustAddressPickerFnPickerHandler) {
+                                        document.CustAddressPickerFnPickerHandler = function(CUST_ADDRESS) {
+                                            // var mainWin = document.CustAddressPicker;
+                                            // mainWin.selectedEvent(mainWin, CUST_UUID, CUST_ORG_UUID);
+
+                                            var mainWin = document.CustAddressPicker;
+                                            //取得當前行的欄位資訊     
+                                            mainWin.fireEvent('closeEvent', mainWin, CUST_ADDRESS);
+                                            mainWin.close();
+                                        }
+                                    }
+                                }
+                            })
+                    }, {
+                        text: "地址",
+                        dataIndex: 'CUST_ADDRESS',
+                        align: 'left',
+                        flex: 4
+                    }
+                ],
                 flex: 1,
                 store: this.myStore.vCustAddress,
                 minHeight: 360,

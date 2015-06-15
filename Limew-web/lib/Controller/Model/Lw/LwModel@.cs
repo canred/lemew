@@ -46,6 +46,24 @@ namespace Limew.Model.Lw
             }
         }
 
+        public IList<CustOrg_Record> getCustOrg_By_CustUuid(string pCustUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.CustOrg custorg = new Limew.Model.Lw.Table.CustOrg(dbc);
+                return custorg.Where(new SQLCondition(custorg).Equal(custorg.CUST_UUID, pCustUuid)
+                    
+                    ).FetchAll<CustOrg_Record>();
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
         public int getCustOrderDetail_By_CustOrderUuid_Count(string pCustOrderUuid)
         {
             try
@@ -83,7 +101,27 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
-
+        public IList<CustOrderDetail_Record> getCustOrderDetail_By_CustOrderUuid(List<Object> arrCustOrderUuid, OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrderDetail table = new CustOrderDetail(dbc);
+                var sc = new SQLCondition(table);
+                if (arrCustOrderUuid.Count == 0) {
+                    return new List<CustOrderDetail_Record>();
+                }
+                sc.In(table.CUST_ORDER_UUID, arrCustOrderUuid);
+                return table.Where(sc)
+                    .Limit(orderLimit)
+                    .FetchAll<CustOrderDetail_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public int getCustOrder_By_CustUuid_Count(string pCustUuid)
         {
             try
@@ -594,6 +632,65 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
+
+        public int getCustOrgV_By_Keyword_Count(string pCustUuid, string pKeyword,List<object> arrCustIsActive)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrgV table = new CustOrgV(dbc);
+                var sc = new SQLCondition(table);
+                if (pCustUuid.Trim().Length > 0)
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+
+                if (arrCustIsActive.Count > 0) {
+                    sc.In(table.CUST_IS_ACTIVE, arrCustIsActive).And();
+                }
+
+                if(pKeyword.Trim().Length>0)
+                {
+                    sc.L()
+                       .iBLike(table.CUST_ORG_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_PS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ADDRESS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_FAX, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_PS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_EMAIL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_PHONE, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_TEL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_UNIFORM_NUM, pKeyword)
+                       .R();
+                }
+                sc.CheckSQL();
+                    
+
+                return table.Where(sc)
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public IList<CustOrg_Record> getCustOrg_By_Keyword(string pCustUuid, string pKeyword, string pShowIsDefault, OrderLimit orderlimit)
         {
             try
@@ -650,6 +747,68 @@ namespace Limew.Model.Lw
                     )
                     .Limit(orderlimit)
                     .FetchAll<CustOrg_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<CustOrgV_Record> getCustOrgV_By_Keyword(string pCustUuid, string pKeyword,List<object> arrCustIsActive ,OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                CustOrgV table = new CustOrgV(dbc);
+
+                var sc = new SQLCondition(table);
+                if (pCustUuid.Trim().Length > 0)
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+
+                if (arrCustIsActive.Count > 0)
+                {
+                    sc.In(table.CUST_IS_ACTIVE, arrCustIsActive).And();
+                }
+
+                if (pKeyword.Trim().Length > 0)
+                {
+                    sc.L()
+                       .iBLike(table.CUST_ORG_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_PS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_ADDRESS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_FAX, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_PS, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_EMAIL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_NAME, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_SALES_PHONE, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_TEL, pKeyword)
+                       .Or()
+                       .iBLike(table.CUST_UNIFORM_NUM, pKeyword)
+                       .R();
+                }
+                sc.CheckSQL();
+
+
+                return table.Where(sc)
+                    .Limit(orderlimit)
+                    .FetchAll<CustOrgV_Record>();
             }
             catch (Exception ex)
             {
@@ -776,7 +935,93 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
+        public int getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_PayStatusUuid_Count(string pKeyword, string pCustOrderType, string pCompanyUuid, string pCustUuid, string pCustOrderStatusUuid, string pShippingStatusUuid,string start_date,string end_date, List<Object> pPayStatusUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VCustOrder table = new VCustOrder(dbc);
+                var sc = new SQLCondition(table);
+                if (pCustOrderType.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_ORDER_TYPE, pCustOrderType).And();
+                }
 
+                if (pCompanyUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.COMPANY_UUID, pCompanyUuid).And();
+                }
+
+                if (pCustUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+                }
+
+                if (pCustOrderStatusUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_ORDER_STATUS_UUID, pCustOrderStatusUuid).And();
+                }
+
+                if (pShippingStatusUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.SHIPPING_STATUS_UUID, pShippingStatusUuid).And();
+                }
+
+                if (pPayStatusUuid.Count>0)
+                {
+                    sc.In(table.PAY_STATUS_UUID, pPayStatusUuid).And();
+                }
+
+                if (start_date.Trim().Length > 0 && end_date.Trim().Length > 0)
+                {
+                    var s = Convert.ToDateTime(start_date);
+                    var e = Convert.ToDateTime(end_date);
+                    e = e.AddDays(1).AddMilliseconds(-1);
+
+                    sc.L()
+                        .OverThen(table.CUST_ORDER_CR, s)
+                        .And()
+                        .LessThen(table.CUST_ORDER_CR, e)
+                        .R().And();
+
+                }
+
+
+                if (pKeyword.Trim().Length > 0)
+                {
+                    sc.L()
+                        .iBLike(table.CUST_ADDRESS, pKeyword).Or()
+                        .iBLike(table.CUST_FAX, pKeyword).Or()
+                        .iBLike(table.CUST_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_CUST_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_DEPT, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_INVOICE_NUMBER, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_PO_NUMBER, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_PRINT_USER_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_USER_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_USER_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_PS, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_EMAIL, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_TEL, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE,pKeyword)
+                        .R();
+                }
+                sc.CheckSQL();
+                return table.Where(sc)
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public int getVCustOrderSearch_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_PayStatusUuid_Count(DateTime s , DateTime e, string pKeyword, string pCustOrderType, string pCompanyUuid, string pCustUuid, string pCustOrderStatusUuid, string pShippingStatusUuid, string pPayStatusUuid)
         {
             try
@@ -840,7 +1085,9 @@ namespace Limew.Model.Lw
                         .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
                         .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
                         .iBLike(table.CUST_TEL, pKeyword).Or()
-                        .iBLike(table.CUST_ORDER_DETAIL_GOODS_NAME, pKeyword)
+                        .iBLike(table.CUST_ORDER_DETAIL_GOODS_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE,pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_DETAIL_TOTAL_PRICE,pKeyword)
                         .R();
                 }
                 sc.CheckSQL();
@@ -917,7 +1164,9 @@ namespace Limew.Model.Lw
                         .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
                         .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
                         .iBLike(table.CUST_TEL, pKeyword).Or()
-                        .iBLike(table.CUST_ORDER_DETAIL_GOODS_NAME, pKeyword)
+                        .iBLike(table.CUST_ORDER_DETAIL_GOODS_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_DETAIL_TOTAL_PRICE, pKeyword)
                         .R();
                 }
                 sc.CheckSQL();
@@ -1101,7 +1350,7 @@ namespace Limew.Model.Lw
                 dbc = LK.Config.DataBase.Factory.getInfo();
                 VCustOrder table = new VCustOrder(dbc);
                 var sc = new SQLCondition(table);
-                sc.IsNotNull(table.SHIPPING_ADDRESS).And();
+                //sc.IsNotNull(table.SHIPPING_ADDRESS).And();
                 if (pCustOrderType.Trim().Length > 0)
                 {
                     sc.Equal(table.CUST_ORDER_TYPE, pCustOrderType).And();
@@ -1148,7 +1397,8 @@ namespace Limew.Model.Lw
                         .iBLike(table.CUST_SALES_EMAIL, pKeyword).Or()
                         .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
                         .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
-                        .iBLike(table.CUST_TEL, pKeyword)
+                        .iBLike(table.CUST_TEL, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE,pKeyword)
                         .R();
                 }
                 sc.CheckSQL();
@@ -1234,7 +1484,92 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
+        public IList<VCustOrder_Record> getVCustOrder_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid_PayStatusUuid(string pKeyword, string pCustOrderType, string pCompanyUuid, string pCustUuid, string pCustOrderStatusUuid, string pShippingStatusUuid,string start_date,string end_date, List<Object> pPayStatusUuid, OrderLimit orderlimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VCustOrder table = new VCustOrder(dbc);
+                var sc = new SQLCondition(table);
+                if (pCustOrderType.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_ORDER_TYPE, pCustOrderType).And();
+                }
 
+                if (pCompanyUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.COMPANY_UUID, pCompanyUuid).And();
+                }
+
+                if (pCustUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+                }
+
+                if (pCustOrderStatusUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_ORDER_STATUS_UUID, pCustOrderStatusUuid).And();
+                }
+
+                if (pShippingStatusUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.SHIPPING_STATUS_UUID, pShippingStatusUuid).And();
+                }
+                if (pPayStatusUuid.Count>0)
+                {
+                    sc.In(table.PAY_STATUS_UUID, pPayStatusUuid).And();
+                    //sc.Equal(table.PAY_STATUS_UUID, pPayStatusUuid).And();
+                }
+                if (start_date.Trim().Length > 0 && end_date.Trim().Length > 0)
+                {
+                    var s = Convert.ToDateTime(start_date);
+                    var e = Convert.ToDateTime(end_date);
+                    e = e.AddDays(1).AddMilliseconds(-1);
+
+                    sc.L()
+                        .OverThen(table.CUST_ORDER_CR, s)
+                        .And()
+                        .LessThen(table.CUST_ORDER_CR, e)
+                        .R().And();
+
+                }
+
+                if (pKeyword.Trim().Length > 0)
+                {
+                    sc.L()
+                        .iBLike(table.CUST_ADDRESS, pKeyword).Or()
+                        .iBLike(table.CUST_FAX, pKeyword).Or()
+                        .iBLike(table.CUST_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_CUST_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_DEPT, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_INVOICE_NUMBER, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_PO_NUMBER, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_PRINT_USER_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_USER_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_USER_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_PS, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_EMAIL, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_ORG_SALES_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_EMAIL, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
+                        .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
+                        .iBLike(table.CUST_TEL, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE, pKeyword)
+                        .R();
+                }
+                sc.CheckSQL();
+                return table.Where(sc)
+                    .Limit(orderlimit)
+                    .FetchAll<VCustOrder_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
         public IList<VCustOrder_Record> getVCustOrderForShipping_By_Keyword_CustOrderTypeUuid_CompanyUuid_CustUuid_CustOrderStatus_ShippingStatusUuid(string pKeyword, string pCustOrderType, string pCompanyUuid, string pCustUuid, string pCustOrderStatusUuid, string pShippingStatusUuid, OrderLimit orderlimit)
         {
             try
@@ -1242,7 +1577,7 @@ namespace Limew.Model.Lw
                 dbc = LK.Config.DataBase.Factory.getInfo();
                 VCustOrder table = new VCustOrder(dbc);
                 var sc = new SQLCondition(table);
-                sc.IsNotNull(table.SHIPPING_ADDRESS).And();
+                //sc.IsNotNull(table.SHIPPING_ADDRESS).And();
                 if (pCustOrderType.Trim().Length > 0)
                 {
                     sc.Equal(table.CUST_ORDER_TYPE, pCustOrderType).And();
@@ -1289,7 +1624,8 @@ namespace Limew.Model.Lw
                         .iBLike(table.CUST_SALES_EMAIL, pKeyword).Or()
                         .iBLike(table.CUST_SALES_NAME, pKeyword).Or()
                         .iBLike(table.CUST_SALES_PHONE, pKeyword).Or()
-                        .iBLike(table.CUST_TEL, pKeyword)
+                        .iBLike(table.CUST_TEL, pKeyword).Or()
+                        .iBLike(table.CUST_ORDER_TOTAL_PRICE, pKeyword)
                         .R();
                 }
                 sc.CheckSQL();
@@ -1503,6 +1839,23 @@ namespace Limew.Model.Lw
                 Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
                 return file.Where(new SQLCondition(file)
                     .Equal(file.FILEGROUP_UUID, pFILEGROUP_UUID))
+                    .FetchAll<File_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<File_Record> getFile_By_FilegroupUuid(List<object> arrFILEGROUP_UUID)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
+                return file.Where(new SQLCondition(file)
+                    .In(file.FILEGROUP_UUID, arrFILEGROUP_UUID))
                     .FetchAll<File_Record>();
             }
             catch (Exception ex)
@@ -1765,7 +2118,7 @@ namespace Limew.Model.Lw
 
                 if (pSupplierUuid.Trim().Length > 0)
                 {
-                    sc.Equal(vmyorderdetail.SUPPLIER_UUID, pMY_ORDER_UUID).And();
+                    sc.Equal(vmyorderdetail.SUPPLIER_UUID, pSupplierUuid).And();
                 };
 
                 if (pKeyword.Trim().Length > 0)
@@ -1808,7 +2161,7 @@ namespace Limew.Model.Lw
                 };
 
                 if(pSupplierUuid.Trim().Length>0){
-                    sc.Equal(vmyorderdetail.SUPPLIER_UUID,pMY_ORDER_UUID).And();
+                    sc.Equal(vmyorderdetail.SUPPLIER_UUID, pSupplierUuid).And();
                 };
 
                 if(pKeyword.Trim().Length>0){
@@ -2117,5 +2470,222 @@ namespace Limew.Model.Lw
                 throw ex;
             }
         }
+
+        public IList<Billing_Record> getBilling_By_BillingId(string pBillingId, OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Billing table = new Billing(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.BILLING_ID, pBillingId);
+                return table.Where(sc)
+                    .Limit(orderLimit)
+                    .FetchAll<Billing_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<BillingDetail_Record> getBillingDetail_By_BillingUuid(string pBILLING_UUID)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.BillingDetail billingdetail = new Limew.Model.Lw.Table.BillingDetail(dbc);
+                return billingdetail
+                    .Where(new SQLCondition(billingdetail).Equal(billingdetail.BILLING_UUID, pBILLING_UUID))
+                    .FetchAll<BillingDetail_Record>();
+                //return billingdetail;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getVBillingDetail_By_BillingUuid_Count(string pBillingUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VBillingDetail table = new VBillingDetail(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.BILLING_UUID, pBillingUuid)
+                   ;
+                return table.Where(sc)
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<VBillingDetail_Record> getVBillingDetail_By_BillingUuid(string pBillingUuid,OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                VBillingDetail table = new VBillingDetail(dbc);
+                var sc = new SQLCondition(table);
+                sc.Equal(table.BILLING_UUID, pBillingUuid)
+                   ;
+                return table.Where(sc)
+                    .Limit(orderLimit)
+                    .FetchAll<VBillingDetail_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public int getBilling_By_CustUuid_Keyword_Count(string pCustUuid,string pBillingIsActive, string keyword)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Billing table = new Billing(dbc);
+                var sc = new SQLCondition(table);
+                if (pCustUuid.Trim().Length > 0) {
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+                }
+
+                if (keyword.Trim().Length > 0) {
+                    sc.L()
+                        .iBLike(table.BILLING_ARREARS_PRICE, keyword).Or()
+                        .iBLike(table.BILLING_BACK_ACCOUNT_NAME, keyword).Or()
+                        .iBLike(table.BILLING_BACK_ACCOUNT_NUMBER, keyword).Or()
+                        .iBLike(table.BILLING_BACK_NAME, keyword).Or()
+                        .iBLike(table.BILLING_BACK_SUB_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CHECK_MM, keyword).Or()
+                        .iBLike(table.BILLING_CHECK_TITLE, keyword).Or()
+                        .iBLike(table.BILLING_CONTACT_USER_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CUST_ADDRESS, keyword).Or()
+                        .iBLike(table.BILLING_CUST_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CUST_UNIFORM_NUM, keyword).Or()
+                        .iBLike(table.BILLING_DISCOUNT, keyword).Or()
+                        .iBLike(table.BILLING_ID, keyword).Or()
+                        .iBLike(table.BILLING_PS, keyword).Or()
+                        .iBLike(table.BILLING_SALES_NAME, keyword).Or()
+                        .iBLike(table.BILLING_SUM_PRICE, keyword).Or()
+                        .iBLike(table.BILLING_TEL, keyword).Or()
+                        .iBLike(table.BILLING_TOTAL_PRICE, keyword)
+                        .R().And();
+
+                }
+                
+                if (pBillingIsActive.Trim().Length > 0) {
+                    sc.Equal(table.BILLING_IS_ACTIVE, pBillingIsActive).And();
+                }
+                sc.CheckSQL();
+                
+                return table.Where(sc)
+                    .FetchCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<Billing_Record> getBilling_By_CustUuid_Keyword(string pCustUuid, string pBillingIsActive,string keyword,OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Billing table = new Billing(dbc);
+                var sc = new SQLCondition(table);
+                if (pCustUuid.Trim().Length > 0)
+                {
+                    sc.Equal(table.CUST_UUID, pCustUuid).And();
+                }
+
+                if (keyword.Trim().Length > 0)
+                {
+                    sc.L()
+                        .iBLike(table.BILLING_ARREARS_PRICE, keyword).Or()
+                        .iBLike(table.BILLING_BACK_ACCOUNT_NAME, keyword).Or()
+                        .iBLike(table.BILLING_BACK_ACCOUNT_NUMBER, keyword).Or()
+                        .iBLike(table.BILLING_BACK_NAME, keyword).Or()
+                        .iBLike(table.BILLING_BACK_SUB_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CHECK_MM, keyword).Or()
+                        .iBLike(table.BILLING_CHECK_TITLE, keyword).Or()
+                        .iBLike(table.BILLING_CONTACT_USER_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CUST_ADDRESS, keyword).Or()
+                        .iBLike(table.BILLING_CUST_NAME, keyword).Or()
+                        .iBLike(table.BILLING_CUST_UNIFORM_NUM, keyword).Or()
+                        .iBLike(table.BILLING_DISCOUNT, keyword).Or()
+                        .iBLike(table.BILLING_ID, keyword).Or()
+                        .iBLike(table.BILLING_PS, keyword).Or()
+                        .iBLike(table.BILLING_SALES_NAME, keyword).Or()
+                        .iBLike(table.BILLING_SUM_PRICE, keyword).Or()
+                        .iBLike(table.BILLING_TEL, keyword).Or()
+                        .iBLike(table.BILLING_TOTAL_PRICE, keyword)
+                        .R().And();
+
+                }
+
+                if (pBillingIsActive.Trim().Length > 0)
+                {
+                    sc.Equal(table.BILLING_IS_ACTIVE, pBillingIsActive).And();
+                }
+
+                sc.CheckSQL();
+
+                return table.Where(sc)
+                    .Limit(orderLimit)
+                    .FetchAll < Billing_Record>();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<VBillingExp_Record> getVBillingExp_By_BillingUuid(string pBillingUuid,OrderLimit orderLimit)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.VBillingExp vbillingexp = new Limew.Model.Lw.Table.VBillingExp(dbc);
+                return vbillingexp.Where(new SQLCondition(vbillingexp).Equal(vbillingexp.BILLING_UUID, pBillingUuid))
+                    .Limit(orderLimit)
+                    .FetchAll<VBillingExp_Record>();
+                
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
+        public IList<Goods_Record> getGoods_By_SupplierUuid(string pSupplierUuid)
+        {
+            try
+            {
+                dbc = LK.Config.DataBase.Factory.getInfo();
+                Limew.Model.Lw.Table.Goods goods = new Limew.Model.Lw.Table.Goods(dbc);
+                return goods.Where(new SQLCondition(goods).Equal(goods.SUPPLIER_UUID, pSupplierUuid))
+                    .FetchAll<Goods_Record>();
+                //return goods;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex); LK.MyException.MyException.Error(this, ex);
+                throw ex;
+            }
+        }
+
 	}
 }

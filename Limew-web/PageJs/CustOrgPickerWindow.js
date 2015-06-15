@@ -10,21 +10,22 @@ Ext.define('WS.CustOrgPickerWindow', {
         custOrg: Ext.create('Ext.data.Store', {
             successProperty: 'success',
             autoLoad: true,
-            model: 'CUST_ORG',
+            model: 'CUST_ORG_V',
             pageSize: 10,
             proxy: {
                 type: 'direct',
                 api: {
-                    read: WS.CustAction.loadCustOrgAll
+                    read: WS.CustAction.loadCustOrgV
                 },
                 reader: {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pCustUuid', 'keyword', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pCustUuid', 'keyword','custIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     pCustUuid: '',
-                    keyword: ''
+                    keyword: '',
+                    custIsActive:'1'
                 },
                 simpleSortMode: true,
                 listeners: {

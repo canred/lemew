@@ -126,51 +126,97 @@ Ext.define('WS.ShippingStatusQueryPanel', {
                     defaults: {
                         align: 'left'
                     },
-                    items: [{
-                        text: "編輯",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'SHIPPING_STATUS_UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var main = grid.up('panel').up('panel').up('panel');
-                                if (!main.subWinShippingStatus) {
-                                    Ext.MessageBox.show({
-                                        title: '系統訊息',
-                                        icon: Ext.MessageBox.INFO,
-                                        buttons: Ext.Msg.OK,
-                                        msg: '未實現 subWinShippingStatus 物件,無法進行編輯操作!'
-                                    });
-                                    return false;
-                                };
-                                /*註冊事件*/
-                                console.log(grid.getStore().getAt(rowIndex));
-                                var subWin = Ext.create(main.subWinShippingStatus, {
-                                    param: {
-                                        shippingStatusUuid: grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_UUID
+                    items: [
+
+                        // {
+                        //     text: "編輯",
+                        //     xtype: 'actioncolumn',
+                        //     dataIndex: 'SHIPPING_STATUS_UUID',
+                        //     align: 'center',
+                        //     width: 60,
+                        //     items: [{
+                        //         tooltip: '*編輯',
+                        //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                        //         handler: function(grid, rowIndex, colIndex) {
+                        //             var main = grid.up('panel').up('panel').up('panel');
+                        //             if (!main.subWinShippingStatus) {
+                        //                 Ext.MessageBox.show({
+                        //                     title: '系統訊息',
+                        //                     icon: Ext.MessageBox.INFO,
+                        //                     buttons: Ext.Msg.OK,
+                        //                     msg: '未實現 subWinShippingStatus 物件,無法進行編輯操作!'
+                        //                 });
+                        //                 return false;
+                        //             };
+                        //             /*註冊事件*/
+                        //             console.log(grid.getStore().getAt(rowIndex));
+                        //             var subWin = Ext.create(main.subWinShippingStatus, {
+                        //                 param: {
+                        //                     shippingStatusUuid: grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_UUID
+                        //                 }
+                        //             });
+                        //             subWin.on('closeEvent', function(obj) {
+                        //                 main.down("#grdShippingStatus").getStore().load();
+                        //             }, main);
+                        //             subWin.show();
+                        //         }
+                        //     }],
+                        //     sortable: false,
+                        //     hideable: false
+                        // },
+                        {
+                            xtype: 'templatecolumn',
+                            text: '編輯',
+                            width: 60,
+                            sortable: false,
+                            hideable: false,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="ShippingStatusQueryPanelFnEdit(\'{SHIPPING_STATUS_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnInit: function() {
+                                        document.ShippingStatusQueryPanel = this.scope;
+                                        if (!document.ShippingStatusQueryPanelFnEdit) {
+                                            document.ShippingStatusQueryPanelFnEdit = function(SHIPPING_STATUS_UUID) {
+                                                var main = document.ShippingStatusQueryPanel;
+
+                                                if (!main.subWinShippingStatus) {
+                                                    Ext.MessageBox.show({
+                                                        title: '系統訊息',
+                                                        icon: Ext.MessageBox.INFO,
+                                                        buttons: Ext.Msg.OK,
+                                                        msg: '未實現 subWinShippingStatus 物件,無法進行編輯操作!'
+                                                    });
+                                                    return false;
+                                                };
+                                                /*註冊事件*/                                                
+                                                var subWin = Ext.create(main.subWinShippingStatus, {
+                                                    param: {
+                                                        shippingStatusUuid: SHIPPING_STATUS_UUID
+                                                    }
+                                                });
+                                                subWin.on('closeEvent', function(obj) {
+                                                    this.down("#grdShippingStatus").getStore().load();
+                                                }, main);
+                                                subWin.show();
+                                            }
+                                        }
+
                                     }
-                                });
-                                subWin.on('closeEvent', function(obj) {
-                                    main.down("#grdShippingStatus").getStore().load();
-                                }, main);
-                                subWin.show();
-                            }
-                        }],
-                        sortable: false,
-                        hideable: false
-                    }, {
-                        header: "出貨狀態",
-                        dataIndex: 'SHIPPING_STATUS_NAME',
-                        flex: 1
-                    }, {
-                        header: '順序',
-                        dataIndex: 'SHIPPING_STATUS_ORD',
-                        align: 'center',
-                        width: 60
-                    }]
+                                }),
+
+                        }, {
+                            header: "出貨狀態",
+                            dataIndex: 'SHIPPING_STATUS_NAME',
+                            flex: 1
+                        }, {
+                            header: '順序',
+                            dataIndex: 'SHIPPING_STATUS_ORD',
+                            align: 'center',
+                            width: 60
+                        }
+                    ]
                 },
                 tbarCfg: {
                     buttonAlign: 'right'

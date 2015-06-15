@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("PAY_METHOD", false)]
+	[TableView("PAY_METHOD", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class PayMethod_Record : RecordBase{
@@ -17,7 +17,7 @@ namespace Limew.Model.Lw.Table.Record
 		/*欄位資訊 Start*/
 		string _PAY_METHOD_UUID=null;
 		string _PAY_METHOD_NAME=null;
-		short? _PAY_METHOD_ORD=null;
+		int? _PAY_METHOD_ORD=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("PAY_METHOD_UUID",true,typeof(string))]
@@ -46,8 +46,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("PAY_METHOD_ORD",false,typeof(short?))]
-		public short? PAY_METHOD_ORD
+		[ColumnName("PAY_METHOD_ORD",false,typeof(int?))]
+		public int? PAY_METHOD_ORD
 		{
 			set
 			{
@@ -79,16 +79,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180347*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_PayMethodUuid()
+		public List<CustOrder_Record> Link_CustOrder_By_PayMethodUuid()
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.PAY_METHOD_UUID,this.PAY_METHOD_UUID))
-					.FetchAll<VCustOrder_Record>() ; 
+					.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -97,18 +97,18 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180348*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_PayMethodUuid(OrderLimit limit)
+		public List<CustOrder_Record> Link_CustOrder_By_PayMethodUuid(OrderLimit limit)
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.PAY_METHOD_UUID,this.PAY_METHOD_UUID))
 					.Order(limit)
 					.Limit(limit)
-					.FetchAll<VCustOrder_Record>() ; 
+					.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -117,11 +117,11 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180357*/
-		public VCustOrder LinkFill_VCustOrder_By_PayMethodUuid()
+		public CustOrder LinkFill_CustOrder_By_PayMethodUuid()
 		{
 			try{
-				var data = Link_VCustOrder_By_PayMethodUuid();
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_PayMethodUuid();
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){
@@ -130,11 +130,11 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180358*/
-		public VCustOrder LinkFill_VCustOrder_By_PayMethodUuid(OrderLimit limit)
+		public CustOrder LinkFill_CustOrder_By_PayMethodUuid(OrderLimit limit)
 		{
 			try{
-				var data = Link_VCustOrder_By_PayMethodUuid(limit);
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_PayMethodUuid(limit);
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

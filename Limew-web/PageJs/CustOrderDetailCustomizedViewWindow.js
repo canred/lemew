@@ -249,54 +249,88 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
                     flex: 1,
                     border: true,
                     autoScroll: true,
-                    columns: [{
-                        text: "",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*編輯備註',
-                            icon: SYSTEM_URL_ROOT + '/css/custimages/edit.gif',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var mainWin = grid.up('window');
-                                var subWin = Ext.create('WS.FileWindow', {
-                                    param: {
-                                        fileUuid: grid.getStore().getAt(rowIndex).data.FILE_UUID,
-                                        parentObj: mainWin
+                    columns: [
+                        // {                        
+                        //     text: "",
+                        //     xtype: 'actioncolumn',
+                        //     dataIndex: 'UUID',
+                        //     align: 'center',
+                        //     width: 60,
+                        //     items: [{
+                        //         tooltip: '*編輯備註',
+                        //         icon: SYSTEM_URL_ROOT + '/css/custimages/edit.gif',
+                        //         handler: function(grid, rowIndex, colIndex) {
+                        //             var mainWin = grid.up('window');
+                        //             var subWin = Ext.create('WS.FileWindow', {
+                        //                 param: {
+                        //                     fileUuid: grid.getStore().getAt(rowIndex).data.FILE_UUID,
+                        //                     parentObj: mainWin
+                        //                 }
+                        //             });
+                        //             subWin.on('closeEvent', function() {
+                        //                 var store = mainWin.down('#grdFile').getStore();
+                        //                 store.reload();
+                        //             });
+                        //             subWin.show();
+                        //         }
+                        //     }],
+                        //     sortable: false,
+                        //     hideable: false
+                        // },
+                        {
+                            xtype: 'templatecolumn',
+                            text: '編輯備註',
+                            width: 100,
+                            sortable: false,
+                            hideable: false,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:80px" value="編輯備註" onclick="CustOrderDetailCustomizedViewWindowFnEditPs(\'{FILE_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnInit: function() {
+                                        document.CustOrderDetailCustomizedView = this.scope;
+                                        if (!document.CustOrderDetailCustomizedViewWindowFnEditPs) {
+                                            document.CustOrderDetailCustomizedViewWindowFnEditPs = function(FILE_UUID) {
+                                                var mainWin = this.scope;
+                                                var subWin = Ext.create('WS.FileWindow', {
+                                                    param: {
+                                                        fileUuid: FILE_UUID,
+                                                        parentObj: mainWin
+                                                    }
+                                                });
+                                                subWin.on('closeEvent', function() {
+                                                    var store = document.CustOrderDetailCustomizedView.down('#grdFile').getStore();
+                                                    store.reload();
+                                                });
+                                                subWin.show();
+                                            }
+                                        }
                                     }
-                                });
-                                subWin.on('closeEvent', function() {
-                                    var store = mainWin.down('#grdFile').getStore();
-                                    store.reload();
-                                });
-                                subWin.show();
-                            }
-                        }],
-                        sortable: false,
-                        hideable: false
-                    }, {
-                        text: "名稱",
-                        dataIndex: 'FILE_NAME',
-                        align: 'left',
-                        renderer: function(value, r) {
-                            var html = '<a target="_BLANK" href="';
-                            html += SYSTEM_URL_ROOT + (r.record.data['FILE_PATH'].replace('~', ''));
-                            html += '">' + value + '</a>'
-                            return html;
-                        },
-                        width:200
-                    }, {
-                        text: "備註",
-                        dataIndex: 'FILE_PS',
-                        align: 'left',
-                        flex: 2
-                    }, {
-                        text: "建立時間",
-                        dataIndex: 'FILE_CR',
-                        align: 'left',
-                        width: 140
-                    }],
+                                })
+                        }, {
+                            text: "名稱",
+                            dataIndex: 'FILE_NAME',
+                            align: 'left',
+                            renderer: function(value, r) {
+                                var html = '<a target="_BLANK" href="';
+                                html += SYSTEM_URL_ROOT + (r.record.data['FILE_PATH'].replace('~', ''));
+                                html += '">' + value + '</a>'
+                                return html;
+                            },
+                            width: 200
+                        }, {
+                            text: "備註",
+                            dataIndex: 'FILE_PS',
+                            align: 'left',
+                            flex: 2
+                        }, {
+                            text: "建立時間",
+                            dataIndex: 'FILE_CR',
+                            align: 'left',
+                            width: 140
+                        }
+                    ],
                     height: 310
                 }]
             }, {
@@ -357,7 +391,7 @@ Ext.define('WS.CustOrderDetailCustomizedViewWindow', {
     },
     listeners: {
         'show': function() {
-this.mask("資訊載入中…請稍後…");
+            this.mask("資訊載入中…請稍後…");
             if (this.param.custOrderUuid) {
                 this.down("#CUST_ORDER_UUID").setValue(this.param.custOrderUuid);
             };

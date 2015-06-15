@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("SHIPPING_ID", false)]
+	[TableView("SHIPPING_ID", true)]
 	public partial class ShippingId : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -209,6 +209,66 @@ namespace Limew.Model.Lw.Table
 									.Equal(this.SHIPPING_ID_UUID,pshipping_id_uuid)
 				).FetchAll<ShippingId_Record>(db)  ;  
 				return ret.First();
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<ShippingId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<ShippingId_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<ShippingId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<ShippingId_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<ShippingId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<ShippingId_Record>(this.AllRecord(),db);   
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

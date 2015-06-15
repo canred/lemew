@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("UNIT", false)]
+	[TableView("UNIT", true)]
 	public partial class Unit : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -212,6 +212,66 @@ namespace Limew.Model.Lw.Table
 									.Equal(this.UNIT_UUID,pUNIT_UUID)
 				).FetchAll<Unit_Record>(db)  ;  
 				return ret.First();
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<Unit_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<Unit_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<Unit_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<Unit_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<Unit_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<Unit_Record>(this.AllRecord(),db);   
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

@@ -143,94 +143,136 @@ Ext.define('WS.SupplierQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "編輯",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinSupplier) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinSupplier 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinSupplier, {});
-                            subWin.on('closeEvent', function(obj) {
-                                main.down("#grdSupplierQuery").getStore().load();
-                            }, main);
-                            subWin.param.supplierUuid = grid.getStore().getAt(rowIndex).data.SUPPLIER_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: "廠商名稱",
-                    dataIndex: 'SUPPLIER_NAME',
-                    align: 'left',
-                    width:200
-                }, {
-                    header: "廠商電話",
-                    align: 'left',
-                    dataIndex: 'SUPPLIER_TEL',
-                    flex: 1
-                }, {
-                    header: "廠商傳真",
-                    dataIndex: 'SUPPLIER_FAX',
-                    align: 'left',
-                    hidden:true,
-                    flex: 1
-                }, {
-                    header: '廠商地址',
-                    dataIndex: 'SUPPLIER_ADDRESS',
-                    align: 'center',
-                    hidden:true,
-                    flex: 1
-                }, {
-                    header: '聯絡人',
-                    dataIndex: 'SUPPLIER_CONTACT_NAME',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '聯絡人電話',
-                    dataIndex: 'SUPPLIER_CONTACT_PHONE',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '聯絡人email',
-                    dataIndex: 'SUPPLIER_CONTACT_EMAIL',
-                    align: 'center',hidden:true,
-                    flex: 1
-                }, {
-                    header: '業務員',
-                    dataIndex: 'SUPPLIER_SALES_NAME',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '業務員電話',
-                    dataIndex: 'SUPPLIER_SALES_NAME',
-                    align: 'center',
-                    flex: 1
-                }, {
-                    header: '業務員email',
-                    dataIndex: 'SUPPLIER_SALES_EMAIL',
-                    align: 'center',hidden:true,
-                    flex: 1
-                }, {
-                    header: '備註',
-                    dataIndex: 'SUPPLIER_PS',
-                    align: 'center',
-                    flex: 1
-                }],
+                columns: [
+                    // {
+                    //     text: "編輯",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [{
+                    //         tooltip: '*編輯',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinSupplier) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinSupplier 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             var subWin = Ext.create(main.subWinSupplier, {});
+                    //             subWin.on('closeEvent', function(obj) {
+                    //                 main.down("#grdSupplierQuery").getStore().load();
+                    //             }, main);
+                    //             subWin.param.supplierUuid = grid.getStore().getAt(rowIndex).data.SUPPLIER_UUID;
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="SupplierQueryPanelFnEdit(\'{SUPPLIER_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.SupplierQueryPanel = this.scope;
+                                    if (!document.SupplierQueryPanelFnEdit) {
+                                        document.SupplierQueryPanelFnEdit = function(SUPPLIER_UUID) {
+                                            var main = document.SupplierQueryPanel;
+                                            if (!main.subWinSupplier) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinSupplier 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinSupplier, {});
+                                            subWin.on('closeEvent', function(obj) {
+                                                this.down("#grdSupplierQuery").getStore().load();
+                                            }, main);
+                                            subWin.param.supplierUuid = SUPPLIER_UUID;
+                                            subWin.show();
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        header: "廠商名稱",
+                        dataIndex: 'SUPPLIER_NAME',
+                        align: 'left',
+                        width: 200
+                    }, {
+                        header: "廠商電話",
+                        align: 'left',
+                        dataIndex: 'SUPPLIER_TEL',
+                        flex: 1
+                    }, {
+                        header: "廠商傳真",
+                        dataIndex: 'SUPPLIER_FAX',
+                        align: 'left',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '廠商地址',
+                        dataIndex: 'SUPPLIER_ADDRESS',
+                        align: 'center',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '聯絡人',
+                        dataIndex: 'SUPPLIER_CONTACT_NAME',
+                        align: 'center',
+                        flex: 1
+                    }, {
+                        header: '聯絡人電話',
+                        dataIndex: 'SUPPLIER_CONTACT_PHONE',
+                        align: 'center',
+                        flex: 1
+                    }, {
+                        header: '聯絡人email',
+                        dataIndex: 'SUPPLIER_CONTACT_EMAIL',
+                        align: 'center',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '業務員',
+                        dataIndex: 'SUPPLIER_SALES_NAME',
+                        align: 'center',
+                        flex: 1
+                    }, {
+                        header: '業務員電話',
+                        dataIndex: 'SUPPLIER_SALES_NAME',
+                        align: 'center',
+                        flex: 1
+                    }, {
+                        header: '業務員email',
+                        dataIndex: 'SUPPLIER_SALES_EMAIL',
+                        align: 'center',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '備註',
+                        dataIndex: 'SUPPLIER_PS',
+                        align: 'center',
+                        flex: 1
+                    }
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },

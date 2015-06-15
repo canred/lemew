@@ -22,10 +22,10 @@ Ext.define('WS.MyOrderQueryPanel', {
                     root: 'data'
                 },
                 paramsAsHash: true,
-                paramOrder: ['pKeyword','pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
+                paramOrder: ['pKeyword', 'pSupplierIsActive', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
                     'pKeyword': '',
-                    pSupplierIsActive:'1|0'
+                    pSupplierIsActive: '1|0'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -184,55 +184,128 @@ Ext.define('WS.MyOrderQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "編輯",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'MY_ORDER_UUID',
-                    align: 'center',
+                columns: [
+                // {
+                //     text: "編輯",
+                //     xtype: 'actioncolumn',
+                //     dataIndex: 'MY_ORDER_UUID',
+                //     align: 'center',
+                //     width: 60,
+                //     items: [{
+                //         tooltip: '*編輯',
+                //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                //         handler: function(grid, rowIndex, colIndex) {
+                //             var main = grid.up('panel').up('panel').up('panel');
+                //             if (!main.subWinMyOrder) {
+                //                 Ext.MessageBox.show({
+                //                     title: '系統訊息',
+                //                     icon: Ext.MessageBox.INFO,
+                //                     buttons: Ext.Msg.OK,
+                //                     msg: '未實現 subWinMyOrder 物件,無法進行編輯操作!'
+                //                 });
+                //                 return false;
+                //             };
+                //             var subWin = Ext.create(main.subWinMyOrder, {
+                //                 subWinMyOrderOrder: 'WS.MyOrderWindow',
+                //                 param: {
+                //                     myOrderUuid: grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID
+                //                 }
+                //             });
+                //             subWin.on('closeEvent', function(obj) {
+                //                 main.down("#grdMyOrderQuery").getStore().load();
+                //             }, main);
+                //             subWin.show();
+                //         }
+                //     }, {
+                //         tooltip: '*刪除',
+                //         icon: SYSTEM_URL_ROOT + '/css/custimages/delete16x16.png',
+                //         handler: function(grid, rowIndex, colIndex) {
+                //             var main = grid.up('panel').up('panel').up('panel');
+                //             Ext.MessageBox.confirm('刪除訂貨項目操作', '確定刪除這一個訂貨紀錄?', function(result) {
+                //                 if (result == 'yes') {
+                //                     WS.MyOrderAction.destoryMyOrder(grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID, function(obj, jsonObj) {
+                //                         if (jsonObj.result.success) {
+                //                             this.myStore.myOrder.reload();
+                //                         }
+                //                     }, this);
+                //                 }
+                //             }, main);
+                //         }
+                //     }],
+                //     sortable: false,
+                //     hideable: false
+                // }, 
+
+                {
+                    xtype: 'templatecolumn',
+                    text: '編輯',
                     width: 60,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinMyOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinMyOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinMyOrder, {
-                                subWinMyOrderOrder: 'WS.MyOrderWindow',
-                                param: {
-                                    myOrderUuid: grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID
-                                }
-                            });
-                            subWin.on('closeEvent', function(obj) {
-                                main.down("#grdMyOrderQuery").getStore().load();
-                            }, main);
-                            subWin.show();
-                        }
-                    }, {
-                        tooltip: '*刪除',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/delete16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            Ext.MessageBox.confirm('刪除訂貨項目操作', '確定刪除這一個訂貨紀錄?', function(result) {
-                                if (result == 'yes') {
-                                    WS.MyOrderAction.destoryMyOrder(grid.getStore().getAt(rowIndex).data.MY_ORDER_UUID, function(obj, jsonObj) {
-                                        if (jsonObj.result.success) {
-                                            this.myStore.myOrder.reload();
-                                        }
-                                    }, this);
-                                }
-                            }, main);
-                        }
-                    }],
                     sortable: false,
-                    hideable: false
+                    hideable: false,
+                    tpl: new Ext.XTemplate(
+                        "<tpl >",
+                        '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="MyOrderQueryPanelFnEdit(\'{MY_ORDER_UUID}\')"/>',
+                        "</tpl>", {
+                            scope: this,
+                            fnInit: function() {
+                                document.MyOrderQueryPanel = this.scope;
+                                if (!document.MyOrderQueryPanelFnEdit) {
+                                    document.MyOrderQueryPanelFnEdit = function(MY_ORDER_UUID) {
+                                        var main = document.MyOrderQueryPanel;
+                                        if (!main.subWinMyOrder) {
+                                            Ext.MessageBox.show({
+                                                title: '系統訊息',
+                                                icon: Ext.MessageBox.INFO,
+                                                buttons: Ext.Msg.OK,
+                                                msg: '未實現 subWinMyOrder 物件,無法進行編輯操作!'
+                                            });
+                                            return false;
+                                        };
+                                        var subWin = Ext.create(main.subWinMyOrder, {
+                                            subWinMyOrderOrder: 'WS.MyOrderWindow',
+                                            param: {
+                                                myOrderUuid: MY_ORDER_UUID
+                                            }
+                                        });
+                                        subWin.on('closeEvent', function(obj) {
+                                            document.MyOrderQueryPanel.down("#grdMyOrderQuery").getStore().load();
+                                        }, main);
+                                        subWin.show();
+                                    }
+                                }
+
+                            }
+                        }),
+
+                }, {
+                    xtype: 'templatecolumn',
+                    text: '刪除',
+                    width: 60,
+                    sortable: false,
+                    hideable: false,
+                    tpl: new Ext.XTemplate(
+                        "<tpl >",
+                        '{[this.fnInit()]}<input type="button" style="width:50px" value="刪除" onclick="MyOrderQueryPanelFnDelete(\'{MY_ORDER_UUID}\')"/>',
+                        "</tpl>", {
+                            scope: this,
+                            fnInit: function() {
+                                document.MyOrderQueryPanel = this.scope;
+                                if (!document.MyOrderQueryPanelFnDelete) {
+                                    document.MyOrderQueryPanelFnDelete = function(MY_ORDER_UUID) {
+                                        var main = document.MyOrderQueryPanel;
+                                        Ext.MessageBox.confirm('刪除訂貨項目操作', '確定刪除這一個訂貨紀錄?', function(result) {
+                                            if (result == 'yes') {
+                                                WS.MyOrderAction.destoryMyOrder(MY_ORDER_UUID, function(obj, jsonObj) {
+                                                    if (jsonObj.result.success) {
+                                                        this.myStore.myOrder.reload();
+                                                    }
+                                                }, this);
+                                            }
+                                        }, main);
+                                    }
+                                }
+                            }
+                        })
                 }, {
                     header: "訂貨編號",
                     dataIndex: 'MY_ORDER_ID',

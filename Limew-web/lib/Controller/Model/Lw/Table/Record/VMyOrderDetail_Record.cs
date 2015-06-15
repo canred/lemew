@@ -34,6 +34,7 @@ namespace Limew.Model.Lw.Table.Record
 		decimal? _MY_ORDER_DETAIL_PRICE=null;
 		decimal? _MY_ORDER_DETAIL_TOTAL_PRICE=null;
 		string _SUPPLIER_GOODS_UUID=null;
+		string _MY_ORDER_DETAIL_PS=null;
 		string _MY_ORDER_DETAIL_ATTENDANT_C_NAME=null;
 		string _UNIT_UUID=null;
 		string _MY_ORDER_DETAIL_UNIT_NAME=null;
@@ -284,6 +285,19 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _SUPPLIER_GOODS_UUID;
+			}
+		}
+
+		[ColumnName("MY_ORDER_DETAIL_PS",false,typeof(string))]
+		public string MY_ORDER_DETAIL_PS
+		{
+			set
+			{
+				_MY_ORDER_DETAIL_PS=value;
+			}
+			get
+			{
+				return _MY_ORDER_DETAIL_PS;
 			}
 		}
 

@@ -240,7 +240,8 @@ Ext.define('WS.GroupQueryPanel', {
                 store: this.myStore.grouphead,
                 padding: 5,
                 border: true,
-                columns: [{
+                columns: [
+                {
                     text: "編輯",
                     xtype: 'actioncolumn',
                     dataIndex: 'UUID',
@@ -265,7 +266,9 @@ Ext.define('WS.GroupQueryPanel', {
                     }],
                     sortable: false,
                     hideable: false
-                }, {
+                },
+
+                 {
                     header: "群組繁中",
                     dataIndex: 'NAME_ZH_TW',
                     align: 'left',

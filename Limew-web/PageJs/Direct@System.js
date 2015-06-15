@@ -11,3 +11,4 @@ Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayMethodAction"));
 Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".PayStatusAction"));
 Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".UnitAction"));
 Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".MyOrderAction"));
+Ext.direct.Manager.addProvider(eval(SYSTEM_APPLICATION + ".BillingAction"));

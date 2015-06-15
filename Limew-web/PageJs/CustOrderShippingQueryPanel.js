@@ -465,203 +465,270 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                 listeners: {
 
                 },
-                columns: [{
-                    text: "",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 30,
-                    items: [{
-                        tooltip: '*查看',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCustOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCustOrder, {});
+                columns: [
+                    // {
+                    //     text: "",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 30,
+                    //     items: [{
+                    //         tooltip: '*查看',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinCustOrder) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             var subWin = Ext.create(main.subWinCustOrder, {});
 
-                            subWin.on('closeEvent', function(obj) {}, main);
-                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    text: "",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 30,
-                    items: [{
-                        tooltip: '*退回到訂單狀態',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/back16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                    //             subWin.on('closeEvent', function(obj) {}, main);
+                    //             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                    //             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }
+                    {
+                        xtype: 'templatecolumn',
+                        text: '查看',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="查看" onclick="CustOrderShippingQueryPanelFnView(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderShippingQueryPanel = this.scope;
+                                    if (!document.CustOrderShippingQueryPanelFnView) {
+                                        document.CustOrderShippingQueryPanelFnView = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.CustOrderShippingQueryPanel;
+                                            var subWin = Ext.create('WS.CustOrderStep1ViewWindow', {});
+                                            subWin.on('closeEvent', function(obj) {}, main);
+                                            subWin.param.custOrderUuid = CUST_ORDER_UUID;
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+                                        }
+                                    }
 
-                            if (grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_UUID != 'SS_INPROCESS') {
-                                Ext.MessageBox.show({
-                                    title: '系統提示',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '此訂單狀態為「' + grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_NAME + '」無法執行退回操作'
-                                });
-                                return;
-                            };
-
-                            Ext.MessageBox.confirm('請確認', '將此單退回到訂單狀態?', function(result) {
-                                if (result == 'yes') {
-                                    WS.CustAction.backToOrder(custOrderUuid, function(obj, jsonObj) {
-                                        //alert(jsonObj.result.CUST_ORDER_UUID);
-                                        var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
-                                        this.myStore.vcustorder.remove(findData);
-                                    }, this);
                                 }
-                            }, main);
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: '建立日期',
-                    dataIndex: 'CUST_ORDER_CR',
-                    align: 'left',hidden:true,
-                    width: 100
-                },
-                {
-                    header: "訂單編號",
-                    dataIndex: 'CUST_ORDER_ID',
-                    align: 'left',
-                    width: 130
-                }, {
-                    header: "公司名稱",
-                    dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "公司電話",
-                    align: 'left',
-                    dataIndex: 'CUST_TEL',
-                    width: 120
-                }, {
-                    header: "單位",
-                    dataIndex: 'CUST_ORDER_DEPT',
-                    align: 'left',
-                    width: 80
-                }, {
-                    header: '採購員',
-                    dataIndex: 'CUST_ORG_SALES_NAME',
-                    align: 'left',
-                    width: 80
-                }, {
-                    header: '聯絡電話',
-                    dataIndex: 'CUST_ORG_SALES_PHONE',
-                    align: 'left',
-                    width: 120,
-                    hidden: false
-                },  {
-                    xtype: 'templatecolumn',
-                    header: '發票號碼',
-                    dataIndex: 'CUST_ORDER_INVOICE_NUMBER',
-                    align: 'right',
-                    width: 150,
-                    layout: 'hbox',
-                    tpl: new Ext.XTemplate(
-                        "<tpl if='SHIPPING_STATUS_UUID == \"SS_INPROCESS\"'>",
-                        '<input readonly type="text" style="width:130px;background-color:#75D966" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
-                        "<tpl else>",
-                        '{CUST_ORDER_INVOICE_NUMBER}',
-                        "</tpl>"),
-                    editor: {
-                        xtype: 'textfield',
-                        flex: 1,
-                        listeners: {
-                            focus: function(obj, eOpts) {
-                                var mainPanel = obj.up('panel').up('panel').up('panel');
+                            }),
+
+                    },
+                    // {
+                    //     text: "",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 30,
+                    //     items: [{
+                    //         tooltip: '*退回到訂單狀態',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/back16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+
+                    //             if (grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_UUID != 'SS_INPROCESS') {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統提示',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '此訂單狀態為「' + grid.getStore().getAt(rowIndex).data.SHIPPING_STATUS_NAME + '」無法執行退回操作'
+                    //                 });
+                    //                 return;
+                    //             };
+
+                    //             Ext.MessageBox.confirm('請確認', '將此單退回到訂單狀態?', function(result) {
+                    //                 if (result == 'yes') {
+                    //                     WS.CustAction.backToOrder(custOrderUuid, function(obj, jsonObj) {
+                    //                         //alert(jsonObj.result.CUST_ORDER_UUID);
+                    //                         var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
+                    //                         this.myStore.vcustorder.remove(findData);
+                    //                     }, this);
+                    //                 }
+                    //             }, main);
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }
+
+                    {
+                        xtype: 'templatecolumn',
+                        text: '退回',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="退回" onclick="CustOrderShippingQueryPanelFnBack(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderShippingQueryPanel = this.scope;
+                                    if (!document.CustOrderShippingQueryPanelFnBack) {
+                                        document.CustOrderShippingQueryPanelFnBack = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.CustOrderShippingQueryPanel;
+                                            var custOrderUuid = CUST_ORDER_UUID;
+                                            Ext.MessageBox.confirm('請確認', '將此單退回到訂單狀態?', function(result) {
+                                                if (result == 'yes') {
+                                                    WS.CustAction.backToOrder(custOrderUuid, function(obj, jsonObj) {
+                                                        var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
+                                                        this.myStore.vcustorder.remove(findData);
+                                                    }, this);
+                                                }
+                                            }, main);
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        header: '製單日期',
+                        dataIndex: 'CUST_ORDER_REPORT_DATE',
+                        align: 'left',
+                        hidden: true,
+                        width: 100
+                    }, {
+                        header: "訂單編號",
+                        dataIndex: 'CUST_ORDER_ID',
+                        align: 'left',
+                        width: 110
+                    }, {
+                        header: "公司名稱",
+                        dataIndex: 'CUST_NAME',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: "公司電話",
+                        align: 'left',
+                        dataIndex: 'CUST_TEL',
+                        width: 120,
+                        hidden: true
+                    }, {
+                        header: "單位",
+                        dataIndex: 'CUST_ORDER_DEPT',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: '採購員',
+                        dataIndex: 'CUST_ORG_SALES_NAME',
+                        align: 'left',
+                        width: 60
+                    }, {
+                        header: '聯絡電話',
+                        dataIndex: 'CUST_ORG_SALES_PHONE',
+                        align: 'left',
+                        width: 100,
+                        hidden: false
+                    }, {
+                        xtype: 'templatecolumn',
+                        header: '發票號碼',
+                        dataIndex: 'CUST_ORDER_INVOICE_NUMBER',
+                        align: 'right',
+                        width: 150,
+                        layout: 'hbox',
+                        tpl: new Ext.XTemplate(
+                            "<tpl if='SHIPPING_STATUS_UUID == \"SS_INPROCESS\"'>",
+                            '<input readonly type="text" style="width:130px;background-color:#75D966" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
+                            "<tpl else>",
+                            '{CUST_ORDER_INVOICE_NUMBER}',
+                            "</tpl>"),
+                        editor: {
+                            xtype: 'textfield',
+                            flex: 1,
+                            listeners: {
+                                focus: function(obj, eOpts) {
+                                    var mainPanel = obj.up('panel').up('panel').up('panel');
 
 
-                                if (mainPanel.param.editRecord.data.SHIPPING_STATUS_UUID != "SS_INPROCESS") {
-                                    obj.setReadOnly(true);
-                                } else {
-                                    obj.setReadOnly(false);
+                                    if (mainPanel.param.editRecord.data.SHIPPING_STATUS_UUID != "SS_INPROCESS") {
+                                        obj.setReadOnly(true);
+                                    } else {
+                                        obj.setReadOnly(false);
+                                    }
                                 }
                             }
                         }
+                    }, {
+                        header: '金額',
+                        dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                        align: 'right',
+                        width: 80,renderer: function (value,r) {                            
+                            return Ext.String.format('${0}', value);
+                        }  
+                    },
+                    // {
+                    //     header: "訂單編號",
+                    //     dataIndex: 'CUST_ORDER_ID',
+                    //     align: 'left',
+                    //     width: 150
+                    // },
+                    {
+                        header: "出貨編號",
+                        dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
+                        align: 'left',
+                        width: 120
+                    }, {
+                        header: "出貨地址",
+                        dataIndex: 'SHIPPING_ADDRESS',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: '採購員電話',
+                        dataIndex: 'CUST_SALES_PHONE',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: "傳真",
+                        dataIndex: 'CUST_FAX',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '地址',
+                        dataIndex: 'CUST_ADDRESS',
+                        align: 'left',
+                        width: 150,
+                        hidden: true
+                    }, {
+                        header: '採購員email',
+                        dataIndex: 'CUST_SALES_EMAIL',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '出貨狀態',
+                        dataIndex: 'SHIPPING_STATUS_NAME',
+                        align: 'left',
+                        width: 100
+                    }, {
+                        xtype: 'templatecolumn',
+                        header: '備註',
+                        dataIndex: 'CUST_ORDER_PS',
+                        align: 'center',
+                        width: 140,
+                        layout: 'hbox',
+                        tpl: new Ext.XTemplate(
+                            "<tpl if='CUST_ORDER_PS != \"\"'>",
+                            '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                            "<tpl else>",
+                            '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                            "</tpl>")
                     }
-                }, {
-                    header: '金額',
-                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    width: 80
-                },
-                // {
-                //     header: "訂單編號",
-                //     dataIndex: 'CUST_ORDER_ID',
-                //     align: 'left',
-                //     width: 150
-                // },
-                 {
-                    header: "出貨編號",
-                    dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "出貨地址",
-                    dataIndex: 'SHIPPING_ADDRESS',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: '採購員電話',
-                    dataIndex: 'CUST_SALES_PHONE',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: "傳真",
-                    dataIndex: 'CUST_FAX',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '地址',
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: '採購員email',
-                    dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '出貨狀態',
-                    dataIndex: 'SHIPPING_STATUS_NAME',
-                    align: 'left',
-                    width:120
-                }, {
-                    xtype: 'templatecolumn',
-                    header: '備註',
-                    dataIndex: 'CUST_ORDER_PS',
-                    align: 'center',
-                    width: 140,
-                    layout: 'hbox',
-                    tpl: new Ext.XTemplate(
-                        "<tpl if='CUST_ORDER_PS != \"\"'>",
-                        '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
-                        "<tpl else>",
-                        '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
-                        "</tpl>")
-                }],
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },
@@ -678,7 +745,8 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                         var mainPanel = this.up('panel').up('panel').up('panel');
                         var updateData = "";
                         Ext.each(mainPanel.myStore.vcustorder.data.items, function(item) {
-                            updateData += item.data.CUST_ORDER_UUID + ",," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
+                            updateData += item.data.CUST_ORDER_UUID + "``" + item.data.CUST_ORDER_INVOICE_NUMBER + "`" + item.data.CUST_ORDER_PAY_PS + "|";
+                            //updateData += item.data.CUST_ORDER_UUID + "`" + item.data.PAY_METHOD_UUID + "`" + item.data.CUST_ORDER_INVOICE_NUMBER + "`"+ item.data.CUST_ORDER_PAY_PS+ "|";
                         });
 
                         WS.CustAction.batchUpdateCustOrderInvoice(updateData, function(obj, jsonObj) {
@@ -711,30 +779,52 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                             if (main.myStore.vcustorder.getModifiedRecords().length > 0) {
                                 var updateData = "";
                                 Ext.each(main.myStore.vcustorder.data.items, function(item) {
-                                    updateData += item.data.CUST_ORDER_UUID + ",," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
+                                    //updateData += item.data.CUST_ORDER_UUID + ",," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
+                                    updateData += item.data.CUST_ORDER_UUID + "``" + item.data.CUST_ORDER_INVOICE_NUMBER + "`" + item.data.CUST_ORDER_PAY_PS + "|";
                                 });
+
+
+
+
 
                                 WS.CustAction.batchUpdateCustOrderInvoice(updateData, function(obj, jsonObj) {
 
                                     var postData = '';
-                                    var hasAddressEmpty = false;
+                                    // var hasAddressEmpty = false;
                                     Ext.each(selectRecord, function(item) {
-                                        if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
-                                            postData += item.data.CUST_ORDER_UUID + "|";
-                                        } else {
-                                            hasAddressEmpty = true;
-                                        };
+                                        // if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
+                                        postData += item.data.CUST_ORDER_UUID + "|";
+                                        // } else {
+                                        //     hasAddressEmpty = true;
+                                        // };
                                     });
 
-                                    if (hasAddressEmpty == true) {
+                                    var hasErrorData = false;
+                                    Ext.each(selectRecord, function(item) {
+                                        if (item.data.CUST_ORDER_INVOICE_NUMBER == "") {
+                                            hasErrorData = true;
+                                        }
+                                    });
+
+                                    if (hasErrorData) {
                                         Ext.MessageBox.show({
-                                            title: '操作提示',
+                                            title: '系統提示',
                                             icon: Ext.MessageBox.INFO,
                                             buttons: Ext.Msg.OK,
-                                            msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                                            msg: '有部份訂單的發票號為空，所以停止操作!'
                                         });
                                         return;
                                     };
+
+                                    // if (hasAddressEmpty == true) {
+                                    //     Ext.MessageBox.show({
+                                    //         title: '操作提示',
+                                    //         icon: Ext.MessageBox.INFO,
+                                    //         buttons: Ext.Msg.OK,
+                                    //         msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                                    //     });
+                                    //     return;
+                                    // };
 
                                     if (postData.length == 0) {
                                         return;
@@ -761,24 +851,41 @@ Ext.define('WS.CustOrderShippingQueryPanel', {
                                 }, main);
                             } else {
                                 var postData = '';
-                                var hasAddressEmpty = false;
+                                //var hasAddressEmpty = false;
                                 Ext.each(selectRecord, function(item) {
-                                    if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
-                                        postData += item.data.CUST_ORDER_UUID + "|";
-                                    } else {
-                                        hasAddressEmpty = true;
-                                    };
+                                    //if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
+                                    postData += item.data.CUST_ORDER_UUID + "|";
+                                    // } else {
+                                    //     hasAddressEmpty = true;
+                                    // };
+                                });
+                                var hasErrorData = false;
+                                Ext.each(selectRecord, function(item) {
+                                    if (item.data.CUST_ORDER_INVOICE_NUMBER == "") {
+                                        hasErrorData = true;
+                                    }
                                 });
 
-                                if (hasAddressEmpty == true) {
+                                if (hasErrorData) {
                                     Ext.MessageBox.show({
-                                        title: '操作提示',
+                                        title: '系統提示',
                                         icon: Ext.MessageBox.INFO,
                                         buttons: Ext.Msg.OK,
-                                        msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                                        msg: '有部份訂單的發票號為空，所以停止操作!'
                                     });
                                     return;
                                 };
+                                // if (hasAddressEmpty == true) {
+                                //     Ext.MessageBox.show({
+                                //         title: '操作提示',
+                                //         icon: Ext.MessageBox.INFO,
+                                //         buttons: Ext.Msg.OK,
+                                //         msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                                //     });
+                                //     return;
+                                // };
+
+
 
                                 if (postData.length == 0) {
                                     return;

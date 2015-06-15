@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("UNIT", false)]
+	[TableView("UNIT", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class Unit_Record : RecordBase{

@@ -126,51 +126,95 @@ Ext.define('WS.UnitQueryPanel', {
                     defaults: {
                         align: 'left'
                     },
-                    items: [{
-                        text: "編輯",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'UNIT_UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var main = grid.up('panel').up('panel').up('panel');
-                                if (!main.subWinUnit) {
-                                    Ext.MessageBox.show({
-                                        title: '系統訊息',
-                                        icon: Ext.MessageBox.INFO,
-                                        buttons: Ext.Msg.OK,
-                                        msg: '未實現 subWinUnit 物件,無法進行編輯操作!'
-                                    });
-                                    return false;
-                                };
-                                /*註冊事件*/
-                                var subWin = Ext.create(main.subWinUnit, {
-                                    param: {
-                                        unitUuid: grid.getStore().getAt(rowIndex).data.UNIT_UUID
+                    items: [
+                        // {
+                        //     text: "編輯",
+                        //     xtype: 'actioncolumn',
+                        //     dataIndex: 'UNIT_UUID',
+                        //     align: 'center',
+                        //     width: 60,
+                        //     items: [{
+                        //         tooltip: '*編輯',
+                        //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                        //         handler: function(grid, rowIndex, colIndex) {
+                        //             var main = grid.up('panel').up('panel').up('panel');
+                        //             if (!main.subWinUnit) {
+                        //                 Ext.MessageBox.show({
+                        //                     title: '系統訊息',
+                        //                     icon: Ext.MessageBox.INFO,
+                        //                     buttons: Ext.Msg.OK,
+                        //                     msg: '未實現 subWinUnit 物件,無法進行編輯操作!'
+                        //                 });
+                        //                 return false;
+                        //             };
+                        //             /*註冊事件*/
+                        //             var subWin = Ext.create(main.subWinUnit, {
+                        //                 param: {
+                        //                     unitUuid: grid.getStore().getAt(rowIndex).data.UNIT_UUID
+                        //                 }
+                        //             });
+                        //             subWin.on('closeEvent', function(obj) {
+                        //                 main.down("#grdUnitQuery").getStore().load();
+                        //             }, main);
+                        //             subWin.show();
+                        //         }
+                        //     }],
+                        //     sortable: false,
+                        //     hideable: false
+                        // },
+                        {
+                            xtype: 'templatecolumn',
+                            text: '編輯',
+                            width: 60,
+                            sortable: false,
+                            hideable: false,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="UnitQueryPanelEdit(\'{UNIT_UUID}\',\'{CUST_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnInit: function() {
+                                        document.UnitQueryPanel = this.scope;
+                                        if (!document.UnitQueryPanelEdit) {
+                                            document.UnitQueryPanelEdit = function(UNIT_UUID, CUST_UUID) {
+                                                var main = document.UnitQueryPanel;
+                                                if (!main.subWinUnit) {
+                                                    Ext.MessageBox.show({
+                                                        title: '系統訊息',
+                                                        icon: Ext.MessageBox.INFO,
+                                                        buttons: Ext.Msg.OK,
+                                                        msg: '未實現 subWinUnit 物件,無法進行編輯操作!'
+                                                    });
+                                                    return false;
+                                                };
+                                                /*註冊事件*/
+                                                var subWin = Ext.create(main.subWinUnit, {
+                                                    param: {
+                                                        unitUuid: UNIT_UUID
+                                                    }
+                                                });
+                                                subWin.on('closeEvent', function(obj) {
+                                                    this.down("#grdUnitQuery").getStore().load();
+                                                }, main);
+                                                subWin.show();
+                                            }
+                                        }
+
                                     }
-                                });
-                                subWin.on('closeEvent', function(obj) {
-                                    main.down("#grdUnitQuery").getStore().load();
-                                }, main);
-                                subWin.show();
-                            }
-                        }],
-                        sortable: false,
-                        hideable: false
-                    }, {
-                        header: "單位",
-                        dataIndex: 'UNIT_NAME',
-                        flex: 1
-                    }, {
-                        header: '有效',
-                        dataIndex: 'UNIT_IS_ACTIVE',
-                        align: 'center',
-                        width: 60,
-                        renderer: this.fnActiveRender
-                    }]
+                                }),
+
+                        }, {
+                            header: "單位",
+                            dataIndex: 'UNIT_NAME',
+                            flex: 1
+                        }, {
+                            header: '有效',
+                            dataIndex: 'UNIT_IS_ACTIVE',
+                            align: 'center',
+                            width: 60,
+                            renderer: this.fnActiveRender
+                        }
+                    ]
                 },
                 tbarCfg: {
                     buttonAlign: 'right'

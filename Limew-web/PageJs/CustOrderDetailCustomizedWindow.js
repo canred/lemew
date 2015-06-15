@@ -299,59 +299,135 @@ Ext.define('WS.CustOrderDetailCustomizedWindow', {
                     flex: 1,
                     border: true,
                     autoScroll: true,
-                    columns: [{
-                        text: "",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*編輯備註',
-                            icon: SYSTEM_URL_ROOT + '/css/custimages/edit.gif',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var mainWin = grid.up('window');
-                                var subWin = Ext.create('WS.FileWindow', {
-                                    param: {
-                                        fileUuid: grid.getStore().getAt(rowIndex).data.FILE_UUID,
-                                        parentObj: mainWin
-                                    }
-                                });
-                                subWin.on('closeEvent', function() {
-                                    var store = mainWin.down('#grdFile').getStore();
-                                    store.reload();
-                                });
-                                subWin.show();
-                            }
-                        }, {
-                            tooltip: '*刪除',
-                            icon: SYSTEM_URL_ROOT + '/css/custimages/delete.gif',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var mainWin = grid.up('window');
-                                Ext.MessageBox.confirm('刪除操作', '確定要刪除這一個檔案?', function(result) {
-                                    if (result == 'yes') {
-                                        WS.FileAction.destoryFile(grid.getStore().getAt(rowIndex).data.FILE_UUID, function(obj, jsonObj) {
-                                            if (jsonObj.result.success) {
-                                                var store = mainWin.down('#grdFile').getStore(),
-                                                    count = store.getCount();
-                                                if (count == 1) {
-                                                    if (store.currentPage > 1) {
-                                                        store.previousPage();
-                                                    } else {
-                                                        store.reload();
-                                                    };
-                                                } else {
-                                                    store.reload();
-                                                };
+                    columns: [
+                    // {
+                    //     text: "",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [{
+                    //         tooltip: '*編輯備註',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/edit.gif',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var mainWin = grid.up('window');
+                    //             var subWin = Ext.create('WS.FileWindow', {
+                    //                 param: {
+                    //                     fileUuid: grid.getStore().getAt(rowIndex).data.FILE_UUID,
+                    //                     parentObj: mainWin
+                    //                 }
+                    //             });
+                    //             subWin.on('closeEvent', function() {
+                    //                 var store = mainWin.down('#grdFile').getStore();
+                    //                 store.reload();
+                    //             });
+                    //             subWin.show();
+                    //         }
+                    //     }, {
+                    //         tooltip: '*刪除',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/delete.gif',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var mainWin = grid.up('window');
+                    //             Ext.MessageBox.confirm('刪除操作', '確定要刪除這一個檔案?', function(result) {
+                    //                 if (result == 'yes') {
+                    //                     WS.FileAction.destoryFile(grid.getStore().getAt(rowIndex).data.FILE_UUID, function(obj, jsonObj) {
+                    //                         if (jsonObj.result.success) {
+                    //                             var store = mainWin.down('#grdFile').getStore(),
+                    //                                 count = store.getCount();
+                    //                             if (count == 1) {
+                    //                                 if (store.currentPage > 1) {
+                    //                                     store.previousPage();
+                    //                                 } else {
+                    //                                     store.reload();
+                    //                                 };
+                    //                             } else {
+                    //                                 store.reload();
+                    //                             };
 
-                                            };
-                                        }, mainWin);
-                                    };
-                                }, mainWin);
-                            }
-                        }],
+                    //                         };
+                    //                     }, mainWin);
+                    //                 };
+                    //             }, mainWin);
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // },
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯備註',
+                        width: 100,
                         sortable: false,
-                        hideable: false
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:80px" value="編輯備註" onclick="CustOrderDetailCustomizedWindowFnEditPs(\'{FILE_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderDetailCustomizedWindow = this.scope;
+                                    if (!document.CustOrderDetailCustomizedWindowFnEditPs) {
+                                        document.CustOrderDetailCustomizedWindowFnEditPs = function(FILE_UUID) {
+                                            var mainWin = this.scope;
+                                            var subWin = Ext.create('WS.FileWindow', {
+                                                param: {
+                                                    fileUuid: FILE_UUID,
+                                                    parentObj: mainWin
+                                                }
+                                            });
+                                            subWin.on('closeEvent', function() {
+                                                var store = document.CustOrderDetailCustomizedWindow.down('#grdFile').getStore();
+                                                store.reload();
+                                            });
+                                            subWin.show();
+                                        }
+                                    }
+                                }
+                            })
                     }, {
+                        xtype: 'templatecolumn',
+                        text: '刪除',
+                        width: 100,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:80px" value="刪除" onclick="CustOrderDetailCustomizedWindowFnDelete(\'{FILE_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderDetailCustomizedWindow = this.scope;
+                                    if (!document.CustOrderDetailCustomizedWindowFnDelete) {
+                                        document.CustOrderDetailCustomizedWindowFnDelete = function(FILE_UUID) {
+                                            var mainWin = document.CustOrderDetailCustomizedWindow;
+                                            Ext.MessageBox.confirm('刪除操作', '確定要刪除這一個檔案?', function(result) {
+                                                if (result == 'yes') {
+                                                    WS.FileAction.destoryFile(FILE_UUID, function(obj, jsonObj) {
+                                                        if (jsonObj.result.success) {
+                                                            var store = mainWin.down('#grdFile').getStore(),
+                                                                count = store.getCount();
+                                                            if (count == 1) {
+                                                                if (store.currentPage > 1) {
+                                                                    store.previousPage();
+                                                                } else {
+                                                                    store.reload();
+                                                                };
+                                                            } else {
+                                                                store.reload();
+                                                            };
+
+                                                        };
+                                                    }, mainWin);
+                                                };
+                                            }, mainWin);
+                                        }
+                                    }
+
+                                }
+                            })
+
+                    },
+                     {
                         text: "名稱",
                         dataIndex: 'FILE_NAME',
                         align: 'left',

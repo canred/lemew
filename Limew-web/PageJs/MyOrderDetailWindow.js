@@ -340,8 +340,8 @@ Ext.define('WS.MyOrderDetailWindow', {
                 items: [{
                     xtype: 'textarea',
                     fieldLabel: '備註',
-                    name: 'CUST_ORDER_DETAIL_PS',
-                    itemId: 'CUST_ORDER_DETAIL_PS',
+                    name: 'MY_ORDER_DETAIL_PS',
+                    itemId: 'MY_ORDER_DETAIL_PS',
                     flex: 1
                 }]
             }, {

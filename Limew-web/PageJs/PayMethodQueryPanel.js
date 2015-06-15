@@ -126,51 +126,94 @@ Ext.define('WS.PayMethodQueryPanel', {
                     defaults: {
                         align: 'left'
                     },
-                    items: [{
-                        text: "編輯",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'PAY_METHOD_UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var main = grid.up('panel').up('panel').up('panel');
-                                if (!main.subWinPayMethod) {
-                                    Ext.MessageBox.show({
-                                        title: '系統訊息',
-                                        icon: Ext.MessageBox.INFO,
-                                        buttons: Ext.Msg.OK,
-                                        msg: '未實現 subWinPayMethod 物件,無法進行編輯操作!'
-                                    });
-                                    return false;
-                                };
-                                /*註冊事件*/
-                                console.log(grid.getStore().getAt(rowIndex));
-                                var subWin = Ext.create(main.subWinPayMethod, {
-                                    param: {
-                                        payMethodUuid: grid.getStore().getAt(rowIndex).data.PAY_METHOD_UUID
+                    items: [
+                        // {
+                        //     text: "編輯",
+                        //     xtype: 'actioncolumn',
+                        //     dataIndex: 'PAY_METHOD_UUID',
+                        //     align: 'center',
+                        //     width: 60,
+                        //     items: [{
+                        //         tooltip: '*編輯',
+                        //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                        //         handler: function(grid, rowIndex, colIndex) {
+                        //             var main = grid.up('panel').up('panel').up('panel');
+                        //             if (!main.subWinPayMethod) {
+                        //                 Ext.MessageBox.show({
+                        //                     title: '系統訊息',
+                        //                     icon: Ext.MessageBox.INFO,
+                        //                     buttons: Ext.Msg.OK,
+                        //                     msg: '未實現 subWinPayMethod 物件,無法進行編輯操作!'
+                        //                 });
+                        //                 return false;
+                        //             };
+                        //             /*註冊事件*/
+                        //             console.log(grid.getStore().getAt(rowIndex));
+                        //             var subWin = Ext.create(main.subWinPayMethod, {
+                        //                 param: {
+                        //                     payMethodUuid: grid.getStore().getAt(rowIndex).data.PAY_METHOD_UUID
+                        //                 }
+                        //             });
+                        //             subWin.on('closeEvent', function(obj) {
+                        //                 main.down("#grdPayMethodQuery").getStore().load();
+                        //             }, main);
+                        //             subWin.show();
+                        //         }
+                        //     }],
+                        //     sortable: false,
+                        //     hideable: false
+                        // },
+                        {
+                            xtype: 'templatecolumn',
+                            text: '編輯',
+                            width: 60,
+                            sortable: false,
+                            hideable: false,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="PayMethodQueryPanelFnEdit(\'{PAY_METHOD_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnInit: function() {
+                                        document.PayMethodQueryPanel = this.scope;
+                                        if (!document.PayMethodQueryPanelFnEdit) {
+                                            document.PayMethodQueryPanelFnEdit = function(PAY_METHOD_UUID) {
+                                                var main = document.PayMethodQueryPanel;
+                                                if (!main.subWinPayMethod) {
+                                                    Ext.MessageBox.show({
+                                                        title: '系統訊息',
+                                                        icon: Ext.MessageBox.INFO,
+                                                        buttons: Ext.Msg.OK,
+                                                        msg: '未實現 subWinPayMethod 物件,無法進行編輯操作!'
+                                                    });
+                                                    return false;
+                                                };
+                                                var subWin = Ext.create(main.subWinPayMethod, {
+                                                    param: {
+                                                        payMethodUuid: PAY_METHOD_UUID
+                                                    }
+                                                });
+                                                subWin.on('closeEvent', function(obj) {
+                                                    this.down("#grdPayMethodQuery").getStore().load();
+                                                }, main);
+                                                subWin.show();
+                                            }
+                                        }
+
                                     }
-                                });
-                                subWin.on('closeEvent', function(obj) {
-                                    main.down("#grdPayMethodQuery").getStore().load();
-                                }, main);
-                                subWin.show();
-                            }
-                        }],
-                        sortable: false,
-                        hideable: false
-                    }, {
-                        header: "付款方式",
-                        dataIndex: 'PAY_METHOD_NAME',
-                        flex: 1
-                    }, {
-                        header: '順序',
-                        dataIndex: 'PAY_METHOD_ORD',
-                        align: 'center',
-                        width: 60
-                    }]
+                                }),
+
+                        }, {
+                            header: "付款方式",
+                            dataIndex: 'PAY_METHOD_NAME',
+                            flex: 1
+                        }, {
+                            header: '順序',
+                            dataIndex: 'PAY_METHOD_ORD',
+                            align: 'center',
+                            width: 60
+                        }
+                    ]
                 },
                 tbarCfg: {
                     buttonAlign: 'right'

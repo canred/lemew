@@ -126,40 +126,83 @@ Ext.define('WS.CustOrderStatusQueryPanel', {
                     defaults: {
                         align: 'left'
                     },
-                    items: [{
-                        text: "編輯",
-                        xtype: 'actioncolumn',
-                        dataIndex: 'CUST_ORDER_STATUS_UUID',
-                        align: 'center',
+                    items: [
+                    // {
+                    //     text: "編輯",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'CUST_ORDER_STATUS_UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [{
+                    //         tooltip: '*編輯',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinCustOrderStatus) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinCustOrderStatus 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             /*註冊事件*/
+                    //             var subWin = Ext.create(main.subWinCustOrderStatus, {
+                    //                 param: {
+                    //                     custOrderStatusUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_STATUS_UUID
+                    //                 }
+                    //             });
+                    //             subWin.on('closeEvent', function(obj) {
+                    //                 main.down("#grdCustOrderStatusQuery").getStore().load();
+                    //             }, main);
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯',
                         width: 60,
-                        items: [{
-                            tooltip: '*編輯',
-                            icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var main = grid.up('panel').up('panel').up('panel');
-                                if (!main.subWinCustOrderStatus) {
-                                    Ext.MessageBox.show({
-                                        title: '系統訊息',
-                                        icon: Ext.MessageBox.INFO,
-                                        buttons: Ext.Msg.OK,
-                                        msg: '未實現 subWinCustOrderStatus 物件,無法進行編輯操作!'
-                                    });
-                                    return false;
-                                };
-                                /*註冊事件*/
-                                var subWin = Ext.create(main.subWinCustOrderStatus, {
-                                    param: {
-                                        custOrderStatusUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_STATUS_UUID
-                                    }
-                                });
-                                subWin.on('closeEvent', function(obj) {
-                                    main.down("#grdCustOrderStatusQuery").getStore().load();
-                                }, main);
-                                subWin.show();
-                            }
-                        }],
                         sortable: false,
-                        hideable: false
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="CustOrderStatusQueryPanelEdit(\'{CUST_ORDER_STATUS_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderStatusQueryPanel = this.scope;
+                                    if (!document.CustOrderStatusQueryPanelEdit) {
+                                        document.CustOrderStatusQueryPanelEdit = function(CUST_ORDER_STATUS_UUID, CUST_UUID) {
+                                            var main = document.CustOrderStatusQueryPanel;  
+                                            if (!main.subWinCustOrderStatus) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinCustOrderStatus 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            /*註冊事件*/
+                                            var subWin = Ext.create(main.subWinCustOrderStatus, {
+                                                param: {
+                                                    custOrderStatusUuid: CUST_ORDER_STATUS_UUID
+                                                }
+                                            });
+                                            subWin.on('closeEvent', function(obj) {
+                                                this.down("#grdCustOrderStatusQuery").getStore().load();
+                                            }, main);
+                                            subWin.show();
+                                        }
+                                    }
+
+                                }
+                            }),
+
                     }, {
                         header: "狀態名稱",
                         dataIndex: 'CUST_ORDER_STATUS_NAME',

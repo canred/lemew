@@ -87,7 +87,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     pCustUuid: '',
                     pCustOrderStatusUuid: '',
                     pShippingStatusUuid: '',
-                    pPayStatusUuid: 'pay_status_1'
+                    pPayStatusUuid: 'pay_status_1|pay_status_2'
                 },
                 simpleSortMode: true,
                 listeners: {
@@ -314,6 +314,14 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     }
                 }
             },
+            listeners: {
+                load: function(store, records, sucessful, eOpts) {
+                    store.insert(0, {
+                        'PAY_STATUS_UUID': 'pay_status_1|pay_status_2',
+                        'PAY_STATUS_NAME': '--'
+                    });
+                }
+            },
             sorters: [{
                 property: 'PAY_STATUS_ORD',
                 direction: 'ASC'
@@ -440,7 +448,8 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                     width: 180,
                     editable: false,
                     hidden: false,
-                    value: 'pay_status_1',
+                    //value: 'pay_status_1',
+                    value: 'pay_status_1|pay_status_2',
                     store: this.myStore.payStatus,
                     editable: false
                 }, {
@@ -549,229 +558,381 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 30,
-                    items: [{
-                        tooltip: '*查看',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCustOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCustOrder, {});
+                columns: [
+                    // {
+                    //     text: "",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 30,
+                    //     items: [{
+                    //         tooltip: '*查看',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinCustOrder) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             var subWin = Ext.create(main.subWinCustOrder, {});
 
-                            subWin.on('closeEvent', function(obj) {}, main);
-                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    text: "",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 30,
-                    items: [{
-                        tooltip: '*退回到出貨狀態',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/back16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                    //             subWin.on('closeEvent', function(obj) {}, main);
+                    //             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                    //             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '查看',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="查看" onclick="CustWindowFnView2(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustWindow = this.scope;
+                                    if (!document.CustWindowFnView2) {
+                                        document.CustWindowFnView2 = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.CustWindow;
+                                            var subWin = Ext.create('WS.CustOrderStep1ViewWindow', {});
+                                            subWin.on('closeEvent', function(obj) {}, main);
+                                            subWin.param.custOrderUuid = CUST_ORDER_UUID;
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+                                        }
+                                    }
 
-                            if (grid.getStore().getAt(rowIndex).data.PAY_STATUS_UUID != 'pay_status_1') {
-                                Ext.MessageBox.show({
-                                    title: '系統提示',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '此訂單付款狀態為「' + grid.getStore().getAt(rowIndex).data.PAY_STATUS_NAME + '」無法執行退回操作'
-                                });
-                                return;
-                            };
-
-                            Ext.MessageBox.confirm('請確認', '將此單退回到出貨狀態?', function(result) {
-                                if (result == 'yes') {
-                                    WS.CustAction.backToShipping(custOrderUuid, function(obj, jsonObj) {
-                                        //alert(jsonObj.result.CUST_ORDER_UUID);
-                                        var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
-                                        this.myStore.vcustorder.remove(findData);
-                                    }, this);
                                 }
-                            }, main);
+                            }),
 
-
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: '建立日期',
-                    dataIndex: 'CUST_ORDER_CR',
-                    align: 'left',
-                    width: 100
-                }, {
-                    header: "公司名稱",
-                    dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "單位",
-                    dataIndex: 'CUST_ORDER_DEPT',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: "公司電話",
-                    align: 'left',
-                    dataIndex: 'CUST_TEL',
-                    width: 120
-                }, {
-                    header: '採購員',
-                    dataIndex: 'CUST_ORG_SALES_NAME',
-                    align: 'left',
-                    width: 80
-                }, {
-                    header: '聯絡電話',
-                    dataIndex: 'CUST_ORG_SALES_PHONE',
-                    align: 'left',
-                    width: 120,
-                    hidden: false
-                }, {
-                    header: '金額',
-                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    width: 80
-                }, {
-                    header: '付款狀態',
-                    dataIndex: 'PAY_STATUS_NAME'
-                }, {
-                    //xtype:'combo',
-                    header: '款項方式',
-                    width: 100,
-                    dataIndex: 'PAY_METHOD_UUID',
-                    renderer: function(value, r) {
-                        return "<div style='background-color:#75D966;width:80px;'>&nbsp;" + r.record.data.PAY_METHOD_NAME + "</div>";
                     },
-                    editor: {
-                        xtype: 'combo',
-                        allowBlank: false,
-                        displayField: 'PAY_METHOD_NAME',
-                        valueField: 'PAY_METHOD_UUID',
-                        store: this.myStore.payMethod,
-                        editable: false,
-                        hidden: false,
-                        listeners: {
-                            change: function(obj, newValue, oldValue, eOpts) {
-                                var mainPanel = obj.up('panel').up('panel').up('panel');
-                                if (Ext.isEmpty(newValue)) {
-                                    return true;
-                                };
-                                var dr = obj.getStore().findRecord("PAY_METHOD_UUID", newValue).data;
-                                mainPanel.param.editRecord.data.PAY_METHOD_NAME = dr.PAY_METHOD_NAME;
-                            },
-                            focus: function(obj, eOpts) {
-                                var mainPanel = obj.up('panel').up('panel').up('panel');
-                                if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
-                                    obj.setReadOnly(false);
-                                } else {
-                                    obj.setReadOnly(true);
+
+                    // {
+                    //     text: "",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 30,
+                    //     items: [{
+                    //         tooltip: '*退回到出貨狀態',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/back16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             var custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+
+                    //             if (grid.getStore().getAt(rowIndex).data.PAY_STATUS_UUID != 'pay_status_1') {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統提示',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '此訂單付款狀態為「' + grid.getStore().getAt(rowIndex).data.PAY_STATUS_NAME + '」無法執行退回操作'
+                    //                 });
+                    //                 return;
+                    //             };
+
+                    //             Ext.MessageBox.confirm('請確認', '將此單退回到出貨狀態?', function(result) {
+                    //                 if (result == 'yes') {
+                    //                     WS.CustAction.backToShipping(custOrderUuid, function(obj, jsonObj) {
+                    //                         //alert(jsonObj.result.CUST_ORDER_UUID);
+                    //                         var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
+                    //                         this.myStore.vcustorder.remove(findData);
+                    //                     }, this);
+                    //                 }
+                    //             }, main);
+
+
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // },
+                    {
+                        xtype: 'templatecolumn',
+                        text: '退回',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="退回" onclick="CustOrderInvoiceQueryPanelFnBack(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderInvoiceQueryPanel = this.scope;
+                                    if (!document.CustOrderInvoiceQueryPanelFnBack) {
+                                        document.CustOrderInvoiceQueryPanelFnBack = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.CustOrderInvoiceQueryPanel;
+                                            var custOrderUuid = CUST_ORDER_UUID;
+                                            Ext.MessageBox.confirm('請確認', '將此單退回到出貨狀態?', function(result) {
+                                                if (result == 'yes') {
+                                                    WS.CustAction.backToShipping(custOrderUuid, function(obj, jsonObj) {
+                                                        var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
+                                                        this.myStore.vcustorder.remove(findData);
+                                                    }, this);
+                                                }
+                                            }, main);
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        xtype: 'templatecolumn',
+                        text: '轉未付款',
+                        width: 80,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:70px" value="轉未付款" onclick="CustOrderInvoiceQueryPanelFnComplete2Back(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.CustOrderInvoiceQueryPanel = this.scope;
+                                    if (!document.CustOrderInvoiceQueryPanelFnComplete2Back) {
+                                        document.CustOrderInvoiceQueryPanelFnComplete2Back = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.CustOrderInvoiceQueryPanel;
+                                            var custOrderUuid = CUST_ORDER_UUID;
+                                            Ext.MessageBox.confirm('請確認', '將此單的付款狀態轉成『未付款』?', function(result) {
+                                                if (result == 'yes') {
+                                                    WS.CustAction.backToNotPay(custOrderUuid, function(obj, jsonObj) {
+                                                        var findData = this.myStore.vcustorder.findRecord("CUST_ORDER_UUID", jsonObj.result.CUST_ORDER_UUID);
+                                                        this.myStore.vcustorder.reload();
+                                                    }, this);
+                                                }
+                                            }, main);
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        header: '製單日期',
+                        dataIndex: 'CUST_ORDER_REPORT_DATE',
+                        align: 'left',
+                        width: 100
+                    }, {
+                        header: "客戶名稱",
+                        dataIndex: 'CUST_NAME',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: "單位",
+                        dataIndex: 'CUST_ORDER_DEPT',
+                        align: 'left',
+                        width: 100,
+                        hidden: false
+                    }, {
+                        header: "客戶電話",
+                        align: 'left',
+                        hidden: true,
+                        dataIndex: 'CUST_TEL',
+                        width: 120
+                    }, {
+                        header: '採購員',
+                        dataIndex: 'CUST_ORG_SALES_NAME',
+                        align: 'left',
+                        width: 70
+                    }, {
+                        header: '聯絡電話',
+                        dataIndex: 'CUST_ORG_SALES_PHONE',
+                        align: 'left',
+                        width: 100,
+                        hidden: false
+                    }, {
+                        header: '金額',
+                        dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                        align: 'right',
+                        width: 80,
+                        renderer: function(value, r) {
+                            return Ext.String.format('${0}', value);
+                        }
+                    }, {
+                        header: '付款狀態',
+                        dataIndex: 'PAY_STATUS_NAME',
+                        width: 80,
+                        renderer: function(value, r) {
+                            if (r.record.data.PAY_STATUS_UUID == 'pay_status_2') {
+                                return "<div style='background-color:#75D966;width:80px;'>&nbsp;" + r.record.data.PAY_STATUS_NAME + "</div>";
+                            } else {
+                                return "<div style='background-color:white;width:80px;'>&nbsp;" + r.record.data.PAY_STATUS_NAME + "</div>";
+                            }
+
+                        }
+                    }, {
+                        //xtype:'combo',
+                        header: '款項方式',
+                        width: 100,
+                        dataIndex: 'PAY_METHOD_UUID',
+                        renderer: function(value, r) {
+                            if (r.record.data.PAY_STATUS_UUID == 'pay_status_2') {
+                                return "<div style='background-color:#75D966;width:80px;'>&nbsp;" + r.record.data.PAY_METHOD_NAME + "</div>";
+                            } else {
+                                return "<div style='background-color:white;width:80px;'>&nbsp;" + r.record.data.PAY_METHOD_NAME + "</div>";
+                            }
+
+                        },
+                        editor: {
+                            xtype: 'combo',
+                            allowBlank: false,
+                            displayField: 'PAY_METHOD_NAME',
+                            valueField: 'PAY_METHOD_UUID',
+                            store: this.myStore.payMethod,
+                            editable: false,
+                            hidden: false,
+                            listeners: {
+                                change: function(obj, newValue, oldValue, eOpts) {
+                                    var mainPanel = obj.up('panel').up('panel').up('panel');
+                                    if (Ext.isEmpty(newValue)) {
+                                        return true;
+                                    };
+                                    var dr = obj.getStore().findRecord("PAY_METHOD_UUID", newValue).data;
+                                    mainPanel.param.editRecord.data.PAY_METHOD_NAME = dr.PAY_METHOD_NAME;
+                                },
+                                focus: function(obj, eOpts) {
+                                    var mainPanel = obj.up('panel').up('panel').up('panel');
+                                    if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
+                                        obj.setReadOnly(false);
+                                    } else {
+                                        obj.setReadOnly(true);
+                                    }
                                 }
                             }
                         }
-                    }
-                }, {
-                    xtype: 'templatecolumn',
-                    header: '發票號碼',
-                    dataIndex: 'CUST_ORDER_INVOICE_NUMBER',
-                    align: 'right',
-                    width: 140,
-                    layout: 'hbox',
-                    tpl: '<input type="text" readonly style="width:130px;background-color:#75D966;" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
-                    editor: {
-                        xtype: 'textfield',
+                    }, {
+                        //xtype: 'templatecolumn',
+                        header: '款項備註',
+                        dataIndex: 'CUST_ORDER_PAY_PS',
+                        align: 'right',
+                        width: 140,
+                        layout: 'hbox',
+                        tpl: '<input type="text" readonly style="width:130px;background-color:#75D966;" value="{CUST_ORDER_PAY_PS}"/>',
+                        renderer: function(value, r) {
+                            if (r.record.data.PAY_STATUS_UUID == 'pay_status_2') {
+                                return '<input type="text" readonly style="width:130px;background-color:#75D966;" value="' + r.record.data.CUST_ORDER_PAY_PS + '"/>';
+                            } else {
+                                return '<input type="text" readonly style="width:130px;background-color:white;" value="' + r.record.data.CUST_ORDER_PAY_PS + '"/>';
+                            }
+
+                        },
+                        editor: {
+                            xtype: 'textfield',
+                            flex: 1,
+                            listeners: {
+                                focus: function(obj, eOpts) {
+                                    var mainPanel = obj.up('panel').up('panel').up('panel');
+                                    if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
+                                        obj.setReadOnly(false);
+                                    } else {
+                                        obj.setReadOnly(true);
+                                    }
+                                }
+                            }
+                        }
+                    }, {
+                        //xtype: 'templatecolumn',
+                        header: '發票號碼',
+                        dataIndex: 'CUST_ORDER_INVOICE_NUMBER',
+                        align: 'right',
+                        width: 140,
+                        layout: 'hbox',
+                        //tpl: '<input type="text" readonly style="width:130px;background-color:#75D966;" value="{CUST_ORDER_INVOICE_NUMBER}"/>',
+                        renderer: function(value, r) {
+                            if (r.record.data.PAY_STATUS_UUID == 'pay_status_2') {
+                                return '<input type="text" readonly style="width:130px;background-color:#75D966;" value="' + r.record.data.CUST_ORDER_INVOICE_NUMBER + '"/>';
+                            } else {
+                                return '<input type="text" readonly style="width:130px;background-color:white;" value="' + r.record.data.CUST_ORDER_INVOICE_NUMBER + '"/>';
+                            }
+
+                        },
+                        editor: {
+                            xtype: 'textfield',
+                            flex: 1,
+                            listeners: {
+                                focus: function(obj, eOpts) {
+                                    var mainPanel = obj.up('panel').up('panel').up('panel');
+                                    if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
+                                        obj.setReadOnly(false);
+                                    } else {
+                                        obj.setReadOnly(true);
+                                    }
+                                }
+                            }
+                        }
+                    }, {
+                        header: "訂單編號",
+                        dataIndex: 'CUST_ORDER_ID',
+                        align: 'left',
+                        width: 110
+                    }, {
+                        header: "出貨編號",
+                        dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
+                        align: 'left',
+                        width: 120
+                    }, {
+                        header: "出貨地址",
+                        dataIndex: 'SHIPPING_ADDRESS',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: '採購員電話',
+                        dataIndex: 'CUST_SALES_PHONE',
+                        align: 'left',
                         flex: 1,
-                        listeners: {
-                            focus: function(obj, eOpts) {
-                                var mainPanel = obj.up('panel').up('panel').up('panel');
-                                if (mainPanel.param.editRecord.data.PAY_STATUS_UUID == 'pay_status_1') {
-                                    obj.setReadOnly(false);
-                                } else {
-                                    obj.setReadOnly(true);
-                                }
-                            }
-                        }
+                        hidden: true
+                    }, {
+                        header: "傳真",
+                        dataIndex: 'CUST_FAX',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '地址',
+                        dataIndex: 'CUST_ADDRESS',
+                        align: 'left',
+                        width: 150,
+                        hidden: true
+                    }, {
+                        header: '採購員email',
+                        dataIndex: 'CUST_SALES_EMAIL',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '出貨狀態',
+                        dataIndex: 'SHIPPING_STATUS_NAME',
+                        align: 'left',
+                        flex: 1,
+                        minWidth: 70
+                    }, {
+                        xtype: 'templatecolumn',
+                        header: '備註',
+                        dataIndex: 'CUST_ORDER_PS',
+                        align: 'center',
+                        width: 140,
+                        layout: 'hbox',
+                        tpl: new Ext.XTemplate(
+                            "<tpl if='CUST_ORDER_PS != \"\"'>",
+                            '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                            "<tpl else>",
+                            '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
+                            "</tpl>")
                     }
-                }, {
-                    header: "訂單編號",
-                    dataIndex: 'CUST_ORDER_ID',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "出貨編號",
-                    dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "出貨地址",
-                    dataIndex: 'SHIPPING_ADDRESS',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: '採購員電話',
-                    dataIndex: 'CUST_SALES_PHONE',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: "傳真",
-                    dataIndex: 'CUST_FAX',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '地址',
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: '採購員email',
-                    dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '出貨狀態',
-                    dataIndex: 'SHIPPING_STATUS_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    xtype: 'templatecolumn',
-                    header: '備註',
-                    dataIndex: 'CUST_ORDER_PS',
-                    align: 'center',
-                    width: 140,
-                    layout: 'hbox',
-                    tpl: new Ext.XTemplate(
-                        "<tpl if='CUST_ORDER_PS != \"\"'>",
-                        '<input type="button" class="red-button-s" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
-                        "<tpl else>",
-                        '<input type="button" class="edit-button" onclick="fnOpenPs(\'{CUST_ORDER_UUID}\',\'{CUST_ORDER_STATUS}\',\'{PAY_STATUS_UUID}\')" style="width:110px" value="備註"/>',
-                        "</tpl>")
-                }],
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },
@@ -788,7 +949,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                         var mainPanel = this.up('panel').up('panel').up('panel');
                         var updateData = "";
                         Ext.each(mainPanel.myStore.vcustorder.data.items, function(item) {
-                            updateData += item.data.CUST_ORDER_UUID + "," + item.data.PAY_METHOD_UUID + "," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
+                            updateData += item.data.CUST_ORDER_UUID + "`" + item.data.PAY_METHOD_UUID + "`" + item.data.CUST_ORDER_INVOICE_NUMBER + "`" + item.data.CUST_ORDER_PAY_PS + "|";
                         });
 
                         WS.CustAction.batchUpdateCustOrderInvoice(updateData, function(obj, jsonObj) {
@@ -817,7 +978,7 @@ Ext.define('WS.CustOrderInvoiceQueryPanel', {
                             if (main.myStore.vcustorder.getModifiedRecords().length > 0) {
                                 var updateData = "";
                                 Ext.each(main.myStore.vcustorder.data.items, function(item) {
-                                    updateData += item.data.CUST_ORDER_UUID + "," + item.data.PAY_METHOD_UUID + "," + item.data.CUST_ORDER_INVOICE_NUMBER + "|";
+                                    updateData += item.data.CUST_ORDER_UUID + "`" + item.data.PAY_METHOD_UUID + "`" + item.data.CUST_ORDER_INVOICE_NUMBER + "`" + item.data.CUST_ORDER_PAY_PS + "|";
                                 });
                                 WS.CustAction.batchUpdateCustOrderInvoice(updateData, function(obj, jsonObj) {
                                     var postData = '';

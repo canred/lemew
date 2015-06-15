@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("PAY_STATUS", false)]
+	[TableView("PAY_STATUS", true)]
 	public partial class PayStatus : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -36,7 +36,7 @@ namespace Limew.Model.Lw.Table
 			[ColumnName("PAY_STATUS_NAME",false,typeof(string))]
 			get{return "PAY_STATUS_NAME" ; }}
 		public string PAY_STATUS_ORD {
-			[ColumnName("PAY_STATUS_ORD",false,typeof(short?))]
+			[ColumnName("PAY_STATUS_ORD",false,typeof(int?))]
 			get{return "PAY_STATUS_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
@@ -218,6 +218,140 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<PayStatus_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<PayStatus_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<PayStatus_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<PayStatus_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<PayStatus_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<PayStatus_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
+		/*201303180320*/
+		public List<CustOrder_Record> Link_CustOrder_By_PayStatusUuid()
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.PAY_STATUS_UUID,item.PAY_STATUS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<CustOrder_Record>)
+						___table.Where(condition)
+						.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180321*/
+		public List<CustOrder_Record> Link_CustOrder_By_PayStatusUuid(OrderLimit limit)
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.PAY_STATUS_UUID,item.PAY_STATUS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<CustOrder_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180324*/
+		public CustOrder LinkFill_CustOrder_By_PayStatusUuid()
+		{
+			try{
+				var data = Link_CustOrder_By_PayStatusUuid();
+				CustOrder ret=new CustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180325*/
+		public CustOrder LinkFill_CustOrder_By_PayStatusUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_CustOrder_By_PayStatusUuid(limit);
+				CustOrder ret=new CustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 	}
 }

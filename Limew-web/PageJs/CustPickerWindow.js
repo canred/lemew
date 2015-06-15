@@ -47,8 +47,8 @@ Ext.define('WS.CustPickerWindow', {
     },
     param: {
         uuid: undefined,
-
-        parentObj: undefined
+        parentObj: undefined,
+        showAllBtn:false
     },
     iconSelectUrl: SYSTEM_URL_ROOT + '/css/custImages/mouse_select_left.gif',
     width: 750,
@@ -56,6 +56,9 @@ Ext.define('WS.CustPickerWindow', {
     resizable: false,
     draggable: false,
     initComponent: function() {
+        if(!this.param.showAllBtn){
+            this.param.showAllBtn=false;
+        };
         this.items = [Ext.create('Ext.form.Panel', {
             border: true,
             bodyPadding: 5,
@@ -94,6 +97,18 @@ Ext.define('WS.CustPickerWindow', {
 
                         proxy.setExtraParam('keyword', mainWin.down('#txtKeyword').getValue());
                         store.load();
+                    }
+                },{
+                    xtype:'tbfill'
+                },{
+                    xtype:'button',
+                    text:'全部',
+                    itemId:'btnAll',
+                    hidden:true,
+                    handler:function(handler,scope){
+                         var mainWin = this.up('window');
+                          
+                            mainWin.selectedEvent(mainWin, {'CUST_UUID': '','CUST_NAME': '全部'});
                     }
                 }]
             }, {
@@ -155,6 +170,12 @@ Ext.define('WS.CustPickerWindow', {
         'beforeshow': function() {
             var store = this.myStore.cust,
                 proxy = store.getProxy();
+
+            if(this.param.showAllBtn){
+                this.down('#btnAll').show();
+            }else{
+                this.down('#btnAll').hide();
+            };
 
             proxy.setExtraParam('keyword', this.down('#txtKeyword').getValue());
             store.load();

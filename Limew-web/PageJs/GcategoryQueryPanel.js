@@ -182,40 +182,115 @@ Ext.define('WS.GcategoryQueryPanel', {
                     sortable: false,
                     hidden: false,
                     renderer: this.fnActiveRender
-                }, {
-                    text: "維護",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'GCATEGORY_UUID',
-                    align: 'center',
+                }, 
+                // {
+    //     text: "維護",
+    //     xtype: 'actioncolumn',
+    //     dataIndex: 'GCATEGORY_UUID',
+    //     align: 'center',
+    //     sortable: false,
+    //     flex: 1,
+    //     items: [{
+    //         tooltip: '*編輯',
+    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+    //         handler: function(grid, rowIndex, colIndex) {
+    //             var mainPanel = grid.up('panel').up('panel').up('panel'),
+    //                 gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
+    //             mainPanel.fnEditGcategory(gcategoryUuid);
+    //         }
+    //     }, {
+    //         tooltip: '*新增子節點',
+    //         icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
+    //         handler: function(grid, rowIndex, colIndex) {
+    //             var mainPanel = grid.up('panel').up('panel').up('panel'),
+    //                 gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
+    //             mainPanel.fnAddGcategoryChild(gcategoryUuid);
+    //         }
+    //     }, {
+    //         tooltip: '*刪除',
+    //         icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
+    //         margin: '0 0 0 40',
+    //         handler: function(grid, rowIndex, colIndex) {
+    //             var mainPanel = grid.up('panel').up('panel').up('panel'),
+    //                 gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;;
+    //             mainPanel.fnRemoveGcategory(mainPanel, gcategoryUuid);
+    //         }
+    //     }],
+    //     hideable: false
+    // },
+
+                 {
+                    xtype: 'templatecolumn',
+                    text: '編輯',
+                    width: 60,
                     sortable: false,
-                    flex: 1,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var mainPanel = grid.up('panel').up('panel').up('panel'),
-                                gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
-                            mainPanel.fnEditGcategory(gcategoryUuid);
-                        }
-                    }, {
-                        tooltip: '*新增子節點',
-                        icon: SYSTEM_URL_ROOT + '/css/images/add16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var mainPanel = grid.up('panel').up('panel').up('panel'),
-                                gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
-                            mainPanel.fnAddGcategoryChild(gcategoryUuid);
-                        }
-                    }, {
-                        tooltip: '*刪除',
-                        icon: SYSTEM_URL_ROOT + '/css/images/delete16x16.png',
-                        margin: '0 0 0 40',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var mainPanel = grid.up('panel').up('panel').up('panel'),
-                                gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;;
-                            mainPanel.fnRemoveGcategory(mainPanel, gcategoryUuid);
-                        }
-                    }],
-                    hideable: false
+                    hideable: false,
+                    tpl: new Ext.XTemplate(
+                        "<tpl >",
+                        '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="GcategoryQueryPanelFnEdit(\'{GCATEGORY_UUID}\')"/>',
+                        "</tpl>", {
+                            scope: this,
+                            fnInit: function() {
+                                document.GcategoryQueryPanel = this.scope;
+                                if (!document.GcategoryQueryPanelFnEdit) {
+                                    document.GcategoryQueryPanelFnEdit = function(GCATEGORY_UUID) {
+                                        var mainPanel = document.GcategoryQueryPanel,
+                                            gcategoryUuid = GCATEGORY_UUID;
+                                        mainPanel.fnEditGcategory(gcategoryUuid);
+                                    }
+                                }
+
+                            }
+                        }),
+
+                }, {
+                    xtype: 'templatecolumn',
+                    text: '加子類',
+                    width: 80,
+                    sortable: false,
+                    hideable: false,
+                    tpl: new Ext.XTemplate(
+                        "<tpl >",
+                        '{[this.fnInit()]}<input type="button" style="width:70px" value="加子類" onclick="GcategoryQueryPanelFnAddChild(\'{GCATEGORY_UUID}\')"/>',
+                        "</tpl>", {
+                            scope: this,
+                            fnInit: function() {
+                                document.GcategoryQueryPanel = this.scope;
+                                if (!document.GcategoryQueryPanelFnAddChild) {
+                                    document.GcategoryQueryPanelFnAddChild = function(GCATEGORY_UUID) {
+                                        var mainPanel = document.GcategoryQueryPanel,
+                                            gcategoryUuid = GCATEGORY_UUID;
+                                        mainPanel.fnAddGcategoryChild(gcategoryUuid);
+                                    }
+                                }
+
+                            }
+                        }),
+
+                }, {
+                    xtype: 'templatecolumn',
+                    text: '刪除',
+                    width: 60,
+                    sortable: false,
+                    hideable: false,
+                    tpl: new Ext.XTemplate(
+                        "<tpl >",
+                        '{[this.fnInit()]}<input type="button" style="width:50px" value="刪除" onclick="GcategoryQueryPanelFnDelete(\'{GCATEGORY_UUID}\')"/>',
+                        "</tpl>", {
+                            scope: this,
+                            fnInit: function() {
+                                document.GcategoryQueryPanel = this.scope;
+                                if (!document.GcategoryQueryPanelFnDelete) {
+                                    document.GcategoryQueryPanelFnDelete = function(GCATEGORY_UUID) {
+                                        var mainPanel = document.GcategoryQueryPanel,
+                                            gcategoryUuid = GCATEGORY_UUID;
+                                        mainPanel.fnRemoveGcategory(mainPanel, gcategoryUuid);
+                                    }
+                                }
+
+                            }
+                        }),
+
                 }]
             }]
         }];

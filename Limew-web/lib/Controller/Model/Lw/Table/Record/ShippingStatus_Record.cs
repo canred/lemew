@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("SHIPPING_STATUS", false)]
+	[TableView("SHIPPING_STATUS", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class ShippingStatus_Record : RecordBase{
@@ -17,7 +17,7 @@ namespace Limew.Model.Lw.Table.Record
 		/*欄位資訊 Start*/
 		string _SHIPPING_STATUS_UUID=null;
 		string _SHIPPING_STATUS_NAME=null;
-		short? _SHIPPING_STATUS_ORD=null;
+		int? _SHIPPING_STATUS_ORD=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("SHIPPING_STATUS_UUID",true,typeof(string))]
@@ -46,8 +46,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("SHIPPING_STATUS_ORD",false,typeof(short?))]
-		public short? SHIPPING_STATUS_ORD
+		[ColumnName("SHIPPING_STATUS_ORD",false,typeof(int?))]
+		public int? SHIPPING_STATUS_ORD
 		{
 			set
 			{
@@ -71,6 +71,70 @@ namespace Limew.Model.Lw.Table.Record
 			try{
 				var dbc = LK.Config.DataBase.Factory.getInfo();
 				ShippingStatus ret = new ShippingStatus(dbc,this);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180347*/
+		public List<CustOrder_Record> Link_CustOrder_By_ShippingStatusUuid()
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.SHIPPING_STATUS_UUID,this.SHIPPING_STATUS_UUID))
+					.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180348*/
+		public List<CustOrder_Record> Link_CustOrder_By_ShippingStatusUuid(OrderLimit limit)
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.SHIPPING_STATUS_UUID,this.SHIPPING_STATUS_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180357*/
+		public CustOrder LinkFill_CustOrder_By_ShippingStatusUuid()
+		{
+			try{
+				var data = Link_CustOrder_By_ShippingStatusUuid();
+				CustOrder ret=new CustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public CustOrder LinkFill_CustOrder_By_ShippingStatusUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_CustOrder_By_ShippingStatusUuid(limit);
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

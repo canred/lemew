@@ -1,6 +1,6 @@
 Ext.define('WS.CustOrderWindow', {
     extend: 'Ext.window.Window',
-    title: '單訂維護',
+    title: '訂單維護',
     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
     closeAction: 'destroy',
     closable: false,

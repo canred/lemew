@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("PAY_STATUS", false)]
+	[TableView("PAY_STATUS", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class PayStatus_Record : RecordBase{
@@ -17,7 +17,7 @@ namespace Limew.Model.Lw.Table.Record
 		/*欄位資訊 Start*/
 		string _PAY_STATUS_UUID=null;
 		string _PAY_STATUS_NAME=null;
-		short? _PAY_STATUS_ORD=null;
+		int? _PAY_STATUS_ORD=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("PAY_STATUS_UUID",true,typeof(string))]
@@ -46,8 +46,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("PAY_STATUS_ORD",false,typeof(short?))]
-		public short? PAY_STATUS_ORD
+		[ColumnName("PAY_STATUS_ORD",false,typeof(int?))]
+		public int? PAY_STATUS_ORD
 		{
 			set
 			{
@@ -71,6 +71,70 @@ namespace Limew.Model.Lw.Table.Record
 			try{
 				var dbc = LK.Config.DataBase.Factory.getInfo();
 				PayStatus ret = new PayStatus(dbc,this);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180347*/
+		public List<CustOrder_Record> Link_CustOrder_By_PayStatusUuid()
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.PAY_STATUS_UUID,this.PAY_STATUS_UUID))
+					.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180348*/
+		public List<CustOrder_Record> Link_CustOrder_By_PayStatusUuid(OrderLimit limit)
+		{
+			try{
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.PAY_STATUS_UUID,this.PAY_STATUS_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180357*/
+		public CustOrder LinkFill_CustOrder_By_PayStatusUuid()
+		{
+			try{
+				var data = Link_CustOrder_By_PayStatusUuid();
+				CustOrder ret=new CustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public CustOrder LinkFill_CustOrder_By_PayStatusUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_CustOrder_By_PayStatusUuid(limit);
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

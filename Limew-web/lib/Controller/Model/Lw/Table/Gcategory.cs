@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("GCATEGORY", false)]
+	[TableView("GCATEGORY", true)]
 	public partial class Gcategory : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -42,7 +42,7 @@ namespace Limew.Model.Lw.Table
 			[ColumnName("GCATEGORY_FULL_UUID",false,typeof(string))]
 			get{return "GCATEGORY_FULL_UUID" ; }}
 		public string GCATEGORY_IS_ACTIVE {
-			[ColumnName("GCATEGORY_IS_ACTIVE",false,typeof(string))]
+			[ColumnName("GCATEGORY_IS_ACTIVE",false,typeof(int?))]
 			get{return "GCATEGORY_IS_ACTIVE" ; }}
 		public string GCATEGORY_PARENT_UUID {
 			[ColumnName("GCATEGORY_PARENT_UUID",false,typeof(string))]
@@ -227,6 +227,66 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<Gcategory_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<Gcategory_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<Gcategory_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<Gcategory_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<Gcategory_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<Gcategory_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
 		/*201303180320*/
 		public List<Goods_Record> Link_Goods_By_GcategoryUuid()
@@ -244,29 +304,6 @@ namespace Limew.Model.Lw.Table
 				ret=(List<Goods_Record>)
 						___table.Where(condition)
 						.FetchAll<Goods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180320*/
-		public List<VGoods_Record> Link_VGoods_By_GcategoryUuid()
-		{
-			try{
-				List<VGoods_Record> ret= new List<VGoods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VGoods ___table = new VGoods(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.GCATEGORY_UUID,item.GCATEGORY_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<VGoods_Record>)
-						___table.Where(condition)
-						.FetchAll<VGoods_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -299,31 +336,6 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
-		/*201303180321*/
-		public List<VGoods_Record> Link_VGoods_By_GcategoryUuid(OrderLimit limit)
-		{
-			try{
-				List<VGoods_Record> ret= new List<VGoods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VGoods ___table = new VGoods(dbc);
-				SQLCondition condition = new SQLCondition(___table) ;
-				foreach(var item in AllRecord()){
-						condition
-						.L().Equal(___table.GCATEGORY_UUID,item.GCATEGORY_UUID).R().Or()  ; 
- 				}
-				condition.CheckSQL();
-				ret=(List<VGoods_Record>)
-						___table.Where(condition)
-						.Order(limit)
-						.Limit(limit)
-						.FetchAll<VGoods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180324*/
 		public Goods LinkFill_Goods_By_GcategoryUuid()
 		{
@@ -337,38 +349,12 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
-		/*201303180324*/
-		public VGoods LinkFill_VGoods_By_GcategoryUuid()
-		{
-			try{
-				var data = Link_VGoods_By_GcategoryUuid();
-				VGoods ret=new VGoods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
 		/*201303180325*/
 		public Goods LinkFill_Goods_By_GcategoryUuid(OrderLimit limit)
 		{
 			try{
 				var data = Link_Goods_By_GcategoryUuid(limit);
 				Goods ret=new Goods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180325*/
-		public VGoods LinkFill_VGoods_By_GcategoryUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_VGoods_By_GcategoryUuid(limit);
-				VGoods ret=new VGoods(data);
 				return ret;
 			}
 			catch (Exception ex){

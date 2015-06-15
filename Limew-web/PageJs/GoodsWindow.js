@@ -131,9 +131,9 @@ Ext.define('WS.GoodsWindow', {
                                         parentObj: this.up('window')
                                     }
                                 });
-                                pickerWin.on('selected', function(win, returnRecord) {
-                                    if (returnRecord && returnRecord.GCATEGORY_UUID && returnRecord.GCATEGORY_UUID.length > 0) {
-                                        win.param.parentObj.down('#GCATEGORY_UUID').setValue(returnRecord.GCATEGORY_UUID);
+                                pickerWin.on('selected', function(win, GCATEGORY_UUID) {
+                                    if (GCATEGORY_UUID  && GCATEGORY_UUID.length > 0) {
+                                        win.param.parentObj.down('#GCATEGORY_UUID').setValue(GCATEGORY_UUID);
                                         win.close();
                                     }
                                 });

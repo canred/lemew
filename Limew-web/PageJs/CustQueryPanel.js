@@ -139,79 +139,103 @@ Ext.define('WS.CustQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "編輯",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCust) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCust 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCust, {
-                                subWinCustOrder: 'WS.CustOrderStep1Window'
-                            });
-                            subWin.on('closeEvent', function(obj) {
-                                main.down("#grdSupplierQuery").getStore().load();
-                            }, main);
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: "公司名稱",
-                    dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    width:200
-                }, {
-                    header: "電話",
-                    align: 'left',
-                    dataIndex: 'CUST_TEL',
-                    flex: 1
-                }, {
-                    header: "傳真",
-                    dataIndex: 'CUST_FAX',
-                    align: 'left',hidden:true,
-                    flex: 1
-                }, {
-                    header: '地址',
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '採購員',
-                    dataIndex: 'CUST_SALES_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '採購員電話',
-                    dataIndex: 'CUST_SALES_PHONE',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '採購員email',
-                    dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'left',hidden:true,
-                    flex: 1
-                }, {
-                    header: '備註',
-                    dataIndex: 'CUST_PS',
-                    align: 'left',
-                    flex: 1
-                }],
+                columns: [
+                    // {
+                    //     text: "編輯",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [{
+                    //         tooltip: '*編輯',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+
+                    //         }
+                    //     }],
+
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="CustQueryPanelFnEdit(\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                fnInit: function() {
+                                    if (!document.CustQueryPanelFnEdit) {
+                                        document.CustQueryPanelFnEdit = function(CUST_UUID) {
+                                            var main = WS_CUSTQUERYPANEL;
+                                            if (!main.subWinCust) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinCust 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinCust, {
+                                                subWinCustOrder: 'WS.CustOrderStep1Window'
+                                            });
+                                            subWin.on('closeEvent', function(obj) {
+                                                main.down("#grdSupplierQuery").getStore().load();
+                                            }, main);
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        header: "客戶名稱",
+                        dataIndex: 'CUST_NAME',
+                        align: 'left',
+                        width: 200
+                    }, {
+                        header: "電話",
+                        align: 'left',
+                        dataIndex: 'CUST_TEL',
+                        flex: 1
+                    }, {
+                        header: "傳真",
+                        dataIndex: 'CUST_FAX',
+                        align: 'left',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '地址',
+                        dataIndex: 'CUST_ADDRESS',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '採購員',
+                        dataIndex: 'CUST_SALES_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '採購員電話',
+                        dataIndex: 'CUST_SALES_PHONE',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '採購員email',
+                        dataIndex: 'CUST_SALES_EMAIL',
+                        align: 'left',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '備註',
+                        dataIndex: 'CUST_PS',
+                        align: 'left',
+                        flex: 1
+                    }
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },

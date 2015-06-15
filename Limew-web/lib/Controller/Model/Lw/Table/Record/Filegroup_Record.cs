@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("FILEGROUP", false)]
+	[TableView("FILEGROUP", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class Filegroup_Record : RecordBase{

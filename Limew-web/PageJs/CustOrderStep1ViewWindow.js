@@ -1,6 +1,6 @@
 Ext.define('WS.CustOrderStep1ViewWindow', {
     extend: 'Ext.window.Window',
-    title: '單訂資訊(唯讀模式)',
+    title: '訂單資訊(唯讀模式)',
     icon: SYSTEM_URL_ROOT + '/css/custimages/order16x16.png',
     closeAction: 'destroy',
     closable: false,
@@ -127,13 +127,24 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
         });
         if (itemCount > 0) {
             WS.CustAction.infoCustOrder(records[0].data.CUST_ORDER_UUID, function(obj, jsonObj) {
+
+
                 if (jsonObj.result.data.CUST_ORDER_HAS_TAX == "0") {
                     this.down('#btnMoney').show();
-                    this.down('#btnMoney').setText('訂單項目明細    數量：' + itemCount + '筆,金額合計：' + sum + '元(未稅)');
+                    this.down('#btnMoneyTitle').show();
+
+                    this.down('#btnMoneyTitle').setText('<span style="font-size:18px;">數量：' + itemCount + '筆</span>');
+                    var taxMoney = sum * 0.05;
+                    taxMoney = Math.round(taxMoney * 100) / 100;
+                    this.down('#btnMoney').setText('<span style="font-size:18px;">未稅 金額合計：' + sum + '元+稅金' + taxMoney + '元</span>');
+
                 } else {
                     this.down('#btnMoney').show();
-                    this.down('#btnMoney').setText('訂單項目明細    數量：' + itemCount + '筆,金額合計：' + sum + '元(含稅)');
+                    this.down('#btnMoneyTitle').show();
+                    this.down('#btnMoneyTitle').setText('<span style="font-size:18px;">數量：' + itemCount + '筆</span>');
+                    this.down('#btnMoney').setText('<span style="font-size:18px;">含稅 金額合計：' + sum + '元</span>');
                 }
+
             }, this);
         };
     },
@@ -181,10 +192,18 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                         WS.CustAction.infoCustOrder(records[0].data.CUST_ORDER_UUID, function(obj, jsonObj) {
                             if (jsonObj.result.data.CUST_ORDER_HAS_TAX == "0") {
                                 this.down('#btnMoney').show();
-                                this.down('#btnMoney').setText('訂單項目明細    數量：' + itemCount + '筆,金額合計：' + sum + '元(未稅)')
+                                this.down('#btnMoneyTitle').show();
+
+                                this.down('#btnMoneyTitle').setText('<span style="font-size:18px;">數量：' + itemCount + '筆</span>');
+                                var taxMoney = sum * 0.05;
+                                taxMoney = Math.round(taxMoney * 100) / 100;
+                                this.down('#btnMoney').setText('<span style="font-size:18px;">未稅 金額合計：' + sum + '元+稅金' + taxMoney + '元</span>');
+
                             } else {
                                 this.down('#btnMoney').show();
-                                this.down('#btnMoney').setText('訂單項目明細    數量：' + itemCount + '筆,金額合計：' + sum + '元(含稅)')
+                                this.down('#btnMoneyTitle').show();
+                                this.down('#btnMoneyTitle').setText('<span style="font-size:18px;">數量：' + itemCount + '筆</span>');
+                                this.down('#btnMoney').setText('<span style="font-size:18px;">含稅 金額合計：' + sum + '元</span>');
                             }
                         }, this);
                     };
@@ -237,9 +256,10 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                         }, {
                             xtype: 'datefield',
                             fieldLabel: '製單日期',
-                            value: new Date(),
+                            //value: new Date(),
                             format: 'Y/m/d',
                             submitFormat: 'Y/m/d',
+                            //2015/06/01 00:00:00
                             readOnly: true,
                             name: 'CUST_ORDER_REPORT_DATE',
                             itemId: 'CUST_ORDER_REPORT_DATE',
@@ -314,6 +334,14 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                             inputValue: '1',
                             readOnly: true,
                             labelAlign: 'right'
+                        }, {
+                            xtype: 'textfield',
+                            fieldLabel: '請示單號',
+                            labelAlign: 'right',
+                            labelWidth: 180,
+                            readOnly:true,
+                            name: 'CUST_ORDER_PS_NUMBER',
+                            flex: 1
                         }]
                     }, {
                         xtype: 'container',
@@ -503,106 +531,234 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                     title: '訂單項目明細',
                     store: this.myStore.vCustOrderDetail,
                     itemId: 'grdVCustOrderDetail',
-                    columns: [{
-                        xtype: 'actioncolumn',
-                        dataIndex: 'UUID',
-                        align: 'center',
-                        width: 60,
-                        items: [{
-                            tooltip: '*查看',
-                            icon: SYSTEM_URL_ROOT + '/css/custImages/view16x16.png',
-                            handler: function(grid, rowIndex, colIndex) {
-                                var mainWin = grid.up('window'),
-                                    custOrderUuid = mainWin.down('#CUST_ORDER_UUID').getValue();
-                                if (grid.getStore().getAt(rowIndex).data.GOODS_UUID != "") {
-                                    var subWin = Ext.create('WS.CustOrderDetailViewWindow', {
-                                        param: {
-                                            parentObj: mainWin,
-                                            custOrderUuid: custOrderUuid,
-                                            custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
+                    columns: [
+
+                        // {
+                        //     xtype: 'actioncolumn',
+                        //     dataIndex: 'UUID',
+                        //     align: 'center',
+                        //     width: 60,
+                        //     items: [{
+                        //         tooltip: '*查看',
+                        //         icon: SYSTEM_URL_ROOT + '/css/custImages/view16x16.png',
+                        //         handler: function(grid, rowIndex, colIndex) {
+                        //             var mainWin = grid.up('window'),
+                        //                 custOrderUuid = mainWin.down('#CUST_ORDER_UUID').getValue();
+                        //             if (grid.getStore().getAt(rowIndex).data.GOODS_UUID != "") {
+                        //                 var subWin = Ext.create('WS.CustOrderDetailViewWindow', {
+                        //                     param: {
+                        //                         parentObj: mainWin,
+                        //                         custOrderUuid: custOrderUuid,
+                        //                         custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
+                        //                     }
+                        //                 });
+                        //                 subWin.on('closeEvent', function() {
+                        //                     //mainWin.myStore.vCustOrderDetail.reload();
+                        //                 });
+                        //                 subWin.show();
+                        //             } else if (grid.getStore().getAt(rowIndex).data.SUPPLIER_GOODS_UUID != "") {
+                        //                 var subWin = Ext.create('WS.CustOrderDetailSupplierWindow', {
+                        //                     param: {
+                        //                         parentObj: mainWin,
+                        //                         custOrderUuid: custOrderUuid,
+                        //                         custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
+                        //                     }
+                        //                 });
+                        //                 subWin.on('closeEvent', function() {
+                        //                     //mainWin.myStore.vCustOrderDetail.reload();
+                        //                 });
+                        //                 subWin.show();
+                        //             } else {
+                        //                 var subWin = Ext.create('WS.CustOrderDetailCustomizedViewWindow', {
+                        //                     param: {
+                        //                         parentObj: mainWin,
+                        //                         custOrderUuid: custOrderUuid,
+                        //                         custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
+                        //                     }
+                        //                 });
+                        //                 subWin.on('closeEvent', function() {
+                        //                     //mainWin.myStore.vCustOrderDetail.reload();
+                        //                 });
+                        //                 subWin.show();
+                        //             }
+                        //         }
+                        //     }],
+                        //     sortable: false,
+                        //     hideable: false
+                        // }, 
+                        {
+                            xtype: 'templatecolumn',
+                            text: '查看',
+                            width: 70,
+                            sortable: false,
+                            hideable: false,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:60px" value="查看" onclick="CustOrderStep1ViewWindowFnView(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\',\'{CUST_ORDER_DETAIL_UUID}\',\'{SUPPLIER_GOODS_UUID}\',\'{GOODS_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnInit: function() {
+                                        document.CustOrderStep1ViewWindow = this.scope;
+                                        if (!document.CustOrderStep1ViewWindowFnView) {
+                                            document.CustOrderStep1ViewWindowFnView = function(CUST_ORDER_UUID, CUST_UUID, CUST_ORDER_DETAIL_UUID, SUPPLIER_GOODS_UUID, GOODS_UUID) {
+                                                var mainWin = document.CustOrderStep1ViewWindow,
+                                                    custOrderUuid = mainWin.down('#CUST_ORDER_UUID').getValue();
+                                                if (GOODS_UUID != "") {
+                                                    var subWin = Ext.create('WS.CustOrderDetailViewWindow', {
+                                                        param: {
+                                                            parentObj: mainWin,
+                                                            custOrderUuid: custOrderUuid,
+                                                            custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function() {
+                                                        //mainWin.myStore.vCustOrderDetail.reload();
+                                                    });
+                                                    subWin.show();
+                                                } else if (SUPPLIER_GOODS_UUID != "") {
+                                                    var subWin = Ext.create('WS.CustOrderDetailSupplierWindow', {
+                                                        param: {
+                                                            parentObj: mainWin,
+                                                            custOrderUuid: custOrderUuid,
+                                                            custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function() {
+                                                        //mainWin.myStore.vCustOrderDetail.reload();
+                                                    });
+                                                    subWin.show();
+                                                } else {
+                                                    var subWin = Ext.create('WS.CustOrderDetailCustomizedViewWindow', {
+                                                        param: {
+                                                            parentObj: mainWin,
+                                                            custOrderUuid: custOrderUuid,
+                                                            custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function() {
+                                                        //mainWin.myStore.vCustOrderDetail.reload();
+                                                    });
+                                                    subWin.show();
+                                                }
+                                            }
                                         }
-                                    });
-                                    subWin.on('closeEvent', function() {
-                                        //mainWin.myStore.vCustOrderDetail.reload();
-                                    });
-                                    subWin.show();
-                                } else if (grid.getStore().getAt(rowIndex).data.SUPPLIER_GOODS_UUID != "") {
-                                    var subWin = Ext.create('WS.CustOrderDetailSupplierWindow', {
-                                        param: {
-                                            parentObj: mainWin,
-                                            custOrderUuid: custOrderUuid,
-                                            custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
-                                        }
-                                    });
-                                    subWin.on('closeEvent', function() {
-                                        //mainWin.myStore.vCustOrderDetail.reload();
-                                    });
-                                    subWin.show();
-                                } else {
-                                    var subWin = Ext.create('WS.CustOrderDetailCustomizedViewWindow', {
-                                        param: {
-                                            parentObj: mainWin,
-                                            custOrderUuid: custOrderUuid,
-                                            custOrderDetailUuid: grid.getStore().getAt(rowIndex).data.CUST_ORDER_DETAIL_UUID
-                                        }
-                                    });
-                                    subWin.on('closeEvent', function() {
-                                        //mainWin.myStore.vCustOrderDetail.reload();
-                                    });
-                                    subWin.show();
-                                }
-                            }
-                        }],
-                        sortable: false,
-                        hideable: false
-                    }, {
-                        xtype: 'booleancolumn',
-                        text: "客製",
-                        enableColumnHide: false,
-                        trueText: '是',
-                        falseText: '否',
-                        dataIndex: 'CUST_ORDER_DETAIL_CUSTOMIZED',
-                        align: 'center',
-                        width: 50
-                    }, {
-                        text: "商品",
-                        dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                        align: 'left',
-                        flex: 2
-                    }, {
-                        text: "單價",
-                        dataIndex: 'CUST_ORDER_DETAIL_PRICE',
-                        align: 'right',
-                        flex: 1
-                    }, {
-                        text: "數量",
-                        dataIndex: 'CUST_ORDER_DETAIL_COUNT',
-                        align: 'right',
-                        flex: 1
-                    }, {
-                        text: "單位",
-                        dataIndex: 'CUST_ORDER_DETAIL_UNIT',
-                        align: 'center',
-                        width: 60,
-                        renderer: function(value, r) {
-                            return r.record.data.CUST_ORDER_DETAIL_UNIT_NAME;
+
+                                    }
+                                }),
+
                         }
-                    }, {
-                        text: "小計",
-                        dataIndex: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
-                        align: 'right',
-                        flex: 1
-                    }, {
-                        text: "備註",
-                        dataIndex: 'CUST_ORDER_DETAIL_PS',
-                        align: 'left',
-                        flex: 1
-                    }, {
-                        text: "附件(個)",
-                        dataIndex: 'FILE_COUNT',
-                        align: 'center',
-                        flex: 1
-                    }],
+                        // , {
+                        //     xtype: 'booleancolumn',
+                        //     text: "客製",
+                        //     enableColumnHide: false,
+                        //     trueText: '是',
+                        //     falseText: '否',
+                        //     dataIndex: 'CUST_ORDER_DETAIL_CUSTOMIZED',
+                        //     align: 'center',
+                        //     width: 50
+                        // }
+                        , {
+                            text: "商品",
+                            dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
+                            align: 'left',
+                            flex: 2
+                        }, {
+                            text: "數量",
+                            dataIndex: 'CUST_ORDER_DETAIL_COUNT',
+                            align: 'right',
+                            flex: 1
+                        }, {
+                            text: "單位",
+                            dataIndex: 'CUST_ORDER_DETAIL_UNIT',
+                            align: 'center',
+                            width: 60,
+                            renderer: function(value, r) {
+                                return r.record.data.CUST_ORDER_DETAIL_UNIT_NAME;
+                            }
+                        }, {
+                            text: "單價",
+                            dataIndex: 'CUST_ORDER_DETAIL_PRICE',
+                            align: 'right',
+                            flex: 1,renderer: function (value,r) {                            
+                            return Ext.String.format('${0}', value);
+                        }  
+                        }, {
+                            text: "小計",
+                            dataIndex: 'CUST_ORDER_DETAIL_TOTAL_PRICE',
+                            align: 'right',
+                            flex: 1,renderer: function (value,r) {                            
+                            return Ext.String.format('${0}', value);
+                        }  
+                        }, {
+                            text: "備註",
+                            dataIndex: 'CUST_ORDER_DETAIL_PS',
+                            align: 'left',
+                            flex: 1
+                        }, {
+                            xtype: 'templatecolumn',
+                            text: '附件(個)',
+                            flex: 1,
+                            tpl: new Ext.XTemplate(
+                                "<tpl >",
+                                '{[this.fnInit()]}<input type="button" style="width:100%" value="{[this.fnFileCount(values.FILE_COUNT)]}" onclick="CustOrderStep1ViewWindowFnUploadFile(\'{CUST_ORDER_DETAIL_UUID}\',\'{GOODS_UUID}\',\'{SUPPLIER_GOODS_UUID}\')"/>',
+                                "</tpl>", {
+                                    scope: this,
+                                    fnFileCount: function(filecount) {
+                                        if (filecount == "") {
+                                            return "無";
+                                        } else {
+                                            return filecount;
+                                        }
+                                    },
+                                    fnInit: function() {
+                                        document.CustOrderStep1ViewWindow = this.scope;
+                                        if (!document.CustOrderStep1ViewWindowFnUploadFile) {
+                                            document.CustOrderStep1ViewWindowFnUploadFile = function(CUST_ORDER_DETAIL_UUID, GOODS_UUID, SUPPLIER_GOODS_UUID) {
+                                                var mainWin = document.CustOrderStep1ViewWindow,
+                                                    custOrderUuid = mainWin.down('#CUST_ORDER_UUID').getValue();
+                                                if (GOODS_UUID != "") {
+                                                    var subWin = Ext.create('WS.CustOrderDetailViewJustFileWindow', {
+                                                        param: {
+                                                            parentObj: mainWin,
+                                                            custOrderUuid: custOrderUuid,
+                                                            custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function() {
+                                                        document.CustOrderStep1ViewWindow.myStore.vCustOrderDetail.reload();
+                                                    });
+                                                    subWin.show();
+                                                } else if (SUPPLIER_GOODS_UUID != "") {
+                                                    // var subWin = Ext.create('WS.CustOrderDetailJustFileSupplierWindow', {
+                                                    //     param: {
+                                                    //         parentObj: mainWin,
+                                                    //         custOrderUuid: custOrderUuid,
+                                                    //         custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                    //     }
+                                                    // });
+                                                    // subWin.on('closeEvent', function() {
+                                                    //     document.CustOrderStep1ViewWindow.myStore.vCustOrderDetail.reload();
+                                                    // });
+                                                    // subWin.show();
+                                                } else {
+                                                    var subWin = Ext.create('WS.CustOrderDetailCustomizedViewJustFileWindow', {
+                                                        param: {
+                                                            parentObj: mainWin,
+                                                            custOrderUuid: custOrderUuid,
+                                                            custOrderDetailUuid: CUST_ORDER_DETAIL_UUID
+                                                        }
+                                                    });
+                                                    subWin.on('closeEvent', function() {
+                                                        document.CustOrderStep1ViewWindow.myStore.vCustOrderDetail.reload();
+                                                    });
+                                                    subWin.show();
+                                                }
+                                            }
+                                        }
+                                    }
+                                })
+                        }
+                    ],
                     minHeight: 300,
                     autoHeight: true
                 }]
@@ -615,6 +771,14 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                     pack: 'end'
                 },
                 items: [{
+                    xtype: 'button',
+                    hidden: true,
+                    padding: 5,
+                    margin: 5,
+                    itemId: 'btnMoneyTitle'
+                }, {
+                    xtype: 'tbfill'
+                }, {
                     xtype: 'button',
                     hidden: true,
                     padding: 5,
@@ -646,6 +810,12 @@ Ext.define('WS.CustOrderStep1ViewWindow', {
                     'pCustOrderUuid': mainObj.param.custOrderUuid
                 },
                 success: function(response, a, b) {
+                    if (a.result.data.CUST_ORDER_REPORT_DATE != '' && a.result.data.CUST_ORDER_REPORT_DATE != undefined) {
+                        this.down("#CUST_ORDER_REPORT_DATE").setValue(new Date(a.result.data.CUST_ORDER_REPORT_DATE));
+                    } else {
+                        this.down("#CUST_ORDER_REPORT_DATE").setValue(new Date());
+                    };
+
                     this.myStore.vCustOrderDetail.getProxy().setExtraParam('pCustOrderUuid', this.param.custOrderUuid);
                     this.myStore.vCustOrderDetail.reload();
                     this.unmask();

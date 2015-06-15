@@ -9,29 +9,16 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("MY_ORDER_ID", false)]
+	[TableView("MY_ORDER_ID", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class MyOrderId_Record : RecordBase{
 		public MyOrderId_Record(){}
 		/*欄位資訊 Start*/
-		string _MY_ORDER_ID=null;
 		string _MY_ORDER_ID_UUID=null;
 		int? _MAX=null;
+		string _MY_ORDER_ID=null;
 		/*欄位資訊 End*/
-
-		[ColumnName("MY_ORDER_ID",false,typeof(string))]
-		public string MY_ORDER_ID
-		{
-			set
-			{
-				_MY_ORDER_ID=value;
-			}
-			get
-			{
-				return _MY_ORDER_ID;
-			}
-		}
 
 		[ColumnName("MY_ORDER_ID_UUID",true,typeof(string))]
 		public string MY_ORDER_ID_UUID
@@ -56,6 +43,19 @@ namespace Limew.Model.Lw.Table.Record
 			get
 			{
 				return _MAX;
+			}
+		}
+
+		[ColumnName("MY_ORDER_ID",false,typeof(string))]
+		public string MY_ORDER_ID
+		{
+			set
+			{
+				_MY_ORDER_ID=value;
+			}
+			get
+			{
+				return _MY_ORDER_ID;
 			}
 		}
 		public MyOrderId_Record Clone(){

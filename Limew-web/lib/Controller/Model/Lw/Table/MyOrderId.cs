@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("MY_ORDER_ID", false)]
+	[TableView("MY_ORDER_ID", true)]
 	public partial class MyOrderId : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -29,15 +29,15 @@ namespace Limew.Model.Lw.Table
 			this._All_Record = currenData;
 		}
 		/*欄位資訊 Start*/
-		public string MY_ORDER_ID {
-			[ColumnName("MY_ORDER_ID",false,typeof(string))]
-			get{return "MY_ORDER_ID" ; }}
 		public string MY_ORDER_ID_UUID {
 			[ColumnName("MY_ORDER_ID_UUID",true,typeof(string))]
 			get{return "MY_ORDER_ID_UUID" ; }}
 		public string MAX {
 			[ColumnName("MAX",false,typeof(int?))]
 			get{return "MAX" ; }}
+		public string MY_ORDER_ID {
+			[ColumnName("MY_ORDER_ID",false,typeof(string))]
+			get{return "MY_ORDER_ID" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
 		public MyOrderId_Record CurrentRecord(){
@@ -212,6 +212,66 @@ namespace Limew.Model.Lw.Table
 									.Equal(this.MY_ORDER_ID_UUID,pmy_order_id_uuid)
 				).FetchAll<MyOrderId_Record>(db)  ;  
 				return ret.First();
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<MyOrderId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<MyOrderId_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<MyOrderId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<MyOrderId_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<MyOrderId_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<MyOrderId_Record>(this.AllRecord(),db);   
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

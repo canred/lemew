@@ -315,7 +315,7 @@ Ext.define('WS.SupplierGoodsWindow', {
                                                 msg: jsonObj.result.message
                                             });
                                         };
-                                    }
+                                    },scope:this
                                 });
                             } else {
                                 //alert(this.param.supplierUuid);

@@ -60,6 +60,13 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                         'UUID': '',
                         'C_NAME': '全部'
                     });
+                    for(var i = 0 ; i < store.getCount() ; i++){
+                        if(store.getAt(i).get('C_NAME').length>2){
+                        store.getAt(i).set('C_NAME',store.getAt(i).get('C_NAME').substr(0,2));
+                        store.getAt(i).commit();    
+                        }
+                        
+                    }
                 }
             },
             remoteSort: true,
@@ -248,7 +255,7 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                     editable: false,
                     hidden: false,
                     labelWidth: 40,
-                    width: 120,
+                    width: 110,
                     labelAlign: 'right',
                     store: new Ext.data.ArrayStore({
                         fields: ['text', 'value']
@@ -286,7 +293,7 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                     xtype: 'combo',
                     fieldLabel: '出貨公司',
                     labelAlign: 'right',
-                    width: 150,
+                    width: 130,
                     labelWidth: 60,
                     itemId: 'cmbCompany',
                     displayField: 'C_NAME',
@@ -305,6 +312,7 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                     itemId: 'cmbCust',
                     hidden: false,
                     editable: false,
+                    readOnly:true,
                     store: this.myStore.cust,
                     value: '',
                     listeners: {
@@ -318,7 +326,30 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                     labelAlign: 'right',
                     width: 130,
                     labelWidth: 60
-                }, {
+                },{
+                    xtype:'button',
+                    text:'選',
+                    handler:function(handler,scope){
+                        var mainPanel = this.up('panel').up('panel');
+                        var subWin = Ext.create('WS.CustPickerWindow',{
+                            param:{
+                                parentObj:mainPanel,
+                                showAllBtn:true
+                            }
+                        });
+                        subWin.on('selectedEvent',function(obj,selectRecord){
+                            obj.param.parentObj.down('#cmbCust').setValue(selectRecord.CUST_UUID);
+                            
+                            obj.param.parentObj.down('#cmbCustOrg').setValue('');
+                            obj.param.parentObj.myStore.custOrg.getProxy().setExtraParam('pCustUuid', selectRecord.CUST_UUID);
+                            obj.param.parentObj.myStore.custOrg.load();
+
+                            obj.close();
+
+                        });
+                        subWin.show();
+                    }
+                },{
 
                     xtype: 'combo',
                     fieldLabel: '單位',
@@ -332,6 +363,7 @@ Ext.define('WS.ReportOrderTopQueryPanel', {
                     labelAlign: 'right',
                     width: 110,
                     labelWidth: 40
+
                 }, {
                     xtype: 'button',
                     icon: SYSTEM_URL_ROOT + '/css/custimages/find.png',

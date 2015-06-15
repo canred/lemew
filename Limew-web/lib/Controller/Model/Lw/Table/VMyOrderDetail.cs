@@ -86,6 +86,9 @@ namespace Limew.Model.Lw.Table
 		public string SUPPLIER_GOODS_UUID {
 			[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
 			get{return "SUPPLIER_GOODS_UUID" ; }}
+		public string MY_ORDER_DETAIL_PS {
+			[ColumnName("MY_ORDER_DETAIL_PS",false,typeof(string))]
+			get{return "MY_ORDER_DETAIL_PS" ; }}
 		public string MY_ORDER_DETAIL_ATTENDANT_C_NAME {
 			[ColumnName("MY_ORDER_DETAIL_ATTENDANT_C_NAME",false,typeof(string))]
 			get{return "MY_ORDER_DETAIL_ATTENDANT_C_NAME" ; }}

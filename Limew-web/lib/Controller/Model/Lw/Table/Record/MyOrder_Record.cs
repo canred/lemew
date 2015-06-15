@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("MY_ORDER", false)]
+	[TableView("MY_ORDER", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class MyOrder_Record : RecordBase{
@@ -225,6 +225,133 @@ namespace Limew.Model.Lw.Table.Record
 			try{
 				var dbc = LK.Config.DataBase.Factory.getInfo();
 				MyOrder ret = new MyOrder(dbc,this);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180347*/
+		public List<MyOrderDetail_Record> Link_MyOrderDetail_By_MyOrderUuid()
+		{
+			try{
+				List<MyOrderDetail_Record> ret= new List<MyOrderDetail_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				MyOrderDetail ___table = new MyOrderDetail(dbc);
+				ret=(List<MyOrderDetail_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.MY_ORDER_UUID,this.MY_ORDER_UUID))
+					.FetchAll<MyOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180348*/
+		public List<MyOrderDetail_Record> Link_MyOrderDetail_By_MyOrderUuid(OrderLimit limit)
+		{
+			try{
+				List<MyOrderDetail_Record> ret= new List<MyOrderDetail_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				MyOrderDetail ___table = new MyOrderDetail(dbc);
+				ret=(List<MyOrderDetail_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.MY_ORDER_UUID,this.MY_ORDER_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<MyOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		public List<Supplier_Record> Link_Supplier_By_SupplierUuid()
+		{
+			try{
+				List<Supplier_Record> ret= new List<Supplier_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Supplier ___table = new Supplier(dbc);
+				ret=(List<Supplier_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.SUPPLIER_UUID,this.SUPPLIER_UUID))
+					.FetchAll<Supplier_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180404*/
+		public List<Supplier_Record> Link_Supplier_By_SupplierUuid(OrderLimit limit)
+		{
+			try{
+				List<Supplier_Record> ret= new List<Supplier_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Supplier ___table = new Supplier(dbc);
+				ret=(List<Supplier_Record>)
+										___table.Where(new SQLCondition(___table)
+										.Equal(___table.SUPPLIER_UUID,this.SUPPLIER_UUID))
+					.Order(limit)
+					.Limit(limit)
+					.FetchAll<Supplier_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180357*/
+		public MyOrderDetail LinkFill_MyOrderDetail_By_MyOrderUuid()
+		{
+			try{
+				var data = Link_MyOrderDetail_By_MyOrderUuid();
+				MyOrderDetail ret=new MyOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180358*/
+		public MyOrderDetail LinkFill_MyOrderDetail_By_MyOrderUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_MyOrderDetail_By_MyOrderUuid(limit);
+				MyOrderDetail ret=new MyOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*2013031800428*/
+		public Supplier LinkFill_Supplier_By_SupplierUuid()
+		{
+			try{
+				var data = Link_Supplier_By_SupplierUuid();
+				Supplier ret=new Supplier(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180429*/
+		public Supplier LinkFill_Supplier_By_SupplierUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_Supplier_By_SupplierUuid(limit);
+				Supplier ret=new Supplier(data);
 				return ret;
 			}
 			catch (Exception ex){

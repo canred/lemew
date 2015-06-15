@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("PAY_METHOD", false)]
+	[TableView("PAY_METHOD", true)]
 	public partial class PayMethod : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -36,7 +36,7 @@ namespace Limew.Model.Lw.Table
 			[ColumnName("PAY_METHOD_NAME",false,typeof(string))]
 			get{return "PAY_METHOD_NAME" ; }}
 		public string PAY_METHOD_ORD {
-			[ColumnName("PAY_METHOD_ORD",false,typeof(short?))]
+			[ColumnName("PAY_METHOD_ORD",false,typeof(int?))]
 			get{return "PAY_METHOD_ORD" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
@@ -218,23 +218,83 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<PayMethod_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<PayMethod_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<PayMethod_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<PayMethod_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<PayMethod_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<PayMethod_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
 		/*201303180320*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_PayMethodUuid()
+		public List<CustOrder_Record> Link_CustOrder_By_PayMethodUuid()
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
+				CustOrder ___table = new CustOrder(dbc);
 				SQLCondition condition = new SQLCondition(___table) ;
 				foreach(var item in AllRecord()){
 						condition
 						.L().Equal(___table.PAY_METHOD_UUID,item.PAY_METHOD_UUID).R().Or()  ; 
  				}
 				condition.CheckSQL();
-				ret=(List<VCustOrder_Record>)
+				ret=(List<CustOrder_Record>)
 						___table.Where(condition)
-						.FetchAll<VCustOrder_Record>() ; 
+						.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -243,23 +303,23 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*201303180321*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_PayMethodUuid(OrderLimit limit)
+		public List<CustOrder_Record> Link_CustOrder_By_PayMethodUuid(OrderLimit limit)
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
+				CustOrder ___table = new CustOrder(dbc);
 				SQLCondition condition = new SQLCondition(___table) ;
 				foreach(var item in AllRecord()){
 						condition
 						.L().Equal(___table.PAY_METHOD_UUID,item.PAY_METHOD_UUID).R().Or()  ; 
  				}
 				condition.CheckSQL();
-				ret=(List<VCustOrder_Record>)
+				ret=(List<CustOrder_Record>)
 						___table.Where(condition)
 						.Order(limit)
 						.Limit(limit)
-						.FetchAll<VCustOrder_Record>() ; 
+						.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -268,11 +328,11 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*201303180324*/
-		public VCustOrder LinkFill_VCustOrder_By_PayMethodUuid()
+		public CustOrder LinkFill_CustOrder_By_PayMethodUuid()
 		{
 			try{
-				var data = Link_VCustOrder_By_PayMethodUuid();
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_PayMethodUuid();
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){
@@ -281,11 +341,11 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*201303180325*/
-		public VCustOrder LinkFill_VCustOrder_By_PayMethodUuid(OrderLimit limit)
+		public CustOrder LinkFill_CustOrder_By_PayMethodUuid(OrderLimit limit)
 		{
 			try{
-				var data = Link_VCustOrder_By_PayMethodUuid(limit);
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_PayMethodUuid(limit);
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

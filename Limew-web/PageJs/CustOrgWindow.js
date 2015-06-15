@@ -41,7 +41,7 @@ Ext.define('WS.CustOrgWindow', {
                         name: 'CUST_ORG_NAME',
                         padding: '5 0 0 0',
                         anchor: '0 0',
-                        maxLength: 12,
+                        maxLength: 33,
                         allowBlank: false,
                         labelAlign: 'right'
                     }, {
@@ -110,7 +110,6 @@ Ext.define('WS.CustOrgWindow', {
                     name: 'CUST_UUID',
                     padding: '5 0 0 0',
                     anchor: '100%',
-                    maxLength: 84,
                     itemId: 'CUST_UUID'
                 }, {
                     xtype: 'hidden',
@@ -118,7 +117,6 @@ Ext.define('WS.CustOrgWindow', {
                     name: 'CUST_ORG_UUID',
                     padding: '5 0 0 0',
                     anchor: '100%',
-                    maxLength: 84,
                     itemId: 'CUST_ORG_UUID'
                 }, {
                     xtype: 'hidden',
@@ -126,7 +124,6 @@ Ext.define('WS.CustOrgWindow', {
                     name: 'CUST_ORG_IS_DEFAULT',
                     padding: '5 0 0 0',
                     anchor: '100%',
-                    maxLength: 84,
                     value: '0',
                     itemId: 'CUST_ORG_IS_DEFAULT'
                 }],

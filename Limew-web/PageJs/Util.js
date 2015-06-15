@@ -85,5 +85,62 @@ Ext.define('WS.Util', {
         this.session._task.scope = this.session;
         this.session.fnKeep.call(this.session);
         this.trace.fnTrace.call(this.trace);
+    },
+
+    Alert: function(title,delay,toHeight,eventX,eventY,showDuration) {
+        
+        var topStr = 'top:' + Ext.getBody().el.getScroll().top + "px";
+        //alert(topStr);
+        Ext.define('WS.AlertWindow', {
+            extend: 'Ext.window.Window',            
+            closeAction: 'destory',
+            closable: false,
+            width: 200,
+            height: 0,
+            y:eventY,
+            x:eventX,
+            resizable: false,
+            draggable: false,
+            initComponent: function() {
+                this.items = [{
+                    xtype:'displayfield',
+                    value:title
+                }];
+                this.callParent(arguments);
+            },
+            listeners: {
+                'show': function() {
+
+                }
+            }
+        });
+
+        var a = Ext.create('WS.AlertWindow');
+        a.show();
+        if(!showDuration){
+            showDuration = 5000;
+        };
+        var h = 200;
+        if(toHeight){
+            h = toHeight;
+        }
+        a.animate({
+            duration: 500,
+            to: {
+                width: 200,
+                height: h
+            }
+        }).animate({
+            duration: showDuration,
+            to: {
+                opacity: 0
+            },
+            listeners: {               
+                afteranimate: function() {
+                    this.close();
+                },
+                scope: a
+            }
+        });
     }
 });

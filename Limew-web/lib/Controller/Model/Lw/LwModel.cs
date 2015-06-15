@@ -18,12 +18,96 @@ namespace Limew.Model.Lw
 		private LK.Config.DataBase.IDataBaseConfigInfo dbc = null;
 		public LwModel(){}
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.Cust getCust_By_CustUuid(string pCUST_UUID){
+		public Limew.Model.Lw.Table.CustOrderId getCustOrderId_By_CustOrderIdUuid(string pCUST_ORDER_ID_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.Cust cust = new Limew.Model.Lw.Table.Cust(dbc);
-				cust.Fill_By_PK(pCUST_UUID);
-				return cust;
+				Limew.Model.Lw.Table.CustOrderId custorderid = new Limew.Model.Lw.Table.CustOrderId(dbc);
+				custorderid.Fill_By_PK(pCUST_ORDER_ID_UUID);
+				return custorderid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustAddress getVCustAddress_By_CustUuid_And_CustOrgUuid(string pCUST_UUID,string pCUST_ORG_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustAddress vcustaddress = new Limew.Model.Lw.Table.VCustAddress(dbc);
+				vcustaddress.Fill_By_PK(pCUST_UUID,pCUST_ORG_UUID);
+				return vcustaddress;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.MyOrderId getMyOrderId_By_MyOrderIdUuid(string pMY_ORDER_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.MyOrderId myorderid = new Limew.Model.Lw.Table.MyOrderId(dbc);
+				myorderid.Fill_By_PK(pMY_ORDER_ID_UUID);
+				return myorderid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustOrderSearch getVCustOrderSearch_By_CustOrderUuid_And_CustOrderDetailUuid(string pCUST_ORDER_UUID,string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustOrderSearch vcustordersearch = new Limew.Model.Lw.Table.VCustOrderSearch(dbc);
+				vcustordersearch.Fill_By_PK(pCUST_ORDER_UUID,pCUST_ORDER_DETAIL_UUID);
+				return vcustordersearch;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.MyOrder getMyOrder_By_MyOrderUuid(string pMY_ORDER_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.MyOrder myorder = new Limew.Model.Lw.Table.MyOrder(dbc);
+				myorder.Fill_By_PK(pMY_ORDER_UUID);
+				return myorder;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.Unit getUnit_By_UnitUuid(string pUNIT_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.Unit unit = new Limew.Model.Lw.Table.Unit(dbc);
+				unit.Fill_By_PK(pUNIT_UUID);
+				return unit;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.CustOrg getCustOrg_By_CustOrgUuid(string pCUST_ORG_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.CustOrg custorg = new Limew.Model.Lw.Table.CustOrg(dbc);
+				custorg.Fill_By_PK(pCUST_ORG_UUID);
+				return custorg;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -38,6 +122,48 @@ namespace Limew.Model.Lw
 				Limew.Model.Lw.Table.CustOrderStatus custorderstatus = new Limew.Model.Lw.Table.CustOrderStatus(dbc);
 				custorderstatus.Fill_By_PK(pCUST_ORDER_STATUS_UUID);
 				return custorderstatus;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.Cust getCust_By_CustUuid(string pCUST_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.Cust cust = new Limew.Model.Lw.Table.Cust(dbc);
+				cust.Fill_By_PK(pCUST_UUID);
+				return cust;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.CustOrderDetail getCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.CustOrderDetail custorderdetail = new Limew.Model.Lw.Table.CustOrderDetail(dbc);
+				custorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
+				return custorderdetail;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VCustOrderDetail getVCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VCustOrderDetail vcustorderdetail = new Limew.Model.Lw.Table.VCustOrderDetail(dbc);
+				vcustorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
+				return vcustorderdetail;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -74,12 +200,96 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VGoods getVGoods_By_GoodsUuid(string pGOODS_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VGoods vgoods = new Limew.Model.Lw.Table.VGoods(dbc);
+				vgoods.Fill_By_PK(pGOODS_UUID);
+				return vgoods;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.Filegroup getFilegroup_By_FilegroupUuid(string pFILEGROUP_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.Filegroup filegroup = new Limew.Model.Lw.Table.Filegroup(dbc);
+				filegroup.Fill_By_PK(pFILEGROUP_UUID);
+				return filegroup;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.ShippingId getShippingId_By_ShippingIdUuid(string pSHIPPING_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.ShippingId shippingid = new Limew.Model.Lw.Table.ShippingId(dbc);
+				shippingid.Fill_By_PK(pSHIPPING_ID_UUID);
+				return shippingid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.PayStatus getPayStatus_By_PayStatusUuid(string pPAY_STATUS_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.PayStatus paystatus = new Limew.Model.Lw.Table.PayStatus(dbc);
+				paystatus.Fill_By_PK(pPAY_STATUS_UUID);
+				return paystatus;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
 		public Limew.Model.Lw.Table.PayMethod getPayMethod_By_PayMethodUuid(string pPAY_METHOD_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
 				Limew.Model.Lw.Table.PayMethod paymethod = new Limew.Model.Lw.Table.PayMethod(dbc);
 				paymethod.Fill_By_PK(pPAY_METHOD_UUID);
 				return paymethod;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VFilegroup getVFilegroup_By_FileUuid(string pFILE_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VFilegroup vfilegroup = new Limew.Model.Lw.Table.VFilegroup(dbc);
+				vfilegroup.Fill_By_PK(pFILE_UUID);
+				return vfilegroup;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.File getFile_By_FileUuid(string pFILE_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
+				file.Fill_By_PK(pFILE_UUID);
+				return file;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -130,34 +340,6 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VGoods getVGoods_By_GoodsUuid(string pGOODS_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VGoods vgoods = new Limew.Model.Lw.Table.VGoods(dbc);
-				vgoods.Fill_By_PK(pGOODS_UUID);
-				return vgoods;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.Unit getUnit_By_UnitUuid(string pUNIT_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.Unit unit = new Limew.Model.Lw.Table.Unit(dbc);
-				unit.Fill_By_PK(pUNIT_UUID);
-				return unit;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
 		public Limew.Model.Lw.Table.VSupplierGoods getVSupplierGoods_By_SupplierGoodsUuid_And_SupplierUuid(string pSUPPLIER_GOODS_UUID,string pSUPPLIER_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
@@ -172,26 +354,12 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.CustOrg getCustOrg_By_CustOrgUuid(string pCUST_ORG_UUID){
+		public Limew.Model.Lw.Table.CustOrgV getCustOrgV_By_CustUuid_And_CustOrgUuid(string pCUST_UUID,string pCUST_ORG_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.CustOrg custorg = new Limew.Model.Lw.Table.CustOrg(dbc);
-				custorg.Fill_By_PK(pCUST_ORG_UUID);
-				return custorg;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VCustOrder getVCustOrder_By_CustOrderUuid(string pCUST_ORDER_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VCustOrder vcustorder = new Limew.Model.Lw.Table.VCustOrder(dbc);
-				vcustorder.Fill_By_PK(pCUST_ORDER_UUID);
-				return vcustorder;
+				Limew.Model.Lw.Table.CustOrgV custorgv = new Limew.Model.Lw.Table.CustOrgV(dbc);
+				custorgv.Fill_By_PK(pCUST_UUID,pCUST_ORG_UUID);
+				return custorgv;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -214,138 +382,12 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.CustOrderDetail getCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
+		public Limew.Model.Lw.Table.VCustOrder getVCustOrder_By_CustOrderUuid(string pCUST_ORDER_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.CustOrderDetail custorderdetail = new Limew.Model.Lw.Table.CustOrderDetail(dbc);
-				custorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
-				return custorderdetail;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.PayStatus getPayStatus_By_PayStatusUuid(string pPAY_STATUS_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.PayStatus paystatus = new Limew.Model.Lw.Table.PayStatus(dbc);
-				paystatus.Fill_By_PK(pPAY_STATUS_UUID);
-				return paystatus;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.Filegroup getFilegroup_By_FilegroupUuid(string pFILEGROUP_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.Filegroup filegroup = new Limew.Model.Lw.Table.Filegroup(dbc);
-				filegroup.Fill_By_PK(pFILEGROUP_UUID);
-				return filegroup;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.File getFile_By_FileUuid(string pFILE_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.File file = new Limew.Model.Lw.Table.File(dbc);
-				file.Fill_By_PK(pFILE_UUID);
-				return file;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VFilegroup getVFilegroup_By_FileUuid(string pFILE_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VFilegroup vfilegroup = new Limew.Model.Lw.Table.VFilegroup(dbc);
-				vfilegroup.Fill_By_PK(pFILE_UUID);
-				return vfilegroup;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VCustOrderDetail getVCustOrderDetail_By_CustOrderDetailUuid(string pCUST_ORDER_DETAIL_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VCustOrderDetail vcustorderdetail = new Limew.Model.Lw.Table.VCustOrderDetail(dbc);
-				vcustorderdetail.Fill_By_PK(pCUST_ORDER_DETAIL_UUID);
-				return vcustorderdetail;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VCustAddress getVCustAddress_By_CustUuid_And_CustOrgUuid(string pCUST_UUID,string pCUST_ORG_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VCustAddress vcustaddress = new Limew.Model.Lw.Table.VCustAddress(dbc);
-				vcustaddress.Fill_By_PK(pCUST_UUID,pCUST_ORG_UUID);
-				return vcustaddress;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.CustOrderId getCustOrderId_By_CustOrderIdUuid(string pCUST_ORDER_ID_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.CustOrderId custorderid = new Limew.Model.Lw.Table.CustOrderId(dbc);
-				custorderid.Fill_By_PK(pCUST_ORDER_ID_UUID);
-				return custorderid;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.ShippingId getShippingId_By_ShippingIdUuid(string pSHIPPING_ID_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.ShippingId shippingid = new Limew.Model.Lw.Table.ShippingId(dbc);
-				shippingid.Fill_By_PK(pSHIPPING_ID_UUID);
-				return shippingid;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-
-		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.MyOrder getMyOrder_By_MyOrderUuid(string pMY_ORDER_UUID){
-			try{
-				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.MyOrder myorder = new Limew.Model.Lw.Table.MyOrder(dbc);
-				myorder.Fill_By_PK(pMY_ORDER_UUID);
-				return myorder;
+				Limew.Model.Lw.Table.VCustOrder vcustorder = new Limew.Model.Lw.Table.VCustOrder(dbc);
+				vcustorder.Fill_By_PK(pCUST_ORDER_UUID);
+				return vcustorder;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -382,12 +424,12 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.MyOrderId getMyOrderId_By_MyOrderIdUuid(string pMY_ORDER_ID_UUID){
+		public Limew.Model.Lw.Table.Billing getBilling_By_BillingUuid(string pBILLING_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.MyOrderId myorderid = new Limew.Model.Lw.Table.MyOrderId(dbc);
-				myorderid.Fill_By_PK(pMY_ORDER_ID_UUID);
-				return myorderid;
+				Limew.Model.Lw.Table.Billing billing = new Limew.Model.Lw.Table.Billing(dbc);
+				billing.Fill_By_PK(pBILLING_UUID);
+				return billing;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);
@@ -396,12 +438,54 @@ namespace Limew.Model.Lw
 		}
 
 		/*Templete Model A001*/
-		public Limew.Model.Lw.Table.VCustOrderSearch getVCustOrderSearch_By_CustOrderUuid_And_CustOrderDetailUuid(string pCUST_ORDER_UUID,string pCUST_ORDER_DETAIL_UUID){
+		public Limew.Model.Lw.Table.BillingDetail getBillingDetail_By_BillingDetailUuid(string pBILLING_DETAIL_UUID){
 			try{
 				dbc = LK.Config.DataBase.Factory.getInfo();
-				Limew.Model.Lw.Table.VCustOrderSearch vcustordersearch = new Limew.Model.Lw.Table.VCustOrderSearch(dbc);
-				vcustordersearch.Fill_By_PK(pCUST_ORDER_UUID,pCUST_ORDER_DETAIL_UUID);
-				return vcustordersearch;
+				Limew.Model.Lw.Table.BillingDetail billingdetail = new Limew.Model.Lw.Table.BillingDetail(dbc);
+				billingdetail.Fill_By_PK(pBILLING_DETAIL_UUID);
+				return billingdetail;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.BillingId getBillingId_By_BillingIdUuid(string pBILLING_ID_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.BillingId billingid = new Limew.Model.Lw.Table.BillingId(dbc);
+				billingid.Fill_By_PK(pBILLING_ID_UUID);
+				return billingid;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VBillingDetail getVBillingDetail_By_BillingDetailUuid_And_CustOrderUuid(string pBILLING_DETAIL_UUID,string pCUST_ORDER_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VBillingDetail vbillingdetail = new Limew.Model.Lw.Table.VBillingDetail(dbc);
+				vbillingdetail.Fill_By_PK(pBILLING_DETAIL_UUID,pCUST_ORDER_UUID);
+				return vbillingdetail;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+
+		/*Templete Model A001*/
+		public Limew.Model.Lw.Table.VBillingExp getVBillingExp_By_BillingDetailUuid_And_CustOrderUuid_And_CustOrderDetailUuid(string pBILLING_DETAIL_UUID,string pCUST_ORDER_UUID,string pCUST_ORDER_DETAIL_UUID){
+			try{
+				dbc = LK.Config.DataBase.Factory.getInfo();
+				Limew.Model.Lw.Table.VBillingExp vbillingexp = new Limew.Model.Lw.Table.VBillingExp(dbc);
+				vbillingexp.Fill_By_PK(pBILLING_DETAIL_UUID,pCUST_ORDER_UUID,pCUST_ORDER_DETAIL_UUID);
+				return vbillingexp;
 			}
 			catch (Exception ex){
 				log.Error(ex);LK.MyException.MyException.Error(this, ex);

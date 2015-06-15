@@ -21,7 +21,7 @@ namespace Limew.Model.Lw.Table.Record
 		string _UNIT_UUID=null;
 		string _SUPPLIER_GOODS_SN=null;
 		decimal? _SUPPLIER_GOODS_PRICE=null;
-		string _SUPPLIER_GOODS_COST=null;
+		decimal? _SUPPLIER_GOODS_COST=null;
 		int? _SUPPLIER_GOODS_IS_ACTIVE=null;
 		string _SUPPLIER_UUID=null;
 		string _UNIT_NAME=null;
@@ -105,8 +105,8 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 
-		[ColumnName("SUPPLIER_GOODS_COST",false,typeof(string))]
-		public string SUPPLIER_GOODS_COST
+		[ColumnName("SUPPLIER_GOODS_COST",false,typeof(decimal?))]
+		public decimal? SUPPLIER_GOODS_COST
 		{
 			set
 			{
@@ -169,132 +169,6 @@ namespace Limew.Model.Lw.Table.Record
 			try{
 				var dbc = LK.Config.DataBase.Factory.getInfo();
 				VSupplierGoods ret = new VSupplierGoods(dbc,this);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<Supplier_Record> Link_Supplier_By_SupplierUuid()
-		{
-			try{
-				List<Supplier_Record> ret= new List<Supplier_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Supplier ___table = new Supplier(dbc);
-				ret=(List<Supplier_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SUPPLIER_UUID,this.SUPPLIER_UUID))
-					.FetchAll<Supplier_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		public List<SupplierGoods_Record> Link_SupplierGoods_By_SupplierGoodsUuid()
-		{
-			try{
-				List<SupplierGoods_Record> ret= new List<SupplierGoods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				SupplierGoods ___table = new SupplierGoods(dbc);
-				ret=(List<SupplierGoods_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SUPPLIER_GOODS_UUID,this.SUPPLIER_GOODS_UUID))
-					.FetchAll<SupplierGoods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<Supplier_Record> Link_Supplier_By_SupplierUuid(OrderLimit limit)
-		{
-			try{
-				List<Supplier_Record> ret= new List<Supplier_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				Supplier ___table = new Supplier(dbc);
-				ret=(List<Supplier_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SUPPLIER_UUID,this.SUPPLIER_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<Supplier_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180404*/
-		public List<SupplierGoods_Record> Link_SupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
-		{
-			try{
-				List<SupplierGoods_Record> ret= new List<SupplierGoods_Record>();
-				var dbc = LK.Config.DataBase.Factory.getInfo();
-				SupplierGoods ___table = new SupplierGoods(dbc);
-				ret=(List<SupplierGoods_Record>)
-										___table.Where(new SQLCondition(___table)
-										.Equal(___table.SUPPLIER_GOODS_UUID,this.SUPPLIER_GOODS_UUID))
-					.Order(limit)
-					.Limit(limit)
-					.FetchAll<SupplierGoods_Record>() ; 
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public Supplier LinkFill_Supplier_By_SupplierUuid()
-		{
-			try{
-				var data = Link_Supplier_By_SupplierUuid();
-				Supplier ret=new Supplier(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*2013031800428*/
-		public SupplierGoods LinkFill_SupplierGoods_By_SupplierGoodsUuid()
-		{
-			try{
-				var data = Link_SupplierGoods_By_SupplierGoodsUuid();
-				SupplierGoods ret=new SupplierGoods(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public Supplier LinkFill_Supplier_By_SupplierUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_Supplier_By_SupplierUuid(limit);
-				Supplier ret=new Supplier(data);
-				return ret;
-			}
-			catch (Exception ex){
-				log.Error(ex);LK.MyException.MyException.Error(this, ex);
-				throw ex;
-			}
-		}
-		/*201303180429*/
-		public SupplierGoods LinkFill_SupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
-		{
-			try{
-				var data = Link_SupplierGoods_By_SupplierGoodsUuid(limit);
-				SupplierGoods ret=new SupplierGoods(data);
 				return ret;
 			}
 			catch (Exception ex){

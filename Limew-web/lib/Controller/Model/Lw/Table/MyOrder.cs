@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("MY_ORDER", false)]
+	[TableView("MY_ORDER", true)]
 	public partial class MyOrder : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -251,6 +251,213 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<MyOrder_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<MyOrder_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<MyOrder_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<MyOrder_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<MyOrder_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<MyOrder_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
+		/*201303180320*/
+		public List<MyOrderDetail_Record> Link_MyOrderDetail_By_MyOrderUuid()
+		{
+			try{
+				List<MyOrderDetail_Record> ret= new List<MyOrderDetail_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				MyOrderDetail ___table = new MyOrderDetail(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.MY_ORDER_UUID,item.MY_ORDER_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<MyOrderDetail_Record>)
+						___table.Where(condition)
+						.FetchAll<MyOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180321*/
+		public List<MyOrderDetail_Record> Link_MyOrderDetail_By_MyOrderUuid(OrderLimit limit)
+		{
+			try{
+				List<MyOrderDetail_Record> ret= new List<MyOrderDetail_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				MyOrderDetail ___table = new MyOrderDetail(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.MY_ORDER_UUID,item.MY_ORDER_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<MyOrderDetail_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<MyOrderDetail_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		public List<Supplier_Record> Link_Supplier_By_SupplierUuid()
+		{
+			try{
+				List<Supplier_Record> ret= new List<Supplier_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Supplier ___table = new Supplier(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_UUID,item.SUPPLIER_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Supplier_Record>)
+						___table.Where(condition)
+						.FetchAll<Supplier_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180340*/
+		public List<Supplier_Record> Link_Supplier_By_SupplierUuid(OrderLimit limit)
+		{
+			try{
+				List<Supplier_Record> ret= new List<Supplier_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Supplier ___table = new Supplier(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_UUID,item.SUPPLIER_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Supplier_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<Supplier_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180324*/
+		public MyOrderDetail LinkFill_MyOrderDetail_By_MyOrderUuid()
+		{
+			try{
+				var data = Link_MyOrderDetail_By_MyOrderUuid();
+				MyOrderDetail ret=new MyOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180325*/
+		public MyOrderDetail LinkFill_MyOrderDetail_By_MyOrderUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_MyOrderDetail_By_MyOrderUuid(limit);
+				MyOrderDetail ret=new MyOrderDetail(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180336*/
+		public Supplier LinkFill_Supplier_By_SupplierUuid()
+		{
+			try{
+				var data = Link_Supplier_By_SupplierUuid();
+				Supplier ret=new Supplier(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180337*/
+		public Supplier LinkFill_Supplier_By_SupplierUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_Supplier_By_SupplierUuid(limit);
+				Supplier ret=new Supplier(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 	}
 }

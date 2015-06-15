@@ -10,7 +10,7 @@ using Limew.Model.Lw.Table.Record  ;
 namespace Limew.Model.Lw.Table
 {
 	[LkDataBase("LIMEW")]
-	[TableView("CUST_ORDER_DETAIL", false)]
+	[TableView("CUST_ORDER_DETAIL", true)]
 	public partial class CustOrderDetail : TableBase{
 	/*固定物件*/
 	//LK.DB.SQLCreater.ASQLCreater sqlCreater = null;
@@ -69,7 +69,7 @@ namespace Limew.Model.Lw.Table
 			[ColumnName("SUPPLIER_GOODS_UUID",false,typeof(string))]
 			get{return "SUPPLIER_GOODS_UUID" ; }}
 		public string CUST_ORDER_DETAIL_IS_ACTIVE {
-			[ColumnName("CUST_ORDER_DETAIL_IS_ACTIVE",false,typeof(short?))]
+			[ColumnName("CUST_ORDER_DETAIL_IS_ACTIVE",false,typeof(int?))]
 			get{return "CUST_ORDER_DETAIL_IS_ACTIVE" ; }}
 		/*欄位資訊 End*/
 		/*固定的方法，但名稱需變更 Start*/
@@ -251,7 +251,111 @@ namespace Limew.Model.Lw.Table
 				throw ex;
 			}
 		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord() {
+			try{
+				UpdateAllRecord<CustOrderDetail_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來更新資料行*/
+		public void UpdateAllRecord(DB db) {
+			try{
+				UpdateAllRecord<CustOrderDetail_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord() {
+			try{
+				InsertAllRecord<CustOrderDetail_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來新增資料行*/
+		public void InsertAllRecord(DB db) {
+			try{
+				InsertAllRecord<CustOrderDetail_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord() {
+			try{
+				DeleteAllRecord<CustOrderDetail_Record>(this.AllRecord());   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*利用物件自已的AllRecord的資料來刪除資料行*/
+		public void DeleteAllRecord(DB db) {
+			try{
+				DeleteAllRecord<CustOrderDetail_Record>(this.AllRecord(),db);   
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		/*依照資料表與資料表的關係，產生出來的方法*/
+		public List<Goods_Record> Link_Goods_By_GoodsUuid()
+		{
+			try{
+				List<Goods_Record> ret= new List<Goods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Goods ___table = new Goods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.GOODS_UUID,item.GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Goods_Record>)
+						___table.Where(condition)
+						.FetchAll<Goods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		public List<SupplierGoods_Record> Link_SupplierGoods_By_SupplierGoodsUuid()
+		{
+			try{
+				List<SupplierGoods_Record> ret= new List<SupplierGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				SupplierGoods ___table = new SupplierGoods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_GOODS_UUID,item.SUPPLIER_GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<SupplierGoods_Record>)
+						___table.Where(condition)
+						.FetchAll<SupplierGoods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
 		public List<CustOrder_Record> Link_CustOrder_By_CustOrderUuid()
 		{
 			try{
@@ -267,6 +371,56 @@ namespace Limew.Model.Lw.Table
 				ret=(List<CustOrder_Record>)
 						___table.Where(condition)
 						.FetchAll<CustOrder_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180340*/
+		public List<Goods_Record> Link_Goods_By_GoodsUuid(OrderLimit limit)
+		{
+			try{
+				List<Goods_Record> ret= new List<Goods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				Goods ___table = new Goods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.GOODS_UUID,item.GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<Goods_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<Goods_Record>() ; 
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180340*/
+		public List<SupplierGoods_Record> Link_SupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
+		{
+			try{
+				List<SupplierGoods_Record> ret= new List<SupplierGoods_Record>();
+				var dbc = LK.Config.DataBase.Factory.getInfo();
+				SupplierGoods ___table = new SupplierGoods(dbc);
+				SQLCondition condition = new SQLCondition(___table) ;
+				foreach(var item in AllRecord()){
+						condition
+						.L().Equal(___table.SUPPLIER_GOODS_UUID,item.SUPPLIER_GOODS_UUID).R().Or()  ; 
+ 				}
+				condition.CheckSQL();
+				ret=(List<SupplierGoods_Record>)
+						___table.Where(condition)
+						.Order(limit)
+						.Limit(limit)
+						.FetchAll<SupplierGoods_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -300,11 +454,63 @@ namespace Limew.Model.Lw.Table
 			}
 		}
 		/*201303180336*/
+		public Goods LinkFill_Goods_By_GoodsUuid()
+		{
+			try{
+				var data = Link_Goods_By_GoodsUuid();
+				Goods ret=new Goods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180336*/
+		public SupplierGoods LinkFill_SupplierGoods_By_SupplierGoodsUuid()
+		{
+			try{
+				var data = Link_SupplierGoods_By_SupplierGoodsUuid();
+				SupplierGoods ret=new SupplierGoods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180336*/
 		public CustOrder LinkFill_CustOrder_By_CustOrderUuid()
 		{
 			try{
 				var data = Link_CustOrder_By_CustOrderUuid();
 				CustOrder ret=new CustOrder(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180337*/
+		public Goods LinkFill_Goods_By_GoodsUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_Goods_By_GoodsUuid(limit);
+				Goods ret=new Goods(data);
+				return ret;
+			}
+			catch (Exception ex){
+				log.Error(ex);LK.MyException.MyException.Error(this, ex);
+				throw ex;
+			}
+		}
+		/*201303180337*/
+		public SupplierGoods LinkFill_SupplierGoods_By_SupplierGoodsUuid(OrderLimit limit)
+		{
+			try{
+				var data = Link_SupplierGoods_By_SupplierGoodsUuid(limit);
+				SupplierGoods ret=new SupplierGoods(data);
 				return ret;
 			}
 			catch (Exception ex){

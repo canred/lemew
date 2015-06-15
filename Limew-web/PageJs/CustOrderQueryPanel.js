@@ -442,132 +442,245 @@ Ext.define('WS.CustOrderQueryPanel', {
 
                 },
                 columns: [{
-                    text: "編輯",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCustOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCustOrder, {});
-                            subWin.on('closeEvent', function(obj) {
-                                main.down("#grdVCustOrder").getStore().load();
-                            }, main);
-                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: '建立日期',
-                    dataIndex: 'CUST_ORDER_CR',
-                    align: 'left',hidden:true,
-                    width: 100
-                }, {
-                    header: "訂單編號",
-                    dataIndex: 'CUST_ORDER_ID',
-                    align: 'left',
-                    width: 130
-                }, {
-                    header: "出貨編號",
-                    dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: "出貨地址",
-                    dataIndex: 'SHIPPING_ADDRESS',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: "公司名稱",
-                    dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    width: 150
-                }, {
-                    header: "單位",
-                    dataIndex: 'CUST_ORDER_DEPT',
-                    align: 'left',
-                    width: 100
-                }, {
-                    header: "公司電話",
-                    align: 'left',
-                    dataIndex: 'CUST_TEL',
-                    width: 120
-                }, {
-                    header: '採購員',
-                    dataIndex: 'CUST_ORG_SALES_NAME',
-                    align: 'left',
-                    width: 80
-                }, {
-                    header: '聯絡電話',
-                    dataIndex: 'CUST_ORG_SALES_PHONE',
-                    align: 'left',
-                    width: 120,
-                    hidden: false
-                }, {
-                    header: '金額',
-                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    width: 80
-                }, {
-                    header: '報價公司',
-                    dataIndex: 'COMPANY_C_NAME',
-                    align: 'right',
-                    width: 80
-                }, {
-                    header: "傳真",
-                    dataIndex: 'CUST_FAX',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '地址',
-                    dataIndex: 'CUST_ADDRESS',
-                    align: 'left',
-                    width: 150,
-                    hidden: true
-                }, {
-                    header: '採購員email',
-                    dataIndex: 'CUST_SALES_EMAIL',
-                    align: 'left',
-                    width: 120,
-                    hidden: true
-                }, {
-                    header: '備註',
-                    dataIndex: 'CUST_ORDER_PS',
-                    align: 'left',
-                    width: 200,
-                    hidden: true
+                        header: '製單日期',
+                        dataIndex: 'CUST_ORDER_REPORT_DATE',
+                        align: 'left',
+                        hidden: false,
+                        width: 100
+                    }, {
+                        header: "訂單編號",
+                        dataIndex: 'CUST_ORDER_ID',
+                        align: 'left',
+                        width: 110
+                    }, {
+                        header: "客戶名稱",
+                        dataIndex: 'CUST_NAME',
+                        align: 'left',
+                        minWidth: 150,
+                        flex:1
+                    }, {
+                        header: "單位",
+                        dataIndex: 'CUST_ORDER_DEPT',
+                        align: 'left',
+                        width: 150
+                    }, {
+                        header: '採購人員',
+                        dataIndex: 'CUST_ORG_SALES_NAME',
+                        align: 'left',
+                        width: 70
+                    }, {
+                        header: '聯絡電話',
+                        dataIndex: 'CUST_ORG_SALES_PHONE',
+                        align: 'left',
+                        width: 70,
+                        hidden: false
+                    }, {
+                        header: '金額',
+                        dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                        align: 'right',
+                        width: 80,
+                        renderer: function (value,r) {                            
+                            return Ext.String.format('${0}', value);
+                        }                
+                    }, {
+                        header: "請示單號",
+                        dataIndex: 'CUST_ORDER_PS_NUMBER',
+                        align: 'left',
+                        width: 80
+                    }, {
+                        xtype: 'templatecolumn',
+                        header: '報價公司',
+                        dataIndex: 'COMPANY_C_NAME',
+                        align: 'right',
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnShowName(values)]}',
+                            "</tpl>", {
+                                fnShowName: function(values) {
+                                    return values.COMPANY_C_NAME.substr(0,2);
+                                }
+                            }),
+                        minWidth:70,
+                        maxWidth:100,
+                        flex: 1
+                    },
+                    {
+                         header: "製單人",
+                        dataIndex: 'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
+                        align: 'left',
+                        width: 70
+                    },
+                    // {
+                    //     text: "編輯",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     minWidth: 60,
+                    //     flex: 1,
+                    //     items: [{
+                    //         tooltip: '*編輯',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
 
-                }, {
-                    header: '等級',
-                    dataIndex: 'CUST_LEVEL',
-                    align: 'center',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '最近採購日',
-                    dataIndex: 'CUST_LAST_BUY',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }],
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // },
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯',
+                        width: 60,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="編輯" onclick="CustOrderQueryPanelFnEdit(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                fnInit: function() {
+                                    if (!document.CustOrderQueryPanelFnEdit) {
+                                        document.CustOrderQueryPanelFnEdit = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = WS_CUSTORDERQUERYPANEL;
+
+                                            if (!main.subWinCustOrder) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinCustOrder, {});
+
+                                            subWin.on('closeEvent', function(obj) {
+                                                main.down("#grdVCustOrder").getStore().load();
+                                            }, main);
+
+                                            subWin.param.custOrderUuid = CUST_ORDER_UUID;
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        xtype: 'templatecolumn',
+                        text: '報價單',
+                        width: 60,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="列印" onclick="CustOrderQueryPanelFnPrintOrder(\'{COMPANY_C_NAME}\',\'{CUST_ORDER_UUID}\')"/>',
+                            "</tpl>", {
+                                fnInit: function() {
+                                    if (!document.CustOrderQueryPanelFnPrintOrder) {
+                                        document.CustOrderQueryPanelFnPrintOrder = function(COMPANY_C_NAME, CUST_ORDER_UUID) {
+                                            if (COMPANY_C_NAME == '利旻禮品文具有限公司') {
+
+                                                WS.CustAction.pdfLimew(CUST_ORDER_UUID, function(obj, jsonObj) {
+                                                    if (jsonObj.result.success) {
+                                                        var downloadUrl = SYSTEM_URL_ROOT + '/upload/custOrder/' + jsonObj.result.file;
+                                                        window.open(downloadUrl);
+                                                    }
+                                                });
+                                            } else if (COMPANY_C_NAME == '韋成企業商行') {
+                                                WS.CustAction.pdfW(CUST_ORDER_UUID, function(obj, jsonObj) {
+                                                    if (jsonObj.result.success) {
+                                                        var downloadUrl = SYSTEM_URL_ROOT + '/upload/custOrder/' + jsonObj.result.file;
+                                                        window.open(downloadUrl);
+                                                    }
+                                                });
+                                            } else if (COMPANY_C_NAME == '裕寶企業商行') {
+                                                WS.CustAction.pdfU(CUST_ORDER_UUID, function(obj, jsonObj) {
+                                                    if (jsonObj.result.success) {
+                                                        var downloadUrl = SYSTEM_URL_ROOT + '/upload/custOrder/' + jsonObj.result.file;
+                                                        window.open(downloadUrl);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+
+                    }, {
+                        xtype: 'templatecolumn',
+                        text: '出貨單',
+                        width: 60,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="列印" onclick="CustOrderQueryPanelFnPrintShipping(\'{CUST_ORDER_UUID}\')"/>',
+                            "</tpl>", {
+                                fnInit: function() {
+                                    if (!document.CustOrderQueryPanelFnPrintShipping) {
+                                        document.CustOrderQueryPanelFnPrintShipping = function(CUST_ORDER_UUID) {
+                                            WS.CustAction.pdfShipping(CUST_ORDER_UUID, function(obj, jsonObj) {
+                                                if (jsonObj.result.success) {
+                                                    var downloadUrl = SYSTEM_URL_ROOT + '/upload/shipping/' + jsonObj.result.file;
+                                                    window.open(downloadUrl);
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            })
+                    }, {
+                        header: "出貨編號",
+                        dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
+                        align: 'left',
+                        width: 150,
+                        hidden: true
+                    }, {
+                        header: "出貨地址",
+                        dataIndex: 'SHIPPING_ADDRESS',
+                        align: 'left',
+                        width: 150,
+                        hidden: true
+                    }, {
+                        header: "公司電話",
+                        align: 'left',
+                        dataIndex: 'CUST_TEL',
+                        width: 120,
+                        hidden: true
+                    }, {
+                        header: "傳真",
+                        dataIndex: 'CUST_FAX',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '地址',
+                        dataIndex: 'CUST_ADDRESS',
+                        align: 'left',
+                        width: 150,
+                        hidden: true
+                    }, {
+                        header: '採購員email',
+                        dataIndex: 'CUST_SALES_EMAIL',
+                        align: 'left',
+                        width: 120,
+                        hidden: true
+                    }, {
+                        header: '備註',
+                        dataIndex: 'CUST_ORDER_PS',
+                        align: 'left',
+                        width: 200,
+                        hidden: true
+
+                    }, {
+                        header: '等級',
+                        dataIndex: 'CUST_LEVEL',
+                        align: 'center',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '最近採購日',
+                        dataIndex: 'CUST_LAST_BUY',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },
@@ -633,26 +746,27 @@ Ext.define('WS.CustOrderQueryPanel', {
                                 msg: '請先選擇預出貨的訂單。'
                             });
                         } else {
+
                             /*canred要先檢查出貨地址是否有維護*/
                             var postData = '';
-                            var hasAddressEmpty = false;
+                            //var hasAddressEmpty = false;
                             Ext.each(selectRecord, function(item) {
-                                if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
-                                    postData += item.data.CUST_ORDER_UUID + "|";
-                                } else {
-                                    hasAddressEmpty = true;
-                                };
+                                //if (!Ext.isEmpty(item.data.SHIPPING_ADDRESS)) {
+                                postData += item.data.CUST_ORDER_UUID + "|";
+                                //} else {                                  
+                                //    hasAddressEmpty = true;
+                                //};
                             });
 
-                            if (hasAddressEmpty == true) {
-                                Ext.MessageBox.show({
-                                    title: '操作提示',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
-                                });
-                                return;
-                            };
+                            // if (hasAddressEmpty == true) {
+                            //     Ext.MessageBox.show({
+                            //         title: '操作提示',
+                            //         icon: Ext.MessageBox.INFO,
+                            //         buttons: Ext.Msg.OK,
+                            //         msg: '請檢查訂單出貨地址，發現有空的出貨地址!'
+                            //     });
+                            //     return;
+                            // };
 
                             WS.CustAction.shippingInProcessCustOrder(postData, function(obj, jsonObj) {
                                 if (jsonObj.result.success && jsonObj.result.success == true) {

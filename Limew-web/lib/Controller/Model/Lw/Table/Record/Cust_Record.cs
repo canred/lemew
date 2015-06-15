@@ -9,7 +9,7 @@ using Limew.Model.Lw.Table;
 namespace Limew.Model.Lw.Table.Record
 {
 	[LkRecord]
-	[TableView("CUST", false)]
+	[TableView("CUST", true)]
 	[LkDataBase("LIMEW")]
 	[Serializable]
 	public class Cust_Record : RecordBase{
@@ -27,6 +27,7 @@ namespace Limew.Model.Lw.Table.Record
 		int? _CUST_LEVEL=null;
 		int? _CUST_IS_ACTIVE=null;
 		DateTime? _CUST_LAST_BUY=null;
+		string _CUST_UNIFORM_NUM=null;
 		/*欄位資訊 End*/
 
 		[ColumnName("CUST_UUID",true,typeof(string))]
@@ -184,6 +185,19 @@ namespace Limew.Model.Lw.Table.Record
 				return _CUST_LAST_BUY;
 			}
 		}
+
+		[ColumnName("CUST_UNIFORM_NUM",false,typeof(string))]
+		public string CUST_UNIFORM_NUM
+		{
+			set
+			{
+				_CUST_UNIFORM_NUM=value;
+			}
+			get
+			{
+				return _CUST_UNIFORM_NUM;
+			}
+		}
 		public Cust_Record Clone(){
 			try{
 				return this.Clone<Cust_Record>(this);
@@ -223,16 +237,16 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180347*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_CustUuid()
+		public List<CustOrder_Record> Link_CustOrder_By_CustUuid()
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.CUST_UUID,this.CUST_UUID))
-					.FetchAll<VCustOrder_Record>() ; 
+					.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -261,18 +275,18 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180348*/
-		public List<VCustOrder_Record> Link_VCustOrder_By_CustUuid(OrderLimit limit)
+		public List<CustOrder_Record> Link_CustOrder_By_CustUuid(OrderLimit limit)
 		{
 			try{
-				List<VCustOrder_Record> ret= new List<VCustOrder_Record>();
+				List<CustOrder_Record> ret= new List<CustOrder_Record>();
 				var dbc = LK.Config.DataBase.Factory.getInfo();
-				VCustOrder ___table = new VCustOrder(dbc);
-				ret=(List<VCustOrder_Record>)
+				CustOrder ___table = new CustOrder(dbc);
+				ret=(List<CustOrder_Record>)
 										___table.Where(new SQLCondition(___table)
 										.Equal(___table.CUST_UUID,this.CUST_UUID))
 					.Order(limit)
 					.Limit(limit)
-					.FetchAll<VCustOrder_Record>() ; 
+					.FetchAll<CustOrder_Record>() ; 
 				return ret;
 			}
 			catch (Exception ex){
@@ -294,11 +308,11 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180357*/
-		public VCustOrder LinkFill_VCustOrder_By_CustUuid()
+		public CustOrder LinkFill_CustOrder_By_CustUuid()
 		{
 			try{
-				var data = Link_VCustOrder_By_CustUuid();
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_CustUuid();
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){
@@ -320,11 +334,11 @@ namespace Limew.Model.Lw.Table.Record
 			}
 		}
 		/*201303180358*/
-		public VCustOrder LinkFill_VCustOrder_By_CustUuid(OrderLimit limit)
+		public CustOrder LinkFill_CustOrder_By_CustUuid(OrderLimit limit)
 		{
 			try{
-				var data = Link_VCustOrder_By_CustUuid(limit);
-				VCustOrder ret=new VCustOrder(data);
+				var data = Link_CustOrder_By_CustUuid(limit);
+				CustOrder ret=new CustOrder(data);
 				return ret;
 			}
 			catch (Exception ex){

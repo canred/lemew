@@ -138,94 +138,132 @@ Ext.define('WS.GoodsQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "編輯",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*編輯',
-                        icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinGoods) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinGoods 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinGoods, {});
-                            subWin.on('closeEvent', function(obj) {
-                                main.down("#grdSupplierQuery").getStore().load();
-                            }, main);
-                            subWin.param.goodsUuid = grid.getStore().getAt(rowIndex).data.GOODS_UUID;
-                            subWin.show();
-                        }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: "名稱",
-                    dataIndex: 'GOODS_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '類別',
-                    dataIndex: 'GCATEGORY_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '類別(全)',
-                    dataIndex: 'GCATEGORY_FULL_NAME',
-                    align: 'left',
-                    hidden: true,
-                    flex: 1
-                }, {
-                    header: '商品(備註)',
-                    dataIndex: 'GOODS_PS',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: "序號",
-                    align: 'left',
-                    dataIndex: 'GOODS_SN',
-                    flex: 1
-                }, {
-                    header: "售價",
-                    dataIndex: 'GOODS_SALE',
-                    align: 'right',
-                    flex: 1
-                }, {
-                    header: '原價',
-                    dataIndex: 'GOODS_PRICE',
-                    align: 'right',
-                    flex: 1
-                }, {
-                    header: '成本',
-                    dataIndex: 'GOODS_COST',
-                    align: 'right',
-                    flex: 1
-                }, {
-                    header: '有效',
-                    dataIndex: 'GOODS_IS_ACTIVE',
-                    align: 'center',
-                    flex: 1,
-                    renderer: this.fnActiveRender
-                }, {
-                    header: '供應商',
-                    dataIndex: 'SUPPLIER_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '供應商備註',
-                    dataIndex: 'SUPPLIER_PS',
-                    align: 'left',
-                    flex: 1
-                }],
+                columns: [
+                    // {
+                    //     text: "編輯",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [{
+                    //         tooltip: '*編輯',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/edit16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinGoods) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinGoods 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             var subWin = Ext.create(main.subWinGoods, {});
+                    //             subWin.on('closeEvent', function(obj) {
+                    //                 main.down("#grdSupplierQuery").getStore().load();
+                    //             }, main);
+                    //             subWin.param.goodsUuid = grid.getStore().getAt(rowIndex).data.GOODS_UUID;
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '編輯',
+                        width: 100,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:80px" value="編輯" onclick="GoodsQueryPanelFnEdit(\'{GOODS_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.GoodsQueryPanel = this.scope;
+                                    if (!document.GoodsQueryPanelFnEdit) {
+                                        document.GoodsQueryPanelFnEdit = function(GOODS_UUID) {
+                                            var main = document.GoodsQueryPanel;
+                                            if (!main.subWinGoods) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinGoods 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinGoods, {});
+                                            subWin.on('closeEvent', function(obj) {
+                                                document.GoodsQueryPanel.down("#grdSupplierQuery").getStore().load();
+                                            }, main);
+                                            subWin.param.goodsUuid = GOODS_UUID;
+                                            subWin.show();
+                                        }
+                                    }
+                                }
+                            })
+                    }, {
+                        header: "名稱",
+                        dataIndex: 'GOODS_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '類別',
+                        dataIndex: 'GCATEGORY_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '類別(全)',
+                        dataIndex: 'GCATEGORY_FULL_NAME',
+                        align: 'left',
+                        hidden: true,
+                        flex: 1
+                    }, {
+                        header: '商品(備註)',
+                        dataIndex: 'GOODS_PS',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: "序號",
+                        align: 'left',
+                        dataIndex: 'GOODS_SN',
+                        flex: 1
+                    }, {
+                        header: "售價",
+                        dataIndex: 'GOODS_SALE',
+                        align: 'right',
+                        flex: 1
+                    }, {
+                        header: '原價',
+                        dataIndex: 'GOODS_PRICE',
+                        align: 'right',
+                        flex: 1
+                    }, {
+                        header: '成本',
+                        dataIndex: 'GOODS_COST',
+                        align: 'right',
+                        flex: 1
+                    }, {
+                        header: '有效',
+                        dataIndex: 'GOODS_IS_ACTIVE',
+                        align: 'center',
+                        flex: 1,
+                        renderer: this.fnActiveRender
+                    }, {
+                        header: '供應商',
+                        dataIndex: 'SUPPLIER_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '供應商備註',
+                        dataIndex: 'SUPPLIER_PS',
+                        align: 'left',
+                        flex: 1
+                    }
+                ],
                 tbarCfg: {
                     buttonAlign: 'right'
                 },

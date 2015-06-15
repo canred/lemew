@@ -60,6 +60,13 @@ Ext.define('WS.ReportOrderQueryPanel', {
                         'UUID': '',
                         'C_NAME': '全部'
                     });
+                    for (var i = 0; i < store.getCount(); i++) {
+                        if (store.getAt(i).get('C_NAME').length > 2) {
+                            store.getAt(i).set('C_NAME', store.getAt(i).get('C_NAME').substr(0, 2));
+                            store.getAt(i).commit();
+                        }
+
+                    }
                 }
             },
             remoteSort: true,
@@ -240,14 +247,15 @@ Ext.define('WS.ReportOrderQueryPanel', {
                 layout: 'hbox',
                 items: [{
                     xtype: 'datefield',
-                    labelWidth: 60,
-                    fieldLabel: '日期區間',
+                    labelWidth: 40,
+                    fieldLabel: '時間',
                     //value: new Date(),
                     format: 'Y/m/d',
                     submitFormat: 'Y/m/d',
                     labelAlign: 'right',
-                    itemId: 'dfStart',allowBlank:false,
-                    width: 170
+                    itemId: 'dfStart',
+                    allowBlank: false,
+                    width: 145
                 }, {
                     html: '~'
                 }, {
@@ -256,13 +264,14 @@ Ext.define('WS.ReportOrderQueryPanel', {
                     format: 'Y/m/d',
                     submitFormat: 'Y/m/d',
                     labelAlign: 'right',
-                    itemId: 'dfEnd',allowBlank:false,
-                    width: 110
+                    itemId: 'dfEnd',
+                    allowBlank: false,
+                    width: 100
                 }, {
                     xtype: 'combo',
                     fieldLabel: '出貨公司',
                     labelAlign: 'right',
-                    width: 150,
+                    width: 130,
                     labelWidth: 60,
                     itemId: 'cmbCompany',
                     displayField: 'C_NAME',
@@ -281,6 +290,7 @@ Ext.define('WS.ReportOrderQueryPanel', {
                     itemId: 'cmbCust',
                     hidden: false,
                     editable: false,
+                    readOnly: true,
                     store: this.myStore.cust,
                     value: '',
                     listeners: {
@@ -289,19 +299,43 @@ Ext.define('WS.ReportOrderQueryPanel', {
                             mainPanel.down('#cmbCustOrg').setValue('');
                             mainPanel.myStore.custOrg.getProxy().setExtraParam('pCustUuid', combo.getValue());
                             mainPanel.myStore.custOrg.load();
+
                         }
                     },
                     labelAlign: 'right',
                     width: 130,
                     labelWidth: 60
                 }, {
+                    xtype: 'button',
+                    text: '選',
+                    handler: function(handler, scope) {
+                        var mainPanel = this.up('panel').up('panel');
+                        var subWin = Ext.create('WS.CustPickerWindow', {
+                            param: {
+                                parentObj: mainPanel,
+                                showAllBtn: true
+                            }
+                        });
+                        subWin.on('selectedEvent', function(obj, selectRecord) {
+                            obj.param.parentObj.down('#cmbCust').setValue(selectRecord.CUST_UUID);
 
+                            obj.param.parentObj.down('#cmbCustOrg').setValue('');
+                            obj.param.parentObj.myStore.custOrg.getProxy().setExtraParam('pCustUuid', selectRecord.CUST_UUID);
+                            obj.param.parentObj.myStore.custOrg.load();
+
+                            obj.close();
+
+                        });
+                        subWin.show();
+                    }
+                }, {
                     xtype: 'combo',
                     fieldLabel: '單位',
                     itemId: 'cmbCustOrg',
                     value: '',
                     displayField: 'CUST_ORG_NAME',
                     valueField: 'CUST_ORG_UUID',
+                    labelAlign: 'right',
                     editable: false,
                     hidden: false,
                     store: this.myStore.custOrg,
@@ -405,6 +439,16 @@ Ext.define('WS.ReportOrderQueryPanel', {
 
 
                                 obj.loadPage(1);
+                                WS.CustAction.loadVCustOrderForReportSum(start, end, '', '', company, cust, custOrg, keyword, 1, 999999, "CUST_ORDER_ID", "ASC", function(obj, jsonObj) {
+                                    if (jsonObj.result) {
+                                        if (jsonObj.result.SUM) {
+                                            this.down('#btnSum').show();
+                                            this.down('#btnSum').setText("合計：$" + jsonObj.result.SUM);
+                                        } else {
+                                            this.down('#btnSum').hide();
+                                        }
+                                    }
+                                }, pl);
                             }(store, this.up('panel'));
                     }
                 }, {
@@ -432,68 +476,120 @@ Ext.define('WS.ReportOrderQueryPanel', {
                 border: true,
                 height: $(document).height() - 200,
                 padding: '5 15 5 5',
-                columns: [{
-                    text: "查看",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*查看',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCustOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCustOrder, {});
-                            //Ext.getBody().mask();
-                            subWin.on('closeEvent', function(obj) {
-                                //main.down("#grdVCustOrder").getStore().load();
-                                //Ext.getBody().unmask();
-                            }, main);
-                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
+                columns: [
+                    // {
+                    //     text: "查看",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'UUID',
+                    //     align: 'center',
+                    //     width: 60,
+                    //     items: [
+                    //     {
+                    //         tooltip: '*查看',
+                    //         icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var main = grid.up('panel').up('panel').up('panel');
+                    //             if (!main.subWinCustOrder) {
+                    //                 Ext.MessageBox.show({
+                    //                     title: '系統訊息',
+                    //                     icon: Ext.MessageBox.INFO,
+                    //                     buttons: Ext.Msg.OK,
+                    //                     msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                    //                 });
+                    //                 return false;
+                    //             };
+                    //             var subWin = Ext.create(main.subWinCustOrder, {});
+                    //             //Ext.getBody().mask();
+                    //             subWin.on('closeEvent', function(obj) {
+                    //                 //main.down("#grdVCustOrder").getStore().load();
+                    //                 //Ext.getBody().unmask();
+                    //             }, main);
+                    //             subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
+                    //             subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
+                    //             subWin.show();
+                    //         }
+                    //     }],
+                    //     sortable: false,
+                    //     hideable: false
+                    // }, 
+                    {
+                        xtype: 'templatecolumn',
+                        text: '查看',
+                        width: 60,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:50px" value="查看" onclick="ReportOrderQueryPanelFnView(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.ReportOrderQueryPanel = this.scope;
+                                    if (!document.ReportOrderQueryPanelFnView) {
+                                        document.ReportOrderQueryPanelFnView = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.ReportOrderQueryPanel;
+                                            if (!main.subWinCustOrder) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinCustOrder, {});
+                                            //Ext.getBody().mask();
+                                            subWin.on('closeEvent', function(obj) {
+                                                //main.down("#grdVCustOrder").getStore().load();
+                                                //Ext.getBody().unmask();
+                                            }, main);
+                                            subWin.param.custOrderUuid = CUST_ORDER_UUID;
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+                                        }
+                                    }
+
+                                }
+                            }),
+
+                    }, {
+                        header: '訂單編號',
+                        dataIndex: 'CUST_ORDER_ID',
+                        width: 140,
+                    }, {
+                        header: "出貨日期",
+                        dataIndex: 'CUST_ORDER_SHIPPING_DATE',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: "出貨公司",
+                        align: 'left',
+                        dataIndex: 'COMPANY_C_NAME',
+                        flex: 1
+                    }, {
+                        header: "客戶名稱",
+                        dataIndex: 'CUST_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '單位',
+                        dataIndex: 'CUST_ORG_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        header: '總銷售金額',
+                        dataIndex: 'CUST_ORDER_TOTAL_PRICE',
+                        align: 'right',
+                        flex: 1,
+                        renderer: function(value, r) {
+                            return Ext.String.format('${0}', value);
                         }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: '訂單編號',
-                    dataIndex: 'CUST_ORDER_ID',
-                    width: 140,
-                }, {
-                    header: "出貨日期",
-                    dataIndex: 'CUST_ORDER_SHIPPING_DATE',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: "出貨公司",
-                    align: 'left',
-                    dataIndex: 'COMPANY_C_NAME',
-                    flex: 1
-                }, {
-                    header: "客戶名稱",
-                    dataIndex: 'CUST_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '單位',
-                    dataIndex: 'CUST_ORG_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    header: '總銷售金額',
-                    dataIndex: 'CUST_ORDER_TOTAL_PRICE',
-                    align: 'right',
-                    flex: 1
+                    }
+                ],
+                fbar: [{
+                    type: 'button',
+                    text: '合計：',
+                    itemId: 'btnSum'
                 }],
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     store: this.myStore.vCustOrder,
@@ -509,11 +605,11 @@ Ext.define('WS.ReportOrderQueryPanel', {
         afterrender: function(obj, eOpts) {
 
             var today = new Date();
-            var startDate = today.getFullYear()+"/1/1";
-            var endDate = today.getFullYear()+"/12/31";
-            
-            this.down('#dfStart').setValue( new Date( startDate ));
-            this.down('#dfEnd').setValue( new Date( endDate ));
+            var startDate = today.getFullYear() + "/1/1";
+            var endDate = today.getFullYear() + "/12/31";
+
+            this.down('#dfStart').setValue(new Date(startDate));
+            this.down('#dfEnd').setValue(new Date(endDate));
 
             this.myStore.company.load();
             // this.myStore.vCustOrder.load({

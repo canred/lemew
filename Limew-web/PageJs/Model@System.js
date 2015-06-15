@@ -1,3 +1,276 @@
+Ext.define('BILLING', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'BILLING_UUID',
+        'BILLING_ID',
+        'CUST_UUID',
+        //'BILLING_START_DATE',
+        {
+            name: 'BILLING_START_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+
+        //'BILLING_END_DATE',
+        {
+            name: 'BILLING_END_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+        //'BILLING_REPORT_DATE',
+        {
+            name: 'BILLING_REPORT_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+        'BILLING_CUST_NAME',
+        'BILLING_CUST_UNIFORM_NUM',
+        'BILLING_TEL',
+        'BILLING_CUST_ADDRESS',
+        'BILLING_SALES_NAME',
+        'BILLING_ITEM_COUNT',
+        'BILLING_DISCOUNT',
+        'BILLING_SUM_PRICE',
+        'BILLING_ARREARS_PRICE',
+        'BILLING_TAX',
+        'BILLING_TOTAL_PRICE',
+        'BILLING_CHECK_YY',
+        'BILLING_CHECK_MM',
+        'BILLING_CHECK_TITLE',
+        'BILLING_CONTACT_USER_NAME',
+        'BILLING_CONTACT_ATTENDANT_UUID',
+        'BILLING_BACK_ACCOUNT_NUMBER',
+        'BILLING_BACK_NAME',
+        'BILLING_BACK_SUB_NAME',
+        'BILLING_BACK_ACCOUNT_NAME',
+        'BILLING_PS',
+        'BILLING_STATUS_ID',
+        'BILLING_IS_ACTIVE',
+        'BILLING_REPORT_ATTENDANT_UUID'
+    ]
+});
+
+Ext.define('BILLING_DETAIL', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'BILLING_DETAIL_UUID',
+        'CUST_ORDER_UUID',
+        'BILLING_DETAIL_CR',
+        'BILLING_UUID'
+    ]
+});
+
+Ext.define('V_BILLING_DETAIL', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'BILLING_DETAIL_CR',
+        'BILLING_DETAIL_UUID',
+        'BILLING_UUID',
+        'CUST_ORDER_UUID',
+        //'CUST_ORDER_CR',
+        {
+            name: 'CUST_ORDER_CR',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+        'CUST_ORDER_ID',
+        'CUST_ORDER_TOTAL_PRICE',
+        'CUST_ORDER_STATUS_UUID',
+        'CUST_ORDER_IS_ACTIVE',
+        'CUST_UUID',
+        'CUST_ORDER_TYPE',
+        'CUST_ORDER_CUST_NAME',
+        'CUST_ORDER_DEPT',
+        'CUST_ORDER_USER_NAME',
+        'CUST_ORDER_USER_PHONE',
+        'CUST_ORDER_PURCHASE_AMOUNT',
+        'CUST_ORDER_PRINT_USER_NAME',
+        'CUST_ORDER_SHIPPING_DATE',
+        'SHIPPING_STATUS_UUID',
+        'CUST_ORDER_PO_NUMBER',
+        'PAY_STATUS_UUID',
+        'PAY_METHOD_UUID',
+        'CUST_ORDER_INVOICE_NUMBER',
+        'CUST_ORDER_LIMIT_DATE',
+        'CUST_ORG_UUID',
+        'CUST_ORDER_HAS_TAX',
+        'CUST_ORDER_PS',
+        'CUST_ORDER_SHIPPING_NUMBER',
+        'CUST_ORDER_PS_NUMBER',
+        'CUST_ORDER_PAY_PS',
+        'CUST_NAME',
+        'CUST_ADDRESS',
+        'CUST_FAX',
+        'CUST_IS_ACTIVE',
+        'CUST_LAST_BUY',
+        'CUST_PS',
+        'CUST_SALES_EMAIL',
+        'CUST_SALES_NAME',
+        'CUST_SALES_PHONE',
+        'CUST_TEL',
+        //'CUST_ORDER_REPORT_DATE',
+        {
+            name: 'CUST_ORDER_REPORT_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
+        'CUST_ORDER_REPORT_ATTENDANT_UUID',
+        'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
+        'PAY_STATUS_NAME',
+        'PAY_METHOD_NAME',
+        'CUST_ORG_SALES_NAME',
+        'CUST_ORG_SALES_PHONE',
+        'CUST_ORG_SALES_EMAIL',
+        'CUST_ORG_PS',
+        'CUST_ORG_NAME',
+        'CUST_ORG_IS_ACTIVE',
+        'SHIPPING_ADDRESS',
+        'COMPANY_UUID',
+        'COMPANY_C_NAME',
+        'SHIPPING_STATUS_NAME'
+    ]
+});
+
 Ext.define('CUST', {
     extend: 'Ext.data.Model',
     fields: [
@@ -12,7 +285,8 @@ Ext.define('CUST', {
         'CUST_PS',
         'CUST_LEVEL',
         'CUST_IS_ACTIVE',
-        'CUST_LAST_BUY'
+        'CUST_LAST_BUY',
+        'CUST_UNIFORM_NUM'
     ]
 });
 
@@ -61,6 +335,34 @@ Ext.define('CUST_ORG', {
     ]
 });
 
+Ext.define('CUST_ORG_V', {
+    extend: 'Ext.data.Model',
+    fields: [
+        'CUST_UUID',
+        'CUST_NAME',
+        'CUST_TEL',
+        'CUST_FAX',
+        'CUST_ADDRESS',
+        'CUST_SALES_NAME',
+        'CUST_SALES_PHONE',
+        'CUST_SALES_EMAIL',
+        'CUST_PS',
+        'CUST_LEVEL',
+        'CUST_IS_ACTIVE',
+        'CUST_LAST_BUY',
+        'CUST_UNIFORM_NUM',
+        'CUST_ORG_ADDRESS',
+        'CUST_ORG_IS_ACTIVE',
+        'CUST_ORG_IS_DEFAULT',
+        'CUST_ORG_NAME',
+        'CUST_ORG_PS',
+        'CUST_ORG_SALES_EMAIL',
+        'CUST_ORG_SALES_NAME',
+        'CUST_ORG_SALES_PHONE',
+        'CUST_ORG_UUID'
+    ]
+});
+
 Ext.define('CUST_ORDER', {
     extend: 'Ext.data.Model',
     fields: [
@@ -89,10 +391,44 @@ Ext.define('CUST_ORDER', {
         'CUST_ORDER_HAS_TAX',
         'CUST_ORDER_PS',
         'COMPANY_UUID',
-        'CUST_ORDER_REPORT_DATE',
+        //'CUST_ORDER_REPORT_DATE',
+        {
+            name: 'CUST_ORDER_REPORT_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
         'CUST_ORDER_REPORT_ATTENDANT_UUID',
         'CUST_ORDER_SHIPPING_NUMBER',
-        'SHIPPING_ADDRESS'
+        'SHIPPING_ADDRESS',
+        'CUST_ORDER_PS_NUMBER'
     ]
 });
 
@@ -250,7 +586,17 @@ Ext.define('V_CUST_ORDER', {
                 } else {
 
                     if (v != undefined && v.split(' ').length > 1) {
-                        return v.split(' ')[0];
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
                     } else {
                         return v;
                     }
@@ -291,7 +637,40 @@ Ext.define('V_CUST_ORDER', {
         'CUST_SALES_NAME',
         'CUST_SALES_PHONE',
         'CUST_TEL',
-        'CUST_ORDER_REPORT_DATE',
+        //'CUST_ORDER_REPORT_DATE',
+        {
+            name: 'CUST_ORDER_REPORT_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
         'CUST_ORDER_REPORT_ATTENDANT_UUID',
         'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
         'PAY_STATUS_NAME',
@@ -304,7 +683,9 @@ Ext.define('V_CUST_ORDER', {
         'CUST_ORG_IS_ACTIVE',
         'CUST_ORDER_SHIPPING_NUMBER',
         'SHIPPING_ADDRESS', 'SHIPPING_STATUS_NAME',
-        'COMPANY_C_NAME'
+        'COMPANY_C_NAME',
+        'CUST_ORDER_PS_NUMBER',
+        'CUST_ORDER_PAY_PS',
     ]
 });
 
@@ -431,8 +812,18 @@ Ext.define('MY_ORDER', {
                     };
                     return v.getFullYear() + '/' + month + "/" + day;
                 } else {
-                    if (v.split(' ').length > 1) {
-                        return v.split(' ')[0];
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
                     } else {
                         return v;
                     }
@@ -471,8 +862,18 @@ Ext.define('V_MY_ORDER_DETAIL', {
                     };
                     return v.getFullYear() + '/' + month + "/" + day;
                 } else {
-                    if (v.split(' ').length > 1) {
-                        return v.split(' ')[0];
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
                     } else {
                         return v;
                     }
@@ -535,7 +936,40 @@ Ext.define('V_CUST_ORDER_SEARCH', {
         'CUST_ORDER_PURCHASE_AMOUNT',
         'CUST_ORDER_REPORT_ATTENDANT_C_NAME',
         'CUST_ORDER_REPORT_ATTENDANT_UUID',
-        'CUST_ORDER_REPORT_DATE',
+        //'CUST_ORDER_REPORT_DATE',
+        {
+            name: 'CUST_ORDER_REPORT_DATE',
+            convert: function(v) {
+                if (v != undefined && typeof v.getFullYear == 'function') {
+                    var month = (v.getMonth() + 1);
+                    var day = v.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (day < 10) {
+                        day = "0" + day;
+                    };
+                    return v.getFullYear() + '/' + month + "/" + day;
+                } else {
+
+                    if (v != undefined && v.split(' ').length > 1) {
+                        var y = v.split(' ')[0].split('/')[0];
+                        var m = v.split(' ')[0].split('/')[1];
+                        var d = v.split(' ')[0].split('/')[2];
+                        if (m.length == 1) {
+                            m = '0' + m;
+                        }
+
+                        if (d.length == 1) {
+                            d = '0' + d;
+                        }
+                        return y + '/' + m + "/" + d;
+                    } else {
+                        return v;
+                    }
+                }
+            }
+        },
         'CUST_ORDER_SHIPPING_DATE',
         'CUST_ORDER_SHIPPING_NUMBER',
         'CUST_ORDER_STATUS_UUID',

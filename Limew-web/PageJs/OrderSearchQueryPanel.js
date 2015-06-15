@@ -85,8 +85,8 @@ Ext.define('WS.OrderSearchQueryPanel', {
                 paramsAsHash: true,
                 paramOrder: ['dtStart', 'dtEnd', 'pKeyword', 'pCustOrderType', 'pCompanyUuid', 'pCustUuid', 'pCustOrderStatusUuid', 'pShippingStatusUuid', 'pPayStatusUuid', 'page', 'limit', 'sort', 'dir'],
                 extraParams: {
-                    dtStart:'',
-                    dtEnd:'',
+                    dtStart: '',
+                    dtEnd: '',
                     pKeyword: '',
                     pCustOrderType: '',
                     pCompanyUuid: '',
@@ -281,8 +281,8 @@ Ext.define('WS.OrderSearchQueryPanel', {
             icon: SYSTEM_URL_ROOT + '/css/custimages/search16x16.png',
             frame: true,
             border: false,
-            autoHeight: true,           
-            minHeight: $(document).height() - 130,            
+            autoHeight: true,
+            minHeight: $(document).height() - 130,
             autoWidth: true,
             padding: '5 0 5 5',
             items: [{
@@ -335,7 +335,7 @@ Ext.define('WS.OrderSearchQueryPanel', {
                     submitFormat: 'Y/m/d',
                     labelAlign: 'right',
                     itemId: 'dfStart',
-                    allowBlank:false,
+                    allowBlank: false,
                     width: 170
                 }, {
                     html: '~'
@@ -345,7 +345,8 @@ Ext.define('WS.OrderSearchQueryPanel', {
                     format: 'Y/m/d',
                     submitFormat: 'Y/m/d',
                     labelAlign: 'right',
-                    itemId: 'dfEnd',allowBlank:false,
+                    itemId: 'dfEnd',
+                    allowBlank: false,
                     width: 110
                 }, {
                     xtype: 'combo',
@@ -384,7 +385,8 @@ Ext.define('WS.OrderSearchQueryPanel', {
                     width: 160,
                     editable: false,
                     hidden: false,
-                    value: 'SS_FINISH',
+                    //value: 'SS_FINISH',
+                    value: '',
                     store: this.myStore.shippingStatus,
                     editable: false
                 }, {
@@ -413,18 +415,18 @@ Ext.define('WS.OrderSearchQueryPanel', {
                     handler: function() {
                         var store = this.up('panel').down("#grdVCustOrder").getStore(),
                             doSomeghing = function(obj, pl) {
-                                if( pl.down("#dfStart").isValid() == false || pl.down("#dfEnd").isValid() == false){
+                                if (pl.down("#dfStart").isValid() == false || pl.down("#dfEnd").isValid() == false) {
                                     Ext.MessageBox.show({
-                                        title:'操作提示',
-                                        icon : Ext.MessageBox.INFO,
-                                        buttons : Ext.Msg.OK,
-                                        msg : '日期區間格式錯誤!' 
+                                        title: '操作提示',
+                                        icon: Ext.MessageBox.INFO,
+                                        buttons: Ext.Msg.OK,
+                                        msg: '日期區間格式錯誤!'
                                     });
                                     return;
                                 };
 
 
-                                obj.getProxy().setExtraParam('dtStart', pl.down("#dfStart").getValue());                                
+                                obj.getProxy().setExtraParam('dtStart', pl.down("#dfStart").getValue());
                                 obj.getProxy().setExtraParam('dtEnd', pl.down("#dfEnd").getValue());
                                 obj.getProxy().setExtraParam('pCustOrderType', pl.down("#cmbCustOrderType").getValue());
                                 obj.getProxy().setExtraParam('pCustUuid', pl.down("#cmbCust").getValue());
@@ -491,122 +493,154 @@ Ext.define('WS.OrderSearchQueryPanel', {
                             getCustOrderTotalPrice: function(rows) {
 
                                 if (rows[0].data.CUST_ORDER_HAS_TAX == 1) {
-                                    ret = "訂單總計(含稅):";
+                                    ret = "訂單總計:$";
                                 } else {
                                     ret = "訂單總計(<span style='color:red;font-weight: bold;'>稅後</span>):$";
                                 }
                                 ret = ret + rows[0].data.CUST_ORDER_TOTAL_PRICE;
                                 return "<div style='float:right;'>" + ret + "<div>";
+                                //return "";
                             }
                         }),
                     showSummaryRow: true,
                     hideGroupedHeader: false,
                     enableGroupingMenu: false
-                }],
+                }
+
+                // , {
+                //     ftype: 'rowbody',
+                //     setupRowData: function(record, rowIndex, rowValues) {
+                //         var headerCt = this.view.headerCt,
+                //             colspan = headerCt.getColumnCount();
+
+                //         // Usually you would style the my-body-class in CSS file
+                //         Ext.apply(rowValues, {
+                //             rowBody: '<div style="padding: 1em">' + record.get("CUST_ORDER_TOTAL_PRICE") + '</div>',
+                //             rowBodyCls: "my-body-class",
+                //             rowBodyColspan: colspan
+                //         });
+                //     }
+                // }
+
+                ],
                 sortableColumns: false,
                 columns: [{
-                    text: "查看",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'UUID',
-                    align: 'center',
-                    width: 60,
-                    items: [{
-                        tooltip: '*查看',
-                        icon: SYSTEM_URL_ROOT + '/css/custimages/view16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var main = grid.up('panel').up('panel').up('panel');
-                            if (!main.subWinCustOrder) {
-                                Ext.MessageBox.show({
-                                    title: '系統訊息',
-                                    icon: Ext.MessageBox.INFO,
-                                    buttons: Ext.Msg.OK,
-                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
-                                });
-                                return false;
-                            };
-                            var subWin = Ext.create(main.subWinCustOrder, {});
-                            subWin.on('closeEvent', function(obj) {}, main);
-                            subWin.param.custOrderUuid = grid.getStore().getAt(rowIndex).data.CUST_ORDER_UUID;
-                            subWin.param.custUuid = grid.getStore().getAt(rowIndex).data.CUST_UUID;
-                            subWin.show();
+                        xtype: 'templatecolumn',
+                        text: '查看',
+                        width: 70,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:60px" value="查看" onclick="OrderSearchQueryPanelFnView(\'{CUST_ORDER_UUID}\',\'{CUST_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.OrderSearchQueryPanel = this.scope;
+                                    if (!document.OrderSearchQueryPanelFnView) {
+                                        document.OrderSearchQueryPanelFnView = function(CUST_ORDER_UUID, CUST_UUID) {
+                                            var main = document.OrderSearchQueryPanel;
+                                            if (!main.subWinCustOrder) {
+                                                Ext.MessageBox.show({
+                                                    title: '系統訊息',
+                                                    icon: Ext.MessageBox.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    msg: '未實現 subWinCustOrder 物件,無法進行編輯操作!'
+                                                });
+                                                return false;
+                                            };
+                                            var subWin = Ext.create(main.subWinCustOrder, {});
+                                            subWin.on('closeEvent', function(obj) {}, main);
+                                            subWin.param.custOrderUuid = CUST_ORDER_UUID;
+                                            subWin.param.custUuid = CUST_UUID;
+                                            subWin.show();
+
+                                        }
+                                    }
+
+                                }
+                            })
+                    }, {
+                        header: "出貨日期",
+                        dataIndex: 'CUST_ORDER_SHIPPING_DATE',
+                        align: 'left',
+                        width: 80,
+                        renderer: function(value, r) {
+                            var text = '';
+                            if (value != '' && value.indexOf(' ') != -1) {
+                                text = value.split(' ')[0];
+                            }
+                            return Ext.String.format('<div style="font-size:10px;">{0}</div>', text);
+                        },
+                        summaryType: 'count',
+                        summaryRenderer: function(value) {
+                            return Ext.String.format('共{0}筆', value);
                         }
-                    }],
-                    sortable: false,
-                    hideable: false
-                }, {
-                    header: "出貨日期",
-                    dataIndex: 'CUST_ORDER_SHIPPING_DATE',
-                    align: 'left',
-                    width: 80,
-                    renderer: function(value, r) {
-                        var text = '';
-                        if (value != '' && value.indexOf(' ') != -1) {
-                            text = value.split(' ')[0];
+                    }, {
+                        header: "出貨編號",
+                        dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
+                    }, {
+                        header: '出貨狀態',
+                        dataIndex: 'SHIPPING_STATUS_NAME',
+                        align: 'center',
+                        width: 120,
+                        renderer: function(value, r) {
+                            var text = "";
+                            text = r.record.data.SHIPPING_STATUS_NAME;
+                            if (r.record.data.PAY_STATUS_NAME != '') {
+                                text += '(' + r.record.data.PAY_STATUS_NAME + ')';
+                            }
+                            return Ext.String.format('<div style="font-size:10px;">{0}</div>', text);
                         }
-                        return Ext.String.format('<div style="font-size:10px;">{0}</div>', text);
+                    }, {
+                        header: '商品名稱',
+                        dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
+                        align: 'left',
+                        flex: 1
+                    }, {
+                        xtype: 'booleancolumn',
+                        header: '客製',
+                        dataIndex: 'CUST_ORDER_DETAIL_CUSTOMIZED',
+                        align: 'center',
+                        trueText: '是',
+                        falseText: '否',
+                        hidden: true,
+                        width: 80,
                     },
-                    summaryType: 'count',
-                    summaryRenderer: function(value) {
-                        return Ext.String.format('共{0}筆', value);
+
+                    {
+                        header: '數量',
+                        dataIndex: 'CUST_ORDER_DETAIL_COUNT',
+                        align: 'right',
+                        width: 80
+                    }, {
+                        header: '單位',
+                        dataIndex: 'CUST_ORDER_DETAIL_UNIT_NAME',
+                        align: 'center',
+                        width: 80
+                    }, {
+                        header: '單價',
+                        dataIndex: 'CUST_ORDER_DETAIL_PRICE',
+                        align: 'right',
+                        width: 150,
+                        renderer: function(value, r) {
+                                return Ext.String.format('${0}', value);
+                            }
+                            // summaryType: 'sum',
+                            // summaryRenderer: function(value) {
+                            //     return Ext.String.format('單價合計：{0}', value);
+                            // }
+                    }, {
+                        header: '備註',
+                        dataIndex: 'CUST_ORDER_PS',
+                        align: 'left',
+                        flex: 1,
+                        hidden: true
                     }
-                }, {
-                    header: "出貨編號",
-                    dataIndex: 'CUST_ORDER_SHIPPING_NUMBER',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }, {
-                    header: '出貨狀態',
-                    dataIndex: 'SHIPPING_STATUS_NAME',
-                    align: 'center',
-                    width: 120,
-                    renderer: function(value, r) {
-                        var text = "";
-                        text = r.record.data.SHIPPING_STATUS_NAME;
-                        if (r.record.data.PAY_STATUS_NAME != '') {
-                            text += '(' + r.record.data.PAY_STATUS_NAME + ')';
-                        }
-                        return Ext.String.format('<div style="font-size:10px;">{0}</div>', text);
-                    }
-                }, {
-                    header: '商品名稱',
-                    dataIndex: 'CUST_ORDER_DETAIL_GOODS_NAME',
-                    align: 'left',
-                    flex: 1
-                }, {
-                    xtype: 'booleancolumn',
-                    header: '客製',
-                    dataIndex: 'CUST_ORDER_DETAIL_CUSTOMIZED',
-                    align: 'center',
-                    trueText: '是',
-                    falseText: '否',
-                    width: 80,
-                }, {
-                    header: '數量',
-                    dataIndex: 'CUST_ORDER_DETAIL_COUNT',
-                    align: 'left',
-                    width: 80
-                }, {
-                    header: '單位',
-                    dataIndex: 'CUST_ORDER_DETAIL_UNIT_NAME',
-                    align: 'center',
-                    width: 80
-                }, {
-                    header: '單價',
-                    dataIndex: 'CUST_ORDER_DETAIL_PRICE',
-                    align: 'right',
-                    width: 150,
-                    // summaryType: 'sum',
-                    // summaryRenderer: function(value) {
-                    //     return Ext.String.format('單價合計：{0}', value);
-                    // }
-                }, {
-                    header: '備註',
-                    dataIndex: 'CUST_ORDER_PS',
-                    align: 'left',
-                    flex: 1,
-                    hidden: true
-                }],
+                ],
 
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     store: this.myStore.vcustordersearch,
@@ -622,11 +656,11 @@ Ext.define('WS.OrderSearchQueryPanel', {
     listeners: {
         afterrender: function(obj, eOpts) {
             var today = new Date();
-            var startDate = today.getFullYear()+"/1/1";
-            var endDate = today.getFullYear()+"/12/31";
-            
-            this.down('#dfStart').setValue( new Date( startDate ));
-            this.down('#dfEnd').setValue( new Date( endDate ));
+            var startDate = today.getFullYear() + "/1/1";
+            var endDate = today.getFullYear() + "/12/31";
+
+            this.down('#dfStart').setValue(new Date(startDate));
+            this.down('#dfEnd').setValue(new Date(endDate));
 
             this.myStore.cust.load({
                 scope: this

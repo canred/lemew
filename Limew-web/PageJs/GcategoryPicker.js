@@ -69,38 +69,66 @@ Ext.define('WS.GcategoryPicker', {
                 store: this.myStore.tree,
                 multiSelect: true,
                 rootVisible: false,
-                columns: [{
-                    text: "選擇",
-                    xtype: 'actioncolumn',
-                    dataIndex: 'GCATEGORY_UUID',
-                    align: 'center',
-                    sortable: false,
-                    flex: .5,
-                    items: [{
-                        tooltip: '*選擇',
-                        icon: SYSTEM_URL_ROOT + '/css/images/mouseSelect16x16.png',
-                        handler: function(grid, rowIndex, colIndex) {
-                            var mainPanel = grid.up('window');
-                            var gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
-                            mainPanel.fireEvent('selected', mainPanel, grid.getStore().getAt(rowIndex).data);
-                        }
-                    }],
-                    hideable: false
-                }, {
-                    xtype: 'treecolumn',
-                    text: '類別',
-                    flex: 3,
-                    sortable: false,
-                    dataIndex: 'GCATEGORY_NAME'
-                }, {
-                    text: '有效',
-                    flex: .5,
-                    dataIndex: 'GCATEGORY_IS_ACTIVE',
-                    align: 'center',
-                    sortable: false,
-                    hidden: false,
-                    renderer: this.fnActiveRender
-                }]
+                columns: [
+                    // {
+                    //     text: "選擇",
+                    //     xtype: 'actioncolumn',
+                    //     dataIndex: 'GCATEGORY_UUID',
+                    //     align: 'center',
+                    //     sortable: false,
+                    //     flex: .5,
+                    //     items: [{
+                    //         tooltip: '*選擇',
+                    //         icon: SYSTEM_URL_ROOT + '/css/images/mouseSelect16x16.png',
+                    //         handler: function(grid, rowIndex, colIndex) {
+                    //             var mainPanel = grid.up('window');
+                    //             var gcategoryUuid = grid.getStore().getAt(rowIndex).data.GCATEGORY_UUID;
+                    //             mainPanel.fireEvent('selected', mainPanel, grid.getStore().getAt(rowIndex).data);
+                    //         }
+                    //     }],
+                    //     hideable: false
+                    // }
+                    // ,
+                    {
+                        xtype: 'templatecolumn',
+                        text: '選擇',
+                        width: 100,
+                        sortable: false,
+                        hideable: false,
+                        tpl: new Ext.XTemplate(
+                            "<tpl >",
+                            '{[this.fnInit()]}<input type="button" style="width:80px" value="選擇" onclick="GcategoryPickerHandler(\'{GCATEGORY_UUID}\')"/>',
+                            "</tpl>", {
+                                scope: this,
+                                fnInit: function() {
+                                    document.GcategoryPicker = this.scope;
+                                    if (!document.GcategoryPickerHandler) {
+                                        document.GcategoryPickerHandler = function(GCATEGORY_UUID  ) {
+                                            var mainPanel = document.GcategoryPicker;
+                                            var gcategoryUuid = GCATEGORY_UUID;
+                                            
+                                            //console.log(values);
+                                            mainPanel.fireEvent('selected', mainPanel, gcategoryUuid);
+                                        }
+                                    }
+                                }
+                            })
+                    }, {
+                        xtype: 'treecolumn',
+                        text: '類別',
+                        flex: 3,
+                        sortable: false,
+                        dataIndex: 'GCATEGORY_NAME'
+                    }, {
+                        text: '有效',
+                        flex: .5,
+                        dataIndex: 'GCATEGORY_IS_ACTIVE',
+                        align: 'center',
+                        sortable: false,
+                        hidden: false,
+                        renderer: this.fnActiveRender
+                    }
+                ]
             }]
         }];
         this.callParent(arguments);
