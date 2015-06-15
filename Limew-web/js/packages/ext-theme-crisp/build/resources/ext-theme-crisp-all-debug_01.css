@@ -12372,8 +12372,7 @@ ul.x-tagfield-list.x-tagfield-singleselect {
 /* line 23, ../../../ext-theme-neutral/sass/src/view/Table.scss */
 .x-grid-item {
   color: black;
-  /*font: 300 13px/15px helvetica, arial, verdana, sans-serif;*/
-  font: 300 16px/18px helvetica, arial, verdana, sans-serif;
+  font: 300 13px/15px helvetica, arial, verdana, sans-serif;
   background-color: white; }
 
 /* line 29, ../../../ext-theme-neutral/sass/src/view/Table.scss */
@@ -12716,8 +12715,7 @@ ul.x-tagfield-list.x-tagfield-singleselect {
 .x-column-header {
   border-right: 1px solid #cecece;
   color: #666666;
-  /*font: 300 13px/15px helvetica, arial, verdana, sans-serif;*/
-  font: 300 16px/18px helvetica, arial, verdana, sans-serif;
+  font: 300 13px/15px helvetica, arial, verdana, sans-serif;
   outline: 0;
   background-color: white; }
 
@@ -23743,8 +23741,8 @@ a.x-color-picker-item:hover {
 
 /* line 16, ../../../ext-theme-neutral/sass/src/grid/column/Action.scss */
 .x-action-col-icon {
-  height: 20px;
-  width: 20px;
+  height: 16px;
+  width: 16px;
   cursor: pointer; }
 
 /* line 1, ../../../ext-theme-neutral/sass/src/grid/column/Check.scss */

@@ -12952,7 +12952,8 @@ ul.x-tagfield-list.x-tagfield-singleselect {
 /* line 250, ../../../ext-theme-neutral/sass/src/form/field/Text.scss */
 .x-form-text-default {
   color: black;
-  padding: 4px 6px 3px 6px;
+  /*padding: 4px 6px 3px 6px;*/
+  padding: -5px 0px 0px 0px;
   background-color: white;
   font: normal 13px/15px helvetica, arial, verdana, sans-serif;
   min-height: 22px; }
